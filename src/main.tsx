@@ -1,12 +1,16 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { Toaster } from "@/components/ui/toaster"
-import App from './App.tsx'
-import './index.css'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { Toaster } from "@/components/ui/toaster";
+import { Provider } from "react-redux";
+import store from "@/app/store";
+import App from "./App.tsx";
+import "./index.css";
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <App />
-    <Toaster />
-  </React.StrictMode>,
-)
+    <Provider store={store}>
+      <App />
+      <Toaster />
+    </Provider>
+  </React.StrictMode>
+);
