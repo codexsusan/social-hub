@@ -2,13 +2,36 @@ import React from "react";
 import { Button } from "../ui/button";
 import { InputWithLabel } from "../common/InputWithLabel";
 import { useNavigate } from "react-router-dom";
+import { Loader2 } from "lucide-react";
+import { userLogin } from "@/utils/userUtils";
+import { useToast } from "../ui/use-toast";
 
 function Login() {
   const navigate = useNavigate();
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const { toast } = useToast();
+  const [email, setEmail] = React.useState<string>("");
+  const [password, setPassword] = React.useState<string>("");
+  const [loading, setLoading] = React.useState<boolean>(false);
 
-  const handleLogin = () => {};
+  const handleLogin = () => {
+    setLoading(true);
+    userLogin({ email, password })
+      .then((res) => {
+        setLoading(false);
+        if (res.status === 200 || res.status === 201) {
+          localStorage.setItem("token", res.data.token);
+        } else {
+          toast({
+            description: res.data.message,
+            duration: 3000,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  };
   return (
     <div className=" flex-1 flex items-center justify-center bg-[#030303]">
       <div className="w-full flex flex-col items-center justify-center gap-y-10 mb-10">
@@ -53,7 +76,16 @@ function Login() {
               placeholder="•••••••••"
               type="password"
             />
-            <Button type="submit">Login</Button>
+            {loading ? (
+              <Button className="mt-2" disabled>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Please wait
+              </Button>
+            ) : (
+              <Button type="submit" className="mt-2">
+                Login
+              </Button>
+            )}
             <div className="text-center text-slate-400">
               Don't have an account ?{" "}
               <span

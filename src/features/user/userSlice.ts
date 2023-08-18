@@ -8,10 +8,10 @@ const initialState: User = {
   lastName: "",
   email: "",
   password: "",
-  token: "",
-  username: "",
+  userName: "",
   profilePic: "",
   bio: "",
+  gender: "",
   isVerified: false,
   isBanned: false,
   banReason: "",
@@ -21,27 +21,22 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    addEmail: (state, action) => {
-      state.email = action.payload;
-    },
-    addPassword: (state, action) => {
-      state.password = action.payload;
-    },
-    clearLogin: (state) => {
-      state.email = "";
-      state.password = "";
-    },
-    clearSignup: (state) => {
-      state.email = "";
-      state.password = "";
-      state.username = "";
+    clear: (state) => {
+      state.id = "";
       state.firstName = "";
       state.lastName = "";
+      state.userName = "";
+      state.email = "";
+      state.password = "";
+      state.profilePic = "";
+      state.bio = "";
+      state.isVerified = false;
+      state.isBanned = false;
+      state.banReason = "";
     },
   },
   extraReducers: {},
 });
 
 export default userSlice.reducer;
-export const { addEmail, addPassword, clearLogin, clearSignup } =
-  userSlice.actions;
+export const { clear } = userSlice.actions;

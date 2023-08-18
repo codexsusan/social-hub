@@ -1,10 +1,14 @@
 import React from "react";
 import { InputWithLabel } from "../common/InputWithLabel";
+import { useToast } from "../ui/use-toast";
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
+import { Loader2 } from "lucide-react";
+import { userSignup } from "@/utils/userUtils";
 
 function Register() {
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   // TODO: Remove bio in backend and from here too
   // TODO: Use Validation for all the fields
@@ -16,9 +20,38 @@ function Register() {
     userName: "",
     email: "",
     password: "",
+    gender: "",
     confirmPassword: "",
     bio: "Hello Dev",
+    loading: false,
   });
+
+  const handleRegister = () => {
+    setUser({ ...user, loading: true });
+    userSignup(user)
+      .then((res) => {
+        setUser({ ...user, loading: false });
+        if (res.status === 200 || res.status === 201) {
+          // Check: Do we need to show a toast here?
+          // toast({
+          //   description: res.data.message,
+          //   duration: 3000,
+          // });
+          localStorage.setItem("token", res.data.token);
+          // TODO: Add navigation properly
+          // navigate("/app");
+        } else {
+          toast({
+            description: res.data.message,
+            duration: 3000,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setUser({ ...user, loading: false });
+      });
+  };
 
   return (
     <div className=" flex-1 flex items-center justify-center bg-[#030303]">
@@ -36,6 +69,7 @@ function Register() {
           <form
             onSubmit={(e) => {
               e.preventDefault();
+              handleRegister();
               // Working  till here
             }}
             className="w-1/4 flex flex-col gap-y-3"
@@ -58,6 +92,26 @@ function Register() {
               id="lastname"
               label="Last Name"
               placeholder="Enter your last name"
+              type="text"
+            />
+            <InputWithLabel
+              value={user.userName}
+              onValueChange={(value: string) => {
+                setUser({ ...user, userName: value });
+              }}
+              id="username"
+              label="Username"
+              placeholder="Enter your username"
+              type="text"
+            />
+            <InputWithLabel
+              value={user.gender}
+              onValueChange={(value: string) => {
+                setUser({ ...user, gender: value });
+              }}
+              id="gender"
+              label="Gender"
+              placeholder="Enter your gender"
               type="text"
             />
             <InputWithLabel
@@ -90,10 +144,17 @@ function Register() {
               placeholder="•••••••••"
               type="password"
             />
-            <Button type="submit" className="mt-2">
-              Sign up
-            </Button>
-            
+            {user.loading ? (
+              <Button className="mt-2" disabled>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Please wait
+              </Button>
+            ) : (
+              <Button type="submit" className="mt-2">
+                Sign up
+              </Button>
+            )}
+
             <div className="text-center text-slate-400">
               Already a member?{" "}
               <span

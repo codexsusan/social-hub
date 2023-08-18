@@ -2,11 +2,11 @@ export type User = {
   id: string;
   firstName: string;
   lastName: string;
-  username: string;
+  userName: string;
   email: string;
   password: string;
-  token: string;
   profilePic: string;
+  gender: string;
   bio: string;
   isVerified: boolean;
   isBanned: boolean;
@@ -14,4 +14,3 @@ export type User = {
 };
 
 export type UserPartial = Partial<User>;
-

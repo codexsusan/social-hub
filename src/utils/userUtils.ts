@@ -5,19 +5,22 @@ export const userSignup = async (user: UserPartial) => {
   const response = await request("/api/auth/register", "POST", {
     firstName: user.firstName,
     lastName: user.lastName,
-    username: user.username,
+    userName: user.userName,
     email: user.email,
     password: user.password,
+    confirmPassword: user.password,
+    gender: user.gender,
+    bio: user.bio,
   });
   return response;
 };
 
-// SIgn Up Format
-// "firstName": "Hritik",
-//     "lastName": "Adhikari",
-//     "userName": "hritikadhikari",
-//     "email": "hr@gmail.com",
-//     "password":"asdfghjkl",
-//     "gender":"male",
-//     "confirmPassword": "asdfghjkl",
-//     "bio":"Hello"
+
+export const userLogin = async (user: UserPartial) => {
+    const response = await request("/api/auth/login", "POST", {
+        email: user.email,
+        password: user.password,
+    });
+    return response;
+}
+

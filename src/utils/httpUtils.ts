@@ -1,6 +1,6 @@
 type methodType = "GET" | "POST" | "PATCH" | "PUT" | "DELETE";
 
-const base_url = "https://social-hub1.onrender.com";
+const base_url = "http://localhost:3000" || "https://social-hub1.onrender.com";
 
 export const request = async (
   endpoint: string,
@@ -31,9 +31,13 @@ export const request = async (
     },
     body: method !== "GET" ? JSON.stringify(data) : undefined,
   });
-  // console.log(response);
   if (response.ok) {
-    return await response.json();
+    const updatedResponse = {
+        status: response.status,
+        statusText: response.statusText,
+        data: await response.json(),
+    }
+    return updatedResponse;
   }
   throw new Error(response.statusText);
 };
