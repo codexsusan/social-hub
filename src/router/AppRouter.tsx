@@ -3,13 +3,16 @@ import Auth from "../pages/Auth";
 import AuthContainer from "@/hoc/AuthContainer";
 import Home from "@/pages/Home";
 import AppContainer from "@/hoc/AppContainer";
+import Profile from "@/pages/Profile";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <AppContainer >
-      <Home />
-    </AppContainer>,
+    element: (
+      <AppContainer>
+        <Home />
+      </AppContainer>
+    ),
   },
   {
     path: "/auth/login",
@@ -25,6 +28,14 @@ export const router = createBrowserRouter([
       <AuthContainer authMethod="signup">
         <Auth authMethod="signup" />
       </AuthContainer>
+    ),
+  },
+  {
+    path: "/user/:username",
+    element: (
+      <AppContainer>
+        <Profile />
+      </AppContainer>
     ),
   },
   {

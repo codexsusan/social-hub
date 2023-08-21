@@ -35,7 +35,9 @@ const userSlice = createSlice({
       state.banReason = "";
     },
   },
-  extraReducers: {},
+  extraReducers: (builder)=>{
+    
+  },
 });
 
 export default userSlice.reducer;
