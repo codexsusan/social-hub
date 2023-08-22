@@ -3,7 +3,7 @@ import IconButton from "../common/IconButton";
 
 function CreatePost() {
   return (
-    <div className="lg:w-3/5 md:w-4/5 w-full p-2 border rounded-sm border-slate-600 flex gap-2">
+    <div className="xl:w-2/5 lg:w-3/5 md:w-4/5 w-full p-2 border rounded-sm border-slate-600 flex gap-2">
       <div
         className=" cursor-pointer"
         onClick={() => {
