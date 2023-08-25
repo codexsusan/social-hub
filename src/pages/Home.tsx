@@ -1,5 +1,5 @@
 import CreatePost from "@/components/home/CreatePost";
-import Post from "@/components/post/Post";
+import Post from "@/components/post/PostCard";
 
 function Home() {
   return (

@@ -1,5 +1,5 @@
 import DefaultProfile from "@/components/common/DefaultProfile";
-import { SwitchTab } from "@/components/profile/SwitchTab";
+import { ProfileTab } from "@/components/profile/ProfileTab";
 import { Camera } from "lucide-react";
 
 function Profile() {
@@ -7,7 +7,7 @@ function Profile() {
     <div className="w-full flex flex-col flex-1 items-center p-4 gap-y-2 overflow-auto text-white">
       <UserCover />
       <div className="xl:w-2/5 lg:w-3/5 md:w-4/5 w-full p-2 border rounded-sm border-slate-600 flex gap-2 flex-1">
-        <SwitchTab />
+        <ProfileTab />
       </div>
     </div>
   );

@@ -1,7 +1,8 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
 
-export function InputWithLabel(props: {
+type Props = {
   label: string;
   type: string;
   placeholder: string;
@@ -9,13 +10,17 @@ export function InputWithLabel(props: {
   required?: boolean;
   onValueChange?: (value: string) => void;
   value?: string;
-}) {
+  inputClassName: string;
+};
+
+export function InputWithLabel(props: Props) {
   return (
-    <div className="grid w-full items-center gap-y-2.5">
+    <div className={cn("grid w-full items-center gap-y-2.5")}>
       <Label className="text-slate-200" htmlFor="email">
         {props.label}
       </Label>
       <Input
+        className={cn("", props.inputClassName)}
         value={props.value!}
         onChange={(e) => {
           props.onValueChange!(e.target.value);

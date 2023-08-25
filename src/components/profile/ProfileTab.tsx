@@ -7,9 +7,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Post, { PostBody } from "../post/Post";
+import { PostBody } from "../post/PostCard";
 
-export function SwitchTab() {
+export function ProfileTab() {
   return (
     <Tabs defaultValue="overview" className="w-full">
       <TabsList className="grid w-full bg-[#27272A] grid-cols-4">

@@ -70,6 +70,7 @@ function Register() {
             onSubmit={(e) => {
               e.preventDefault();
               handleRegister();
+              navigate("/");
               // Working  till here
             }}
             className="w-1/4 flex flex-col gap-y-3"

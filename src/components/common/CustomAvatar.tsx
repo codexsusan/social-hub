@@ -1,10 +1,12 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-export function CustomAvatar(props: {
+type Props = {
   src?: string;
   alt?: string;
   fallBack?: React.ReactNode;
-}) {
+};
+
+export function CustomAvatar(props: Props) {
   return (
     <Avatar>
       <AvatarImage

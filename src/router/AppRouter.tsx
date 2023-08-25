@@ -4,6 +4,8 @@ import AuthContainer from "@/hoc/AuthContainer";
 import Home from "@/pages/Home";
 import AppContainer from "@/hoc/AppContainer";
 import Profile from "@/pages/Profile";
+import Post from "@/pages/Post";
+import Submit from "@/pages/Submit";
 
 export const router = createBrowserRouter([
   {
@@ -31,10 +33,26 @@ export const router = createBrowserRouter([
     ),
   },
   {
+    path: "/submit",
+    element: (
+      <AppContainer>
+        <Submit />
+      </AppContainer>
+    ),
+  },
+  {
     path: "/user/:username",
     element: (
       <AppContainer>
         <Profile />
+      </AppContainer>
+    ),
+  },
+  {
+    path: "/c/:communityId/post/:postId",
+    element: (
+      <AppContainer>
+        <Post />
       </AppContainer>
     ),
   },
