@@ -20,9 +20,7 @@ function Submit() {
             placeholder="Choose a community"
           />
         </div>
-        <div>
-          <SubmitTab />
-        </div>
+        <SubmitTab />
       </div>
     </div>
   );
