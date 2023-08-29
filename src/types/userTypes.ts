@@ -1,4 +1,4 @@
-export type User = {
+export interface User {
   id: string;
   firstName: string;
   lastName: string;
@@ -6,11 +6,20 @@ export type User = {
   email: string;
   password: string;
   profilePic: string;
-  gender: string;
+  gender: "male" | "female" | "others" | "";
+  token: string;
   bio: string;
   isVerified: boolean;
   isBanned: boolean;
   banReason: string;
-};
+  loading: boolean;
+  error: string;
+}
 
-export type UserPartial = Partial<User>;
+export interface UserPartial extends Partial<User> {}
+
+export interface RegisterUser extends UserPartial {
+  confirmPassword: string;
+}
+
+export type Gender = "male" | "female" | "others" | "";

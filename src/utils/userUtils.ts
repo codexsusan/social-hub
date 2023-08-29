@@ -15,12 +15,15 @@ export const userSignup = async (user: UserPartial) => {
   return response;
 };
 
-
 export const userLogin = async (user: UserPartial) => {
-    const response = await request("/api/auth/login", "POST", {
-        email: user.email,
-        password: user.password,
-    });
-    return response;
-}
+  const response = await request("/api/auth/login", "POST", {
+    email: user.email,
+    password: user.password,
+  });
+  return response;
+};
 
+export const fetchUser = async () => {
+  const response = await request("/api/auth/user-details", "GET");
+  return response;
+};

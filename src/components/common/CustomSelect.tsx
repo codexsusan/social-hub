@@ -1,4 +1,4 @@
-
+import { Gender } from "@/types/userTypes";
 import {
   Select,
   SelectContent,
@@ -10,18 +10,22 @@ import {
 type Props = {
   options: string[];
   placeholder: string;
-  onValueChange: (value: string) => void;
+  onValueChange: (value: Gender) => void;
 };
 
 function CustomSelect(props: Props) {
   return (
     <Select onValueChange={props.onValueChange}>
-      <SelectTrigger className="w-full bg-black">
+      <SelectTrigger className="w-full bg-[#09090B]">
         <SelectValue placeholder={props.placeholder} />
       </SelectTrigger>
       <SelectContent className="bg-black">
         {props.options.map((option: string) => {
-          return <SelectItem key={option} value={option}>{option}</SelectItem>;
+          return (
+            <SelectItem key={option} value={option}>
+              {option.charAt(0).toUpperCase() + option.slice(1)}
+            </SelectItem>
+          );
         })}
       </SelectContent>
     </Select>

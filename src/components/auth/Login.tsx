@@ -4,40 +4,39 @@ import { InputWithLabel } from "../common/InputWithLabel";
 import { useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { userLogin } from "@/utils/userUtils";
-import { useToast } from "../ui/use-toast";
+import useDocumentTitle from "@/hooks/useDocumentTitle";
+import { UserPartial } from "@/types/userTypes";
+
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { loginUser } from "@/features/user/userSlice";
 
 function Login() {
+  useDocumentTitle("Login | Social Hub");
   const navigate = useNavigate();
-  const { toast } = useToast();
-  const [email, setEmail] = React.useState<string>("");
-  const [password, setPassword] = React.useState<string>("");
-  const [loading, setLoading] = React.useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  const userData = useAppSelector((state) => state.user);
+  // const [email, setEmail] = React.useState<string>("");
+  // const [password, setPassword] = React.useState<string>("");
+  // const [loading, setLoading] = React.useState<boolean>(false);
+
+  const [user, setUser] = React.useState<UserPartial>({
+    email: "",
+    password: "",
+  });
 
   const handleLogin = () => {
-    setLoading(true);
-    userLogin({ email, password })
-      .then((res) => {
-        setLoading(false);
-        if (res.status === 200 || res.status === 201) {
-          localStorage.setItem("token", res.data.token);
-        } else {
-          toast({
-            description: res.data.message,
-            duration: 3000,
-          });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
+    dispatch(loginUser(user)).then((res) => {
+      console.log(res);
+      if (res.type === "/user/login/fulfilled") {
+        navigate("/");
+      }
+    });
   };
+
   return (
-    <div className=" flex-1 flex items-center justify-center bg-[#030303]">
-      <div className="w-full flex flex-col items-center justify-center gap-y-10 mb-10">
-        {/* Logo should be here */}
-        {/* <Images source={logo} /> */}
-        <div className="w-1/3 text-center">
+    <div className="w-full flex flex-col flex-1 items-center justify-center p-4 gap-y-2 overflow-auto bg-[#030303]">
+      <div className="xl:w-2/5 lg:w-3/5 md:w-4/5 w-full p-2 rounded-sm flex flex-col gap-2">
+        <div className="w-full text-center">
           <div>
             <div className="text-2xl text-slate-200 font-semibold mb-2">
               Log In
@@ -54,12 +53,14 @@ function Login() {
               handleLogin();
               // Working  till here
             }}
-            className="w-1/4 flex flex-col gap-y-3"
+            className="w-full flex flex-col gap-y-3"
           >
             <InputWithLabel
-              value={email}
+              value={user.email}
+              inputClassName="bg-[#09090B] text-white"
               onValueChange={(value: string) => {
-                setEmail(value);
+                // setEmail(value);
+                setUser({ ...user, email: value });
               }}
               id="user-email"
               label="Email"
@@ -67,16 +68,18 @@ function Login() {
               type="text"
             />
             <InputWithLabel
-              value={password}
+              value={user.password}
+              inputClassName="bg-[#09090B] text-white"
               onValueChange={(value: string) => {
-                setPassword(value);
+                // setPassword(value);
+                setUser({ ...user, password: value });
               }}
               id="user-password"
               label="Password"
               placeholder="•••••••••"
               type="password"
             />
-            {loading ? (
+            {userData.loading ? (
               <Button className="mt-2" disabled>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 Please wait

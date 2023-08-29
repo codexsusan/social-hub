@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { PostBody } from "../post/PostCard";
+import { PostActions, PostBody } from "../post/PostCard";
 
 export function ProfileTab() {
   return (
@@ -41,6 +41,7 @@ export function ProfileTab() {
           <CardContent className="space-y-4">
             <div className="border rounded-sm border-slate-600 flex gap-2 flex-col text-white p-4 cursor-pointer">
               <PostBody />
+              <PostActions />
             </div>
           </CardContent>
         </Card>
@@ -67,7 +68,8 @@ export function ProfileTab() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="border rounded-sm border-slate-600 flex gap-2 flex-col text-white p-4 cursor-pointer">
-              <PostBody isBookmarked={true} />
+              <PostBody  />
+              <PostActions />
             </div>
           </CardContent>
         </Card>

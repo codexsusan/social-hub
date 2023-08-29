@@ -10,7 +10,7 @@ type Props = {
   required?: boolean;
   onValueChange?: (value: string) => void;
   value?: string;
-  inputClassName: string;
+  inputClassName?: string;
 };
 
 export function InputWithLabel(props: Props) {

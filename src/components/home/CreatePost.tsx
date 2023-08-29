@@ -1,7 +1,10 @@
 import { CustomAvatar } from "../common/CustomAvatar";
 import IconButton from "../common/IconButton";
+import { useAppSelector } from "@/app/hooks";
 
 function CreatePost() {
+  const user = useAppSelector((state) => state.user);
+
   return (
     <div className="xl:w-2/5 lg:w-3/5 md:w-4/5 w-full p-2 border rounded-sm border-slate-600 flex gap-2">
       <div
@@ -10,7 +13,7 @@ function CreatePost() {
           console.log("User Profile");
         }}
       >
-        <CustomAvatar />
+        <CustomAvatar  />
       </div>
       <div
         onClick={() => {

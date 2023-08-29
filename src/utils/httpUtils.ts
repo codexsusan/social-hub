@@ -2,6 +2,13 @@ type methodType = "GET" | "POST" | "PATCH" | "PUT" | "DELETE";
 
 const base_url = "http://localhost:3000" || "https://social-hub1.onrender.com";
 
+export type ResponseData = {
+  msg: string;
+  status: number;
+  statusText: string;
+  data: any;
+};
+
 export const request = async (
   endpoint: string,
   method: methodType = "GET",
@@ -27,16 +34,16 @@ export const request = async (
     method,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `${auth}`,
+      Authorization: `Bearer ${auth}`,
     },
     body: method !== "GET" ? JSON.stringify(data) : undefined,
   });
   if (response.ok) {
-    const updatedResponse = {
-        status: response.status,
-        statusText: response.statusText,
-        data: await response.json(),
-    }
+    const updatedResponse: ResponseData = {
+      status: response.status,
+      statusText: response.statusText,
+      data: await response.json(),
+    };
     return updatedResponse;
   }
   throw new Error(response.statusText);

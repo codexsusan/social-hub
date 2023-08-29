@@ -23,7 +23,7 @@ function PostCard(props: { className?: string }) {
   );
 }
 
-export function PostBody(props: { isBookmarked?: boolean }) {
+export function PostBody() {
   return (
     <>
       <PostUserData />

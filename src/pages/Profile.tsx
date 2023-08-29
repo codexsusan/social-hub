@@ -1,8 +1,10 @@
 import DefaultProfile from "@/components/common/DefaultProfile";
 import { ProfileTab } from "@/components/profile/ProfileTab";
+import useDocumentTitle from "@/hooks/useDocumentTitle";
 import { Camera } from "lucide-react";
 
 function Profile() {
+  useDocumentTitle("Profile | Social Hub");
   return (
     <div className="w-full flex flex-col flex-1 items-center p-4 gap-y-2 overflow-auto text-white">
       <UserCover />
