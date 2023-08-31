@@ -54,7 +54,8 @@ export function PostBody() {
 }
 
 export function PostActions(props: { isBookmarked?: boolean; type?: string }) {
-  const [actionStatus, setActionStatus] = React.useState<PostActionType>({
+  const initialState = {
+    vote: 0,
     upVote: false,
     downVote: false,
     comment: false,
@@ -62,22 +63,58 @@ export function PostActions(props: { isBookmarked?: boolean; type?: string }) {
     upVoteCount: 0,
     downVoteCount: 0,
     commentCount: 0,
-  });
+  };
+  const [actionStatus, setActionStatus] =
+    React.useState<PostActionType>(initialState);
 
   const handleUpVote = () => {
-    setActionStatus({
-      ...actionStatus,
-      upVote: !actionStatus.upVote,
-      downVote: false,
-    });
+    if (actionStatus.downVote) {
+      setActionStatus({
+        ...actionStatus,
+        downVote: !actionStatus.downVote,
+        downVoteCount: actionStatus.downVoteCount - 1,
+        vote: actionStatus.vote + 1,
+      });
+    }
+    if (actionStatus.upVote) {
+      setActionStatus({
+        ...actionStatus,
+        upVote: !actionStatus.upVote,
+        upVoteCount: actionStatus.upVoteCount - 1,
+        downVote: false,
+        vote: actionStatus.vote - 1,
+      });
+    } else if (!actionStatus.upVote) {
+      setActionStatus({
+        ...actionStatus,
+        upVote: !actionStatus.upVote,
+        upVoteCount: actionStatus.upVoteCount + 1,
+        downVote: false,
+        vote: actionStatus.vote + 1,
+      });
+    }
+    console.log(actionStatus);
   };
 
   const handleDownVote = () => {
-    setActionStatus({
-      ...actionStatus,
-      downVote: !actionStatus.downVote,
-      upVote: false,
-    });
+    if (!actionStatus.downVote) {
+      setActionStatus({
+        ...actionStatus,
+        downVote: !actionStatus.downVote,
+        downVoteCount: actionStatus.downVoteCount - 1,
+        vote: actionStatus.vote - 1,
+        upVote: false,
+      });
+    } else if (actionStatus.downVote) {
+      setActionStatus({
+        ...actionStatus,
+        downVote: !actionStatus.downVote,
+        downVoteCount: actionStatus.downVoteCount + 1,
+        vote: actionStatus.vote + 1,
+        upVote: false,
+      });
+    }
+    console.log(actionStatus);
   };
 
   const upVoteElement = actionStatus.upVote ? (
@@ -93,29 +130,35 @@ export function PostActions(props: { isBookmarked?: boolean; type?: string }) {
   );
 
   const voteStatus =
-    actionStatus.upVote > actionStatus.downVote ? "Upvote" : "Downvote";
+    actionStatus.upVote >= actionStatus.downVote ? "Upvote" : "Downvote";
 
   const voteCountElement = (
-    <div className="font-medium text-sm p-2 flex gap-2">
-      <div className="">{actionStatus.upVoteCount}</div>
+    <div className="text-sm p-2 flex gap-2">
+      <div className="">{actionStatus.vote}</div>
+      <div>{actionStatus.upVote}</div>
+      <div>{actionStatus.downVote}</div>
       <div className="hidden sm:block">{voteStatus}</div>
+    </div>
+  );
+
+  const commentCountElement = (
+    <div className="flex gap-x-2 items-center justify-center text-sm">
+      <div>746</div>
+      <div className="hidden sm:block text-white">Comment</div>
     </div>
   );
 
   return (
     <div className="w-full border-t-2 mt-4 pt-2 flex gap-x-3 justify-start my-2 items-center">
       <div className="flex items-center">
-        <ButtonAction onClick={handleUpVote}>{upVoteElement}</ButtonAction>
-        <ButtonAction onClick={handleDownVote}>{downVoteElement}</ButtonAction>
-        {voteCountElement}
+        <ActionButton onClick={handleUpVote}>{upVoteElement}</ActionButton>
+        <ActionButton onClick={handleDownVote}>{downVoteElement}</ActionButton>
+        <div>{voteCountElement}</div>
       </div>
       <div onClick={() => {}}>
         <MessageSquare />
       </div>
-      <div className="flex gap-x-2 items-center justify-center">
-        <div>746</div>
-        <div className="hidden sm:block text-white">Comment</div>
-      </div>
+      <div>{commentCountElement}</div>
       {props.type === "post" && (
         <>
           <Button
@@ -136,7 +179,7 @@ export function PostActions(props: { isBookmarked?: boolean; type?: string }) {
   );
 }
 
-function ButtonAction(props: {
+function ActionButton(props: {
   children: React.ReactNode;
   onClick?: () => void;
 }) {

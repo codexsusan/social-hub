@@ -92,12 +92,11 @@ const userSlice = createSlice({
     builder.addCase(
       loginUser.fulfilled,
       (state, action: PayloadAction<ResponseData>) => {
+        state.loading = false;
         if (action.payload.status === 200) {
-          state.loading = false;
           state.error = "";
           state.token = action.payload.data.token;
           localStorage.setItem("token", action.payload.data.token);
-          console.log(action);
           toast({
             title: "Welcome back.",
             description: "We've logged you in.",
@@ -109,6 +108,7 @@ const userSlice = createSlice({
             title: "Login failed.",
             description: action.payload.data.message,
             duration: 2000,
+            className: "bg-[#09090B] text-[#e2e2e2] border-none ",
           });
         }
       }

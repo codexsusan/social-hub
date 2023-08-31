@@ -54,7 +54,12 @@ export default function AppNavbar() {
 
               <div className="flex items-center justify-center sm:items-stretch sm:justify-start">
                 {/* Logo will be here below */}
-                <div className="flex flex-shrink-0 items-center">
+                <div
+                  onClick={() => {
+                    navigate("/");
+                  }}
+                  className="flex flex-shrink-0 items-center cursor-pointer"
+                >
                   <img
                     className="h-8 w-auto"
                     src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"

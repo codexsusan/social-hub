@@ -1,15 +1,12 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "../ui/input";
-import { Separator } from "../ui/separator";
-import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 import FileUploadButton from "../common/FileUploadButton";
 import { useSearchParams } from "react-router-dom";
 import EditorView from "./EditorView";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { changeTitle, createPost } from "@/features/submit/submitSlice";
-import { createPostUtils } from "@/utils/postUtils";
+import { changeTitle } from "@/features/submit/submitSlice";
 import { ReactNode } from "react";
 
 type Props = {
@@ -44,9 +41,6 @@ function SubmitTab(props: Props) {
 function PostView(props: Props) {
   const dispatch = useAppDispatch();
   const post = useAppSelector((state) => state.submit.post);
-
-  
-
   return (
     <Card className="bg-[#27272A] ">
       <CardContent className="space-y-4 p-6">

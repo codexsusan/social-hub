@@ -16,6 +16,7 @@ export interface Post {
 export interface PostPartial extends Partial<Post> {}
 
 export interface PostActionType {
+  vote: number;
   upVote: boolean;
   downVote: boolean;
   comment: boolean;
