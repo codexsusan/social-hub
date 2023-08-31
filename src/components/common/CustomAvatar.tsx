@@ -10,7 +10,11 @@ export function CustomAvatar(props: Props) {
   return (
     <Avatar>
       <AvatarImage
-        src={props.src ? props.src : "https://github.com/shadcn.png"}
+        src={
+          props.src && props.src.length
+            ? props.src
+            : "https://res.cloudinary.com/dgxbzasei/image/upload/v1691064812/download_xfqes8.jpg"
+        }
         alt={props.alt ? props.alt : ""}
       />
       <AvatarFallback>{props.fallBack}</AvatarFallback>

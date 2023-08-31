@@ -3,7 +3,6 @@ import { Button } from "../ui/button";
 import { InputWithLabel } from "../common/InputWithLabel";
 import { useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
-import { userLogin } from "@/utils/userUtils";
 import useDocumentTitle from "@/hooks/useDocumentTitle";
 import { UserPartial } from "@/types/userTypes";
 
@@ -26,7 +25,6 @@ function Login() {
 
   const handleLogin = () => {
     dispatch(loginUser(user)).then((res) => {
-      console.log(res);
       if (res.type === "/user/login/fulfilled") {
         navigate("/");
       }

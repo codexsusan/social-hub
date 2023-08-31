@@ -4,8 +4,8 @@ import AuthContainer from "@/hoc/AuthContainer";
 import Home from "@/pages/Home";
 import AppContainer from "@/hoc/AppContainer";
 import Profile from "@/pages/Profile";
-import Post from "@/pages/Post";
 import Submit from "@/pages/Submit";
+import SinglePost from "@/pages/SinglePost";
 
 export const router = createBrowserRouter([
   {
@@ -33,7 +33,7 @@ export const router = createBrowserRouter([
     ),
   },
   {
-    path: "/submit",
+    path: "/submit" || "/submit/?type=:type",
     element: (
       <AppContainer>
         <Submit />
@@ -52,7 +52,7 @@ export const router = createBrowserRouter([
     path: "/c/:communityId/post/:postId",
     element: (
       <AppContainer>
-        <Post />
+        <SinglePost />
       </AppContainer>
     ),
   },

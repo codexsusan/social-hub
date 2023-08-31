@@ -15,7 +15,7 @@ type Props = {
 
 export function InputWithLabel(props: Props) {
   return (
-    <div className={cn("grid w-full items-center gap-y-2.5")}>
+    <div className={"grid w-full items-center gap-y-2.5"}>
       <Label className="text-slate-200" htmlFor="email">
         {props.label}
       </Label>

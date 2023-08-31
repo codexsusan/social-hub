@@ -9,6 +9,9 @@ import PostUserData from "./PostUserData";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 
+import React from "react";
+import { PostActionType } from "@/types/postTypes";
+
 function PostCard(props: { className?: string }) {
   return (
     <div
@@ -18,7 +21,7 @@ function PostCard(props: { className?: string }) {
       )}
     >
       <PostBody />
-      <PostActions />
+      <PostActions type="post" />
     </div>
   );
 }
@@ -50,56 +53,97 @@ export function PostBody() {
   );
 }
 
-export function PostActions(props: { isBookmarked?: boolean }) {
-  return (
-    <div className="w-full border-t-2 mt-4 pt-2 flex gap-x-3 justify-between">
-      <div className="flex items-center">
-        <Button
-          onClick={() => {
-            console.log("Handle upvote from here");
-          }}
-          className="bg-transparent px-2"
-        >
-          <ArrowBigUp fill="white" />
-        </Button>
-        <Button
-          onClick={() => {
-            console.log("Handle downvote from here");
-          }}
-          className="bg-transparent px-2"
-        >
-          <ArrowBigDown />
-        </Button>
-        <div className="font-medium text-sm p-2 flex gap-2">
-          <div>132</div>
-          <div className="hidden sm:block">Upvotes</div>
-        </div>
-      </div>
-      <Button
-        onClick={() => {
-          console.log("Open single page to comment");
-        }}
-        className="bg-transparent"
-      >
-        <div className="flex gap-x-2 items-center justify-center">
-          <MessageSquare />
-          <div>746</div>
-          <div className="hidden sm:block text-white">Comment</div>
-        </div>
-      </Button>
-      <Button
-        onClick={() => {
-          console.log("Handle bookmark action");
-        }}
-        className="bg-transparent"
-      >
-        <div className="flex gap-x-2 items-center justify-center">
-          {props.isBookmarked ? <Bookmark fill="white" /> : <Bookmark />}
+export function PostActions(props: { isBookmarked?: boolean; type?: string }) {
+  const [actionStatus, setActionStatus] = React.useState<PostActionType>({
+    upVote: false,
+    downVote: false,
+    comment: false,
+    bookmarkStatus: false,
+    upVoteCount: 0,
+    downVoteCount: 0,
+    commentCount: 0,
+  });
 
-          <div className="hidden sm:block">Bookmark</div>
-        </div>
-      </Button>
+  const handleUpVote = () => {
+    setActionStatus({
+      ...actionStatus,
+      upVote: !actionStatus.upVote,
+      downVote: false,
+    });
+  };
+
+  const handleDownVote = () => {
+    setActionStatus({
+      ...actionStatus,
+      downVote: !actionStatus.downVote,
+      upVote: false,
+    });
+  };
+
+  const upVoteElement = actionStatus.upVote ? (
+    <ArrowBigUp fill="white" />
+  ) : (
+    <ArrowBigUp />
+  );
+
+  const downVoteElement = actionStatus.downVote ? (
+    <ArrowBigDown fill="white" />
+  ) : (
+    <ArrowBigDown />
+  );
+
+  const voteStatus =
+    actionStatus.upVote > actionStatus.downVote ? "Upvote" : "Downvote";
+
+  const voteCountElement = (
+    <div className="font-medium text-sm p-2 flex gap-2">
+      <div className="">{actionStatus.upVoteCount}</div>
+      <div className="hidden sm:block">{voteStatus}</div>
     </div>
+  );
+
+  return (
+    <div className="w-full border-t-2 mt-4 pt-2 flex gap-x-3 justify-start my-2 items-center">
+      <div className="flex items-center">
+        <ButtonAction onClick={handleUpVote}>{upVoteElement}</ButtonAction>
+        <ButtonAction onClick={handleDownVote}>{downVoteElement}</ButtonAction>
+        {voteCountElement}
+      </div>
+      <div onClick={() => {}}>
+        <MessageSquare />
+      </div>
+      <div className="flex gap-x-2 items-center justify-center">
+        <div>746</div>
+        <div className="hidden sm:block text-white">Comment</div>
+      </div>
+      {props.type === "post" && (
+        <>
+          <Button
+            onClick={() => {
+              console.log("Handle bookmark action");
+            }}
+            className="bg-transparent"
+          >
+            <div className="flex gap-x-2 items-center justify-center">
+              {props.isBookmarked ? <Bookmark fill="white" /> : <Bookmark />}
+
+              <div className="hidden sm:block">Bookmark</div>
+            </div>
+          </Button>
+        </>
+      )}
+    </div>
+  );
+}
+
+function ButtonAction(props: {
+  children: React.ReactNode;
+  onClick?: () => void;
+}) {
+  return (
+    <Button onClick={props.onClick} className="bg-transparent px-2">
+      {props.children}
+    </Button>
   );
 }
 

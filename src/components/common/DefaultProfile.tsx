@@ -1,9 +1,13 @@
 import React from "react";
+import { cn } from "@/lib/utils";
 
-function DefaultProfile() {
+function DefaultProfile(props: { className?: string }) {
   return (
     <>
-      <img src="https://res.cloudinary.com/dgxbzasei/image/upload/v1691064812/download_xfqes8.jpg" />
+      <img
+        className={cn("", props.className)}
+        src="https://res.cloudinary.com/dgxbzasei/image/upload/v1691064812/download_xfqes8.jpg"
+      />
     </>
   );
 }

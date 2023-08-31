@@ -1,9 +1,10 @@
 // import React from "react";
 import "../../styles/FileUploadButton.css";
+import { cn } from "@/lib/utils";
 
-function FileUploadButton() {
+function FileUploadButton(props: { className?: string }) {
   return (
-    <div className="upload-btn-wrapper">
+    <div className={cn("upload-btn-wrapper", props.className)}>
       <button className="btn text-white">Upload a file</button>
       <input type="file" name="myfile" />
     </div>

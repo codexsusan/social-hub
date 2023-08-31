@@ -1,7 +1,11 @@
 import { PayloadAction, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { User, UserPartial } from "@/types/userTypes";
-import { fetchUser, userLogin, userSignup } from "@/utils/userUtils";
+import {
+  fetchUserUtils,
+  userLoginUtils,
+  userSignupUtils,
+} from "@/utils/userUtils";
 import { ResponseData } from "@/utils/httpUtils";
 import { toast } from "@/components/ui/use-toast";
 
@@ -25,14 +29,14 @@ const initialState: User = {
 
 // Fetch User Data
 export const fetchUserData = createAsyncThunk("user/fetch", async () => {
-  return fetchUser().then((response) => response.data);
+  return fetchUserUtils().then((response) => response.data);
 });
 
 // Register User
 export const registerUser = createAsyncThunk(
   "user/register",
   async (user: UserPartial) => {
-    return userSignup(user).then((res) => res);
+    return userSignupUtils(user).then((res) => res);
   }
 );
 
@@ -40,7 +44,7 @@ export const registerUser = createAsyncThunk(
 export const loginUser = createAsyncThunk(
   "/user/login",
   async (user: UserPartial) => {
-    return userLogin(user).then((res) => res);
+    return userLoginUtils(user).then((res) => res);
   }
 );
 
@@ -88,21 +92,31 @@ const userSlice = createSlice({
     builder.addCase(
       loginUser.fulfilled,
       (state, action: PayloadAction<ResponseData>) => {
-        state.loading = false;
-        state.error = "";
-        state.token = action.payload.data.token;
-        localStorage.setItem("token", action.payload.data.token);
-        toast({
-          title: "Welcome back.",
-          description: "We've logged you in.",
-          className: "bg-[#09090B] text-[#e2e2e2] border-none ",
-          duration: 2000,
-        });
+        if (action.payload.status === 200) {
+          state.loading = false;
+          state.error = "";
+          state.token = action.payload.data.token;
+          localStorage.setItem("token", action.payload.data.token);
+          console.log(action);
+          toast({
+            title: "Welcome back.",
+            description: "We've logged you in.",
+            className: "bg-[#09090B] text-[#e2e2e2] border-none ",
+            duration: 2000,
+          });
+        } else {
+          toast({
+            title: "Login failed.",
+            description: action.payload.data.message,
+            duration: 2000,
+          });
+        }
       }
     );
     builder.addCase(loginUser.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error?.message || "Failed to login.";
+      // console.log(action);
       toast({
         title: "Login failed.",
         description: action.error.message!,

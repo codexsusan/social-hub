@@ -3,7 +3,7 @@ type methodType = "GET" | "POST" | "PATCH" | "PUT" | "DELETE";
 const base_url = "http://localhost:3000" || "https://social-hub1.onrender.com";
 
 export type ResponseData = {
-  msg: string;
+  // msg: string;
   status: number;
   statusText: string;
   data: any;
@@ -38,13 +38,15 @@ export const request = async (
     },
     body: method !== "GET" ? JSON.stringify(data) : undefined,
   });
-  if (response.ok) {
-    const updatedResponse: ResponseData = {
-      status: response.status,
-      statusText: response.statusText,
-      data: await response.json(),
-    };
-    return updatedResponse;
-  }
+  // console.log(response);
+  // if (response.ok) {
+  // }
+  const updatedResponse: ResponseData = {
+    status: response.status,
+    statusText: response.statusText,
+    data: await response.json(),
+  };
+  return updatedResponse;
+
   throw new Error(response.statusText);
 };

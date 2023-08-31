@@ -1,32 +1,37 @@
+import { useNavigate } from "react-router-dom";
 import { CustomAvatar } from "../common/CustomAvatar";
 import IconButton from "../common/IconButton";
 import { useAppSelector } from "@/app/hooks";
+import { Input } from "../ui/input";
 
 function CreatePost() {
   const user = useAppSelector((state) => state.user);
+  const navigate = useNavigate();
 
   return (
-    <div className="xl:w-2/5 lg:w-3/5 md:w-4/5 w-full p-2 border rounded-sm border-slate-600 flex gap-2">
+    <div className="xl:w-2/5 lg:w-3/5 md:w-4/5 w-full p-3 border rounded-2xl border-slate-600 flex gap-2">
       <div
         className=" cursor-pointer"
         onClick={() => {
-          console.log("User Profile");
+          navigate(`/user/${user.userName}`);
         }}
       >
-        <CustomAvatar  />
+        <CustomAvatar
+          src={user.profilePic}
+          fallBack={user.firstName.charAt(0)}
+        />
       </div>
-      <div
+      <Input
         onClick={() => {
-          console.log("Route to create post");
+          navigate(`/submit`);
         }}
-        className="bg-[#171717] cursor-pointer flex flex-1 pl-2 text-gray-400 items-center py-2 rounded-sm"
-      >
-        Create Post
-      </div>
+        className="bg-[#171717] border-none border-0 text-gray-400"
+        placeholder="Create Post"
+      />
       <IconButton
         name="image-plus"
         onClick={() => {
-          console.log("Route to create post");
+          navigate(`/submit?type=image`);
         }}
       />
     </div>
