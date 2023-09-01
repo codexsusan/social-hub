@@ -6,18 +6,16 @@ import { Separator } from "@/components/ui/separator";
 import { changeCommunity, createPost } from "@/features/submit/submitSlice";
 import useDocumentTitle from "@/hooks/useDocumentTitle";
 import { Loader2 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 function Submit() {
   useDocumentTitle("Submit | Social Hub");
   const dispatch = useAppDispatch();
   const submit = useAppSelector((state) => state.submit);
-  const navigate = useNavigate();
 
   const handlePostSubmit = () => {
     dispatch(createPost(submit.post)).then((res) => {
       if (res.type === "submit/createPost/fulfilled") {
-        navigate("/");
+        console.log(res);
       }
     });
   };
