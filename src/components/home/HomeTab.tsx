@@ -1,36 +1,34 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent } from "@/components/ui/card";
-import PostCard from "@/components/home/HomeTab";
+import { Loader } from "lucide-react";
+import { lazy, Suspense } from "react";
+
+const LatestHome = lazy(() => import("./LatestHome"));
+const TrendingHome = lazy(() => import("./TrendingHome"));
+const PopularHome = lazy(() => import("./PopularHome"));
 
 function HomeTab() {
   return (
     <div className="xl:w-2/5 lg:w-3/5 md:w-4/5 w-full flex gap-2">
-      <Tabs defaultValue={"trending"} className="w-full">
+      <Tabs defaultValue={"latest"} className="w-full">
         <TabsList className="grid w-full bg-[#27272A] grid-cols-3 ">
-          <TabsTrigger value="trending">Trending</TabsTrigger>
           <TabsTrigger value="latest">Latest</TabsTrigger>
-          <TabsTrigger value="most-viewed">Most Viewed</TabsTrigger>
+          <TabsTrigger value="trending">Trending</TabsTrigger>
+          <TabsTrigger value="popular">Most Viewed</TabsTrigger>
         </TabsList>
-        <TabsContent className="" value="trending">
-          <Card className="bg-[#27272A]">
-            <CardContent className="space-y-4 p-4 text-white">
-              <PostCard />
-            </CardContent>
-          </Card>
-        </TabsContent>
         <TabsContent value="latest">
-          <Card className="bg-[#27272A] ">
-            <CardContent className="space-y-4 p-4 text-white">
-              <div>Latest</div>
-            </CardContent>
-          </Card>
+          <Suspense fallback={<Loader />}>
+            <LatestHome />
+          </Suspense>
         </TabsContent>
-        <TabsContent value="most-viewed">
-          <Card className="bg-[#27272A] ">
-            <CardContent className="space-y-4 p-4 text-white">
-              <div>Most Viewed</div>
-            </CardContent>
-          </Card>
+        <TabsContent value="trending">
+          <Suspense fallback={<Loader />}>
+            <TrendingHome />
+          </Suspense>
+        </TabsContent>
+        <TabsContent value="popular">
+          <Suspense fallback={<Loader />}>
+            <PopularHome />
+          </Suspense>
         </TabsContent>
       </Tabs>
     </div>

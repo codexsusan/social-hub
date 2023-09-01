@@ -1,5 +1,4 @@
 import CreatePost from "@/components/home/CreatePost";
-import PostCard from "@/components/post/PostCard";
 import useDocumentTitle from "@/hooks/useDocumentTitle";
 import { useAppSelector } from "@/app/hooks";
 import PageLoading from "@/components/common/PageLoading";

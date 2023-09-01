@@ -1,6 +1,13 @@
+import { PostPartial } from "@/types/postTypes";
 import { CustomAvatar } from "../common/CustomAvatar";
+interface Props {
+  className?: string;
+  isBookmarked?: boolean;
+  type?: string;
+  post: PostPartial;
+}
 
-function PostUserData() {
+function PostUserData(props: Props) {
   return (
     <div className="flex gap-x-3 items-center">
       <div

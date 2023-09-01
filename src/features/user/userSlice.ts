@@ -142,6 +142,7 @@ const userSlice = createSlice({
       state.isBanned = action.payload.user.isBanned;
       state.isVerified = action.payload.user.isVerified;
       state.banReason = action.payload.user.banReason;
+      // state = { ...state, ...action.payload.user };
       state.token = localStorage.getItem("token") || "";
     });
     builder.addCase(fetchUserData.rejected, (state) => {

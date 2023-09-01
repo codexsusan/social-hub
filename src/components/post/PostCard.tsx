@@ -10,9 +10,16 @@ import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 
 import React from "react";
-import { PostActionType } from "@/types/postTypes";
+import { PostActionType, PostPartial } from "@/types/postTypes";
 
-function PostCard(props: { className?: string }) {
+interface Props {
+  className?: string;
+  isBookmarked?: boolean;
+  type?: string;
+  post: PostPartial;
+}
+
+function PostCard(props: Props) {
   return (
     <div
       className={cn(
@@ -20,40 +27,30 @@ function PostCard(props: { className?: string }) {
         props.className
       )}
     >
-      <PostBody />
-      <PostActions type="post" />
+      <PostBody {...props} />
+      <PostActions {...props} type="post" />
     </div>
   );
 }
 
-export function PostBody() {
+export function PostBody(props: Props) {
   return (
     <>
-      <PostUserData />
+      <PostUserData {...props} />
       <div
         onClick={() => {
           console.log("Redirect to single post page");
         }}
         className="text-base mt-2 space-y-4"
       >
-        <div className="text-xl font-semibold">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Modi quaerat
-          fugiat neque.
-        </div>
-        <div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae
-          repudiandae tenetur qui quasi ratione impedit porro doloremque quaerat
-          minima nostrum perferendis, eligendi obcaecati dolore optio odit
-          molestias illo dicta, aliquid inventore dignissimos, officiis illum!
-          Cum omnis sed ducimus dolorem ab quas nisi tempore eligendi? Voluptas
-          nemo optio ipsa autem itaque totam assumenda cumque, ea quam.
-        </div>
+        <div className="text-xl font-semibold">{props.post.title}</div>
+        <div>{props.post.content}</div>
       </div>
     </>
   );
 }
 
-export function PostActions(props: { isBookmarked?: boolean; type?: string }) {
+export function PostActions(props: Props) {
   const initialState = {
     vote: 0,
     upVote: false,
@@ -93,7 +90,7 @@ export function PostActions(props: { isBookmarked?: boolean; type?: string }) {
         vote: actionStatus.vote + 1,
       });
     }
-    console.log(actionStatus);
+    // console.log(actionStatus);
   };
 
   const handleDownVote = () => {
@@ -114,7 +111,7 @@ export function PostActions(props: { isBookmarked?: boolean; type?: string }) {
         upVote: false,
       });
     }
-    console.log(actionStatus);
+    // console.log(actionStatus);
   };
 
   const upVoteElement = actionStatus.upVote ? (
