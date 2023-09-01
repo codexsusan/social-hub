@@ -23,7 +23,7 @@ function PostCard(props: Props) {
   return (
     <div
       className={cn(
-        "w-full border rounded-sm bg-[#27272a] border-slate-600 flex gap-2 flex-col text-white p-4 cursor-pointer",
+        "w-full border rounded-sm bg-[#27272a] border-slate-600 flex gap-2 flex-col text-white p-4 cursor-pointer hover:bg-[#1e1e1e]",
         props.className
       )}
     >
