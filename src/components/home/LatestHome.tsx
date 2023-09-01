@@ -3,6 +3,7 @@ import PostCard from "../post/PostCard";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { useEffect } from "react";
 import { fetchLatestPosts } from "@/features/home/homeSlice";
+import { Loader } from "lucide-react";
 
 function LatestHome() {
   const dispatch = useAppDispatch();
@@ -10,15 +11,20 @@ function LatestHome() {
     dispatch(fetchLatestPosts());
   }, []);
   const latest = useAppSelector((state) => state.home.latest);
-  
+
+  const view = latest.loading ? (
+    <div className="flex justify-center">
+      <Loader className=" animate-spin my-4" />
+    </div>
+  ) : (
+    latest.posts.map((post) => {
+      return <PostCard key={post._id} post={post} />;
+    })
+  );
 
   return (
     <Card className="bg-[#27272A]">
-      <CardContent className="space-y-4 p-4 text-white">
-        {latest.posts.map((post) => {
-          return <PostCard key={post._id} post={post} />;
-        })}
-      </CardContent>
+      <CardContent className="space-y-4 p-4 text-white">{view}</CardContent>
     </Card>
   );
 }
