@@ -9,10 +9,20 @@ function LatestHome() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchLatestPosts());
-  }, []);
-  const latest = useAppSelector((state) => state.home.latest);
+  }, [dispatch]);
 
-  const view = latest.loading ? (
+  return (
+    <Card className="bg-[#27272A]">
+      <CardContent className="space-y-4 p-4 text-white">
+        <View />
+      </CardContent>
+    </Card>
+  );
+}
+
+function View() {
+  const latest = useAppSelector((state) => state.home.latest);
+  return latest.loading ? (
     <div className="flex justify-center">
       <Loader className=" animate-spin my-4" />
     </div>
@@ -20,12 +30,6 @@ function LatestHome() {
     latest.posts.map((post) => {
       return <PostCard key={post._id} post={post} />;
     })
-  );
-
-  return (
-    <Card className="bg-[#27272A]">
-      <CardContent className="space-y-4 p-4 text-white">{view}</CardContent>
-    </Card>
   );
 }
 
