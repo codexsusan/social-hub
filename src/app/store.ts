@@ -3,8 +3,6 @@ import userReducer from "@/features/user/userSlice";
 import submitReducer from "@/features/submit/submitSlice";
 import homeReducer from "@/features/home/homeSlice";
 
-// import authReducer from "@/features/auth/authSlice";
-
 const store = configureStore({
   reducer: {
     user: userReducer,

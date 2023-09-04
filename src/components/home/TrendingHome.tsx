@@ -6,9 +6,11 @@ import { fetchTrendingPosts } from "@/features/home/homeSlice";
 
 function TrendingHome() {
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     dispatch(fetchTrendingPosts());
-  }, []);
+  }, [dispatch]);
+
   const trending = useAppSelector((state) => state.home.trending);
   return (
     <Card className="bg-[#27272A]">
