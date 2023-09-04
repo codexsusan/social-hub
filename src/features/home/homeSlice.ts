@@ -87,22 +87,25 @@ const homeSlice = createSlice({
         duration: 2000,
       });
     });
-    // Fetch Trending Posts
+    // Trending Posts
     builder.addCase(fetchTrendingPosts.pending, (state) => {
       state.trending.loading = true;
     });
-    builder.addCase(fetchTrendingPosts.fulfilled, (state, action) => {
-      state.trending.loading = false;
-      if (action.payload.status === 200) {
-        state.trending.posts = [...action.payload.data.data];
-      } else {
-        toast({
-          title: "Failed to load data.",
-          description: action.payload.data.message,
-          duration: 2000,
-        });
+    builder.addCase(
+      fetchTrendingPosts.fulfilled,
+      (state, action: PayloadAction<ResponseData>) => {
+        state.trending.loading = false;
+        if (action.payload.status === 200) {
+          state.trending.posts = [...action.payload.data.data];
+        } else {
+          toast({
+            title: "Failed to load data.",
+            description: action.payload.data.message,
+            duration: 2000,
+          });
+        }
       }
-    });
+    );
     builder.addCase(fetchTrendingPosts.rejected, (state, action) => {
       state.trending.loading = false;
       state.trending.error = action.error.message || "";

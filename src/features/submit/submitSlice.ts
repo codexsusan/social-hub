@@ -11,12 +11,7 @@ type InitialState = {
 };
 
 const initialState: InitialState = {
-  post: {
-    title: "",
-    content: "",
-    tags: [],
-    community_id: "",
-  },
+  post: {} as PostPartial,
   loading: false,
   error: "",
 };
@@ -67,7 +62,6 @@ const submitSlice = createSlice({
             description: action.payload.data.message,
             className: "bg-[#09090B] text-[#e2e2e2] border-none ",
             duration: 2000,
-            
           });
         } else {
           toast({
