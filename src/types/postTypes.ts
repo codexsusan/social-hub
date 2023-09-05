@@ -33,7 +33,7 @@ export interface PostAuthor {
   community_name: string;
 }
 
-export interface OverallPost {
+export interface Post {
   _id: string;
   title: string;
   content: string;
@@ -58,4 +58,4 @@ export interface OverallPost {
   created_at: string;
 }
 
-export interface PostPartial extends Partial<OverallPost> {}
+export interface PostPartial extends Partial<Post> {}

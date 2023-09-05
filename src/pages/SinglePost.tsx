@@ -1,12 +1,11 @@
 import { CustomAvatar } from "@/components/common/CustomAvatar";
-import { PostActions, PostBody } from "@/components/post/PostCard";
+// import { PostActions, PostBody } from "@/components/post/PostCard";
 import EditorView from "@/components/submit/EditorView";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { Pin } from "lucide-react";
 
 function SinglePost() {
-  
   return (
     <div className="w-full flex flex-col flex-1 items-center p-4 gap-y-2 overflow-auto text-white">
       <div
@@ -14,8 +13,8 @@ function SinglePost() {
           "xl:w-2/5 lg:w-3/5 md:w-4/5 w-full border rounded-sm bg-[#27272a] border-slate-600 flex flex-col text-white p-4 cursor-pointer"
         )}
       >
-        <PostBody />
-        <PostActions type="post" />
+        {/* <PostBody  />
+        <PostActions type="post" /> */}
         <EditorView />
         <Separator orientation="horizontal" className="my-4" />
         <div className="flex items-center gap-x-2 ">
@@ -35,7 +34,7 @@ function SinglePost() {
           autem? Sint quibusdam minus accusamus expedita recusandae aliquid
           natus, reprehenderit alias. Deserunt architecto ea, laudantium quae
           magni unde asperiores.
-          <PostActions type="comment" />
+          {/* <PostActions type="comment" /> */}
         </div>
       </div>
     </div>

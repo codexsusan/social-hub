@@ -7,7 +7,7 @@ import Profile from "@/pages/Profile";
 import Submit from "@/pages/Submit";
 import SinglePost from "@/pages/SinglePost";
 
-export const router = createBrowserRouter([
+const router = createBrowserRouter([
   {
     path: "/",
     element: (
