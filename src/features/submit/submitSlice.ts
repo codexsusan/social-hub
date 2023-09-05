@@ -29,6 +29,7 @@ const submitSlice = createSlice({
   initialState,
   reducers: {
     clear: (state) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       state = initialState;
     },
     changeTitle: (state, action) => {

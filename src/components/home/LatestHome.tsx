@@ -3,13 +3,16 @@ import PostCard from "../post/PostCard";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { useEffect } from "react";
 import { fetchLatestPosts } from "@/features/home/homeSlice";
-import { Loader } from "lucide-react";
+import Spinner from "../common/Spinner";
 
 function LatestHome() {
   const dispatch = useAppDispatch();
+  const latest = useAppSelector((state) => state.home.latest);
+  
   useEffect(() => {
-    dispatch(fetchLatestPosts());
-  }, [dispatch]);
+    latest.posts.length === 0 &&
+      dispatch(fetchLatestPosts({ page: 1, limit: 10 }));
+  }, [dispatch, latest.posts.length]);
 
   return (
     <Card className="bg-[#27272A]">
@@ -23,13 +26,12 @@ function LatestHome() {
 function View() {
   const latest = useAppSelector((state) => state.home.latest);
   return latest.loading ? (
-    <div className="flex justify-center">
-      <Loader className=" animate-spin my-4" />
-    </div>
+    <Spinner />
   ) : (
-    latest.posts.map((post) => {
-      return <PostCard key={post._id} post={post} />;
-    })
+    latest.posts &&
+      latest.posts.map((post) => {
+        return <PostCard key={post._id} post={post} />;
+      })
   );
 }
 

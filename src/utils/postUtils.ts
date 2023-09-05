@@ -21,14 +21,20 @@ export const getAllPostsUtils = async () => {
 };
 
 // Get latest posts
-export const getLatestPostsUtils = async () => {
-  const response = await request("/api/post/get-latest-posts", "GET");
+export const getLatestPostsUtils = async (page: number, limit: number) => {
+  const response = await request("/api/post/get-latest-posts", "GET", {
+    page,
+    limit,
+  });
   return response;
 };
 
 // Get trending posts
-export const getTrendingPostsUtils = async () => {
-  const response = await request("/api/post/get-trending-posts", "GET");
+export const getTrendingPostsUtils = async (page: number, limit: number) => {
+  const response = await request("/api/post/get-trending-posts", "GET", {
+    page,
+    limit,
+  });
   return response;
 };
 

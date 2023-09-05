@@ -1,11 +1,12 @@
 type methodType = "GET" | "POST" | "PATCH" | "PUT" | "DELETE";
 
-const base_url = "http://localhost:3000" || "https://social-hub1.onrender.com";
+const base_url = "https://social-hub1.onrender.com" || "http://localhost:3000";
 
 export type ResponseData = {
   status: number;
   statusText: string;
   data: any;
+  totalPage?: number;
 };
 
 export const request = async (
@@ -37,6 +38,7 @@ export const request = async (
     },
     body: method !== "GET" ? JSON.stringify(data) : undefined,
   });
+  // console.log(await response.json());
   const updatedResponse: ResponseData = {
     status: response.status,
     statusText: response.statusText,
