@@ -76,4 +76,26 @@ export const getAllPostsByCommunityUtils = async () => {
   return response;
 };
 
-// TODO: Need to add more post utils
+// Get all blocked posts
+export const getAllBlockedPostsUtils = async () => {
+  const response = await request(`/api/post/get-blocked-posts`, "GET");
+  return response;
+};
+
+// Unblock post
+export const unblockPostUtils = async (id: PostPartial["_id"]) => {
+  const response = await request(`/api/post/unblock-post/${id}`, "POST", {});
+  return response;
+};
+
+// Report post
+export const reportPostUtils = async (id: PostPartial["_id"]) => {
+  const response = await request(`/api/post/report-post/${id}`, "POST", {});
+  return response;
+};
+
+// Unreport post
+export const unreportPostUtils = async (id: PostPartial["_id"]) => {
+  const response = await request(`/api/post/unreport-post/${id}`, "POST", {});
+  return response;
+};
