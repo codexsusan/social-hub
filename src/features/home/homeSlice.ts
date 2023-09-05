@@ -4,11 +4,12 @@ import { ResponseData } from "@/utils/httpUtils";
 import { getLatestPostsUtils, getTrendingPostsUtils } from "@/utils/postUtils";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+
 type InitialState = {
   latest: {
     error: string;
     loading: boolean;
-    posts: PostPartial[];
+    posts: PostPartial[] | [];
   };
   trending: {
     error: string;

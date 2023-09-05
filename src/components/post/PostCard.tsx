@@ -14,7 +14,6 @@ import { PostActionType, PostPartial } from "@/types/postTypes";
 
 interface Props {
   className?: string;
-  isBookmarked?: boolean;
   type?: string;
   post: PostPartial;
 }
@@ -165,7 +164,11 @@ export function PostActions(props: Props) {
             className="bg-transparent"
           >
             <div className="flex gap-x-2 items-center justify-center">
-              {props.isBookmarked ? <Bookmark fill="white" /> : <Bookmark />}
+              {props.post.bookmark_status ? (
+                <Bookmark fill="white" />
+              ) : (
+                <Bookmark />
+              )}
 
               <div className="hidden sm:block">Bookmark</div>
             </div>
