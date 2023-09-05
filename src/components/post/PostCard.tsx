@@ -12,6 +12,7 @@ import { Button } from "../ui/button";
 
 import React from "react";
 import { PostActionType, PostPartial } from "@/types/postTypes";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   className?: string;
@@ -20,8 +21,15 @@ interface Props {
 }
 
 function PostCard(props: Props) {
+  const navigate = useNavigate();
+  const routeToSinglePost = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate(`/c/${props.post.community_id}/post/${props.post._id}`);
+  };
+
   return (
     <div
+      onClick={routeToSinglePost}
       className={cn(
         "w-full border rounded-sm bg-[#27272a] border-slate-600 flex gap-2 flex-col text-white p-4 cursor-pointer hover:bg-[#1e1e1e]",
         props.className
@@ -38,12 +46,7 @@ export function PostBody(props: Props) {
   return (
     <>
       <PostUserData {...props} />
-      <div
-        onClick={() => {
-          console.log("Redirect to single post page");
-        }}
-        className="text-base mt-2 space-y-4"
-      >
+      <div className="text-base mt-2 space-y-4">
         <div className="text-xl font-semibold">{props.post.title}</div>
         <div>{content}</div>
       </div>
