@@ -10,7 +10,7 @@ import { ResponseData } from "@/utils/httpUtils";
 import { toast } from "@/components/ui/use-toast";
 
 const initialState: User = {
-  id: "",
+  _id: "",
   firstName: "",
   lastName: "",
   email: "",
@@ -131,7 +131,7 @@ const userSlice = createSlice({
       // console.log(action.payload.user);
       state.loading = false;
       state.error = "";
-      state.id = action.payload.user._id;
+      state._id = action.payload.user._id;
       state.firstName = action.payload.user.firstName;
       state.lastName = action.payload.user.lastName;
       state.email = action.payload.user.email;
