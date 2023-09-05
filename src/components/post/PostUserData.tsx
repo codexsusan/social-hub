@@ -8,12 +8,12 @@ interface Props {
 }
 
 function PostUserData(props: Props) {
-  console.log(props.post._id);
   return (
     <div className="flex gap-x-3 items-center">
       <div
         className=" cursor-pointer"
-        onClick={() => {
+        onClick={(event: React.MouseEvent) => {
+          event.stopPropagation();
           console.log("Redirect to user profile");
         }}
       >
@@ -21,7 +21,8 @@ function PostUserData(props: Props) {
       </div>
       <div>
         <p
-          onClick={() => {
+          onClick={(event: React.MouseEvent) => {
+            event.stopPropagation();
             console.log("Redirect to community profile");
           }}
           className="text-white opacity-70 text-base cursor-pointer"
@@ -29,7 +30,8 @@ function PostUserData(props: Props) {
           c/communityx
         </p>
         <p
-          onClick={() => {
+          onClick={(event: React.MouseEvent) => {
+            event.stopPropagation();
             console.log("Redirect to user profile");
           }}
           className="text-white opacity-60 text-xs cursor-pointer"
