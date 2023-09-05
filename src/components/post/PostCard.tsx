@@ -5,6 +5,7 @@ import {
   MessageSquare,
 } from "lucide-react";
 import PostUserData from "./PostUserData";
+import parser from "html-react-parser";
 
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
@@ -33,6 +34,7 @@ function PostCard(props: Props) {
 }
 
 export function PostBody(props: Props) {
+  const content = parser(props.post.content || "");
   return (
     <>
       <PostUserData {...props} />
@@ -43,7 +45,7 @@ export function PostBody(props: Props) {
         className="text-base mt-2 space-y-4"
       >
         <div className="text-xl font-semibold">{props.post.title}</div>
-        <div>{props.post.content}</div>
+        <div>{content}</div>
       </div>
     </>
   );
