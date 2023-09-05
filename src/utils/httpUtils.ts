@@ -1,6 +1,6 @@
 type methodType = "GET" | "POST" | "PATCH" | "PUT" | "DELETE";
 
-const base_url = "http://localhost:3000" || "https://social-hub1.onrender.com";
+const base_url = "https://social-hub1.onrender.com" || "http://localhost:3000";
 
 export type ResponseData = {
   status: number;

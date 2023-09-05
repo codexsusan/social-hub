@@ -8,6 +8,7 @@ interface Props {
 }
 
 function PostUserData(props: Props) {
+  console.log(props);
   return (
     <div className="flex gap-x-3 items-center">
       <div

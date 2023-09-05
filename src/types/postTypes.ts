@@ -11,6 +11,7 @@ export interface Post {
   view_count: number;
   tags: string[];
   created_at: string;
+  
 }
 
 export interface PostPartial extends Partial<Post> {}
@@ -24,4 +25,14 @@ export interface PostActionType {
   upVoteCount: number;
   downVoteCount: number;
   commentCount: number;
+}
+
+
+export interface PostAuthor {
+  _id: string;
+  username: string;
+  avatar: string;
+  bio: string;
+  community_id: string;
+  community_name: string;
 }
