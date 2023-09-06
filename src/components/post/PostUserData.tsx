@@ -1,17 +1,21 @@
 import { PostPartial } from "@/types/postTypes";
 import { CustomAvatar } from "../common/CustomAvatar";
+// import { useEffect } from "react";
+// import { useAppDispatch } from "@/app/hooks";
+// import { fetchLatestPostUserData } from "@/features/home/homeSlice";
 interface Props {
   className?: string;
   isBookmarked?: boolean;
   type?: string;
   post: PostPartial;
+  children?: React.ReactNode;
 }
 
 function PostUserData(props: Props) {
   return (
-    <div className="flex gap-x-3 items-center">
+    <div className="flex gap-x-3">
       <div
-        className=" cursor-pointer"
+        className=""
         onClick={(event: React.MouseEvent) => {
           event.stopPropagation();
           console.log("Redirect to user profile");
@@ -20,24 +24,27 @@ function PostUserData(props: Props) {
         <CustomAvatar />
       </div>
       <div>
-        <p
-          onClick={(event: React.MouseEvent) => {
-            event.stopPropagation();
-            console.log("Redirect to community profile");
-          }}
-          className="text-white opacity-70 text-base cursor-pointer"
-        >
-          c/communityx
-        </p>
-        <p
-          onClick={(event: React.MouseEvent) => {
-            event.stopPropagation();
-            console.log("Redirect to user profile");
-          }}
-          className="text-white opacity-60 text-xs cursor-pointer"
-        >
-          u/codexsusan
-        </p>
+        <div className="flex items-center gap-2">
+          <p
+            onClick={(event: React.MouseEvent) => {
+              event.stopPropagation();
+              console.log("Redirect to community profile");
+            }}
+            className="text-white opacity-70 text-base font-semibold"
+          >
+            {props.post.author?.firstName + " " + props.post.author?.lastName}
+          </p>
+          <p
+            onClick={(event: React.MouseEvent) => {
+              event.stopPropagation();
+              console.log("Redirect to user profile");
+            }}
+            className="text-white opacity-60 text-base"
+          >
+            @{props.post.author?.userName}
+          </p>
+        </div>
+        <div>{props.children}</div>
       </div>
     </div>
   );

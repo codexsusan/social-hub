@@ -22,6 +22,7 @@ function LatestHome() {
 
 function View() {
   const latest = useAppSelector((state) => state.home.latest);
+  console.log(latest);
   return latest.loading ? (
     <div className="flex justify-center">
       <Loader className=" animate-spin my-4" />
