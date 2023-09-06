@@ -23,3 +23,7 @@ export interface RegisterUser extends UserPartial {
 }
 
 export type Gender = "male" | "female" | "others" | "";
+
+export interface Author extends User {}
+
+export interface AuthorPartial extends Partial<Author> {}

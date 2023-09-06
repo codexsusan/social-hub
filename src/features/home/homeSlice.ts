@@ -1,9 +1,12 @@
 import { toast } from "@/components/ui/use-toast";
 import { PostPartial } from "@/types/postTypes";
+import { UserPartial } from "@/types/userTypes";
+// import {  UserPartial } from "@/types/userTypes";
 import { ResponseData } from "@/utils/httpUtils";
 import { getLatestPostsUtils, getTrendingPostsUtils } from "@/utils/postUtils";
+import { fetchUserByIdUtils } from "@/utils/userUtils";
+// import { fetchUserByIdUtils } from "@/utils/userUtils";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
 
 type InitialState = {
   latest: {
@@ -68,6 +71,7 @@ const homeSlice = createSlice({
       fetchLatestPosts.fulfilled,
       (state, action: PayloadAction<ResponseData>) => {
         state.latest.loading = false;
+        console.log(action.payload);
         if (action.payload.status === 200) {
           state.latest.posts = [...action.payload.data.data];
         } else {

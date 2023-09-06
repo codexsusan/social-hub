@@ -13,6 +13,8 @@
 //   created_at: string;
 // }
 
+import { AuthorPartial } from "./userTypes";
+
 export interface PostActionType {
   vote: number;
   upVote: boolean;
@@ -37,10 +39,7 @@ export interface Post {
   _id: string;
   title: string;
   content: string;
-  author_id: string;
-  author_name: string;
-  author_avatar: string;
-  author_bio: string;
+  author: AuthorPartial;
   community_id: string;
   community_name: string;
   is_sticked: boolean;

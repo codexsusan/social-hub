@@ -9,7 +9,7 @@ const PopularHome = lazy(() => import("./PopularHome"));
 function HomeTab() {
   return (
     <div className="xl:w-2/5 lg:w-3/5 md:w-4/5 w-full flex gap-2">
-      <Tabs defaultValue={"trending"} className="w-full">
+      <Tabs defaultValue={"latest"} className="w-full">
         <TabsList className="grid w-full bg-[#27272A] grid-cols-3 ">
           <TabsTrigger value="latest">Latest</TabsTrigger>
           <TabsTrigger value="trending">Trending</TabsTrigger>
