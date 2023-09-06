@@ -2,14 +2,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import PostCard from "../post/PostCard";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { useEffect } from "react";
-import { fetchLatestPosts } from "@/features/home/homeSlice";
+
 import { Loader } from "lucide-react";
+import { fetchLatestPosts } from "@/features/home/latestSlice";
 
 function LatestHome() {
   const dispatch = useAppDispatch();
+  const latest = useAppSelector((state) => state.latestpost);
   useEffect(() => {
-    dispatch(fetchLatestPosts());
-  }, [dispatch]);
+    latest.posts.length && dispatch(fetchLatestPosts());
+  }, [dispatch, latest.posts.length]);
 
   return (
     <Card className="bg-[#27272A]">
@@ -21,7 +23,7 @@ function LatestHome() {
 }
 
 function View() {
-  const latest = useAppSelector((state) => state.home.latest);
+  const latest = useAppSelector((state) => state.latestpost);
   console.log(latest);
   return latest.loading ? (
     <div className="flex justify-center">
