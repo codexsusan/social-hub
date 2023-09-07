@@ -9,9 +9,10 @@ import { fetchTrendingPosts } from "@/features/home/trendingSlice";
 function TrendingHome() {
   const dispatch = useAppDispatch();
   const trending = useAppSelector((state) => state.trendingpost);
+  const userId = useAppSelector((state) => state.user._id);
   useEffect(() => {
     trending.posts.length == 0 && dispatch(fetchTrendingPosts());
-  }, [dispatch, trending.posts.length]);
+  }, [dispatch, trending.posts.length, userId]);
 
   return (
     <Card className="bg-[#27272A]">
@@ -30,7 +31,7 @@ function View() {
     </div>
   ) : (
     trending.posts.map((post) => {
-      return <PostCard key={post._id} post={post} />;
+      return <PostCard type="trending" key={post._id} post={post} />;
     })
   );
 }

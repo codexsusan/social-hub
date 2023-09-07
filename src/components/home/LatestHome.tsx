@@ -9,10 +9,10 @@ import { fetchLatestPosts } from "@/features/home/latestSlice";
 function LatestHome() {
   const dispatch = useAppDispatch();
   const latest = useAppSelector((state) => state.latestpost);
-  const user = useAppSelector((state) => state.user);
+  const userId = useAppSelector((state) => state.user._id);
   useEffect(() => {
-    latest.posts.length == 0 && dispatch(fetchLatestPosts(user._id));
-  }, [dispatch, latest.posts.length, user._id]);
+    latest.posts.length == 0 && dispatch(fetchLatestPosts(userId));
+  }, [dispatch, latest.posts.length, userId]);
 
   return (
     <Card className="bg-[#27272A]">
@@ -31,7 +31,7 @@ function View() {
     </div>
   ) : (
     latest.posts.map((post) => {
-      return <PostCard key={post._id} post={post} />;
+      return <PostCard type="latest" key={post._id} post={post} />;
     })
   );
 }

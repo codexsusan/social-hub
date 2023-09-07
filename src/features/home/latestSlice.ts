@@ -24,7 +24,7 @@ const initialState: InitialState = {
 export const fetchLatestPosts = createAsyncThunk(
   "home/fetch/latest",
   async (id: UserPartial["_id"]) => {
-    const latestPost = await getLatestPostsUtils().then((res) => res);
+    const latestPost = await getLatestPostsUtils();
     const updatedData = latestPost.data!.data.map((post: PostPartial) => {
       const upvote_status = post.upvotes!.includes(id!);
       const downvote_status = post.downvotes!.includes(id!);
@@ -34,9 +34,10 @@ export const fetchLatestPosts = createAsyncThunk(
         downvote_status,
       };
     });
-    return getLatestPostsUtils().then((res) => {
-      return { ...res, data: { ...res.data, data: [...updatedData] } };
-    });
+    return {
+      ...latestPost,
+      data: { ...latestPost.data, data: [...updatedData] },
+    };
   }
 );
 
@@ -58,7 +59,7 @@ const latestSlice = createSlice({
   name: "latestpost",
   initialState,
   reducers: {
-    upvotepost: (state, action) => {
+    upvotelatestsuccess: (state, action) => {
       const post = state.posts.find((post) => post._id === action.payload);
       if (post) {
         if (!post.upvote_status) {
@@ -74,7 +75,7 @@ const latestSlice = createSlice({
         }
       }
     },
-    downvotepost: (state, action) => {
+    downvotelatestsuccess: (state, action) => {
       const post = state.posts.find((post) => post._id === action.payload);
       if (post) {
         if (!post.downvote_status) {
@@ -127,4 +128,5 @@ const latestSlice = createSlice({
 
 export default latestSlice.reducer;
 
-export const { upvotepost, downvotepost } = latestSlice.actions;
+export const { upvotelatestsuccess, downvotelatestsuccess } =
+  latestSlice.actions;

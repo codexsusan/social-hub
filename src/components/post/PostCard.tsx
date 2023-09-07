@@ -5,7 +5,6 @@ import {
   MessageCircle,
 } from "lucide-react";
 import PostUserData from "./PostUserData";
-import parser from "html-react-parser";
 
 import { cn } from "@/lib/utils";
 
@@ -13,12 +12,15 @@ import React from "react";
 import { PostPartial } from "@/types/postTypes";
 import { useNavigate } from "react-router-dom";
 import {
-  downvoteLatestPost,
-  downvotepost,
-  upvoteLatestPost,
-  upvotepost,
+  upvotelatestsuccess,
+  downvotelatestsuccess,
 } from "@/features/home/latestSlice";
 import { useAppDispatch } from "@/app/hooks";
+import {
+  upvotetrendingsuccess,
+  downvotetrendingsuccess,
+} from "@/features/home/trendingSlice";
+import { downvotePost, upvotePost } from "@/features/post/postSlice";
 
 interface Props {
   className?: string;
@@ -46,29 +48,15 @@ function PostCard(props: Props) {
         <div className="text-base mt-2 space-y-4 w-full">
           <div className="text-xl font-semibold">{post.title}</div>
           <div>{post.content}</div>
-          <PostActions {...props} type="post" />
+          <PostActions {...props} />
         </div>
       </PostUserData>
     </div>
   );
 }
 
-export function PostBody(props: Props) {
-  const content = parser(props.post.content || "");
-  return (
-    <>
-      <PostUserData {...props}>
-        <div className="text-base mt-2 space-y-4">
-          <div className="text-xl font-semibold">{props.post.title}</div>
-          <div>{content}</div>
-        </div>
-      </PostUserData>
-    </>
-  );
-}
-
 export function PostActions(props: Props) {
-  const { post } = props;
+  const { post, type } = props;
   const dispatch = useAppDispatch();
   const VoteCount =
     post.upvotes_count! - post.downvotes_count! == 0
@@ -77,20 +65,29 @@ export function PostActions(props: Props) {
 
   const handleUpVote = (e: React.MouseEvent) => {
     e.stopPropagation();
-    dispatch(upvoteLatestPost(post._id)).then((res) => {
+    dispatch(upvotePost(post._id)).then((res) => {
       if (res.meta.requestStatus == "fulfilled") {
-        dispatch(upvotepost(post._id));
+        if (type == "latest") {
+          dispatch(upvotelatestsuccess(post._id));
+        } else if (type == "trending") {
+          dispatch(upvotetrendingsuccess(post._id));
+        }
       }
     });
   };
   const handleDownVote = (e: React.MouseEvent) => {
     e.stopPropagation();
-    dispatch(downvoteLatestPost(post._id)).then((res) => {
+    dispatch(downvotePost(post._id)).then((res) => {
       if (res.meta.requestStatus == "fulfilled") {
-        dispatch(downvotepost(post._id));
+        if (type == "latest") {
+          dispatch(downvotelatestsuccess(post._id));
+        } else if (type == "trending") {
+          dispatch(downvotetrendingsuccess(post._id));
+        }
       }
     });
   };
+
   return (
     <div className="w-full flex gap-x-3 justify-between my-2 items-center">
       <div className="flex gap-x-2">
