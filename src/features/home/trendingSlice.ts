@@ -3,11 +3,7 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 // import { fetchTrendingPosts } from "./homeSlice";
 import { ResponseData } from "@/utils/httpUtils";
 import { toast } from "@/components/ui/use-toast";
-import {
-  downvotePostUtils,
-  getTrendingPostsUtils,
-  upvotePostUtils,
-} from "@/utils/postUtils";
+import { getTrendingPostsUtils } from "@/utils/postUtils";
 import { UserPartial } from "@/types/userTypes";
 
 type InitialState = {
@@ -43,25 +39,11 @@ export const fetchTrendingPosts = createAsyncThunk(
   }
 );
 
-export const upvoteTrendingPost = createAsyncThunk(
-  "home/trending/post/upvote",
-  async (id: PostPartial["_id"]) => {
-    return upvotePostUtils(id).then((res) => res);
-  }
-);
-
-export const downvoteTrendingPost = createAsyncThunk(
-  "home/trending/post/upvote",
-  async (id: PostPartial["_id"]) => {
-    return downvotePostUtils(id).then((res) => res);
-  }
-);
-
 const trendingSlice = createSlice({
   name: "trendingpost",
   initialState,
   reducers: {
-    upvotetrendingsuccess: (state, action) => {
+    upvotetrendingsuccess: (state: InitialState, action) => {
       const post = state.posts.find((post) => post._id === action.payload);
       if (post) {
         if (!post.upvote_status) {
@@ -77,7 +59,7 @@ const trendingSlice = createSlice({
         }
       }
     },
-    downvotetrendingsuccess: (state, action) => {
+    downvotetrendingsuccess: (state: InitialState, action) => {
       const post = state.posts.find((post) => post._id === action.payload);
       if (post) {
         if (!post.downvote_status) {
@@ -100,7 +82,7 @@ const trendingSlice = createSlice({
     });
     builder.addCase(
       fetchTrendingPosts.fulfilled,
-      (state, action: PayloadAction<ResponseData>) => {
+      (state: InitialState, action: PayloadAction<ResponseData>) => {
         state.loading = false;
         if (action.payload.status === 200) {
           state.posts = [...action.payload.data.data];
@@ -113,15 +95,18 @@ const trendingSlice = createSlice({
         }
       }
     );
-    builder.addCase(fetchTrendingPosts.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.error.message || "";
-      toast({
-        title: "Unable to load data",
-        description: action.error.message!,
-        duration: 2000,
-      });
-    });
+    builder.addCase(
+      fetchTrendingPosts.rejected,
+      (state: InitialState, action) => {
+        state.loading = false;
+        state.error = action.error.message || "";
+        toast({
+          title: "Unable to load data",
+          description: action.error.message!,
+          duration: 2000,
+        });
+      }
+    );
   },
 });
 

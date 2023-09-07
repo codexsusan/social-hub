@@ -35,7 +35,7 @@ function Register() {
   // TODO: Setting token to local storage is left
   const handleRegister = () => {
     dispatch(registerUser(user)).then((res) => {
-      if (res.type === "user/register/fulfilled") {
+      if (res.meta.requestStatus === "fulfilled") {
         navigate("/");
       }
     });

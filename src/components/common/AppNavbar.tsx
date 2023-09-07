@@ -25,13 +25,14 @@ export default function AppNavbar() {
   const navigate = useNavigate();
   useTokenVerify();
   useEffect(() => {
-    dispatch(fetchUserData()).then((res) => {
-      if (res.type === "user/fetch/rejected") {
-        localStorage.removeItem("token");
-        navigate("/auth/login");
-      }
-    });
-  }, []);
+    user._id.length === 0 &&
+      dispatch(fetchUserData()).then((res) => {
+        if (res.meta.requestStatus === "rejected") {
+          localStorage.removeItem("token");
+          navigate("/auth/login");
+        }
+      });
+  }, [dispatch, navigate, user._id.length]);
 
   return (
     <Disclosure as="nav" className="bg-[#1A1A1B]">

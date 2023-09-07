@@ -1,6 +1,24 @@
 import { PostPartial } from "@/types/postTypes";
-import { downvotePostUtils, upvotePostUtils } from "@/utils/postUtils";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { UserPartial } from "@/types/userTypes";
+import { ResponseData } from "@/utils/httpUtils";
+import {
+  downvotePostUtils,
+  getPostUtils,
+  upvotePostUtils,
+} from "@/utils/postUtils";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
+type InitialState = {
+  error: string;
+  loading: boolean;
+  post: PostPartial;
+};
+
+const initialState: InitialState = {
+  error: "",
+  loading: false,
+  post: {} as PostPartial,
+};
 
 export const upvotePost = createAsyncThunk(
   "home/trending/post/upvote",
@@ -15,3 +33,73 @@ export const downvotePost = createAsyncThunk(
     return downvotePostUtils(id).then((res) => res);
   }
 );
+type Data = {
+  postId: PostPartial["_id"];
+  userId: UserPartial["_id"];
+};
+
+export const getPost = createAsyncThunk("post/get", async (data: Data) => {
+  const postData = await getPostUtils(data.postId);
+  const upvote_status = postData.data.data.upvotes.includes(data.userId);
+  const downvote_status = postData.data.data.downvotes.includes(data.userId);
+  return {
+    ...postData,
+    data: {
+      ...postData.data,
+      data: { ...postData.data.data, upvote_status, downvote_status },
+    },
+  };
+});
+
+const postSlice = createSlice({
+  name: "post",
+  initialState,
+  reducers: {
+    upvotesuccess: (state: InitialState) => {
+      if (!state.post.upvote_status) {
+        state.post.upvotes_count! = state.post.upvotes_count! - 1 + 2;
+        state.post.upvote_status = true;
+        if (state.post.downvote_status) {
+          state.post.downvote_status = false;
+          state.post.downvotes_count! = state.post.downvotes_count! - 1;
+        }
+      } else {
+        state.post.upvote_status = false;
+        state.post.upvotes_count! = state.post.upvotes_count! - 1;
+      }
+    },
+    downvotesuccess: (state: InitialState) => {
+      if (!state.post.downvote_status) {
+        state.post.downvotes_count! = state.post.downvotes_count! - 1 + 2;
+        state.post.downvote_status = true;
+        if (state.post.upvote_status) {
+          state.post.upvote_status = false;
+          state.post.upvotes_count = state.post.upvotes_count! - 1;
+        }
+      } else {
+        state.post.downvote_status = false;
+        state.post.downvotes_count = state.post.downvotes_count! - 1;
+      }
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getPost.pending, (state: InitialState) => {
+      state.loading = true;
+    });
+    builder.addCase(
+      getPost.fulfilled,
+      (state: InitialState, action: PayloadAction<ResponseData>) => {
+        state.loading = false;
+        console.log(action.payload);
+        state.post = action.payload.data.data;
+      }
+    );
+    builder.addCase(getPost.rejected, (state: InitialState) => {
+      state.loading = false;
+    });
+  },
+});
+
+export default postSlice.reducer;
+
+export const { upvotesuccess, downvotesuccess } = postSlice.actions;

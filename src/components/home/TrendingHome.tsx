@@ -11,7 +11,7 @@ function TrendingHome() {
   const trending = useAppSelector((state) => state.trendingpost);
   const userId = useAppSelector((state) => state.user._id);
   useEffect(() => {
-    trending.posts.length == 0 && dispatch(fetchTrendingPosts());
+    trending.posts.length == 0 && dispatch(fetchTrendingPosts(userId));
   }, [dispatch, trending.posts.length, userId]);
 
   return (

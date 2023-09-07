@@ -28,7 +28,7 @@ function PostUserData(props: Props) {
           <p
             onClick={(event: React.MouseEvent) => {
               event.stopPropagation();
-              console.log("Redirect to community profile");
+              console.log("Redirect to user profile");
             }}
             className="text-white opacity-70 text-base font-semibold"
           >

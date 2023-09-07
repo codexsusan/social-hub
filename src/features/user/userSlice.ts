@@ -76,7 +76,7 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = action.error.message!;
       toast({
-        title: "Account created.",
+        title: "Unable to create an account.",
         description: action.error.message!,
         duration: 2000,
       });
@@ -144,7 +144,6 @@ const userSlice = createSlice({
     builder.addCase(fetchUserData.rejected, (state) => {
       state.loading = false;
       state.error = "Failed to load user data";
-      
     });
   },
 });

@@ -20,7 +20,12 @@ import {
   upvotetrendingsuccess,
   downvotetrendingsuccess,
 } from "@/features/home/trendingSlice";
-import { downvotePost, upvotePost } from "@/features/post/postSlice";
+import {
+  downvotePost,
+  downvotesuccess,
+  upvotePost,
+  upvotesuccess,
+} from "@/features/post/postSlice";
 
 interface Props {
   className?: string;
@@ -71,6 +76,8 @@ export function PostActions(props: Props) {
           dispatch(upvotelatestsuccess(post._id));
         } else if (type == "trending") {
           dispatch(upvotetrendingsuccess(post._id));
+        } else if (type == "single-post") {
+          dispatch(upvotesuccess());
         }
       }
     });
@@ -83,6 +90,8 @@ export function PostActions(props: Props) {
           dispatch(downvotelatestsuccess(post._id));
         } else if (type == "trending") {
           dispatch(downvotetrendingsuccess(post._id));
+        } else if (type == "single-post") {
+          dispatch(downvotesuccess());
         }
       }
     });

@@ -6,9 +6,7 @@ import HomeTab from "@/components/home/HomeTab";
 
 function Home() {
   useDocumentTitle("Home | Social Hub");
-
   const user = useAppSelector((state) => state.user);
-
   const view = user.loading ? <PageLoading /> : <View />;
 
   return (
