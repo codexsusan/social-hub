@@ -10,7 +10,7 @@ function LatestHome() {
   const dispatch = useAppDispatch();
   const latest = useAppSelector((state) => state.latestpost);
   useEffect(() => {
-    latest.posts.length && dispatch(fetchLatestPosts());
+    latest.posts.length == 0 && dispatch(fetchLatestPosts());
   }, [dispatch, latest.posts.length]);
 
   return (
