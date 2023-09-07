@@ -51,11 +51,7 @@ export const loginUser = createAsyncThunk(
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {
-    clear: (state) => {
-      state = initialState;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     // User Registration
     builder.addCase(registerUser.pending, (state) => {
@@ -148,13 +144,9 @@ const userSlice = createSlice({
     builder.addCase(fetchUserData.rejected, (state) => {
       state.loading = false;
       state.error = "Failed to load user data";
-      // localStorage.removeItem("token");
-      // window.location.href = "/auth/login";
+      
     });
   },
 });
 
 export default userSlice.reducer;
-export const { clear } = userSlice.actions;
-
-
