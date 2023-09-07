@@ -3,17 +3,22 @@ import {
   ArrowBigUp,
   Bookmark,
   MessageCircle,
-  MessageSquare,
 } from "lucide-react";
 import PostUserData from "./PostUserData";
 import parser from "html-react-parser";
 
 import { cn } from "@/lib/utils";
-import { Button } from "../ui/button";
 
 import React from "react";
-import { PostActionType, PostPartial } from "@/types/postTypes";
+import { PostPartial } from "@/types/postTypes";
 import { useNavigate } from "react-router-dom";
+import {
+  downvoteLatestPost,
+  downvotepost,
+  upvoteLatestPost,
+  upvotepost,
+} from "@/features/home/latestSlice";
+import { useAppDispatch } from "@/app/hooks";
 
 interface Props {
   className?: string;
@@ -22,7 +27,7 @@ interface Props {
 }
 
 function PostCard(props: Props) {
-  const { post, type, className } = props;
+  const { post, className } = props;
   const navigate = useNavigate();
   const routeToSinglePost = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -38,7 +43,7 @@ function PostCard(props: Props) {
       )}
     >
       <PostUserData {...props}>
-        <div className="text-base mt-2 space-y-4">
+        <div className="text-base mt-2 space-y-4 w-full">
           <div className="text-xl font-semibold">{post.title}</div>
           <div>{post.content}</div>
           <PostActions {...props} type="post" />
@@ -64,12 +69,41 @@ export function PostBody(props: Props) {
 
 export function PostActions(props: Props) {
   const { post } = props;
-  const VoteCount = post.upvotes! - post.downvotes! == 0 ? "" : null;
+  const dispatch = useAppDispatch();
+  const VoteCount =
+    post.upvotes_count! - post.downvotes_count! == 0
+      ? ""
+      : post.upvotes_count! - post.downvotes_count!;
+
+  const handleUpVote = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    dispatch(upvoteLatestPost(post._id)).then((res) => {
+      if (res.meta.requestStatus == "fulfilled") {
+        dispatch(upvotepost(post._id));
+      }
+    });
+  };
+  const handleDownVote = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    dispatch(downvoteLatestPost(post._id)).then((res) => {
+      if (res.meta.requestStatus == "fulfilled") {
+        dispatch(downvotepost(post._id));
+      }
+    });
+  };
   return (
     <div className="w-full flex gap-x-3 justify-between my-2 items-center">
       <div className="flex gap-x-2">
-        <ArrowBigUp strokeWidth={1} />
-        <ArrowBigDown strokeWidth={1} />
+        {post.upvote_status ? (
+          <ArrowBigUp onClick={handleUpVote} strokeWidth={1} fill="white" />
+        ) : (
+          <ArrowBigUp onClick={handleUpVote} strokeWidth={1} />
+        )}
+        {post.downvote_status ? (
+          <ArrowBigDown onClick={handleDownVote} strokeWidth={1} fill="white" />
+        ) : (
+          <ArrowBigDown onClick={handleDownVote} strokeWidth={1} />
+        )}
         {VoteCount}
       </div>
       <div className="flex gap-x-2">
@@ -82,145 +116,5 @@ export function PostActions(props: Props) {
     </div>
   );
 }
-
-// export function PostActions(props: Props) {
-//   const initialState = {
-//     vote: 0,
-//     upVote: false,
-//     downVote: false,
-//     comment: false,
-//     bookmarkStatus: false,
-//     upVoteCount: 0,
-//     downVoteCount: 0,
-//     commentCount: 0,
-//   };
-//   const [actionStatus, setActionStatus] =
-//     React.useState<PostActionType>(initialState);
-
-//   const handleUpVote = () => {
-//     if (actionStatus.downVote) {
-//       setActionStatus({
-//         ...actionStatus,
-//         downVote: !actionStatus.downVote,
-//         downVoteCount: actionStatus.downVoteCount - 1,
-//         vote: actionStatus.vote + 1,
-//       });
-//     }
-//     if (actionStatus.upVote) {
-//       setActionStatus({
-//         ...actionStatus,
-//         upVote: !actionStatus.upVote,
-//         upVoteCount: actionStatus.upVoteCount - 1,
-//         downVote: false,
-//         vote: actionStatus.vote - 1,
-//       });
-//     } else if (!actionStatus.upVote) {
-//       setActionStatus({
-//         ...actionStatus,
-//         upVote: !actionStatus.upVote,
-//         upVoteCount: actionStatus.upVoteCount + 1,
-//         downVote: false,
-//         vote: actionStatus.vote + 1,
-//       });
-//     }
-//     // console.log(actionStatus);
-//   };
-
-//   const handleDownVote = () => {
-//     if (!actionStatus.downVote) {
-//       setActionStatus({
-//         ...actionStatus,
-//         downVote: !actionStatus.downVote,
-//         downVoteCount: actionStatus.downVoteCount - 1,
-//         vote: actionStatus.vote - 1,
-//         upVote: false,
-//       });
-//     } else if (actionStatus.downVote) {
-//       setActionStatus({
-//         ...actionStatus,
-//         downVote: !actionStatus.downVote,
-//         downVoteCount: actionStatus.downVoteCount + 1,
-//         vote: actionStatus.vote + 1,
-//         upVote: false,
-//       });
-//     }
-//   };
-
-//   const upVoteElement = actionStatus.upVote ? (
-//     <ArrowBigUp fill="white" />
-//   ) : (
-//     <ArrowBigUp />
-//   );
-
-//   const downVoteElement = actionStatus.downVote ? (
-//     <ArrowBigDown fill="white" />
-//   ) : (
-//     <ArrowBigDown />
-//   );
-
-//   const voteStatus =
-//     actionStatus.upVote >= actionStatus.downVote ? "Upvote" : "Downvote";
-
-//   const voteCountElement = (
-//     <div className="text-sm p-2 flex gap-2">
-//       <div className="">{actionStatus.vote}</div>
-//       <div>{actionStatus.upVote}</div>
-//       <div>{actionStatus.downVote}</div>
-//       <div className="hidden sm:block">{voteStatus}</div>
-//     </div>
-//   );
-
-//   const commentCountElement = (
-//     <div className="flex gap-x-2 items-center justify-center text-sm">
-//       <div>746</div>
-//       {/* <div className="hidden sm:block text-white">Comment</div> */}
-//     </div>
-//   );
-
-//   return (
-//     <div className="w-full flex gap-x-3 justify-between my-2 items-center">
-//       <div className="flex items-center">
-//         <ActionButton onClick={handleUpVote}>{upVoteElement}</ActionButton>
-//         <ActionButton onClick={handleDownVote}>{downVoteElement}</ActionButton>
-//         <div>{voteCountElement}</div>
-//       </div>
-//       <div onClick={() => {}}>
-//         <MessageSquare />
-//       </div>
-//       <div>{commentCountElement}</div>
-//       {props.type === "post" && (
-//         <>
-//           <Button
-//             onClick={() => {
-//               console.log("Handle bookmark action");
-//             }}
-//             className="bg-transparent"
-//           >
-//             <div className="flex gap-x-2 items-center justify-center">
-//               {props.post.bookmark_status ? (
-//                 <Bookmark fill="white" />
-//               ) : (
-//                 <Bookmark />
-//               )}
-
-//               <div className="hidden sm:block">Bookmark</div>
-//             </div>
-//           </Button>
-//         </>
-//       )}
-//     </div>
-//   );
-// }
-
-// function ActionButton(props: {
-//   children: React.ReactNode;
-//   onClick?: () => void;
-// }) {
-//   return (
-//     <Button onClick={props.onClick} className="bg-transparent px-2">
-//       {props.children}
-//     </Button>
-//   );
-// }
 
 export default PostCard;

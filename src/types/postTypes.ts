@@ -44,8 +44,10 @@ export interface Post {
   community_name: string;
   is_sticked: boolean;
   vote: number;
-  upvotes: number;
-  downvotes: number;
+  upvotes: string[];
+  downvotes: string[];
+  upvotes_count: number;
+  downvotes_count: number;
   upvote_status: boolean;
   downvote_status: boolean;
   comment_count: number;

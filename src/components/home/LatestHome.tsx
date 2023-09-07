@@ -9,9 +9,10 @@ import { fetchLatestPosts } from "@/features/home/latestSlice";
 function LatestHome() {
   const dispatch = useAppDispatch();
   const latest = useAppSelector((state) => state.latestpost);
+  const user = useAppSelector((state) => state.user);
   useEffect(() => {
-    latest.posts.length == 0 && dispatch(fetchLatestPosts());
-  }, [dispatch, latest.posts.length]);
+    latest.posts.length == 0 && dispatch(fetchLatestPosts(user._id));
+  }, [dispatch, latest.posts.length, user._id]);
 
   return (
     <Card className="bg-[#27272A]">
@@ -24,7 +25,6 @@ function LatestHome() {
 
 function View() {
   const latest = useAppSelector((state) => state.latestpost);
-  console.log(latest);
   return latest.loading ? (
     <div className="flex justify-center">
       <Loader className=" animate-spin my-4" />
