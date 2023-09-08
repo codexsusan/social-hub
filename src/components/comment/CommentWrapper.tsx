@@ -1,11 +1,15 @@
-import { cn } from "@/lib/utils";
 import React from "react";
 import { CustomAvatar } from "../common/CustomAvatar";
+import { cn } from "@/lib/utils";
 import { CommentPartial } from "@/types/commentTypes";
 
-function CommentView(props: { comment?: CommentPartial }) {
-  const { comment } = props;
+type Props = {
+  comment?: CommentPartial;
+  children: React.ReactNode;
+};
 
+function CommentWrapper(props: Props) {
+  const { comment, children } = props;
   return (
     <div className={cn("flex gap-x-3")}>
       <div
@@ -39,11 +43,11 @@ function CommentView(props: { comment?: CommentPartial }) {
           </p>
         </div>
         {/* Children should be here as */}
-        <div className="w-full">{comment?.content}</div>
-        <div className="p-4 border"></div>
+        {children}
+        
       </div>
     </div>
   );
 }
 
-export default CommentView;
+export default CommentWrapper;

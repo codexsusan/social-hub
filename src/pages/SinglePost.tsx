@@ -11,7 +11,7 @@ import { useParams } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
 import AddCommentWrapper from "@/components/comment/AddCommentWrapper";
 import { getCommentsOnPost } from "@/features/comment/commentSlice";
-import CommentView from "@/components/comment/CommentView";
+import CommentWrapper from "@/components/comment/CommentWrapper";
 
 function SinglePost() {
   const { postId } = useParams();
@@ -81,11 +81,18 @@ function ListComment() {
 
   return (
     <div className="mt-5">
-      <div className={cn("flex gap-x-3")}>
+      <div className={cn("flex gap-x-3 ")}>
         <div className={"w-10"}></div>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 w-full">
           {currentcomment.comments.map((comment) => {
-            return <CommentView key={comment._id} comment={comment} />;
+            return (
+              <>
+                <CommentWrapper key={comment._id} comment={comment}>
+                  <div className="">{comment?.content}</div>
+                  <div className="p-4 border "></div>
+                </CommentWrapper>
+              </>
+            );
           })}
         </div>
       </div>

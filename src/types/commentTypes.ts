@@ -1,10 +1,10 @@
-import { AuthorPartial } from "./userTypes";
+import {  AuthorPartial } from "./userTypes";
 
 export interface Comment {
   _id: string;
   content: string;
   author_id: string;
-  author: AuthorPartial[];
+  author: AuthorPartial;
   post_id: string;
   upvotes: string[];
   downvotes: string[];
