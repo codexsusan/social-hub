@@ -1,26 +1,26 @@
-// import { CustomAvatar } from "@/components/common/CustomAvatar";
-// import { PostActions, PostBody } from "@/components/post/PostCard";
-// import EditorView from "@/components/submit/EditorView";
-// import { Separator } from "@/components/ui/separator";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { PostActions } from "@/components/post/PostCard";
-import PostUserData from "@/components/post/PostUserData";
-import { getPost } from "@/features/post/postSlice";
+import UserData from "@/components/common/UserData";
+import EditorView from "@/components/submit/EditorView";
+import { SinglePageState, getPost } from "@/features/post/postSlice";
 import { cn } from "@/lib/utils";
-import { PostPartial } from "@/types/postTypes";
 import { UserPartial } from "@/types/userTypes";
+import { Loader } from "lucide-react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-// import { Pin } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
+import AddCommentWrapper from "@/components/comment/AddCommentWrapper";
+import { getCommentsOnPost } from "@/features/comment/commentSlice";
+import CommentView from "@/components/comment/CommentView";
 
 function SinglePost() {
   const { postId } = useParams();
   const dispatch = useAppDispatch();
-  const post: PostPartial = useAppSelector((state) => state.singlepost.post);
   const userId: UserPartial["_id"] = useAppSelector((state) => state.user._id);
 
   useEffect(() => {
     dispatch(getPost({ postId, userId }));
+    dispatch(getCommentsOnPost(postId));
   }, [dispatch, postId, userId]);
 
   return (
@@ -30,13 +30,64 @@ function SinglePost() {
           "xl:w-2/5 lg:w-3/5 md:w-4/5 w-full border rounded-sm bg-[#27272a] border-slate-600 flex flex-col text-white p-4 cursor-pointer"
         )}
       >
-        <PostUserData post={post} type="single-post">
+        <PostView />
+        <AddComment />
+        <Separator className="my-4 self-center" orientation="horizontal" />
+        <ListComment />
+      </div>
+    </div>
+  );
+}
+
+function PostView() {
+  const singlePost = useAppSelector((state) => state.currentpost);
+  const post = singlePost.post;
+  const { title, content } = singlePost.post;
+  return (
+    <>
+      {singlePost.loading ? (
+        <Loader className="animate-spin" />
+      ) : (
+        <UserData post={post} type="post">
           <div className="text-base mt-2 space-y-4 w-full">
-            <div className="text-xl font-semibold">{post.title}</div>
-            <div>{post.content}</div>
+            <div className="text-xl font-semibold">{title}</div>
+            <div>{content}</div>
             <PostActions post={post} type={"single-post"} />
           </div>
-        </PostUserData>
+        </UserData>
+      )}
+    </>
+  );
+}
+
+function AddComment() {
+  const singlePage: SinglePageState = useAppSelector(
+    (state) => state.currentpost
+  );
+  const post = singlePage.post;
+  return (
+    <div className="mt-5">
+      {post.comment_status ? (
+        <AddCommentWrapper post={post} type="comment">
+          <EditorView src="comment" className="mt-2" height={200} />
+        </AddCommentWrapper>
+      ) : null}
+    </div>
+  );
+}
+
+function ListComment() {
+  const currentcomment = useAppSelector((state) => state.currentcomment);
+
+  return (
+    <div className="mt-5">
+      <div className={cn("flex gap-x-3")}>
+        <div className={"w-10"}></div>
+        <div className="flex flex-col gap-4">
+          {currentcomment.comments.map((comment) => {
+            return <CommentView key={comment._id} comment={comment} />;
+          })}
+        </div>
       </div>
     </div>
   );

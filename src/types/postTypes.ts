@@ -13,6 +13,7 @@
 //   created_at: string;
 // }
 
+import { CommentPartial } from "./commentTypes";
 import { AuthorPartial } from "./userTypes";
 
 export interface PostActionType {
@@ -51,7 +52,8 @@ export interface Post {
   upvote_status: boolean;
   downvote_status: boolean;
   comment_count: number;
-  comment_data: string[];
+  comment_data: CommentPartial[];
+  comment_status: boolean;
   bookmark_status: boolean;
   report_count: number;
   view_count: number;

@@ -25,7 +25,6 @@ export const fetchTrendingPosts = createAsyncThunk(
     const updatedData = trendingPost.data!.data.map((post: PostPartial) => {
       const upvote_status = post.upvotes!.includes(id!);
       const downvote_status = post.downvotes!.includes(id!);
-      // TODO: Issue while loading data at the first it as the upvote and downvote status is not set
       return {
         ...post,
         upvote_status,

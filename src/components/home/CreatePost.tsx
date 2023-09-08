@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { CustomAvatar } from "../common/CustomAvatar";
-import IconButton from "../common/IconButton";
 import { useAppSelector } from "@/app/hooks";
 import { Input } from "../ui/input";
+import { ImagePlus } from "lucide-react";
 
 function CreatePost() {
   const user = useAppSelector((state) => state.user);
@@ -28,11 +28,11 @@ function CreatePost() {
         className="bg-[#171717] border-none border-0 text-gray-400"
         placeholder="Create Post"
       />
-      <IconButton
-        name="image-plus"
+      <ImagePlus
         onClick={() => {
           navigate(`/submit?type=image`);
         }}
+        className="text-white"
       />
     </div>
   );

@@ -1,21 +1,13 @@
-import { PostPartial } from "@/types/postTypes";
+import { cn } from "@/lib/utils";
+import React from "react";
 import { CustomAvatar } from "../common/CustomAvatar";
-// import { useEffect } from "react";
-// import { useAppDispatch } from "@/app/hooks";
-// import { fetchLatestPostUserData } from "@/features/home/homeSlice";
-interface Props {
-  className?: string;
-  isBookmarked?: boolean;
-  type?: string;
-  post: PostPartial;
-  children?: React.ReactNode;
-}
+import { CommentPartial } from "@/types/commentTypes";
 
-function PostUserData(props: Props) {
+function CommentView(props: { comment?: CommentPartial }) {
   return (
-    <div className="flex gap-x-3">
+    <div className={cn("flex gap-x-3")}>
       <div
-        className=""
+        className={""}
         onClick={(event: React.MouseEvent) => {
           event.stopPropagation();
           console.log("Redirect to user profile");
@@ -23,7 +15,7 @@ function PostUserData(props: Props) {
       >
         <CustomAvatar />
       </div>
-      <div>
+      <div className="w-full">
         <div className="flex items-center gap-2">
           <p
             onClick={(event: React.MouseEvent) => {
@@ -32,7 +24,7 @@ function PostUserData(props: Props) {
             }}
             className="text-white opacity-70 text-base font-semibold"
           >
-            {props.post.author?.firstName + " " + props.post.author?.lastName}
+            {props.comment?.author_id}
           </p>
           <p
             onClick={(event: React.MouseEvent) => {
@@ -41,13 +33,13 @@ function PostUserData(props: Props) {
             }}
             className="text-white opacity-60 text-base"
           >
-            @{props.post.author?.userName}
+            @helloxsusan
           </p>
         </div>
-        <div>{props.children}</div>
+        <div className="w-full"></div>
       </div>
     </div>
   );
 }
 
-export default PostUserData;
+export default CommentView;

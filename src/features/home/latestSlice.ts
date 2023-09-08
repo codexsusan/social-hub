@@ -2,11 +2,7 @@ import { toast } from "@/components/ui/use-toast";
 import { PostPartial } from "@/types/postTypes";
 import { UserPartial } from "@/types/userTypes";
 import { ResponseData } from "@/utils/httpUtils";
-import {
-  downvotePostUtils,
-  getLatestPostsUtils,
-  upvotePostUtils,
-} from "@/utils/postUtils";
+import { getLatestPostsUtils } from "@/utils/postUtils";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 type InitialState = {
@@ -40,7 +36,6 @@ export const fetchLatestPosts = createAsyncThunk(
     };
   }
 );
-
 
 const latestSlice = createSlice({
   name: "latestpost",
