@@ -1,9 +1,18 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { changeContent } from "@/features/submit/submitSlice";
 import { Editor } from "@tinymce/tinymce-react";
+import { Loader } from "lucide-react";
 import React from "react";
+import { cn } from "@/lib/utils";
 
-export default function EditorView(props: { height?: number }) {
+type EditorSrcType = "post" | "comment";
+
+export default function EditorView(props: {
+  height?: number;
+  className?: string;
+  src: EditorSrcType;
+}) {
+  const { height, className, src } = props;
   const content = useAppSelector((state) => state.submit.post.content!);
   const editorRef = React.useRef<Editor | null>(null);
   const dispatch = useAppDispatch();
@@ -13,9 +22,18 @@ export default function EditorView(props: { height?: number }) {
     dispatch(changeContent(contentValue));
   };
 
+  // const commentEditorPlugins = "";
+
+  const commentEditorToolbar =
+    "bold italic underline | link image  codesample | alignleft aligncenter alignright alignjustify lineheight";
+
+  const postEditorToolbar =
+    "bold italic underline | link image table codesample | alignleft aligncenter alignright alignjustify lineheight | checklist bullist numlist ";
+
+  const toolbar = src === "comment" ? commentEditorToolbar : postEditorToolbar;
   return (
-    <div className="flex justify-center items-center">
-      {loading ? <>Loading...</> : null}
+    <div className={cn("flex justify-center items-center w-full", className)}>
+      {loading ? <Loader className="animate-spin self-center" /> : null}
       <div className={`${loading ? "hidden" : "block"} w-full`}>
         <Editor
           ref={editorRef}
@@ -28,14 +46,14 @@ export default function EditorView(props: { height?: number }) {
             skin: "oxide-dark",
             icons: "thin",
             placeholder: "Ask a question or post an update...",
-            height: props.height || 300,
+            height: height || 300,
             menubar: false,
-            resize: true,
+            resize: false,
             content_css: "dark",
+            width: "100%",
             plugins:
               "powerpaste casechange autolink directionality advcode visualblocks visualchars image link media mediaembed codesample table charmap pagebreak nonbreaking anchor tableofcontents insertdatetime advlist lists checklist wordcount tinymcespellchecker editimage permanentpen charmap linkchecker emoticons autosave",
-            toolbar:
-              "bold italic underline | link image table codesample | alignleft aligncenter alignright alignjustify lineheight | checklist bullist numlist ",
+            toolbar,
             textcolor_rows: "4",
           }}
           onEditorChange={handleEditorChange}

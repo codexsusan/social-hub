@@ -4,6 +4,7 @@ import submitReducer from "@/features/submit/submitSlice";
 import latestReducer from "@/features/home/latestSlice";
 import trendingReducer from "@/features/home/trendingSlice";
 import postReducer from "@/features/post/postSlice";
+import commentReducer from "@/features/comment/commentSlice";
 
 const store = configureStore({
   reducer: {
@@ -11,7 +12,8 @@ const store = configureStore({
     submit: submitReducer,
     latestpost: latestReducer,
     trendingpost: trendingReducer,
-    singlepost: postReducer,
+    currentpost: postReducer,
+    currentcomment: commentReducer,
   },
 });
 

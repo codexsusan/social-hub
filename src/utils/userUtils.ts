@@ -29,8 +29,7 @@ export const fetchUserUtils = async () => {
 };
 
 // Fetch User Details by Id
-export const fetchUserByIdUtils = async (userId: UserPartial["_id"]) => {
-  const response = await request(`/api/auth/user-details/${userId}`, "GET");
+export const getUserByIdUtils = async (userId: UserPartial["_id"]) => {
+  const response = await request(`/api/auth/user-details/${userId}`, "GET", {});
   return response;
 };
-  

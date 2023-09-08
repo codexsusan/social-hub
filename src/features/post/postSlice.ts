@@ -8,13 +8,13 @@ import {
 } from "@/utils/postUtils";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-type InitialState = {
+export type SinglePageState = {
   error: string;
   loading: boolean;
   post: PostPartial;
 };
 
-const initialState: InitialState = {
+const initialState: SinglePageState = {
   error: "",
   loading: false,
   post: {} as PostPartial,
@@ -46,7 +46,12 @@ export const getPost = createAsyncThunk("post/get", async (data: Data) => {
     ...postData,
     data: {
       ...postData.data,
-      data: { ...postData.data.data, upvote_status, downvote_status },
+      data: {
+        ...postData.data.data,
+        upvote_status,
+        downvote_status,
+        comment_status: true,
+      },
     },
   };
 });
@@ -55,7 +60,7 @@ const postSlice = createSlice({
   name: "post",
   initialState,
   reducers: {
-    upvotesuccess: (state: InitialState) => {
+    upvotesuccess: (state: SinglePageState) => {
       if (!state.post.upvote_status) {
         state.post.upvotes_count! = state.post.upvotes_count! - 1 + 2;
         state.post.upvote_status = true;
@@ -68,7 +73,7 @@ const postSlice = createSlice({
         state.post.upvotes_count! = state.post.upvotes_count! - 1;
       }
     },
-    downvotesuccess: (state: InitialState) => {
+    downvotesuccess: (state: SinglePageState) => {
       if (!state.post.downvote_status) {
         state.post.downvotes_count! = state.post.downvotes_count! - 1 + 2;
         state.post.downvote_status = true;
@@ -81,20 +86,28 @@ const postSlice = createSlice({
         state.post.downvotes_count = state.post.downvotes_count! - 1;
       }
     },
+    enablecomment: (state: SinglePageState) => {
+      state.post.comment_status = true;
+    },
+    disablecomment: (state: SinglePageState) => {
+      state.post.comment_status = false;
+    },
+    togglecomment: (state: SinglePageState) => {
+      state.post.comment_status = !state.post.comment_status;
+    },
   },
   extraReducers: (builder) => {
-    builder.addCase(getPost.pending, (state: InitialState) => {
+    builder.addCase(getPost.pending, (state: SinglePageState) => {
       state.loading = true;
     });
     builder.addCase(
       getPost.fulfilled,
-      (state: InitialState, action: PayloadAction<ResponseData>) => {
+      (state: SinglePageState, action: PayloadAction<ResponseData>) => {
         state.loading = false;
-        console.log(action.payload);
         state.post = action.payload.data.data;
       }
     );
-    builder.addCase(getPost.rejected, (state: InitialState) => {
+    builder.addCase(getPost.rejected, (state: SinglePageState) => {
       state.loading = false;
     });
   },
@@ -102,4 +115,10 @@ const postSlice = createSlice({
 
 export default postSlice.reducer;
 
-export const { upvotesuccess, downvotesuccess } = postSlice.actions;
+export const {
+  upvotesuccess,
+  downvotesuccess,
+  enablecomment,
+  disablecomment,
+  togglecomment,
+} = postSlice.actions;

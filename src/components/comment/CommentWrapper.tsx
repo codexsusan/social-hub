@@ -1,21 +1,19 @@
-import { PostPartial } from "@/types/postTypes";
+import React from "react";
 import { CustomAvatar } from "../common/CustomAvatar";
-// import { useEffect } from "react";
-// import { useAppDispatch } from "@/app/hooks";
-// import { fetchLatestPostUserData } from "@/features/home/homeSlice";
-interface Props {
-  className?: string;
-  isBookmarked?: boolean;
-  type?: string;
-  post: PostPartial;
-  children?: React.ReactNode;
-}
+import { cn } from "@/lib/utils";
+import { CommentPartial } from "@/types/commentTypes";
 
-function PostUserData(props: Props) {
+type Props = {
+  comment?: CommentPartial;
+  children: React.ReactNode;
+};
+
+function CommentWrapper(props: Props) {
+  const { comment, children } = props;
   return (
-    <div className="flex gap-x-3">
+    <div className={cn("flex gap-x-3")}>
       <div
-        className=""
+        className={""}
         onClick={(event: React.MouseEvent) => {
           event.stopPropagation();
           console.log("Redirect to user profile");
@@ -23,7 +21,7 @@ function PostUserData(props: Props) {
       >
         <CustomAvatar />
       </div>
-      <div>
+      <div className="w-full">
         <div className="flex items-center gap-2">
           <p
             onClick={(event: React.MouseEvent) => {
@@ -32,7 +30,7 @@ function PostUserData(props: Props) {
             }}
             className="text-white opacity-70 text-base font-semibold"
           >
-            {props.post.author?.firstName + " " + props.post.author?.lastName}
+            {comment?.author?.firstName + "" + comment?.author?.lastName}
           </p>
           <p
             onClick={(event: React.MouseEvent) => {
@@ -41,13 +39,15 @@ function PostUserData(props: Props) {
             }}
             className="text-white opacity-60 text-base"
           >
-            @{props.post.author?.userName}
+            @{comment?.author?.userName}
           </p>
         </div>
-        <div>{props.children}</div>
+        {/* Children should be here as */}
+        {children}
+        
       </div>
     </div>
   );
 }
 
-export default PostUserData;
+export default CommentWrapper;

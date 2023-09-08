@@ -16,7 +16,7 @@ export const createCommentOnPostUtils = async (
 };
 
 // Get Comments
-export const getCommentsUtils = async (id: CommentPartial["_id"]) => {
+export const getCommentsOnPostUtils = async (id: PostPartial["_id"]) => {
   const response = await request(`/api/comment/get-comments/${id}`, "GET");
   return response;
 };
