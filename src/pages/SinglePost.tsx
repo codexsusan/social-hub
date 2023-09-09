@@ -12,6 +12,7 @@ import AddCommentWrapper from "@/components/comment/AddCommentWrapper";
 import { getCommentsOnPost } from "@/features/comment/commentSlice";
 import CommentSection from "@/components/comment/CommentSection";
 import PostActions from "@/components/post/PostActions";
+import parser from "html-react-parser";
 
 function SinglePost() {
   const { postId } = useParams();
@@ -43,6 +44,7 @@ function PostView() {
   const singlePost = useAppSelector((state) => state.currentpost);
   const post = singlePost.post;
   const { title, content } = singlePost.post;
+  const parsedContent = parser(content || "");
   return (
     <>
       {singlePost.loading ? (
@@ -51,7 +53,7 @@ function PostView() {
         <PostWrapper post={post} type="post">
           <div className="text-base mt-2 space-y-4 w-full">
             <div className="text-xl font-semibold">{title}</div>
-            <div>{content}</div>
+            <div>{parsedContent}</div>
             <PostActions post={post} type={"single-post"} />
           </div>
         </PostWrapper>

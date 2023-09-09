@@ -111,7 +111,6 @@ const commentSlice = createSlice({
       const comment = state.comments.find(
         (comment) => comment._id === action.payload
       );
-      console.log(action.payload);
       if (comment) {
         if (!comment.downvote_status) {
           comment.downvote_status = true;

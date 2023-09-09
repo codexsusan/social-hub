@@ -5,6 +5,7 @@ import PostActions from "./PostActions";
 import { cn } from "@/lib/utils";
 import { PostPartial } from "@/types/postTypes";
 import { useNavigate } from "react-router-dom";
+import parser from "html-react-parser";
 
 interface Props {
   className?: string;
@@ -19,6 +20,7 @@ function PostCard(props: Props) {
     e.preventDefault();
     navigate(`/c/${post!.community_id}/post/${post!._id}`);
   };
+  const content = parser(post!.content || "");
 
   return (
     <div
@@ -31,7 +33,7 @@ function PostCard(props: Props) {
       <PostWrapper post={post}>
         <div className="text-base mt-2 space-y-4 flex-1">
           <div className="text-xl font-semibold">{post!.title}</div>
-          <div>{post!.content}</div>
+          <div>{content}</div>
           <PostActions {...props} />
         </div>
       </PostWrapper>

@@ -3,6 +3,7 @@ import CustomSelect from "@/components/common/CustomSelect";
 import SubmitTab from "@/components/submit/SubmitTab";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { toast } from "@/components/ui/use-toast";
 import { changeCommunity, createPost } from "@/features/submit/submitSlice";
 import useDocumentTitle from "@/hooks/useDocumentTitle";
 import { Loader2 } from "lucide-react";
@@ -14,8 +15,20 @@ function Submit() {
 
   const handlePostSubmit = () => {
     dispatch(createPost(submit.post)).then((res) => {
-      if (res.type === "submit/createPost/fulfilled") {
-        console.log(res);
+      if (res.meta.requestStatus === "fulfilled") {
+        toast({
+          title: "Post Submitted",
+          description: "Post created successfully.",
+          className: "bg-[#09090B] text-[#e2e2e2] border-none ",
+          duration: 2000,
+        });
+      } else {
+        toast({
+          title: "Post submission failed.",
+          description: "Please try again.",
+          className: "bg-[#09090B] text-[#e2e2e2] border-none ",
+          duration: 2000,
+        });
       }
     });
   };
