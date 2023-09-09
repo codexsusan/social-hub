@@ -9,8 +9,6 @@ function CommentActions(props: { comment: CommentPartial }) {
       ? "Vote"
       : comment.upvotes_count! - comment.downvotes_count!;
 
-  // const CommentCount = comment.
-
   return (
     <div className="w-full flex gap-x-8 justify-normal my-2 items-center ">
       <div className="flex gap-x-2">

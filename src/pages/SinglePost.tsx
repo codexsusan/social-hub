@@ -1,6 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { PostActions } from "@/components/post/PostCard";
-import UserData from "@/components/common/UserData";
+import PostWrapper from "@/components/common/PostWrapper";
 import EditorView from "@/components/submit/EditorView";
 import { SinglePageState, getPost } from "@/features/post/postSlice";
 import { cn } from "@/lib/utils";
@@ -11,8 +10,8 @@ import { useParams } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
 import AddCommentWrapper from "@/components/comment/AddCommentWrapper";
 import { getCommentsOnPost } from "@/features/comment/commentSlice";
-import CommentWrapper from "@/components/comment/CommentWrapper";
-import CommentActions from "@/components/comment/CommentActions";
+import CommentSection from "@/components/comment/CommentSection";
+import PostActions from "@/components/post/PostActions";
 
 function SinglePost() {
   const { postId } = useParams();
@@ -34,7 +33,7 @@ function SinglePost() {
         <PostView />
         <AddComment />
         <Separator className="my-4 self-center" orientation="horizontal" />
-        <ListComment />
+        <CommentSection />
       </div>
     </div>
   );
@@ -49,13 +48,13 @@ function PostView() {
       {singlePost.loading ? (
         <Loader className="animate-spin" />
       ) : (
-        <UserData post={post} type="post">
+        <PostWrapper post={post} type="post">
           <div className="text-base mt-2 space-y-4 w-full">
             <div className="text-xl font-semibold">{title}</div>
             <div>{content}</div>
             <PostActions post={post} type={"single-post"} />
           </div>
-        </UserData>
+        </PostWrapper>
       )}
     </>
   );
@@ -73,30 +72,6 @@ function AddComment() {
           <EditorView src="comment" className="mt-2" height={200} />
         </AddCommentWrapper>
       ) : null}
-    </div>
-  );
-}
-
-function ListComment() {
-  const currentcomment = useAppSelector((state) => state.currentcomment);
-
-  return (
-    <div className="mt-5">
-      <div className={cn("flex gap-x-3 ")}>
-        <div className={"w-10"}></div>
-        <div className="flex flex-col gap-4 w-full">
-          {currentcomment.comments.map((comment) => {
-            return (
-              <>
-                <CommentWrapper key={comment._id} comment={comment}>
-                  <div className="">{comment?.content}</div>
-                  <CommentActions comment={comment} />
-                </CommentWrapper>
-              </>
-            );
-          })}
-        </div>
-      </div>
     </div>
   );
 }
