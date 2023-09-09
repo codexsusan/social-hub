@@ -1,6 +1,12 @@
+import { toast } from "@/components/ui/use-toast";
 import { CommentPartial } from "@/types/commentTypes";
 import { PostPartial } from "@/types/postTypes";
-import { getCommentsOnPostUtils } from "@/utils/commentUtils";
+import { UserPartial } from "@/types/userTypes";
+import {
+  downvoteCommentByIdUtils,
+  getCommentsOnPostUtils,
+  upvoteCommentByIdUtils,
+} from "@/utils/commentUtils";
 import { ResponseData } from "@/utils/httpUtils";
 import { getUserByIdUtils } from "@/utils/userUtils";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
@@ -17,18 +23,30 @@ const initialState: InitialState = {
   comments: [] as CommentPartial[],
 };
 
+type Data = {
+  postId: PostPartial["_id"];
+  userId: UserPartial["_id"];
+};
+
 export const getCommentsOnPost = createAsyncThunk(
   "comment/get",
-  async (id: PostPartial["_id"]) => {
-    const commentData = await getCommentsOnPostUtils(id);
+  async (data: Data) => {
+    const { postId, userId } = data;
+    const commentData = await getCommentsOnPostUtils(postId);
     const commentLength = commentData.data.data.length;
     const updateCommentData = [];
     for (let i = 0; i < commentLength; i++) {
+      const upvote_status = commentData.data.data[i].upvotes.includes(userId);
+      const downvote_status =
+        commentData.data.data[i].downvotes.includes(userId);
       const currentAuthorId = commentData.data.data[i].author_id;
       const authorData = await getUserByIdUtils(currentAuthorId);
       const currentAuthor = authorData.data.user;
       const updatedCurrentCommentData: CommentPartial = {
         ...commentData.data.data[i],
+        comment_reply_status: false,
+        upvote_status,
+        downvote_status,
         author: {
           _id: currentAuthor._id,
           userName: currentAuthor.userName,
@@ -47,13 +65,77 @@ export const getCommentsOnPost = createAsyncThunk(
   }
 );
 
+export const upvoteCommentById = createAsyncThunk(
+  "comment/upvote",
+  async (id: CommentPartial["_id"]) => {
+    return upvoteCommentByIdUtils(id);
+  }
+);
+
+export const downvoteCommentById = createAsyncThunk(
+  "comment/downvote",
+  async (id: CommentPartial["_id"]) => {
+    return downvoteCommentByIdUtils(id);
+  }
+);
+
 const commentSlice = createSlice({
   name: "comment",
   initialState,
   reducers: {
-    upvotesuccess: (state: InitialState, action: PayloadAction) => {
-      console.log(state);
+    upvotesuccess: (
+      state: InitialState,
+      action: PayloadAction<CommentPartial["_id"]>
+    ) => {
+      const comment = state.comments.find(
+        (comment) => comment._id === action.payload
+      );
+      if (comment) {
+        if (!comment.upvote_status) {
+          comment.upvotes_count = comment.upvotes_count! - 1 + 2;
+          comment.upvote_status = true;
+          if (comment.downvote_status) {
+            comment.downvote_status = false;
+            comment.downvotes_count = comment.downvotes_count! - 1;
+          }
+        } else {
+          comment.upvote_status = false;
+          comment.upvotes_count = comment.upvotes_count! - 1;
+        }
+      }
+    },
+    downvotesuccess: (
+      state: InitialState,
+      action: PayloadAction<CommentPartial["_id"]>
+    ) => {
+      const comment = state.comments.find(
+        (comment) => comment._id === action.payload
+      );
       console.log(action.payload);
+      if (comment) {
+        if (!comment.downvote_status) {
+          comment.downvote_status = true;
+          comment.downvotes_count = comment.downvotes_count! - 1 + 2;
+          if (comment.upvote_status) {
+            comment.upvotes_count = comment.upvotes_count! - 1;
+            comment.upvote_status = false;
+          }
+        } else {
+          comment.downvote_status = false;
+          comment.downvotes_count = comment.downvotes_count! - 1;
+        }
+      }
+    },
+    switchcommentreplybox: (
+      state: InitialState,
+      action: PayloadAction<CommentPartial["_id"]>
+    ) => {
+      const comment = state.comments.find(
+        (comment) => comment._id === action.payload
+      );
+      if (comment) {
+        comment.comment_reply_status = !comment.comment_reply_status!;
+      }
     },
   },
   extraReducers: (builder) => {
@@ -72,6 +154,9 @@ const commentSlice = createSlice({
       (state: InitialState, action) => {
         state.loading = false;
         state.error = action.error.message || "";
+        toast({
+          description: state.error || "Something went wrong",
+        });
       }
     );
   },
@@ -79,4 +164,5 @@ const commentSlice = createSlice({
 
 export default commentSlice.reducer;
 
-export const { upvotesuccess } = commentSlice.actions;
+export const { upvotesuccess, downvotesuccess, switchcommentreplybox } =
+  commentSlice.actions;

@@ -52,7 +52,7 @@ export default function EditorView(props: {
             content_css: "dark",
             width: "100%",
             plugins:
-              "powerpaste casechange autolink directionality advcode visualblocks visualchars image link media mediaembed codesample table charmap pagebreak nonbreaking anchor tableofcontents insertdatetime advlist lists checklist wordcount tinymcespellchecker editimage permanentpen charmap linkchecker emoticons autosave",
+              "powerpaste autolink advcode visualblocks visualchars image link media mediaembed codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists checklist wordcount tinymcespellchecker editimage permanentpen charmap linkchecker emoticons autosave",
             toolbar,
             textcolor_rows: "4",
           }}

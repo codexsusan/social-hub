@@ -35,3 +35,13 @@ export const deleteCommentByIdUtils = async (id: CommentPartial["_id"]) => {
   const response = await request(`/api/comment/delete-comment/${id}`, "DELETE");
   return response;
 };
+
+export const upvoteCommentByIdUtils = async (id: CommentPartial["_id"]) => {
+  const response = await request(`/api/comment/upvote-comment/${id}`, "POST");
+  return response;
+};
+
+export const downvoteCommentByIdUtils = async (id: CommentPartial["_id"]) => {
+  const response = await request(`/api/comment/downvote-comment/${id}`, "POST");
+  return response;
+};

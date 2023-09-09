@@ -12,21 +12,16 @@ interface Props {
 }
 
 function AddCommentWrapper(props: Props) {
-  const { className, type, children, post } = props;
+  const { className, type, children } = props;
   const user = useAppSelector((state) => state.user);
   const { firstName, lastName, userName } = user;
 
   const displayName = firstName + " " + lastName;
 
-  const username = type === "comment" ? userName : post?.author?.userName;
+  const username = userName;
   return (
     <div className={cn("flex gap-x-3", className)}>
-      <div
-        className={"w-10"}
-        onClick={(event: React.MouseEvent) => {
-          event.stopPropagation();
-        }}
-      ></div>
+      <AlignmentBox {...props} />
       <div className="w-full">
         <div className="flex items-center gap-2">
           <div className="flex gap-x-2">
@@ -56,6 +51,10 @@ function AddCommentWrapper(props: Props) {
       </div>
     </div>
   );
+}
+
+function AlignmentBox(props: Props) {
+  return <>{props.type === "post" ? <div className={"w-10"}></div> : null}</>;
 }
 
 export default AddCommentWrapper;

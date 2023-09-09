@@ -20,7 +20,7 @@ function SinglePost() {
 
   useEffect(() => {
     dispatch(getPost({ postId, userId }));
-    dispatch(getCommentsOnPost(postId));
+    dispatch(getCommentsOnPost({ postId, userId }));
   }, [dispatch, postId, userId]);
 
   return (
@@ -68,7 +68,7 @@ function AddComment() {
   return (
     <div className="mt-5">
       {post.comment_status ? (
-        <AddCommentWrapper post={post} type="comment">
+        <AddCommentWrapper post={post} type="post">
           <EditorView src="comment" className="mt-2" height={200} />
         </AddCommentWrapper>
       ) : null}
