@@ -1,4 +1,4 @@
-import {  AuthorPartial } from "./userTypes";
+import { AuthorPartial } from "./userTypes";
 
 export interface Comment {
   _id: string;
@@ -8,10 +8,14 @@ export interface Comment {
   post_id: string;
   upvotes: string[];
   downvotes: string[];
+  upvote_status: boolean;
+  downvote_status: boolean;
   upvotes_count: number;
   downvotes_count: number;
   report_count: number;
   comment_context: string;
+  comment_reply_status: boolean;
+  comment_reply: CommentPartial[];
   parent_type: string;
   parent_id: string;
   created_at: string;

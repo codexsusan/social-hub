@@ -66,8 +66,11 @@ export function PostActions(props: Props) {
   const dispatch = useAppDispatch();
   const VoteCount =
     post!.upvotes_count! - post!.downvotes_count! == 0
-      ? ""
+      ? "Vote"
       : post!.upvotes_count! - post!.downvotes_count!;
+
+  const CommentCount =
+    post!.comment_count == 0 ? "Comment" : post!.comment_count;
 
   const handleUpVote = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -122,7 +125,7 @@ export function PostActions(props: Props) {
       </div>
       <div onClick={handleCommentSection} className="flex gap-x-2">
         <MessageCircle strokeWidth={1} size={22} />
-        {post!.comment_count}
+        {CommentCount}
       </div>
       <div>
         <Bookmark strokeWidth={1} size={22} />

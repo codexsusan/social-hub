@@ -12,6 +12,7 @@ import { Separator } from "@/components/ui/separator";
 import AddCommentWrapper from "@/components/comment/AddCommentWrapper";
 import { getCommentsOnPost } from "@/features/comment/commentSlice";
 import CommentWrapper from "@/components/comment/CommentWrapper";
+import CommentActions from "@/components/comment/CommentActions";
 
 function SinglePost() {
   const { postId } = useParams();
@@ -89,7 +90,7 @@ function ListComment() {
               <>
                 <CommentWrapper key={comment._id} comment={comment}>
                   <div className="">{comment?.content}</div>
-                  <div className="p-4 border "></div>
+                  <CommentActions comment={comment} />
                 </CommentWrapper>
               </>
             );

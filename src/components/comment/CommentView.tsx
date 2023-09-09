@@ -41,6 +41,7 @@ function CommentView(props: { comment?: CommentPartial }) {
         {/* Children should be here as */}
         <div className="w-full">{comment?.content}</div>
         <div className="p-4 border"></div>
+        
       </div>
     </div>
   );
