@@ -6,7 +6,7 @@ import FileUploadButton from "../common/FileUploadButton";
 import { useSearchParams } from "react-router-dom";
 import EditorView from "./EditorView";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { changeTitle } from "@/features/submit/submitSlice";
+import { changeContent, changeTitle } from "@/features/submit/submitSlice";
 import { ReactNode } from "react";
 
 type Props = {
@@ -41,6 +41,9 @@ function SubmitTab(props: Props) {
 function PostView(props: Props) {
   const dispatch = useAppDispatch();
   const post = useAppSelector((state) => state.submit.post);
+  const handleContentChange = (content: string) => {
+    dispatch(changeContent(content));
+  };
   return (
     <Card className="bg-[#27272A] ">
       <CardContent className="space-y-4 p-6">
@@ -53,7 +56,11 @@ function PostView(props: Props) {
           type="text"
           placeholder="Title"
         />
-        <EditorView />
+        <EditorView
+          contentChangeCB={handleContentChange}
+          src="post"
+          content={post.content}
+        />
         {props.children}
       </CardContent>
     </Card>

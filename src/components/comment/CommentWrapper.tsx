@@ -30,7 +30,7 @@ function CommentWrapper(props: Props) {
             }}
             className="text-white opacity-70 text-base font-semibold"
           >
-            {comment?.author?.firstName + "" + comment?.author?.lastName}
+            {comment?.author?.firstName + " " + comment?.author?.lastName}
           </p>
           <p
             onClick={(event: React.MouseEvent) => {

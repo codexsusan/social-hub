@@ -2,7 +2,6 @@ import { PostPartial } from "@/types/postTypes";
 import { ResponseData } from "@/utils/httpUtils";
 import { createPostUtils } from "@/utils/postUtils";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { toast } from "@/components/ui/use-toast";
 
 type InitialState = {
   post: PostPartial;
@@ -11,7 +10,9 @@ type InitialState = {
 };
 
 const initialState: InitialState = {
-  post: {} as PostPartial,
+  post: {
+    title: "",
+  } as PostPartial,
   loading: false,
   error: "",
 };
@@ -28,9 +29,6 @@ const submitSlice = createSlice({
   name: "submit",
   initialState,
   reducers: {
-    clear: (state) => {
-      state = initialState;
-    },
     changeTitle: (state, action) => {
       state.post.title = action.payload;
     },
@@ -57,19 +55,6 @@ const submitSlice = createSlice({
             content: "",
             tags: [],
           };
-          toast({
-            title: "Post Submitted",
-            description: action.payload.data.message,
-            className: "bg-[#09090B] text-[#e2e2e2] border-none ",
-            duration: 2000,
-          });
-        } else {
-          toast({
-            title: "Post submission failed.",
-            description: action.payload.data.message,
-            className: "bg-[#09090B] text-[#e2e2e2] border-none ",
-            duration: 2000,
-          });
         }
       }
     );
@@ -81,5 +66,5 @@ const submitSlice = createSlice({
 });
 
 export default submitSlice.reducer;
-export const { changeTitle, changeContent, changeCommunity, clear } =
+export const { changeTitle, changeContent, changeCommunity } =
   submitSlice.actions;

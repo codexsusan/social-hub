@@ -1,5 +1,3 @@
-import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { changeContent } from "@/features/submit/submitSlice";
 import { Editor } from "@tinymce/tinymce-react";
 import { Loader } from "lucide-react";
 import React from "react";
@@ -11,18 +9,12 @@ export default function EditorView(props: {
   height?: number;
   className?: string;
   src: EditorSrcType;
+  contentChangeCB?: (value: string) => void;
+  content?: string;
 }) {
-  const { height, className, src } = props;
-  const content = useAppSelector((state) => state.submit.post.content!);
+  const { height, className, src, content, contentChangeCB } = props;
   const editorRef = React.useRef<Editor | null>(null);
-  const dispatch = useAppDispatch();
   const [loading, setLoading] = React.useState<boolean>(true);
-
-  const handleEditorChange = (contentValue: string) => {
-    dispatch(changeContent(contentValue));
-  };
-
-  // const commentEditorPlugins = "";
 
   const commentEditorToolbar =
     "bold italic underline | link image  codesample | alignleft aligncenter alignright alignjustify lineheight";
@@ -56,7 +48,7 @@ export default function EditorView(props: {
             toolbar,
             textcolor_rows: "4",
           }}
-          onEditorChange={handleEditorChange}
+          onEditorChange={contentChangeCB}
         />
       </div>
     </div>
