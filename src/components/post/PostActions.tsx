@@ -75,19 +75,21 @@ export default function PostActions(props: Props) {
     }
   };
 
+  const { upvote_status, downvote_status } = post!;
+
   return (
     <div className="w-full flex gap-x-8 justify-normal my-2 items-center ">
       <div className="flex gap-x-2">
-        {post!.upvote_status ? (
-          <ArrowBigUp onClick={handleUpVote} strokeWidth={1} fill="white" />
-        ) : (
-          <ArrowBigUp onClick={handleUpVote} strokeWidth={1} />
-        )}
-        {post!.downvote_status ? (
-          <ArrowBigDown onClick={handleDownVote} strokeWidth={1} fill="white" />
-        ) : (
-          <ArrowBigDown onClick={handleDownVote} strokeWidth={1} />
-        )}
+        <ArrowBigUp
+          onClick={handleUpVote}
+          strokeWidth={1}
+          fill={upvote_status ? "white" : ""}
+        />
+        <ArrowBigDown
+          onClick={handleDownVote}
+          strokeWidth={1}
+          fill={downvote_status ? "white" : ""}
+        />
         {VoteCount}
       </div>
       <div onClick={handleCommentSection} className="flex gap-x-2">

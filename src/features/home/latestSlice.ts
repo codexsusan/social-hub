@@ -41,7 +41,10 @@ const latestSlice = createSlice({
   name: "latestpost",
   initialState,
   reducers: {
-    upvotelatestsuccess: (state: InitialState, action) => {
+    upvotelatestsuccess: (
+      state: InitialState,
+      action: PayloadAction<PostPartial["_id"]>
+    ) => {
       const post = state.posts.find((post) => post._id === action.payload);
       if (post) {
         if (!post.upvote_status) {
@@ -57,7 +60,10 @@ const latestSlice = createSlice({
         }
       }
     },
-    downvotelatestsuccess: (state: InitialState, action) => {
+    downvotelatestsuccess: (
+      state: InitialState,
+      action: PayloadAction<PostPartial["_id"]>
+    ) => {
       const post = state.posts.find((post) => post._id === action.payload);
       if (post) {
         if (!post.downvote_status) {

@@ -21,14 +21,14 @@ const initialState: SinglePageState = {
 };
 
 export const upvotePost = createAsyncThunk(
-  "home/trending/post/upvote",
+  "post/upvote",
   async (id: PostPartial["_id"]) => {
     return upvotePostUtils(id).then((res) => res);
   }
 );
 
 export const downvotePost = createAsyncThunk(
-  "home/trending/post/upvote",
+  "post/upvote",
   async (id: PostPartial["_id"]) => {
     return downvotePostUtils(id).then((res) => res);
   }
@@ -115,10 +115,5 @@ const postSlice = createSlice({
 
 export default postSlice.reducer;
 
-export const {
-  upvotesuccess,
-  downvotesuccess,
-  enablecomment,
-  disablecomment,
-  togglecomment,
-} = postSlice.actions;
+export const { upvotesuccess, downvotesuccess, togglecomment } =
+  postSlice.actions;

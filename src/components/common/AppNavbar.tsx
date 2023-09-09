@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { CustomAvatar } from "./CustomAvatar";
 import useTokenVerify from "@/hooks/useTokenVerify";
 import { fetchUserData } from "@/features/user/userSlice";
+import { toast } from "../ui/use-toast";
 
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
@@ -27,11 +28,12 @@ export default function AppNavbar() {
   useEffect(() => {
     dispatch(fetchUserData()).then((res) => {
       if (res.meta.requestStatus === "rejected") {
-        localStorage.removeItem("token");
-        navigate("/auth/login");
+        toast({
+          description: user.error,
+        });
       }
     });
-  }, [dispatch, navigate, user._id.length]);
+  }, [dispatch, navigate, user.error]);
 
   return (
     <Disclosure as="nav" className="bg-[#1A1A1B]">

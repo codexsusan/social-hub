@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import CommentWrapper from "./CommentWrapper";
 import CommentActions from "./CommentActions";
 import { Loader } from "lucide-react";
+import CommentEditor from "./CommentEditor";
 
 function CommentSection() {
   const currentcomment = useAppSelector((state) => state.currentcomment);
@@ -26,12 +27,11 @@ function View() {
     <>
       {currentcomment.comments.map((comment) => {
         return (
-          <>
-            <CommentWrapper key={comment._id} comment={comment}>
-              <div className="text-base">{comment?.content}</div>
-              <CommentActions comment={comment} />
-            </CommentWrapper>
-          </>
+          <CommentWrapper key={comment._id} comment={comment}>
+            <div className="text-base">{comment?.content}</div>
+            <CommentActions comment={comment} />
+            {comment.comment_reply_status && <CommentEditor />}
+          </CommentWrapper>
         );
       })}
     </>
