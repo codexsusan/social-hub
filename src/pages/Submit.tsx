@@ -33,15 +33,6 @@ function Submit() {
     });
   };
 
-  const PostButton = submit.loading ? (
-    <Button disabled>
-      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-      Please wait
-    </Button>
-  ) : (
-    <Button onClick={handlePostSubmit}>Post</Button>
-  );
-
   return (
     <div className="w-full flex flex-col flex-1 items-center p-4 gap-y-2 overflow-auto text-white">
       <div className="xl:w-2/5 lg:w-3/5 md:w-4/5 w-full p-2 rounded-sm border-slate-600 flex flex-col gap-6">
@@ -63,11 +54,35 @@ function Submit() {
           <Separator className="bg-gray-700" orientation="horizontal" />
           <div className="flex justify-end gap-x-4">
             <Button>Save Draft</Button>
-            {PostButton}
+            <PostButton
+              loading={submit.loading}
+              handlePostSubmit={handlePostSubmit}
+            />
           </div>
         </SubmitTab>
       </div>
     </div>
+  );
+}
+
+type PostButtonProps = {
+  loading: boolean;
+  handlePostSubmit: () => void;
+};
+
+function PostButton(props: PostButtonProps) {
+  const { loading, handlePostSubmit } = props;
+  return (
+    <>
+      {loading ? (
+        <Button disabled>
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          Please wait
+        </Button>
+      ) : (
+        <Button onClick={handlePostSubmit}>Post</Button>
+      )}
+    </>
   );
 }
 
