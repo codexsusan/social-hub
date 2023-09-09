@@ -50,7 +50,12 @@ export const getCommentsOnPost = createAsyncThunk(
 const commentSlice = createSlice({
   name: "comment",
   initialState,
-  reducers: {},
+  reducers: {
+    upvotesuccess: (state: InitialState, action: PayloadAction) => {
+      console.log(state);
+      console.log(action.payload);
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getCommentsOnPost.pending, (state: InitialState) => {
       state.loading = true;
@@ -73,3 +78,5 @@ const commentSlice = createSlice({
 });
 
 export default commentSlice.reducer;
+
+export const { upvotesuccess } = commentSlice.actions;

@@ -12,7 +12,7 @@ interface Props {
   children?: React.ReactNode;
 }
 
-function UserData(props: Props) {
+function PostWrapper(props: Props) {
   const { className, type, children, post } = props;
   const user = useAppSelector((state) => state.user);
   const { firstName, lastName, userName } = user;
@@ -62,4 +62,4 @@ function UserData(props: Props) {
   );
 }
 
-export default UserData;
+export default PostWrapper;
