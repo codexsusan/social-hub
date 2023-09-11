@@ -1,12 +1,11 @@
 import { useAppSelector } from "@/app/hooks";
 import { cn } from "@/lib/utils";
+import { contentType } from "@/types/generalTypes";
 import { PostPartial } from "@/types/postTypes";
 import React from "react";
-
-type sourceType = "post" | "comment";
 interface Props {
   className?: string;
-  type?: sourceType;
+  type?: contentType;
   post?: PostPartial;
   children?: React.ReactNode;
 }

@@ -1,4 +1,4 @@
-import { BookmarkPartial } from "@/types/bookmarkTypes";
+import { BookmarkInitialState, BookmarkPartial } from "@/types/bookmarkTypes";
 import { PostPartial } from "@/types/postTypes";
 import {
   addBookmarkUtils,
@@ -8,13 +8,7 @@ import {
 import { ResponseData } from "@/utils/httpUtils";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-type InitialState = {
-  error: string;
-  loading: boolean;
-  bookmarks: BookmarkPartial[];
-};
-
-const initialState: InitialState = {
+const initialState: BookmarkInitialState = {
   error: "",
   loading: false,
   bookmarks: [] as BookmarkPartial[],
@@ -44,52 +38,61 @@ const bookmarkSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     // Add Bookmarks
-    builder.addCase(addBookmark.pending, (state: InitialState) => {
+    builder.addCase(addBookmark.pending, (state: BookmarkInitialState) => {
       state.loading = true;
     });
     builder.addCase(
       addBookmark.fulfilled,
-      (state: InitialState, action: PayloadAction<ResponseData>) => {
+      (state: BookmarkInitialState, action: PayloadAction<ResponseData>) => {
         state.loading = false;
         state.bookmarks = [...state.bookmarks, action.payload.data];
       }
     );
-    builder.addCase(addBookmark.rejected, (state: InitialState, action) => {
-      state.loading = false;
-      state.error = action.error.message!;
-    });
+    builder.addCase(
+      addBookmark.rejected,
+      (state: BookmarkInitialState, action) => {
+        state.loading = false;
+        state.error = action.error.message!;
+      }
+    );
     // Fetch User Bookmarks
-    builder.addCase(fetchBookmarks.pending, (state: InitialState) => {
+    builder.addCase(fetchBookmarks.pending, (state: BookmarkInitialState) => {
       state.loading = true;
     });
     builder.addCase(
       fetchBookmarks.fulfilled,
-      (state: InitialState, action: PayloadAction<ResponseData>) => {
+      (state: BookmarkInitialState, action: PayloadAction<ResponseData>) => {
         state.loading = false;
         state.bookmarks = action.payload.data;
       }
     );
-    builder.addCase(fetchBookmarks.rejected, (state: InitialState, action) => {
-      state.loading = false;
-      state.error = action.error.message!;
-    });
+    builder.addCase(
+      fetchBookmarks.rejected,
+      (state: BookmarkInitialState, action) => {
+        state.loading = false;
+        state.error = action.error.message!;
+      }
+    );
     // Remove Bookmarks
-    builder.addCase(removeBookmark.pending, (state: InitialState) => {
+    builder.addCase(removeBookmark.pending, (state: BookmarkInitialState) => {
       state.loading = true;
     });
     builder.addCase(
       removeBookmark.fulfilled,
-      (state: InitialState, action: PayloadAction<ResponseData>) => {
+      (state: BookmarkInitialState, action: PayloadAction<ResponseData>) => {
         state.loading = false;
         state.bookmarks = state.bookmarks.filter(
           (bookmark) => bookmark._id !== action.payload.data._id
         );
       }
     );
-    builder.addCase(removeBookmark.rejected, (state: InitialState, action) => {
-      state.loading = false;
-      state.error = action.error.message!;
-    });
+    builder.addCase(
+      removeBookmark.rejected,
+      (state: BookmarkInitialState, action) => {
+        state.loading = false;
+        state.error = action.error.message!;
+      }
+    );
   },
 });
 

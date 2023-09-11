@@ -9,7 +9,7 @@ export const createCommunityUtils = (community: PartialCommunity) => {
 
 // Get All Community
 export const getAllCommunityUtils = () => {
-  const response = request("/api/community/get-all-communities", "GET");
+  const response = request("/api/community/get-all-communities", "GET",{});
   return response;
 };
 
@@ -17,7 +17,8 @@ export const getAllCommunityUtils = () => {
 export const getCommunityByIdUtils = (communityId: PartialCommunity["_id"]) => {
   const response = request(
     `/api/community/get-community/${communityId}`,
-    "GET"
+    "GET",
+    {}
   );
   return response;
 };

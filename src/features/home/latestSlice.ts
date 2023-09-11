@@ -1,17 +1,11 @@
 import { toast } from "@/components/ui/use-toast";
-import { PostPartial } from "@/types/postTypes";
+import { LatestInitialState, PostPartial } from "@/types/postTypes";
 import { UserPartial } from "@/types/userTypes";
 import { ResponseData } from "@/utils/httpUtils";
 import { getLatestPostsUtils } from "@/utils/postUtils";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-type InitialState = {
-  error: string;
-  loading: boolean;
-  posts: PostPartial[] | [];
-};
-
-const initialState: InitialState = {
+const initialState: LatestInitialState = {
   error: "",
   loading: false,
   posts: [] as PostPartial[],
@@ -42,7 +36,7 @@ const latestSlice = createSlice({
   initialState,
   reducers: {
     upvotelatestsuccess: (
-      state: InitialState,
+      state: LatestInitialState,
       action: PayloadAction<PostPartial["_id"]>
     ) => {
       const post = state.posts.find((post) => post._id === action.payload);
@@ -61,7 +55,7 @@ const latestSlice = createSlice({
       }
     },
     downvotelatestsuccess: (
-      state: InitialState,
+      state: LatestInitialState,
       action: PayloadAction<PostPartial["_id"]>
     ) => {
       const post = state.posts.find((post) => post._id === action.payload);
@@ -81,12 +75,12 @@ const latestSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchLatestPosts.pending, (state: InitialState) => {
+    builder.addCase(fetchLatestPosts.pending, (state: LatestInitialState) => {
       state.loading = true;
     });
     builder.addCase(
       fetchLatestPosts.fulfilled,
-      (state: InitialState, action: PayloadAction<ResponseData>) => {
+      (state: LatestInitialState, action: PayloadAction<ResponseData>) => {
         state.loading = false;
         if (action.payload.status === 200) {
           state.posts = [...action.payload.data.data];
@@ -98,19 +92,21 @@ const latestSlice = createSlice({
             title: "Failed to load data.",
             description: action.payload.data.message,
             duration: 2000,
+            className: "bg-[#09090B] text-[#e2e2e2] border-none ",
           });
         }
       }
     );
     builder.addCase(
       fetchLatestPosts.rejected,
-      (state: InitialState, action) => {
+      (state: LatestInitialState, action) => {
         state.loading = false;
         state.error = action.error.message || "";
         toast({
           title: "Unable to load data",
           description: action.error.message!,
           duration: 2000,
+          className: "bg-[#09090B] text-[#e2e2e2] border-none ",
         });
       }
     );

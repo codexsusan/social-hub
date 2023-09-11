@@ -11,3 +11,10 @@ export interface Bookmark {
 }
 
 export interface BookmarkPartial extends Partial<Bookmark> {}
+
+
+export type BookmarkInitialState = {
+  error: string;
+  loading: boolean;
+  bookmarks: BookmarkPartial[];
+};

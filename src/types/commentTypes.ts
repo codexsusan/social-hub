@@ -1,4 +1,5 @@
-import { AuthorPartial } from "./userTypes";
+import { PostPartial } from "./postTypes";
+import { AuthorPartial, UserPartial } from "./userTypes";
 
 export interface Comment {
   _id: string;
@@ -23,3 +24,14 @@ export interface Comment {
 }
 
 export interface CommentPartial extends Partial<Comment> {}
+
+export type CommentInitialState = {
+  error: string;
+  loading: boolean;
+  comments: CommentPartial[];
+};
+
+export type PostandUserId = {
+  postId: PostPartial["_id"];
+  userId: UserPartial["_id"];
+};

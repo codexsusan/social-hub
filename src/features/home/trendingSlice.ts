@@ -1,4 +1,4 @@
-import { PostPartial } from "@/types/postTypes";
+import { PostPartial, TrendingInitialState } from "@/types/postTypes";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 // import { fetchTrendingPosts } from "./homeSlice";
 import { ResponseData } from "@/utils/httpUtils";
@@ -6,13 +6,7 @@ import { toast } from "@/components/ui/use-toast";
 import { getTrendingPostsUtils } from "@/utils/postUtils";
 import { UserPartial } from "@/types/userTypes";
 
-type InitialState = {
-  error: string;
-  loading: boolean;
-  posts: PostPartial[];
-};
-
-const initialState: InitialState = {
+const initialState: TrendingInitialState = {
   error: "",
   loading: false,
   posts: [] as PostPartial[],
@@ -42,7 +36,7 @@ const trendingSlice = createSlice({
   name: "trendingpost",
   initialState,
   reducers: {
-    upvotetrendingsuccess: (state: InitialState, action) => {
+    upvotetrendingsuccess: (state: TrendingInitialState, action) => {
       const post = state.posts.find((post) => post._id === action.payload);
       if (post) {
         if (!post.upvote_status) {
@@ -58,7 +52,7 @@ const trendingSlice = createSlice({
         }
       }
     },
-    downvotetrendingsuccess: (state: InitialState, action) => {
+    downvotetrendingsuccess: (state: TrendingInitialState, action) => {
       const post = state.posts.find((post) => post._id === action.payload);
       if (post) {
         if (!post.downvote_status) {
@@ -76,12 +70,15 @@ const trendingSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchTrendingPosts.pending, (state) => {
-      state.loading = true;
-    });
+    builder.addCase(
+      fetchTrendingPosts.pending,
+      (state: TrendingInitialState) => {
+        state.loading = true;
+      }
+    );
     builder.addCase(
       fetchTrendingPosts.fulfilled,
-      (state: InitialState, action: PayloadAction<ResponseData>) => {
+      (state: TrendingInitialState, action: PayloadAction<ResponseData>) => {
         state.loading = false;
         if (action.payload.status === 200) {
           state.posts = [...action.payload.data.data];
@@ -90,19 +87,21 @@ const trendingSlice = createSlice({
             title: "Failed to load data.",
             description: action.payload.data.message,
             duration: 2000,
+            className: "bg-[#09090B] text-[#e2e2e2] border-none ",
           });
         }
       }
     );
     builder.addCase(
       fetchTrendingPosts.rejected,
-      (state: InitialState, action) => {
+      (state: TrendingInitialState, action) => {
         state.loading = false;
         state.error = action.error.message || "";
         toast({
           title: "Unable to load data",
           description: action.error.message!,
           duration: 2000,
+          className: "bg-[#09090B] text-[#e2e2e2] border-none ",
         });
       }
     );

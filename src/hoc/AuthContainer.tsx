@@ -1,6 +1,5 @@
 import AuthNavbar from "@/components/common/AuthNavbar";
-
-type authMethod = "login" | "signup";
+import { authMethod } from "@/types/generalTypes";
 
 function AuthContainer(props: {
   children: React.ReactNode;
