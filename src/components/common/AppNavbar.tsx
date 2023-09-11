@@ -30,6 +30,7 @@ export default function AppNavbar() {
       if (res.meta.requestStatus === "rejected") {
         toast({
           description: user.error,
+          className: "bg-[#09090B] text-[#e2e2e2] border-none ",
         });
       }
     });

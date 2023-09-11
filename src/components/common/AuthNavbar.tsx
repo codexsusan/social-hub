@@ -1,7 +1,7 @@
 import { Disclosure } from "@headlessui/react";
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
-type authMethod = "login" | "signup";
+import { authMethod } from "@/types/generalTypes";
 
 export default function AuthNavbar(props: { authMethod: authMethod }) {
   const navigate = useNavigate();
@@ -24,9 +24,21 @@ export default function AuthNavbar(props: { authMethod: authMethod }) {
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
               {/* Profile dropdown */}
               {props.authMethod === "login" ? (
-                <Button onClick={()=>{navigate("/auth/register")}}>Sign Up</Button>
+                <Button
+                  onClick={() => {
+                    navigate("/auth/register");
+                  }}
+                >
+                  Sign Up
+                </Button>
               ) : (
-                <Button onClick={()=>{navigate("/auth/login")}}>Sign in</Button>
+                <Button
+                  onClick={() => {
+                    navigate("/auth/login");
+                  }}
+                >
+                  Sign in
+                </Button>
               )}
             </div>
           </div>

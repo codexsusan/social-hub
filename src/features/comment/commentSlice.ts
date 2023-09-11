@@ -1,7 +1,9 @@
 import { toast } from "@/components/ui/use-toast";
-import { CommentPartial } from "@/types/commentTypes";
-import { PostPartial } from "@/types/postTypes";
-import { UserPartial } from "@/types/userTypes";
+import {
+  CommentInitialState,
+  CommentPartial,
+  PostandUserId,
+} from "@/types/commentTypes";
 import {
   downvoteCommentByIdUtils,
   getCommentsOnPostUtils,
@@ -11,26 +13,15 @@ import { ResponseData } from "@/utils/httpUtils";
 import { getUserByIdUtils } from "@/utils/userUtils";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-type InitialState = {
-  error: string;
-  loading: boolean;
-  comments: CommentPartial[];
-};
-
-const initialState: InitialState = {
+const initialState: CommentInitialState = {
   error: "",
   loading: false,
   comments: [] as CommentPartial[],
 };
 
-type Data = {
-  postId: PostPartial["_id"];
-  userId: UserPartial["_id"];
-};
-
 export const getCommentsOnPost = createAsyncThunk(
   "comment/get",
-  async (data: Data) => {
+  async (data: PostandUserId) => {
     const { postId, userId } = data;
     const commentData = await getCommentsOnPostUtils(postId);
     const commentLength = commentData.data.data.length;
@@ -84,7 +75,7 @@ const commentSlice = createSlice({
   initialState,
   reducers: {
     upvotesuccess: (
-      state: InitialState,
+      state: CommentInitialState,
       action: PayloadAction<CommentPartial["_id"]>
     ) => {
       const comment = state.comments.find(
@@ -105,7 +96,7 @@ const commentSlice = createSlice({
       }
     },
     downvotesuccess: (
-      state: InitialState,
+      state: CommentInitialState,
       action: PayloadAction<CommentPartial["_id"]>
     ) => {
       const comment = state.comments.find(
@@ -126,7 +117,7 @@ const commentSlice = createSlice({
       }
     },
     switchcommentreplybox: (
-      state: InitialState,
+      state: CommentInitialState,
       action: PayloadAction<CommentPartial["_id"]>
     ) => {
       const comment = state.comments.find(
@@ -138,23 +129,24 @@ const commentSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getCommentsOnPost.pending, (state: InitialState) => {
+    builder.addCase(getCommentsOnPost.pending, (state: CommentInitialState) => {
       state.loading = true;
     });
     builder.addCase(
       getCommentsOnPost.fulfilled,
-      (state: InitialState, action: PayloadAction<ResponseData>) => {
+      (state: CommentInitialState, action: PayloadAction<ResponseData>) => {
         state.loading = false;
         state.comments = action.payload.data.data;
       }
     );
     builder.addCase(
       getCommentsOnPost.rejected,
-      (state: InitialState, action) => {
+      (state: CommentInitialState, action) => {
         state.loading = false;
         state.error = action.error.message || "";
         toast({
           description: state.error || "Something went wrong",
+          className: "bg-[#09090B] text-[#e2e2e2] border-none ",
         });
       }
     );

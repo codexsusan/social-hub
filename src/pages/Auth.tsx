@@ -1,7 +1,6 @@
 import Login from "@/components/auth/Login";
 import Register from "@/components/auth/Register";
-
-type authMethod = "login" | "signup";
+import { authMethod } from "@/types/generalTypes";
 
 function Auth(props: { authMethod: authMethod }) {
   switch (props.authMethod) {

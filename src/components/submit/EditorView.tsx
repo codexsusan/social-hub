@@ -2,13 +2,13 @@ import { Editor } from "@tinymce/tinymce-react";
 import { Loader } from "lucide-react";
 import React from "react";
 import { cn } from "@/lib/utils";
+import { contentType } from "@/types/generalTypes";
 
-type EditorSrcType = "post" | "comment";
 
 export default function EditorView(props: {
   height?: number;
   className?: string;
-  src: EditorSrcType;
+  src: contentType;
   contentChangeCB?: (value: string) => void;
   content?: string;
 }) {

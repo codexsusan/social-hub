@@ -1,18 +1,3 @@
-// export interface Post {
-//   _id: string;
-//   title: string;
-//   content: string;
-//   author_id: string;
-//   community_id: string;
-//   is_sticked: boolean;
-//   upvotes: number;
-//   downvotes: number;
-//   report_count: number;
-//   view_count: number;
-//   tags: string[];
-//   created_at: string;
-// }
-
 import { CommentPartial } from "./commentTypes";
 import { AuthorPartial } from "./userTypes";
 
@@ -62,3 +47,25 @@ export interface Post {
 }
 
 export interface PostPartial extends Partial<Post> {}
+
+export type LatestInitialState = {
+  error: string;
+  loading: boolean;
+  posts: PostPartial[] | [];
+};
+
+export type TrendingInitialState = {
+  error: string;
+  loading: boolean;
+  posts: PostPartial[];
+};
+
+export interface SinglePostDetailType extends PostPartial {
+  comment: string;
+}
+
+export type SinglePostInitialState = {
+  error: string;
+  loading: boolean;
+  post: SinglePostDetailType;
+};

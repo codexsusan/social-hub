@@ -9,7 +9,7 @@ export const addBookmarkUtils = (postId: PostPartial["_id"]) => {
 
 // Get Bookmarks
 export const getBookmarksUtils = () => {
-  const response = request("/api/bookmarks/get-bookmarks", "GET");
+  const response = request("/api/bookmarks/get-bookmarks", "GET", {});
   return response;
 };
 

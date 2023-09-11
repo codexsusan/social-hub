@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 type methodType = "GET" | "POST" | "PATCH" | "PUT" | "DELETE";
 
 // const base_url = "http://localhost:3000" || "https://sea-turtle-app-bk4cx.ondigitalocean.app";
@@ -13,7 +14,7 @@ export type ResponseData = {
 export const request = async (
   endpoint: string,
   method: methodType = "GET",
-  data: any = {}
+  data: any
 ) => {
   let url: string;
   if (method === "GET") {

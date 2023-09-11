@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import PostWrapper from "@/components/common/PostWrapper";
 import EditorView from "@/components/submit/EditorView";
-import { SinglePageState, getPost } from "@/features/post/postSlice";
+import { getPost } from "@/features/post/postSlice";
 import { cn } from "@/lib/utils";
 import { UserPartial } from "@/types/userTypes";
 import { Loader } from "lucide-react";
@@ -63,15 +63,21 @@ function PostView() {
 }
 
 function AddComment() {
-  const singlePage: SinglePageState = useAppSelector(
-    (state) => state.currentpost
-  );
+  const singlePage = useAppSelector((state) => state.currentpost);
   const post = singlePage.post;
+  const { comment } = post;
+
+
   return (
     <div className="mt-5">
       {post.comment_status ? (
         <AddCommentWrapper post={post} type="post">
-          <EditorView src="comment" className="mt-2" height={200} />
+          <EditorView
+            content={comment}
+            src="comment"
+            className="mt-2"
+            height={200}
+          />
         </AddCommentWrapper>
       ) : null}
     </div>

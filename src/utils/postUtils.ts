@@ -1,5 +1,5 @@
 import { PostPartial } from "@/types/postTypes";
-import { request } from "./httpUtils";
+import { ResponseData, request } from "./httpUtils";
 
 // Create post
 export const createPostUtils = async (post: PostPartial) => {
@@ -9,32 +9,32 @@ export const createPostUtils = async (post: PostPartial) => {
 
 // Get single post
 export const getPostUtils = async (id: PostPartial["_id"]) => {
-  const response = await request(`/api/post/get-post/${id}`, "GET");
+  const response = await request(`/api/post/get-post/${id}`, "GET", {});
   return response;
 };
 
 // Get all posts
 // TODO: Need to work with query params
 export const getAllPostsUtils = async () => {
-  const response = await request("/api/post/get-all-posts", "GET");
+  const response = await request("/api/post/get-all-posts", "GET", {});
   return response;
 };
 
 // Get latest posts
 export const getLatestPostsUtils = async () => {
-  const response = await request("/api/post/get-latest-posts", "GET");
+  const response = await request("/api/post/get-latest-posts", "GET", {});
   return response;
 };
 
 // Get trending posts
 export const getTrendingPostsUtils = async () => {
-  const response = await request("/api/post/get-trending-posts", "GET");
+  const response = await request("/api/post/get-trending-posts", "GET", {});
   return response;
 };
 
 // Delete post by id
 export const deletePostByIdUtils = async (id: PostPartial["_id"]) => {
-  const response = await request(`/api/post/delete-post/${id}`, "DELETE");
+  const response = await request(`/api/post/delete-post/${id}`, "DELETE", {});
   return response;
 };
 
@@ -52,7 +52,8 @@ export const editPostByIdUtils = async (
 export const getAllPostsByUserUtils = async (id: PostPartial["_id"]) => {
   const response = await request(
     `/api/post/get-all-posts-by-user/${id}`,
-    "GET"
+    "GET",
+    {}
   );
   return response;
 };
@@ -72,13 +73,17 @@ export const downvotePostUtils = async (id: PostPartial["_id"]) => {
 // Get all posts by community
 // TODO: Need to work with query params
 export const getAllPostsByCommunityUtils = async () => {
-  const response = await request(`/api/post/get-all-posts-by-community`, "GET");
+  const response = await request(
+    `/api/post/get-all-posts-by-community`,
+    "GET",
+    {}
+  );
   return response;
 };
 
 // Get all blocked posts
 export const getAllBlockedPostsUtils = async () => {
-  const response = await request(`/api/post/get-blocked-posts`, "GET");
+  const response = await request(`/api/post/get-blocked-posts`, "GET", {});
   return response;
 };
 
@@ -89,7 +94,9 @@ export const unblockPostUtils = async (id: PostPartial["_id"]) => {
 };
 
 // Report post
-export const reportPostUtils = async (id: PostPartial["_id"]) => {
+export const reportPostByIdUtils: (
+  id: PostPartial["_id"]
+) => Promise<ResponseData> = async (id) => {
   const response = await request(`/api/post/report-post/${id}`, "POST", {});
   return response;
 };

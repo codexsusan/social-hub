@@ -62,13 +62,13 @@ const userSlice = createSlice({
       (state, action: PayloadAction<ResponseData>) => {
         state.loading = false;
         state.error = "";
-        state.token = action.payload.data.token;
+        state.token = action.payload.data.token!;
         localStorage.setItem("token", action.payload.data.token);
         toast({
           title: "Account created.",
           description: "We've created your account for you.",
-          className: "bg-[#09090B] text-[#e2e2e2] border-none ",
           duration: 2000,
+          className: "bg-[#09090B] text-[#e2e2e2] border-none ",
         });
       }
     );
@@ -138,7 +138,6 @@ const userSlice = createSlice({
       state.isBanned = action.payload.user.isBanned;
       state.isVerified = action.payload.user.isVerified;
       state.banReason = action.payload.user.banReason;
-      // state = { ...state, ...action.payload.user };
       state.token = localStorage.getItem("token") || "";
     });
     builder.addCase(fetchUserData.rejected, (state) => {
