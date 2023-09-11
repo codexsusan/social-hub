@@ -46,7 +46,7 @@ function AddCommentWrapper(props: Props) {
             @{username}
           </p>
         </div>
-        <div className="w-full">{children}</div>
+        <div className="w-full flex flex-col">{children}</div>
       </div>
     </div>
   );

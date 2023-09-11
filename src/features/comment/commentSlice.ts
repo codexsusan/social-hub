@@ -4,7 +4,9 @@ import {
   CommentPartial,
   PostandUserId,
 } from "@/types/commentTypes";
+import { PostPartial } from "@/types/postTypes";
 import {
+  createCommentOnPostUtils,
   downvoteCommentByIdUtils,
   getCommentsOnPostUtils,
   upvoteCommentByIdUtils,
@@ -16,6 +18,8 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 const initialState: CommentInitialState = {
   error: "",
   loading: false,
+  currentComment: "",
+  current_comment_loading: false,
   comments: [] as CommentPartial[],
 };
 
@@ -53,6 +57,18 @@ export const getCommentsOnPost = createAsyncThunk(
       ...commentData,
       data: { ...commentData.data, data: updateCommentData },
     };
+  }
+);
+
+type CommentData = {
+  content: CommentPartial["content"];
+  postId: PostPartial["_id"];
+};
+
+export const createCommentOnPost = createAsyncThunk(
+  "comment/create",
+  async (data: CommentData) => {
+    return createCommentOnPostUtils(data.content, data.postId);
   }
 );
 
@@ -127,6 +143,12 @@ const commentSlice = createSlice({
         comment.comment_reply_status = !comment.comment_reply_status!;
       }
     },
+    changecomment: (
+      state: CommentInitialState,
+      action: PayloadAction<string>
+    ) => {
+      state.currentComment = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getCommentsOnPost.pending, (state: CommentInitialState) => {
@@ -150,10 +172,35 @@ const commentSlice = createSlice({
         });
       }
     );
+    builder.addCase(
+      createCommentOnPost.pending,
+      (state: CommentInitialState) => {
+        state.current_comment_loading = true;
+      }
+    );
+    builder.addCase(
+      createCommentOnPost.fulfilled,
+      (state: CommentInitialState, action) => {
+        console.log(action.payload.data.data);
+        state.current_comment_loading = false;
+        state.currentComment = "";
+      }
+    );
+    builder.addCase(
+      createCommentOnPost.rejected,
+      (state: CommentInitialState, action) => {
+        state.current_comment_loading = false;
+        state.error = action.error.message || "";
+      }
+    );
   },
 });
 
 export default commentSlice.reducer;
 
-export const { upvotesuccess, downvotesuccess, switchcommentreplybox } =
-  commentSlice.actions;
+export const {
+  upvotesuccess,
+  downvotesuccess,
+  switchcommentreplybox,
+  changecomment,
+} = commentSlice.actions;

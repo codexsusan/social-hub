@@ -3,13 +3,13 @@ import { ResponseData } from "@/utils/httpUtils";
 import { createPostUtils } from "@/utils/postUtils";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-type InitialState = {
+type SubmitInitialState = {
   post: PostPartial;
   loading: boolean;
   error: string;
 };
 
-const initialState: InitialState = {
+const initialState: SubmitInitialState = {
   post: {
     title: "",
   } as PostPartial,
@@ -41,13 +41,13 @@ const submitSlice = createSlice({
   },
   extraReducers: (builder) => {
     // Create Post
-    builder.addCase(createPost.pending, (state) => {
+    builder.addCase(createPost.pending, (state: SubmitInitialState) => {
       state.loading = true;
       state.error = "";
     });
     builder.addCase(
       createPost.fulfilled,
-      (state, action: PayloadAction<ResponseData>) => {
+      (state: SubmitInitialState, action: PayloadAction<ResponseData>) => {
         state.loading = false;
         if (action.payload.status === 200) {
           state.post = {
@@ -58,10 +58,13 @@ const submitSlice = createSlice({
         }
       }
     );
-    builder.addCase(createPost.rejected, (state, action) => {
-      state.error = action.error.message!;
-      state.loading = false;
-    });
+    builder.addCase(
+      createPost.rejected,
+      (state: SubmitInitialState, action) => {
+        state.error = action.error.message!;
+        state.loading = false;
+      }
+    );
   },
 });
 

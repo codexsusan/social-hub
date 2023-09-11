@@ -28,6 +28,8 @@ export interface CommentPartial extends Partial<Comment> {}
 export type CommentInitialState = {
   error: string;
   loading: boolean;
+  currentComment: string;
+  current_comment_loading: boolean;
   comments: CommentPartial[];
 };
 

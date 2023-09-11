@@ -4,20 +4,23 @@ import { PostPartial } from "@/types/postTypes";
 
 // Create Comment
 export const createCommentOnPostUtils = async (
-  comment: CommentPartial,
+  content: CommentPartial["content"],
   postId?: PostPartial["_id"]
 ) => {
   const response = await request(
     `/api/comment/create-comment/${postId}`,
     "POST",
-    comment
+    {
+      content,
+      parent_type: "POST",
+    }
   );
   return response;
 };
 
 // Get Comments
 export const getCommentsOnPostUtils = async (id: PostPartial["_id"]) => {
-  const response = await request(`/api/comment/get-comments/${id}`, "GET");
+  const response = await request(`/api/comment/get-comments/${id}`, "GET", {});
   return response;
 };
 
@@ -25,23 +28,36 @@ export const getCommentsOnPostUtils = async (id: PostPartial["_id"]) => {
 export const getCommentRepliesUtils = async (id: CommentPartial["_id"]) => {
   const response = await request(
     `/api/comment/get-comment-replies/${id}`,
-    "GET"
+    "GET",
+    {}
   );
   return response;
 };
 
 // Delete Comment by id
 export const deleteCommentByIdUtils = async (id: CommentPartial["_id"]) => {
-  const response = await request(`/api/comment/delete-comment/${id}`, "DELETE");
+  const response = await request(
+    `/api/comment/delete-comment/${id}`,
+    "DELETE",
+    {}
+  );
   return response;
 };
 
 export const upvoteCommentByIdUtils = async (id: CommentPartial["_id"]) => {
-  const response = await request(`/api/comment/upvote-comment/${id}`, "POST");
+  const response = await request(
+    `/api/comment/upvote-comment/${id}`,
+    "POST",
+    {}
+  );
   return response;
 };
 
 export const downvoteCommentByIdUtils = async (id: CommentPartial["_id"]) => {
-  const response = await request(`/api/comment/downvote-comment/${id}`, "POST");
+  const response = await request(
+    `/api/comment/downvote-comment/${id}`,
+    "POST",
+    {}
+  );
   return response;
 };

@@ -60,12 +60,9 @@ export type TrendingInitialState = {
   posts: PostPartial[];
 };
 
-export interface SinglePostDetailType extends PostPartial {
-  comment: string;
-}
 
 export type SinglePostInitialState = {
   error: string;
   loading: boolean;
-  post: SinglePostDetailType;
+  post: PostPartial;
 };

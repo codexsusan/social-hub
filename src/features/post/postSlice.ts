@@ -1,5 +1,8 @@
 import { PostandUserId } from "@/types/commentTypes";
-import { PostPartial, SinglePostDetailType, SinglePostInitialState } from "@/types/postTypes";
+import {
+  PostPartial,
+  SinglePostInitialState,
+} from "@/types/postTypes";
 import { ResponseData } from "@/utils/httpUtils";
 import {
   deletePostByIdUtils,
@@ -13,7 +16,7 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 const initialState: SinglePostInitialState = {
   error: "",
   loading: false,
-  post: {} as SinglePostDetailType,
+  post: {} as PostPartial,
 };
 
 export const upvotePost = createAsyncThunk(
@@ -65,6 +68,8 @@ export const getPost = createAsyncThunk(
   }
 );
 
+// export const crea
+
 const postSlice = createSlice({
   name: "post",
   initialState,
@@ -104,7 +109,6 @@ const postSlice = createSlice({
     togglecomment: (state: SinglePostInitialState) => {
       state.post.comment_status = !state.post.comment_status;
     },
-
   },
   extraReducers: (builder) => {
     // Get Post

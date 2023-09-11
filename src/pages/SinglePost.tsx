@@ -4,15 +4,20 @@ import EditorView from "@/components/submit/EditorView";
 import { getPost } from "@/features/post/postSlice";
 import { cn } from "@/lib/utils";
 import { UserPartial } from "@/types/userTypes";
-import { Loader } from "lucide-react";
+import { Loader, Loader2 } from "lucide-react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
 import AddCommentWrapper from "@/components/comment/AddCommentWrapper";
-import { getCommentsOnPost } from "@/features/comment/commentSlice";
+import {
+  changecomment,
+  createCommentOnPost,
+  getCommentsOnPost,
+} from "@/features/comment/commentSlice";
 import CommentSection from "@/components/comment/CommentSection";
 import PostActions from "@/components/post/PostActions";
 import parser from "html-react-parser";
+import { Button } from "@/components/ui/button";
 
 function SinglePost() {
   const { postId } = useParams();
@@ -63,9 +68,25 @@ function PostView() {
 }
 
 function AddComment() {
+  const dispatch = useAppDispatch();
   const singlePage = useAppSelector((state) => state.currentpost);
+  const commentsData = useAppSelector((state) => state.currentcomment);
+  const user = useAppSelector((state) => state.user);
   const post = singlePage.post;
-  const { comment } = post;
+  const comment = commentsData.currentComment;
+  const changeComment = (content: string) => {
+    dispatch(changecomment(content));
+  };
+
+  const handleCommentSubmitCB = () => {
+    dispatch(createCommentOnPost({ postId: post._id, content: comment })).then(
+      (res) => {
+        if (res.meta.requestStatus === "fulfilled") {
+          dispatch(getCommentsOnPost({ postId: post._id, userId: user._id }));
+        }
+      }
+    );
+  };
 
   return (
     <div className="mt-5">
@@ -73,13 +94,41 @@ function AddComment() {
         <AddCommentWrapper post={post} type="post">
           <EditorView
             content={comment}
+            contentChangeCB={changeComment}
             src="comment"
             className="mt-2"
             height={200}
           />
+          <CommentButton
+            loading={commentsData.current_comment_status}
+            handleCommentSubmit={handleCommentSubmitCB}
+          />
         </AddCommentWrapper>
       ) : null}
     </div>
+  );
+}
+
+type CommentButtonProps = {
+  loading: boolean;
+  handleCommentSubmit: () => void;
+};
+
+function CommentButton(props: CommentButtonProps) {
+  const { loading, handleCommentSubmit } = props;
+  return (
+    <>
+      {loading ? (
+        <Button disabled>
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          Please wait
+        </Button>
+      ) : (
+        <Button className="mt-2 self-end" onClick={handleCommentSubmit}>
+          Post
+        </Button>
+      )}
+    </>
   );
 }
 
