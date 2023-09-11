@@ -45,6 +45,7 @@ function PostWrapper(props: Props) {
 
   const deletePostCB = () => {
     dispatch(deletePost(post!._id)).then((res) => {
+      navigate("/");
       if (hasProperty(res.payload, "data")) {
         toast({
           description: res.payload.data.message,
