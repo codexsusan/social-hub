@@ -67,7 +67,6 @@ function AddComment() {
   const post = singlePage.post;
   const { comment } = post;
 
-
   return (
     <div className="mt-5">
       {post.comment_status ? (
