@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
 import AddCommentWrapper from "@/components/comment/AddCommentWrapper";
 import {
-  changecomment,
+  changepostcomment,
   createCommentOnPost,
   getCommentsOnPost,
 } from "@/features/comment/commentSlice";
@@ -75,7 +75,7 @@ function AddComment() {
   const post = singlePage.post;
   const comment = commentsData.currentComment;
   const changeComment = (content: string) => {
-    dispatch(changecomment(content));
+    dispatch(changepostcomment(content));
   };
 
   const handleCommentSubmitCB = () => {
@@ -100,7 +100,7 @@ function AddComment() {
             height={200}
           />
           <CommentButton
-            loading={commentsData.current_comment_status}
+            loading={commentsData.current_comment_loading}
             handleCommentSubmit={handleCommentSubmitCB}
           />
         </AddCommentWrapper>
@@ -119,7 +119,7 @@ function CommentButton(props: CommentButtonProps) {
   return (
     <>
       {loading ? (
-        <Button disabled>
+        <Button className="mt-2 self-end" disabled>
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
           Please wait
         </Button>

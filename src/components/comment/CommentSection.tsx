@@ -32,7 +32,9 @@ function View() {
           <CommentWrapper key={comment._id} comment={comment}>
             <div className="text-base">{parsedContent}</div>
             <CommentActions comment={comment} />
-            {comment.comment_reply_status && <CommentEditor />}
+            {comment.comment_reply_status && (
+              <CommentEditor comment={comment} />
+            )}
           </CommentWrapper>
         );
       })}

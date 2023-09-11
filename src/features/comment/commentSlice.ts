@@ -2,11 +2,13 @@ import { toast } from "@/components/ui/use-toast";
 import {
   CommentInitialState,
   CommentPartial,
+  NestedComment,
   PostandUserId,
 } from "@/types/commentTypes";
 import { PostPartial } from "@/types/postTypes";
 import {
   createCommentOnPostUtils,
+  createReplyOnCommentUtils,
   downvoteCommentByIdUtils,
   getCommentsOnPostUtils,
   upvoteCommentByIdUtils,
@@ -20,7 +22,13 @@ const initialState: CommentInitialState = {
   loading: false,
   currentComment: "",
   current_comment_loading: false,
-  comments: [] as CommentPartial[],
+  comments: [] as NestedComment[],
+};
+
+type ReplyData = {
+  content: CommentPartial["content"];
+  postId: PostPartial["_id"];
+  parentId: CommentPartial["_id"];
 };
 
 export const getCommentsOnPost = createAsyncThunk(
@@ -60,14 +68,9 @@ export const getCommentsOnPost = createAsyncThunk(
   }
 );
 
-type CommentData = {
-  content: CommentPartial["content"];
-  postId: PostPartial["_id"];
-};
-
 export const createCommentOnPost = createAsyncThunk(
   "comment/create",
-  async (data: CommentData) => {
+  async (data: Partial<ReplyData>) => {
     return createCommentOnPostUtils(data.content, data.postId);
   }
 );
@@ -83,6 +86,13 @@ export const downvoteCommentById = createAsyncThunk(
   "comment/downvote",
   async (id: CommentPartial["_id"]) => {
     return downvoteCommentByIdUtils(id);
+  }
+);
+
+export const createReplyOnComment = createAsyncThunk(
+  "comment/reply",
+  async (data: ReplyData) => {
+    return createReplyOnCommentUtils(data.content, data.postId, data.parentId);
   }
 );
 
@@ -143,11 +153,19 @@ const commentSlice = createSlice({
         comment.comment_reply_status = !comment.comment_reply_status!;
       }
     },
-    changecomment: (
+    changepostcomment: (
       state: CommentInitialState,
       action: PayloadAction<string>
     ) => {
       state.currentComment = action.payload;
+    },
+    changecommentreply: (state: CommentInitialState, action) => {
+      const comment = state.comments.find(
+        (comment) => comment._id === action.payload.commentId
+      );
+      if (comment) {
+        comment.comment_reply.push(action.payload.reply);
+      }
     },
   },
   extraReducers: (builder) => {
@@ -202,5 +220,5 @@ export const {
   upvotesuccess,
   downvotesuccess,
   switchcommentreplybox,
-  changecomment,
+  changepostcomment,
 } = commentSlice.actions;

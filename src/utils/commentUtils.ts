@@ -18,6 +18,24 @@ export const createCommentOnPostUtils = async (
   return response;
 };
 
+// Create Reply on Comment
+export const createReplyOnCommentUtils = async (
+  content: CommentPartial["content"],
+  postId: PostPartial["_id"],
+  parentId: CommentPartial["_id"]
+) => {
+  const response = await request(
+    `/api/comment/create-comment/${postId}`,
+    "POST",
+    {
+      content,
+      parent_type: "COMMENT",
+      comment_id: parentId,
+    }
+  );
+  return response;
+};
+
 // Get Comments
 export const getCommentsOnPostUtils = async (id: PostPartial["_id"]) => {
   const response = await request(`/api/comment/get-comments/${id}`, "GET", {});

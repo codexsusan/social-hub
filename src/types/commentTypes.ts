@@ -25,12 +25,16 @@ export interface Comment {
 
 export interface CommentPartial extends Partial<Comment> {}
 
+export interface NestedComment extends Comment {
+  comment_reply: NestedComment[];
+}
+
 export type CommentInitialState = {
   error: string;
   loading: boolean;
   currentComment: string;
   current_comment_loading: boolean;
-  comments: CommentPartial[];
+  comments: NestedComment[];
 };
 
 export type PostandUserId = {
