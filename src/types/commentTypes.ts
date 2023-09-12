@@ -26,7 +26,8 @@ export interface Comment {
 export interface CommentPartial extends Partial<Comment> {}
 
 export interface NestedComment extends Comment {
-  comment_reply: NestedComment[];
+  comment_current_reply: string;
+  comment_replies: NestedComment[];
 }
 
 export type CommentInitialState = {

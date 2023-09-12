@@ -8,7 +8,7 @@ import { OptionType, contentType } from "@/types/generalTypes";
 import { deletePost, reportPost } from "@/features/post/postSlice";
 import { toast } from "../ui/use-toast";
 import { hasProperty } from "@/utils/generalUtils";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   className?: string;
@@ -19,7 +19,7 @@ interface Props {
 
 function PostWrapper(props: Props) {
   const dispatch = useAppDispatch();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const user = useAppSelector((state) => state.user);
   const { className, type, children, post } = props;
   const { firstName, lastName, userName } = user;

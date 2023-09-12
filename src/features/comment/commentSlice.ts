@@ -10,6 +10,7 @@ import {
   createCommentOnPostUtils,
   createReplyOnCommentUtils,
   downvoteCommentByIdUtils,
+  getCommentRepliesUtils,
   getCommentsOnPostUtils,
   upvoteCommentByIdUtils,
 } from "@/utils/commentUtils";
@@ -96,6 +97,13 @@ export const createReplyOnComment = createAsyncThunk(
   }
 );
 
+export const getCommentReplies = createAsyncThunk(
+  "get/comment/replies",
+  async (commentId: CommentPartial["_id"]) => {
+    return getCommentRepliesUtils(commentId);
+  }
+);
+
 const commentSlice = createSlice({
   name: "comment",
   initialState,
@@ -164,7 +172,7 @@ const commentSlice = createSlice({
         (comment) => comment._id === action.payload.commentId
       );
       if (comment) {
-        comment.comment_reply.push(action.payload.reply);
+        comment.comment_current_reply = action.payload.reply;
       }
     },
   },
@@ -221,4 +229,5 @@ export const {
   downvotesuccess,
   switchcommentreplybox,
   changepostcomment,
+  changecommentreply,
 } = commentSlice.actions;

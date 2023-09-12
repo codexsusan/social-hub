@@ -5,6 +5,7 @@ import CommentActions from "./CommentActions";
 import { Loader } from "lucide-react";
 import CommentEditor from "./CommentEditor";
 import parser from "html-react-parser";
+import CommentButton from "./CommentButton";
 
 function CommentSection() {
   const currentcomment = useAppSelector((state) => state.currentcomment);
@@ -33,7 +34,10 @@ function View() {
             <div className="text-base">{parsedContent}</div>
             <CommentActions comment={comment} />
             {comment.comment_reply_status && (
-              <CommentEditor comment={comment} />
+              <>
+                <CommentEditor comment={comment} />
+                <CommentButton loading={false} handleCommentSubmit={() => {}} />
+              </>
             )}
           </CommentWrapper>
         );

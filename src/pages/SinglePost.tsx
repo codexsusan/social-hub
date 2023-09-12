@@ -4,7 +4,7 @@ import EditorView from "@/components/submit/EditorView";
 import { getPost } from "@/features/post/postSlice";
 import { cn } from "@/lib/utils";
 import { UserPartial } from "@/types/userTypes";
-import { Loader, Loader2 } from "lucide-react";
+import { Loader } from "lucide-react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
@@ -17,7 +17,7 @@ import {
 import CommentSection from "@/components/comment/CommentSection";
 import PostActions from "@/components/post/PostActions";
 import parser from "html-react-parser";
-import { Button } from "@/components/ui/button";
+import CommentButton from "@/components/comment/CommentButton";
 
 function SinglePost() {
   const { postId } = useParams();
@@ -106,29 +106,6 @@ function AddComment() {
         </AddCommentWrapper>
       ) : null}
     </div>
-  );
-}
-
-type CommentButtonProps = {
-  loading: boolean;
-  handleCommentSubmit: () => void;
-};
-
-function CommentButton(props: CommentButtonProps) {
-  const { loading, handleCommentSubmit } = props;
-  return (
-    <>
-      {loading ? (
-        <Button className="mt-2 self-end" disabled>
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          Please wait
-        </Button>
-      ) : (
-        <Button className="mt-2 self-end" onClick={handleCommentSubmit}>
-          Post
-        </Button>
-      )}
-    </>
   );
 }
 
