@@ -1,23 +1,23 @@
-import { toast } from "@/components/ui/use-toast";
-import { LatestInitialState, PostPartial } from "@/types/postTypes";
-import { UserPartial } from "@/types/userTypes";
-import { ResponseData } from "@/utils/httpUtils";
-import { getLatestPostsUtils } from "@/utils/postUtils";
+import { MostViewedInitialState, PostPartial } from "@/types/postTypes";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { UserPartial } from "@/types/userTypes";
+import { getMostViewedPostsUtils } from "@/utils/postUtils";
+import { ResponseData } from "@/utils/httpUtils";
+import { toast } from "@/components/ui/use-toast";
 
-const initialState: LatestInitialState = {
+const initialState: MostViewedInitialState = {
   error: "",
   loading: false,
   posts: [] as PostPartial[],
 };
 
-export const fetchLatestPosts = createAsyncThunk(
-  "home/fetch/latest",
-  async (id: UserPartial["_id"]) => {
-    const latestPost = await getLatestPostsUtils({});
-    const updatedData = latestPost.data!.data.map((post: PostPartial) => {
-      const upvote_status = post.upvotes!.includes(id!);
-      const downvote_status = post.downvotes!.includes(id!);
+export const fetchMostViewedPosts = createAsyncThunk(
+  "home/fetch/most-viewed",
+  async (userId: UserPartial["_id"]) => {
+    const mostviewedPost = await getMostViewedPostsUtils({});
+    const updatedData = mostviewedPost.data!.data.map((post: PostPartial) => {
+      const upvote_status = post.upvotes!.includes(userId!);
+      const downvote_status = post.downvotes!.includes(userId!);
       return {
         ...post,
         upvote_status,
@@ -25,18 +25,21 @@ export const fetchLatestPosts = createAsyncThunk(
       };
     });
     return {
-      ...latestPost,
-      data: { ...latestPost.data, data: [...updatedData] },
+      ...mostviewedPost,
+      data: {
+        ...mostviewedPost.data,
+        data: [...updatedData],
+      },
     };
   }
 );
 
-const latestSlice = createSlice({
-  name: "latestpost",
+const mostviewedSlice = createSlice({
+  name: "mostviewed",
   initialState,
   reducers: {
-    upvotelatestsuccess: (
-      state: LatestInitialState,
+    upvotemostviewedsuccess: (
+      state: MostViewedInitialState,
       action: PayloadAction<PostPartial["_id"]>
     ) => {
       const post = state.posts.find((post) => post._id === action.payload);
@@ -54,8 +57,8 @@ const latestSlice = createSlice({
         }
       }
     },
-    downvotelatestsuccess: (
-      state: LatestInitialState,
+    downvotemostviewedsuccess: (
+      state: MostViewedInitialState,
       action: PayloadAction<PostPartial["_id"]>
     ) => {
       const post = state.posts.find((post) => post._id === action.payload);
@@ -75,12 +78,15 @@ const latestSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchLatestPosts.pending, (state: LatestInitialState) => {
-      state.loading = true;
-    });
     builder.addCase(
-      fetchLatestPosts.fulfilled,
-      (state: LatestInitialState, action: PayloadAction<ResponseData>) => {
+      fetchMostViewedPosts.pending,
+      (state: MostViewedInitialState) => {
+        state.loading = true;
+      }
+    );
+    builder.addCase(
+      fetchMostViewedPosts.fulfilled,
+      (state: MostViewedInitialState, action: PayloadAction<ResponseData>) => {
         state.loading = false;
         if (action.payload.status === 200) {
           state.posts = [...action.payload.data.data];
@@ -88,6 +94,7 @@ const latestSlice = createSlice({
             return { ...post };
           });
         } else {
+          state.error = action.payload.statusText;
           toast({
             title: "Failed to load data.",
             description: action.payload.data.message,
@@ -98,13 +105,13 @@ const latestSlice = createSlice({
       }
     );
     builder.addCase(
-      fetchLatestPosts.rejected,
-      (state: LatestInitialState, action) => {
+      fetchMostViewedPosts.rejected,
+      (state: MostViewedInitialState, action) => {
         state.loading = false;
         state.error = action.error.message || "";
         toast({
-          title: "Unable to load data",
-          description: action.error.message!,
+          title: "Failed to load data.",
+          description: action.error.message,
           duration: 2000,
           className: "bg-[#09090B] text-[#e2e2e2] border-none ",
         });
@@ -112,8 +119,7 @@ const latestSlice = createSlice({
     );
   },
 });
+export default mostviewedSlice.reducer;
 
-export default latestSlice.reducer;
-
-export const { upvotelatestsuccess, downvotelatestsuccess } =
-  latestSlice.actions;
+export const { upvotemostviewedsuccess, downvotemostviewedsuccess } =
+  mostviewedSlice.actions;

@@ -1,5 +1,6 @@
 import { PostPartial } from "@/types/postTypes";
 import { ResponseData, request } from "./httpUtils";
+import { queryParamsType } from "@/types/generalTypes";
 
 // Create post
 export const createPostUtils = async (post: PostPartial) => {
@@ -21,14 +22,24 @@ export const getAllPostsUtils = async () => {
 };
 
 // Get latest posts
-export const getLatestPostsUtils = async () => {
-  const response = await request("/api/post/get-latest-posts", "GET", {});
+export const getLatestPostsUtils = async (data: queryParamsType) => {
+  const response = await request("/api/post/get-latest-posts", "GET", data);
   return response;
 };
 
 // Get trending posts
-export const getTrendingPostsUtils = async () => {
-  const response = await request("/api/post/get-trending-posts", "GET", {});
+export const getTrendingPostsUtils = async (data: queryParamsType) => {
+  const response = await request("/api/post/get-trending-posts", "GET", data);
+  return response;
+};
+
+// Get most viewed posts
+export const getMostViewedPostsUtils = async (data: queryParamsType) => {
+  const response = await request(
+    "/api/post/get-most-viewed-posts",
+    "GET",
+    data
+  );
   return response;
 };
 

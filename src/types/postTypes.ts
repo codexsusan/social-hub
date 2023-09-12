@@ -60,6 +60,11 @@ export type TrendingInitialState = {
   posts: PostPartial[];
 };
 
+export type MostViewedInitialState = {
+  error: string;
+  loading: boolean;
+  posts: PostPartial[];
+};
 
 export type SinglePostInitialState = {
   error: string;
