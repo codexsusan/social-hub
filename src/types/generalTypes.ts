@@ -8,3 +8,8 @@ export type OptionType = {
   icon: JSX.Element;
   action: () => void;
 };
+
+export type queryParamsType = {
+  page?: number;
+  limit?: number;
+};

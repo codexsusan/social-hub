@@ -1,10 +1,11 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Loader } from "lucide-react";
 import { lazy, Suspense } from "react";
+import MostViewedHome from "./MostViewedHome";
 
 const LatestHome = lazy(() => import("./LatestHome"));
 const TrendingHome = lazy(() => import("./TrendingHome"));
-const PopularHome = lazy(() => import("./PopularHome"));
+
 
 function HomeTab() {
   return (
@@ -27,7 +28,7 @@ function HomeTab() {
         </TabsContent>
         <TabsContent value="popular">
           <Suspense fallback={<Loader />}>
-            <PopularHome />
+            <MostViewedHome />
           </Suspense>
         </TabsContent>
       </Tabs>
