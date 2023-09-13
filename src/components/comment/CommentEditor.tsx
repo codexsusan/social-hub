@@ -1,12 +1,20 @@
 import AddCommentWrapper from "./AddCommentWrapper";
 import EditorView from "../submit/EditorView";
-import { CommentPartial } from "@/types/commentTypes";
+import { NestedComment } from "@/types/commentTypes";
 
-function CommentEditor(props: { comment: CommentPartial }) {
-  console.log(props.comment._id);
+function CommentEditor(props: {
+  comment: NestedComment;
+  contentChangeCB?: (value: string) => void;
+}) {
   return (
     <AddCommentWrapper type="comment">
-      <EditorView src="comment" className="mt-2" height={200} />
+      <EditorView
+        contentChangeCB={props.contentChangeCB}
+        content={props.comment.comment_current_reply}
+        src="comment"
+        className="mt-2"
+        height={200}
+      />
     </AddCommentWrapper>
   );
 }

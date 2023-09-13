@@ -1,18 +1,22 @@
-import { useAppDispatch } from "@/app/hooks";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import {
   downvotesuccess,
   upvotesuccess,
   switchcommentreplybox,
   downvoteCommentById,
   upvoteCommentById,
+  getCommentReplies,
+  initcommentreplies,
 } from "@/features/comment/commentSlice";
-import { CommentPartial } from "@/types/commentTypes";
+import { NestedComment } from "@/types/commentTypes";
+import { hasProperty } from "@/utils/generalUtils";
 import { ArrowBigDown, ArrowBigUp, MessageCircle } from "lucide-react";
 import React from "react";
 
-function CommentActions(props: { comment: CommentPartial }) {
+function CommentActions(props: { comment: NestedComment }) {
   const { comment } = props;
   const dispatch = useAppDispatch();
+  const currentUser = useAppSelector((state) => state.user);
 
   const VoteCount =
     comment.upvotes_count! - comment.downvotes_count! == 0
@@ -40,6 +44,22 @@ function CommentActions(props: { comment: CommentPartial }) {
   const switchCommentReplyBox = (e: React.MouseEvent) => {
     e.stopPropagation();
     dispatch(switchcommentreplybox(comment._id));
+    // const current_selected_comment = currentComment.comments.find(
+    //   (thisComment) => thisComment._id === comment._id
+    // );
+    dispatch(
+      getCommentReplies({ commentId: comment._id, userId: currentUser._id })
+    ).then((res) => {
+      console.log(res.payload);
+      if (hasProperty(res.payload, "data")) {
+        dispatch(
+          initcommentreplies({
+            replies: res.payload.data.data,
+            commentId: comment._id,
+          })
+        );
+      }
+    });
   };
 
   const { upvote_status, downvote_status } = comment;
