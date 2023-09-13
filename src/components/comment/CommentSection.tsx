@@ -11,6 +11,7 @@ import {
   createReplyOnComment,
 } from "@/features/comment/commentSlice";
 import { NestedComment } from "@/types/commentTypes";
+import CommentReply from "./CommentReply";
 
 function CommentSection() {
   const currentcomment = useAppSelector((state) => state.currentcomment);
@@ -62,18 +63,7 @@ function View() {
                   <>
                     {comment.comment_replies &&
                       comment.comment_replies.map((reply) => {
-                        const parsedReply = parser(reply?.content || "");
-
-                        return (
-                          <CommentWrapper
-                            key={reply._id}
-                            comment={reply}
-                            className="flex gap-y-4 my-4"
-                          >
-                            <div className="text-base">{parsedReply}</div>
-                            <CommentActions comment={reply} />
-                          </CommentWrapper>
-                        );
+                        return <CommentReply key={reply._id} reply={reply} />;
                       })}
                   </>
                 )}

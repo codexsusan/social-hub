@@ -1,6 +1,7 @@
 import { NestedComment } from "./commentTypes";
 import { AuthorPartial } from "./userTypes";
 
+// TODO: Remove this if not in used till the project is completed
 export interface PostActionType {
   vote: number;
   upVote: boolean;
@@ -12,6 +13,7 @@ export interface PostActionType {
   commentCount: number;
 }
 
+// TODO: Unused till now check before clearing
 export interface PostAuthor {
   _id: string;
   username: string;

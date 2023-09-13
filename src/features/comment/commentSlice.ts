@@ -37,6 +37,11 @@ type CommentandUserId = {
   userId: UserPartial["_id"];
 };
 
+type ReplyPayloadAction = PayloadAction<{
+  parentId: NestedComment["_id"];
+  replyId: NestedComment["_id"];
+}>;
+
 // Get Post Comment
 export const getCommentsOnPost = createAsyncThunk(
   "comment/get",
@@ -46,7 +51,6 @@ export const getCommentsOnPost = createAsyncThunk(
 
     const commentLength = commentData.data.data.length;
     const updateCommentData = [];
-    console.log(commentData.data.data);
     for (let i = 0; i < commentLength; i++) {
       const upvote_status = commentData.data.data[i].upvotes.includes(userId);
       const downvote_status =
@@ -141,7 +145,6 @@ export const getCommentReplies = createAsyncThunk(
       };
       updatedRepliesData.push(updatedCurrentReplyData);
     }
-    console.log(updatedRepliesData);
     return {
       ...repliesData,
       data: { ...repliesData.data, data: updatedRepliesData },
@@ -153,7 +156,7 @@ const commentSlice = createSlice({
   name: "comment",
   initialState,
   reducers: {
-    upvotesuccess: (
+    commentupvotesuccess: (
       state: CommentInitialState,
       action: PayloadAction<NestedComment["_id"]>
     ) => {
@@ -174,7 +177,7 @@ const commentSlice = createSlice({
         }
       }
     },
-    downvotesuccess: (
+    commentdownvotesuccess: (
       state: CommentInitialState,
       action: PayloadAction<NestedComment["_id"]>
     ) => {
@@ -234,7 +237,59 @@ const commentSlice = createSlice({
         (comm) => comm._id == action.payload.commentId
       );
       if (comment) {
-        comment.comment_replies = action.payload.replies;
+        comment.comment_replies = [...action.payload.replies];
+      }
+    },
+    replyupvotesuccess: (
+      state: CommentInitialState,
+      action: ReplyPayloadAction
+    ) => {
+      const comment = state.comments.find(
+        (comment) => comment._id === action.payload.parentId
+      );
+      if (comment) {
+        const reply = comment.comment_replies.find(
+          (reply) => reply._id === action.payload.replyId
+        );
+        if (reply) {
+          if (!reply.upvote_status) {
+            reply.upvote_status = true;
+            reply.upvotes_count = reply.upvotes_count! - 1 + 2;
+            if (reply.downvote_status) {
+              reply.downvote_status = false;
+              reply.downvotes_count = reply.downvotes_count! - 1;
+            }
+          } else {
+            reply.upvote_status = false;
+            reply.upvotes_count = reply.upvotes_count! - 1;
+          }
+        }
+      }
+    },
+    replydownvotesuccess: (
+      state: CommentInitialState,
+      action: ReplyPayloadAction
+    ) => {
+      const comment = state.comments.find(
+        (comment) => comment._id === action.payload.parentId
+      );
+      if (comment) {
+        const reply = comment.comment_replies.find(
+          (reply) => reply._id === action.payload.replyId
+        );
+        if (reply) {
+          if (!reply.downvote_status) {
+            reply.downvote_status = true;
+            reply.downvotes_count = reply.downvotes_count! - 1 + 2;
+            if (reply.upvote_status) {
+              reply.upvote_status = false;
+              reply.upvotes_count = reply.upvotes_count! - 1;
+            }
+          } else {
+            reply.downvote_status = false;
+            reply.downvotes_count = reply.downvotes_count! - 1;
+          }
+        }
       }
     },
   },
@@ -281,16 +336,20 @@ const commentSlice = createSlice({
         state.error = action.error.message || "";
       }
     );
+    builder.addCase(createReplyOnComment.pending, (state) => {
+    });
   },
 });
 
 export default commentSlice.reducer;
 
 export const {
-  upvotesuccess,
-  downvotesuccess,
+  commentupvotesuccess,
+  commentdownvotesuccess,
   switchcommentreplybox,
   changepostcomment,
   changecommentreply,
   initcommentreplies,
+  replyupvotesuccess,
+  replydownvotesuccess,
 } = commentSlice.actions;

@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import {
-  downvotesuccess,
-  upvotesuccess,
+  commentdownvotesuccess,
+  commentupvotesuccess,
   switchcommentreplybox,
   downvoteCommentById,
   upvoteCommentById,
@@ -27,7 +27,7 @@ function CommentActions(props: { comment: NestedComment }) {
     e.stopPropagation();
     dispatch(upvoteCommentById(comment._id)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
-        dispatch(upvotesuccess(comment._id));
+        dispatch(commentupvotesuccess(comment._id));
       }
     });
   };
@@ -36,7 +36,7 @@ function CommentActions(props: { comment: NestedComment }) {
     e.stopPropagation();
     dispatch(downvoteCommentById(comment._id)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
-        dispatch(downvotesuccess(comment._id!));
+        dispatch(commentdownvotesuccess(comment._id!));
       }
     });
   };
@@ -50,7 +50,6 @@ function CommentActions(props: { comment: NestedComment }) {
     dispatch(
       getCommentReplies({ commentId: comment._id, userId: currentUser._id })
     ).then((res) => {
-      console.log(res.payload);
       if (hasProperty(res.payload, "data")) {
         dispatch(
           initcommentreplies({
