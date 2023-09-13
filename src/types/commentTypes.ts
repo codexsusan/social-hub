@@ -14,9 +14,10 @@ export interface Comment {
   upvotes_count: number;
   downvotes_count: number;
   report_count: number;
+  comment_count: number;
   comment_context: string;
   comment_reply_status: boolean;
-  comment_reply: CommentPartial[];
+  comment_reply: NestedComment[];
   parent_type: string;
   parent_id: string;
   created_at: string;
@@ -26,14 +27,16 @@ export interface Comment {
 export interface CommentPartial extends Partial<Comment> {}
 
 export interface NestedComment extends Comment {
+  replies_count: number;
   comment_current_reply: string;
+  comment_current_reply_loading: boolean;
   comment_replies: NestedComment[];
 }
 
 export type CommentInitialState = {
   error: string;
   loading: boolean;
-  currentComment: string;
+  current_comment: string;
   current_comment_loading: boolean;
   comments: NestedComment[];
 };

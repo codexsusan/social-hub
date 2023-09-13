@@ -1,4 +1,4 @@
-import { CommentPartial } from "./commentTypes";
+import { NestedComment } from "./commentTypes";
 import { AuthorPartial } from "./userTypes";
 
 export interface PostActionType {
@@ -37,7 +37,7 @@ export interface Post {
   upvote_status: boolean;
   downvote_status: boolean;
   comment_count: number;
-  comment_data: CommentPartial[];
+  comment_data: NestedComment[];
   comment_status: boolean;
   bookmark_status: boolean;
   report_count: number;

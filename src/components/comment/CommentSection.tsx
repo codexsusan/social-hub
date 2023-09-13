@@ -1,4 +1,4 @@
-import { useAppSelector } from "@/app/hooks";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { cn } from "@/lib/utils";
 import CommentWrapper from "./CommentWrapper";
 import CommentActions from "./CommentActions";
@@ -6,6 +6,11 @@ import { Loader } from "lucide-react";
 import CommentEditor from "./CommentEditor";
 import parser from "html-react-parser";
 import CommentButton from "./CommentButton";
+import {
+  changecommentreply,
+  createReplyOnComment,
+} from "@/features/comment/commentSlice";
+import { NestedComment } from "@/types/commentTypes";
 
 function CommentSection() {
   const currentcomment = useAppSelector((state) => state.currentcomment);
@@ -25,6 +30,24 @@ function CommentSection() {
 
 function View() {
   const currentcomment = useAppSelector((state) => state.currentcomment);
+  const currentPost = useAppSelector((state) => state.currentpost);
+  const dispatch = useAppDispatch();
+
+  const handleReplySubmitCB = (comment: NestedComment) => {
+    dispatch(
+      createReplyOnComment({
+        content: comment.comment_current_reply,
+        postId: currentPost.post._id,
+        parentId: comment._id,
+      })
+    ).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        console.log("fulfilled");
+      }
+      console.log(res);
+    });
+  };
+
   return (
     <>
       {currentcomment.comments.map((comment) => {
@@ -35,8 +58,44 @@ function View() {
             <CommentActions comment={comment} />
             {comment.comment_reply_status && (
               <>
-                <CommentEditor comment={comment} />
-                <CommentButton loading={false} handleCommentSubmit={() => {}} />
+                {comment.replies_count > 0 && (
+                  <>
+                    {comment.comment_replies &&
+                      comment.comment_replies.map((reply) => {
+                        const parsedReply = parser(reply?.content || "");
+
+                        return (
+                          <CommentWrapper
+                            key={reply._id}
+                            comment={reply}
+                            className="flex gap-y-4 my-4"
+                          >
+                            <div className="text-base">{parsedReply}</div>
+                            <CommentActions comment={reply} />
+                          </CommentWrapper>
+                        );
+                      })}
+                  </>
+                )}
+                <div className="flex flex-col">
+                  <CommentEditor
+                    comment={comment}
+                    contentChangeCB={(content: string) => {
+                      dispatch(
+                        changecommentreply({
+                          commentId: comment._id,
+                          reply: content,
+                        })
+                      );
+                    }}
+                  />
+                  <CommentButton
+                    loading={comment.comment_current_reply_loading}
+                    handleCommentSubmit={() => {
+                      handleReplySubmitCB(comment);
+                    }}
+                  />
+                </div>
               </>
             )}
           </CommentWrapper>

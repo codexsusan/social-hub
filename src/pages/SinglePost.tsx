@@ -73,7 +73,7 @@ function AddComment() {
   const commentsData = useAppSelector((state) => state.currentcomment);
   const user = useAppSelector((state) => state.user);
   const post = singlePage.post;
-  const comment = commentsData.currentComment;
+  const comment = commentsData.current_comment;
   const changeComment = (content: string) => {
     dispatch(changepostcomment(content));
   };

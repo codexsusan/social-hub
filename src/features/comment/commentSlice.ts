@@ -1,11 +1,11 @@
 import { toast } from "@/components/ui/use-toast";
 import {
   CommentInitialState,
-  CommentPartial,
   NestedComment,
   PostandUserId,
 } from "@/types/commentTypes";
 import { PostPartial } from "@/types/postTypes";
+import { UserPartial } from "@/types/userTypes";
 import {
   createCommentOnPostUtils,
   createReplyOnCommentUtils,
@@ -21,24 +21,32 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 const initialState: CommentInitialState = {
   error: "",
   loading: false,
-  currentComment: "",
+  current_comment: "",
   current_comment_loading: false,
   comments: [] as NestedComment[],
 };
 
 type ReplyData = {
-  content: CommentPartial["content"];
+  content: NestedComment["content"];
   postId: PostPartial["_id"];
-  parentId: CommentPartial["_id"];
+  parentId: NestedComment["_id"];
 };
 
+type CommentandUserId = {
+  commentId: NestedComment["_id"];
+  userId: UserPartial["_id"];
+};
+
+// Get Post Comment
 export const getCommentsOnPost = createAsyncThunk(
   "comment/get",
   async (data: PostandUserId) => {
     const { postId, userId } = data;
     const commentData = await getCommentsOnPostUtils(postId);
+
     const commentLength = commentData.data.data.length;
     const updateCommentData = [];
+    console.log(commentData.data.data);
     for (let i = 0; i < commentLength; i++) {
       const upvote_status = commentData.data.data[i].upvotes.includes(userId);
       const downvote_status =
@@ -46,11 +54,12 @@ export const getCommentsOnPost = createAsyncThunk(
       const currentAuthorId = commentData.data.data[i].author_id;
       const authorData = await getUserByIdUtils(currentAuthorId);
       const currentAuthor = authorData.data.user;
-      const updatedCurrentCommentData: CommentPartial = {
+      const updatedCurrentCommentData: NestedComment = {
         ...commentData.data.data[i],
         comment_reply_status: false,
         upvote_status,
         downvote_status,
+        comment_count: commentData.data.data[i].replies_count,
         author: {
           _id: currentAuthor._id,
           userName: currentAuthor.userName,
@@ -69,27 +78,31 @@ export const getCommentsOnPost = createAsyncThunk(
   }
 );
 
+// Create comment on Post
 export const createCommentOnPost = createAsyncThunk(
   "comment/create",
   async (data: Partial<ReplyData>) => {
-    return createCommentOnPostUtils(data.content, data.postId);
+    return createCommentOnPostUtils(data.content || "", data.postId);
   }
 );
 
+// Upvote Comment
 export const upvoteCommentById = createAsyncThunk(
   "comment/upvote",
-  async (id: CommentPartial["_id"]) => {
+  async (id: NestedComment["_id"]) => {
     return upvoteCommentByIdUtils(id);
   }
 );
 
+// Downvote Comment
 export const downvoteCommentById = createAsyncThunk(
   "comment/downvote",
-  async (id: CommentPartial["_id"]) => {
+  async (id: NestedComment["_id"]) => {
     return downvoteCommentByIdUtils(id);
   }
 );
 
+// Create Reply on Comment
 export const createReplyOnComment = createAsyncThunk(
   "comment/reply",
   async (data: ReplyData) => {
@@ -97,10 +110,42 @@ export const createReplyOnComment = createAsyncThunk(
   }
 );
 
+// Get replies of comment by Id
 export const getCommentReplies = createAsyncThunk(
   "get/comment/replies",
-  async (commentId: CommentPartial["_id"]) => {
-    return getCommentRepliesUtils(commentId);
+  async (data: CommentandUserId) => {
+    const { commentId, userId } = data;
+    const repliesData = await getCommentRepliesUtils(commentId);
+    const repliesLength = repliesData.data.data.length;
+    const updatedRepliesData = [];
+    for (let i = 0; i < repliesLength; i++) {
+      const upvote_status = repliesData.data.data[i].upvotes.includes(userId);
+      const downvote_status =
+        repliesData.data.data[i].downvotes.includes(userId);
+      const currentAuthorId = repliesData.data.data[i].author_id;
+      const authorData = await getUserByIdUtils(currentAuthorId);
+      const currentAuthor = authorData.data.user;
+      const updatedCurrentReplyData: NestedComment = {
+        ...repliesData.data.data[i],
+        comment_reply_status: false,
+        upvote_status,
+        downvote_status,
+        author: {
+          _id: currentAuthor._id,
+          userName: currentAuthor.userName,
+          firstName: currentAuthor.firstName,
+          lastName: currentAuthor.lastName,
+          profilePic: currentAuthor.profilePic,
+          bio: currentAuthor.bio,
+        },
+      };
+      updatedRepliesData.push(updatedCurrentReplyData);
+    }
+    console.log(updatedRepliesData);
+    return {
+      ...repliesData,
+      data: { ...repliesData.data, data: updatedRepliesData },
+    };
   }
 );
 
@@ -110,7 +155,7 @@ const commentSlice = createSlice({
   reducers: {
     upvotesuccess: (
       state: CommentInitialState,
-      action: PayloadAction<CommentPartial["_id"]>
+      action: PayloadAction<NestedComment["_id"]>
     ) => {
       const comment = state.comments.find(
         (comment) => comment._id === action.payload
@@ -131,7 +176,7 @@ const commentSlice = createSlice({
     },
     downvotesuccess: (
       state: CommentInitialState,
-      action: PayloadAction<CommentPartial["_id"]>
+      action: PayloadAction<NestedComment["_id"]>
     ) => {
       const comment = state.comments.find(
         (comment) => comment._id === action.payload
@@ -152,7 +197,7 @@ const commentSlice = createSlice({
     },
     switchcommentreplybox: (
       state: CommentInitialState,
-      action: PayloadAction<CommentPartial["_id"]>
+      action: PayloadAction<NestedComment["_id"]>
     ) => {
       const comment = state.comments.find(
         (comment) => comment._id === action.payload
@@ -165,14 +210,31 @@ const commentSlice = createSlice({
       state: CommentInitialState,
       action: PayloadAction<string>
     ) => {
-      state.currentComment = action.payload;
+      state.current_comment = action.payload;
     },
-    changecommentreply: (state: CommentInitialState, action) => {
+    changecommentreply: (
+      state: CommentInitialState,
+      action: PayloadAction<{ commentId: NestedComment["_id"]; reply: string }>
+    ) => {
       const comment = state.comments.find(
         (comment) => comment._id === action.payload.commentId
       );
       if (comment) {
         comment.comment_current_reply = action.payload.reply;
+      }
+    },
+    initcommentreplies: (
+      state: CommentInitialState,
+      action: PayloadAction<{
+        commentId: NestedComment["_id"];
+        replies: NestedComment["comment_replies"];
+      }>
+    ) => {
+      const comment = state.comments.find(
+        (comm) => comm._id == action.payload.commentId
+      );
+      if (comment) {
+        comment.comment_replies = action.payload.replies;
       }
     },
   },
@@ -209,7 +271,7 @@ const commentSlice = createSlice({
       (state: CommentInitialState, action) => {
         console.log(action.payload.data.data);
         state.current_comment_loading = false;
-        state.currentComment = "";
+        state.current_comment = "";
       }
     );
     builder.addCase(
@@ -230,4 +292,5 @@ export const {
   switchcommentreplybox,
   changepostcomment,
   changecommentreply,
+  initcommentreplies,
 } = commentSlice.actions;

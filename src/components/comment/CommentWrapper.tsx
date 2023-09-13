@@ -1,17 +1,19 @@
 import React from "react";
 import { CustomAvatar } from "../common/CustomAvatar";
 import { cn } from "@/lib/utils";
-import { CommentPartial } from "@/types/commentTypes";
+import { NestedComment } from "@/types/commentTypes";
 
+// TODO: Test with just nested comment
 type Props = {
-  comment?: CommentPartial;
+  comment?: NestedComment ;
   children: React.ReactNode;
+  className?: string;
 };
 
 function CommentWrapper(props: Props) {
-  const { comment, children } = props;
+  const { comment, children, className } = props;
   return (
-    <div className={cn("flex gap-x-3")}>
+    <div className={cn("flex gap-x-3", className)}>
       <div
         className={""}
         onClick={(event: React.MouseEvent) => {
@@ -44,7 +46,6 @@ function CommentWrapper(props: Props) {
         </div>
         {/* Children should be here as */}
         {children}
-        
       </div>
     </div>
   );

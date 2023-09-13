@@ -1,10 +1,10 @@
-import { CommentPartial } from "@/types/commentTypes";
+import {  NestedComment } from "@/types/commentTypes";
 import { request } from "./httpUtils";
 import { PostPartial } from "@/types/postTypes";
 
 // Create Comment
 export const createCommentOnPostUtils = async (
-  content: CommentPartial["content"],
+  content: NestedComment["content"],
   postId?: PostPartial["_id"]
 ) => {
   const response = await request(
@@ -20,9 +20,9 @@ export const createCommentOnPostUtils = async (
 
 // Create Reply on Comment
 export const createReplyOnCommentUtils = async (
-  content: CommentPartial["content"],
+  content: NestedComment["content"],
   postId: PostPartial["_id"],
-  parentId: CommentPartial["_id"]
+  parentId: NestedComment["_id"]
 ) => {
   const response = await request(
     `/api/comment/create-comment/${postId}`,
@@ -43,7 +43,7 @@ export const getCommentsOnPostUtils = async (id: PostPartial["_id"]) => {
 };
 
 // Get Comments Replies
-export const getCommentRepliesUtils = async (id: CommentPartial["_id"]) => {
+export const getCommentRepliesUtils = async (id: NestedComment["_id"]) => {
   const response = await request(
     `/api/comment/get-comment-replies/${id}`,
     "GET",
@@ -53,7 +53,7 @@ export const getCommentRepliesUtils = async (id: CommentPartial["_id"]) => {
 };
 
 // Delete Comment by id
-export const deleteCommentByIdUtils = async (id: CommentPartial["_id"]) => {
+export const deleteCommentByIdUtils = async (id: NestedComment["_id"]) => {
   const response = await request(
     `/api/comment/delete-comment/${id}`,
     "DELETE",
@@ -62,7 +62,7 @@ export const deleteCommentByIdUtils = async (id: CommentPartial["_id"]) => {
   return response;
 };
 
-export const upvoteCommentByIdUtils = async (id: CommentPartial["_id"]) => {
+export const upvoteCommentByIdUtils = async (id: NestedComment["_id"]) => {
   const response = await request(
     `/api/comment/upvote-comment/${id}`,
     "POST",
@@ -71,7 +71,7 @@ export const upvoteCommentByIdUtils = async (id: CommentPartial["_id"]) => {
   return response;
 };
 
-export const downvoteCommentByIdUtils = async (id: CommentPartial["_id"]) => {
+export const downvoteCommentByIdUtils = async (id: NestedComment["_id"]) => {
   const response = await request(
     `/api/comment/downvote-comment/${id}`,
     "POST",
