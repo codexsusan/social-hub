@@ -336,8 +336,6 @@ const commentSlice = createSlice({
         state.error = action.error.message || "";
       }
     );
-    builder.addCase(createReplyOnComment.pending, (state) => {
-    });
   },
 });
 
