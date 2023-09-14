@@ -41,7 +41,7 @@ export interface Post {
   comment_count: number;
   comment_data: NestedComment[];
   comment_status: boolean;
-  bookmark_status: boolean;
+  isBookmarked: boolean;
   report_count: number;
   view_count: number;
   tags: string[];

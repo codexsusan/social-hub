@@ -75,7 +75,11 @@ export default function PostActions(props: Props) {
     }
   };
 
-  const { upvote_status, downvote_status } = post!;
+  const handleBookmark = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  }
+
+  const { upvote_status, downvote_status, isBookmarked } = post!;
 
   return (
     <div className="w-full flex gap-x-8 justify-normal my-2 items-center ">
@@ -88,7 +92,7 @@ export default function PostActions(props: Props) {
         <ArrowBigDown
           onClick={handleDownVote}
           strokeWidth={1}
-          fill={downvote_status ? "white" : ""}
+          fill={downvote_status ? "white" : undefined}
         />
         {VoteCount}
       </div>
@@ -97,7 +101,12 @@ export default function PostActions(props: Props) {
         {CommentCount}
       </div>
       <div>
-        <Bookmark strokeWidth={1} size={22} />
+        <Bookmark
+
+          strokeWidth={1}
+          size={22}
+          fill={isBookmarked ? "white" : undefined}
+        />
       </div>
     </div>
   );
