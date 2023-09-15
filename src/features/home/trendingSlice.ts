@@ -15,7 +15,7 @@ const initialState: TrendingInitialState = {
 export const fetchTrendingPosts = createAsyncThunk(
   "home/fetch/trending",
   async (id: UserPartial["_id"]) => {
-    const trendingPost = await getTrendingPostsUtils();
+    const trendingPost = await getTrendingPostsUtils({});
     const updatedData = trendingPost.data!.data.map((post: PostPartial) => {
       const upvote_status = post.upvotes!.includes(id!);
       const downvote_status = post.downvotes!.includes(id!);
@@ -52,7 +52,10 @@ const trendingSlice = createSlice({
         }
       }
     },
-    downvotetrendingsuccess: (state: TrendingInitialState, action) => {
+    downvotetrendingsuccess: (
+      state: TrendingInitialState,
+      action: PayloadAction<PostPartial["_id"]>
+    ) => {
       const post = state.posts.find((post) => post._id === action.payload);
       if (post) {
         if (!post.downvote_status) {
@@ -66,6 +69,33 @@ const trendingSlice = createSlice({
           post.downvote_status = false;
           post.downvotes_count = post.downvotes_count! - 1;
         }
+      }
+    },
+    addbookmarktrendingsuccess: (
+      state: TrendingInitialState,
+      action: PayloadAction<PostPartial["_id"]>
+    ) => {
+      const post = state.posts.find((post) => post._id === action.payload);
+      if (post) {
+        post.isBookmarked = true;
+      }
+    },
+    removebookmarktrendingsuccess: (
+      state: TrendingInitialState,
+      action: PayloadAction<PostPartial["_id"]>
+    ) => {
+      const post = state.posts.find((post) => post._id === action.payload);
+      if (post) {
+        post.isBookmarked = false;
+      }
+    },
+    switchbookmarktrendingsuccess: (
+      state: TrendingInitialState,
+      action: PayloadAction<PostPartial["_id"]>
+    ) => {
+      const post = state.posts.find((post) => post._id === action.payload);
+      if (post) {
+        post.isBookmarked = !post.isBookmarked;
       }
     },
   },
@@ -110,5 +140,10 @@ const trendingSlice = createSlice({
 
 export default trendingSlice.reducer;
 
-export const { upvotetrendingsuccess, downvotetrendingsuccess } =
-  trendingSlice.actions;
+export const {
+  upvotetrendingsuccess,
+  downvotetrendingsuccess,
+  addbookmarktrendingsuccess,
+  removebookmarktrendingsuccess,
+  switchbookmarktrendingsuccess,
+} = trendingSlice.actions;

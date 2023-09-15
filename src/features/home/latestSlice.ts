@@ -73,6 +73,33 @@ const latestSlice = createSlice({
         }
       }
     },
+    addbookmarklatestsuccess: (
+      state: LatestInitialState,
+      action: PayloadAction<PostPartial["_id"]>
+    ) => {
+      const post = state.posts.find((post) => post._id === action.payload);
+      if (post) {
+        post.isBookmarked = true;
+      }
+    },
+    removebookmarklatestsuccess: (
+      state: LatestInitialState,
+      action: PayloadAction<PostPartial["_id"]>
+    ) => {
+      const post = state.posts.find((post) => post._id === action.payload);
+      if (post) {
+        post.isBookmarked = false;
+      }
+    },
+    switchbookmarklatestsuccess: (
+      state: LatestInitialState,
+      action: PayloadAction<PostPartial["_id"]>
+    ) => {
+      const post = state.posts.find((post) => post._id === action.payload);
+      if (post) {
+        post.isBookmarked = !post.isBookmarked;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchLatestPosts.pending, (state: LatestInitialState) => {
@@ -115,5 +142,10 @@ const latestSlice = createSlice({
 
 export default latestSlice.reducer;
 
-export const { upvotelatestsuccess, downvotelatestsuccess } =
-  latestSlice.actions;
+export const {
+  upvotelatestsuccess,
+  downvotelatestsuccess,
+  addbookmarklatestsuccess,
+  removebookmarklatestsuccess,
+  switchbookmarklatestsuccess,
+} = latestSlice.actions;

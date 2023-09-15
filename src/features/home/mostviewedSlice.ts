@@ -76,6 +76,15 @@ const mostviewedSlice = createSlice({
         }
       }
     },
+    switchbookmarkmostviewedsuccess: (
+      state: MostViewedInitialState,
+      action: PayloadAction<PostPartial["_id"]>
+    ) => {
+      const post = state.posts.find((post) => post._id === action.payload);
+      if (post) {
+        post.isBookmarked = !post.isBookmarked;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(
@@ -121,5 +130,8 @@ const mostviewedSlice = createSlice({
 });
 export default mostviewedSlice.reducer;
 
-export const { upvotemostviewedsuccess, downvotemostviewedsuccess } =
-  mostviewedSlice.actions;
+export const {
+  upvotemostviewedsuccess,
+  downvotemostviewedsuccess,
+  switchbookmarkmostviewedsuccess,
+} = mostviewedSlice.actions;
