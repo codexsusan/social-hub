@@ -30,7 +30,7 @@ function View() {
     </div>
   ) : (
     mostviewed.posts.map((post) => {
-      return <PostCard type="latest" key={post._id} post={post} />;
+      return <PostCard type="most-viewed" key={post._id} post={post} />;
     })
   );
 }

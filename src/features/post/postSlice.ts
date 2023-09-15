@@ -1,8 +1,6 @@
 import { PostandUserId } from "@/types/commentTypes";
-import {
-  PostPartial,
-  SinglePostInitialState,
-} from "@/types/postTypes";
+import { PostPartial, SinglePostInitialState } from "@/types/postTypes";
+import { addBookmarkUtils, removeBookmarkUtils } from "@/utils/bookmarkUtils";
 import { ResponseData } from "@/utils/httpUtils";
 import {
   deletePostByIdUtils,
@@ -47,6 +45,20 @@ export const reportPost = createAsyncThunk(
   }
 );
 
+export const addBookmarkPost = createAsyncThunk(
+  "post/add/bookmark",
+  async (id: PostPartial["_id"]) => {
+    return addBookmarkUtils(id).then((res) => res);
+  }
+);
+
+export const removeBookmarkPost = createAsyncThunk(
+  "post/remove/bookmark",
+  async (id: PostPartial["_id"]) => {
+    return removeBookmarkUtils(id).then((res) => res);
+  }
+);
+
 export const getPost = createAsyncThunk(
   "post/get",
   async (data: PostandUserId) => {
@@ -67,8 +79,6 @@ export const getPost = createAsyncThunk(
     };
   }
 );
-
-// export const crea
 
 const postSlice = createSlice({
   name: "post",
@@ -99,6 +109,15 @@ const postSlice = createSlice({
         state.post.downvote_status = false;
         state.post.downvotes_count = state.post.downvotes_count! - 1;
       }
+    },
+    addbookmarksuccess: (state: SinglePostInitialState) => {
+      state.post.isBookmarked = true;
+    },
+    removebookmarksuccess: (state: SinglePostInitialState) => {
+      state.post.isBookmarked = false;
+    },
+    switchbookmarksuccess: (state: SinglePostInitialState) => {
+      state.post.isBookmarked = !state.post.isBookmarked;
     },
     enablecomment: (state: SinglePostInitialState) => {
       state.post.comment_status = true;
@@ -134,5 +153,11 @@ const postSlice = createSlice({
 
 export default postSlice.reducer;
 
-export const { upvotesuccess, downvotesuccess, togglecomment } =
-  postSlice.actions;
+export const {
+  upvotesuccess,
+  downvotesuccess,
+  togglecomment,
+  addbookmarksuccess,
+  removebookmarksuccess,
+  switchbookmarksuccess,
+} = postSlice.actions;

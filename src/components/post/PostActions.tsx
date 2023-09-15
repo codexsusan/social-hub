@@ -1,15 +1,24 @@
 import { useAppDispatch } from "@/app/hooks";
 import {
+  addBookmark,
+  removeBookmark,
+} from "@/features/bookmarks/bookmarkSlice";
+import {
   downvotelatestsuccess,
+  removebookmarklatestsuccess,
+  switchbookmarklatestsuccess,
   upvotelatestsuccess,
 } from "@/features/home/latestSlice";
+import { switchbookmarkmostviewedsuccess } from "@/features/home/mostviewedSlice";
 import {
   downvotetrendingsuccess,
+  switchbookmarktrendingsuccess,
   upvotetrendingsuccess,
 } from "@/features/home/trendingSlice";
 import {
   downvotePost,
   downvotesuccess,
+  switchbookmarksuccess,
   togglecomment,
   upvotePost,
   upvotesuccess,
@@ -77,7 +86,36 @@ export default function PostActions(props: Props) {
 
   const handleBookmark = (e: React.MouseEvent) => {
     e.stopPropagation();
-  }
+    if (post?.isBookmarked) {
+      dispatch(removeBookmark(post!._id)).then((res) => {
+        if (res.meta.requestStatus === "fulfilled") {
+          if (type === "latest") {
+            dispatch(removebookmarklatestsuccess(post!._id));
+          } else if (type === "single-post") {
+            dispatch(switchbookmarksuccess());
+          } else if (type === "trending") {
+            dispatch(switchbookmarktrendingsuccess(post!._id));
+          } else if (type === "most-viewed") {
+            dispatch(switchbookmarkmostviewedsuccess(post!._id));
+          }
+        }
+      });
+    } else {
+      dispatch(addBookmark(post!._id)).then((res) => {
+        if (res.meta.requestStatus === "fulfilled") {
+          if (type === "latest") {
+            dispatch(switchbookmarklatestsuccess(post?._id));
+          } else if (type === "single-post") {
+            dispatch(switchbookmarksuccess());
+          } else if (type === "trending") {
+            dispatch(switchbookmarktrendingsuccess(post!._id));
+          } else if (type === "most-viewed") {
+            dispatch(switchbookmarkmostviewedsuccess(post!._id));
+          }
+        }
+      });
+    }
+  };
 
   const { upvote_status, downvote_status, isBookmarked } = post!;
 
@@ -102,7 +140,7 @@ export default function PostActions(props: Props) {
       </div>
       <div>
         <Bookmark
-
+          onClick={handleBookmark}
           strokeWidth={1}
           size={22}
           fill={isBookmarked ? "white" : undefined}

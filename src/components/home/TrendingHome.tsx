@@ -31,7 +31,7 @@ function View() {
     </div>
   ) : (
     trending.posts.map((post) => {
-      return <PostCard type="trending" key={post._id} post={post} />;
+      return <PostCard type={"trending"} key={post._id} post={post} />;
     })
   );
 }
