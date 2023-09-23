@@ -3,7 +3,6 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { UserPartial } from "@/types/userTypes";
 import { getMostViewedPostsUtils } from "@/utils/postUtils";
 import { ResponseData } from "@/utils/httpUtils";
-import { toast } from "@/components/ui/use-toast";
 import {
   downvoteSuccessUtils,
   switchbookmarkSuccessUtils,
@@ -47,7 +46,7 @@ const mostviewedSlice = createSlice({
       state: MostViewedInitialState,
       action: PayloadAction<PostPartial["_id"]>
     ) => {
-      upvoteSuccessUtils(state, action);  
+      upvoteSuccessUtils(state, action);
     },
     downvotemostviewedsuccess: (
       state: MostViewedInitialState,
@@ -73,20 +72,7 @@ const mostviewedSlice = createSlice({
       fetchMostViewedPosts.fulfilled,
       (state: MostViewedInitialState, action: PayloadAction<ResponseData>) => {
         state.loading = false;
-        if (action.payload.status === 200) {
-          state.posts = [...action.payload.data.data];
-          state.posts = state.posts.map((post) => {
-            return { ...post };
-          });
-        } else {
-          state.error = action.payload.statusText;
-          toast({
-            title: "Failed to load data.",
-            description: action.payload.data.message,
-            duration: 2000,
-            className: "bg-[#09090B] text-[#e2e2e2] border-none ",
-          });
-        }
+        state.posts = [...action.payload.data.data];
       }
     );
     builder.addCase(
@@ -94,12 +80,6 @@ const mostviewedSlice = createSlice({
       (state: MostViewedInitialState, action) => {
         state.loading = false;
         state.error = action.error.message || "";
-        toast({
-          title: "Failed to load data.",
-          description: action.error.message,
-          duration: 2000,
-          className: "bg-[#09090B] text-[#e2e2e2] border-none ",
-        });
       }
     );
   },

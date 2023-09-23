@@ -8,15 +8,13 @@ import { UserPartial } from "@/types/userTypes";
 
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { loginUser } from "@/features/user/userSlice";
+import { toast } from "../ui/use-toast";
 
 function Login() {
   useDocumentTitle("Login | Social Hub");
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const userData = useAppSelector((state) => state.user);
-  // const [email, setEmail] = React.useState<string>("");
-  // const [password, setPassword] = React.useState<string>("");
-  // const [loading, setLoading] = React.useState<boolean>(false);
 
   const [user, setUser] = React.useState<UserPartial>({
     email: "",
@@ -25,8 +23,20 @@ function Login() {
 
   const handleLogin = () => {
     dispatch(loginUser(user)).then((res) => {
-      if (res.type === "/user/login/fulfilled") {
+      if (res.meta.requestStatus === "fulfilled") {
+        toast({
+          title: "Welcome back.",
+          description: "We've logged you in.",
+          className: "bg-[#09090B] text-[#e2e2e2] border-none ",
+          duration: 2000,
+        });
         navigate("/");
+      } else if (res.meta.requestStatus === "rejected") {
+        toast({
+          title: "Login failed.",
+          description: userData.error,
+          duration: 2000,
+        });
       }
     });
   };

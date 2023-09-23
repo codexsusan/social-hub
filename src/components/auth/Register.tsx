@@ -10,6 +10,7 @@ import { registerUser } from "@/features/user/userSlice";
 
 import CustomSelect from "../common/CustomSelect";
 import { Gender, RegisterUser } from "@/types/userTypes";
+import { toast } from "../ui/use-toast";
 
 function Register() {
   const navigate = useNavigate();
@@ -32,11 +33,22 @@ function Register() {
 
   const userData = useAppSelector((state) => state.user);
 
-  // TODO: Setting token to local storage is left
   const handleRegister = () => {
     dispatch(registerUser(user)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
+        toast({
+          title: "Account created.",
+          description: "We've created your account for you.",
+          duration: 2000,
+          className: "bg-[#09090B] text-[#e2e2e2] border-none ",
+        });
         navigate("/");
+      } else if (res.meta.requestStatus === "rejected") {
+        toast({
+          title: "Unable to create an account.",
+          description: userData.error,
+          duration: 2000,
+        });
       }
     });
   };

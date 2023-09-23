@@ -7,7 +7,6 @@ import {
   userSignupUtils,
 } from "@/utils/userUtils";
 import { ResponseData } from "@/utils/httpUtils";
-import { toast } from "@/components/ui/use-toast";
 
 const initialState: User = {
   _id: "",
@@ -64,22 +63,11 @@ const userSlice = createSlice({
         state.error = "";
         state.token = action.payload.data.token!;
         localStorage.setItem("token", action.payload.data.token);
-        toast({
-          title: "Account created.",
-          description: "We've created your account for you.",
-          duration: 2000,
-          className: "bg-[#09090B] text-[#e2e2e2] border-none ",
-        });
       }
     );
     builder.addCase(registerUser.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error.message!;
-      toast({
-        title: "Unable to create an account.",
-        description: action.error.message!,
-        duration: 2000,
-      });
     });
     // User Login
     builder.addCase(loginUser.pending, (state) => {
@@ -89,35 +77,14 @@ const userSlice = createSlice({
       loginUser.fulfilled,
       (state, action: PayloadAction<ResponseData>) => {
         state.loading = false;
-        if (action.payload.status === 200) {
-          state.error = "";
-          state.token = action.payload.data.token;
-          localStorage.setItem("token", action.payload.data.token);
-          toast({
-            title: "Welcome back.",
-            description: "We've logged you in.",
-            className: "bg-[#09090B] text-[#e2e2e2] border-none ",
-            duration: 2000,
-          });
-        } else {
-          toast({
-            title: "Login failed.",
-            description: action.payload.data.message,
-            duration: 2000,
-            className: "bg-[#09090B] text-[#e2e2e2] border-none ",
-          });
-        }
+        state.error = "";
+        state.token = action.payload.data.token;
+        localStorage.setItem("token", action.payload.data.token);
       }
     );
     builder.addCase(loginUser.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error?.message || "Failed to login.";
-      // console.log(action);
-      toast({
-        title: "Login failed.",
-        description: action.error.message!,
-        duration: 2000,
-      });
     });
     // Fetch User Data
     builder.addCase(fetchUserData.pending, (state) => {

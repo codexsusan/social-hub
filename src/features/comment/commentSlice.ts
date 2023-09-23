@@ -1,4 +1,3 @@
-import { toast } from "@/components/ui/use-toast";
 import {
   CommentInitialState,
   NestedComment,
@@ -309,10 +308,6 @@ const commentSlice = createSlice({
       (state: CommentInitialState, action) => {
         state.loading = false;
         state.error = action.error.message || "";
-        toast({
-          description: state.error || "Something went wrong",
-          className: "bg-[#09090B] text-[#e2e2e2] border-none ",
-        });
       }
     );
     builder.addCase(
