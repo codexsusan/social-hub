@@ -50,18 +50,6 @@ export interface Post {
 
 export interface PostPartial extends Partial<Post> {}
 
-export type LatestInitialState = {
-  error: string;
-  loading: boolean;
-  posts: PostPartial[] | [];
-};
-
-export type TrendingInitialState = {
-  error: string;
-  loading: boolean;
-  posts: PostPartial[];
-};
-
 export type MostViewedInitialState = {
   error: string;
   loading: boolean;
@@ -72,4 +60,10 @@ export type SinglePostInitialState = {
   error: string;
   loading: boolean;
   post: PostPartial;
+};
+
+export type MultiplePostsInitialState = {
+  error: string;
+  loading: boolean;
+  posts: PostPartial[];
 };

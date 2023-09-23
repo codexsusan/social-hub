@@ -5,6 +5,7 @@ import { ResponseData } from "@/utils/httpUtils";
 import {
   deletePostByIdUtils,
   downvotePostUtils,
+  getAllPostsByUserUtils,
   getPostUtils,
   reportPostByIdUtils,
   upvotePostUtils,
@@ -17,6 +18,9 @@ const initialState: SinglePostInitialState = {
   post: {} as PostPartial,
 };
 
+/* This function is an async thunk that upvotes a post 
+   with the given ID using the upvotePostUtils function.
+*/
 export const upvotePost = createAsyncThunk(
   "post/upvote",
   async (id: PostPartial["_id"]) => {
@@ -24,6 +28,9 @@ export const upvotePost = createAsyncThunk(
   }
 );
 
+/* This function is an async thunk that downvotes a post 
+   with the given ID using the downvotePostUtils function.
+ */
 export const downvotePost = createAsyncThunk(
   "post/upvote",
   async (id: PostPartial["_id"]) => {
@@ -31,6 +38,9 @@ export const downvotePost = createAsyncThunk(
   }
 );
 
+/*
+  This function is an async thunk that deletes a post with the given ID using the deletePostByIdUtils function.
+*/
 export const deletePost = createAsyncThunk(
   "post/delete",
   async (id: PostPartial["_id"]) => {
@@ -38,6 +48,9 @@ export const deletePost = createAsyncThunk(
   }
 );
 
+/*
+  This function is an async thunk that reports a post with the given ID using the reportPostByIdUtils function.
+*/
 export const reportPost = createAsyncThunk(
   "post/report",
   async (id: PostPartial["_id"]) => {
@@ -45,6 +58,9 @@ export const reportPost = createAsyncThunk(
   }
 );
 
+/*
+  This function is an async thunk that adds a bookmark to a post with the given ID using the addBookmarkUtils function.
+*/
 export const addBookmarkPost = createAsyncThunk(
   "post/add/bookmark",
   async (id: PostPartial["_id"]) => {
@@ -52,6 +68,9 @@ export const addBookmarkPost = createAsyncThunk(
   }
 );
 
+/*
+  This function is an async thunk that removes a bookmark from a post with the given ID using the removeBookmarkUtils function.
+*/
 export const removeBookmarkPost = createAsyncThunk(
   "post/remove/bookmark",
   async (id: PostPartial["_id"]) => {
@@ -59,6 +78,16 @@ export const removeBookmarkPost = createAsyncThunk(
   }
 );
 
+export const getUserPosts = createAsyncThunk(
+  "post/get/user",
+  async () => {
+    return getAllPostsByUserUtils().then((res) => res);
+  }
+);
+
+/*
+  This function is an async thunk that gets a post with the given ID using the getPostUtils function.
+*/
 export const getPost = createAsyncThunk(
   "post/get",
   async (data: PostandUserId) => {
@@ -79,6 +108,10 @@ export const getPost = createAsyncThunk(
     };
   }
 );
+
+/*
+  This code defines a Redux slice for handling post-related actions, including upvoting, downvoting, bookmarking, enabling/disabling comments, and reporting a post. It also includes extra reducers for getting a post and reporting a post
+*/
 
 const postSlice = createSlice({
   name: "post",

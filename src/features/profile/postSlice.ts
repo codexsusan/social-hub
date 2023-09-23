@@ -1,14 +1,13 @@
-import { toast } from "@/components/ui/use-toast";
-import { MultiplePostsInitialState, PostPartial } from "@/types/postTypes";
+import { PostPartial, MultiplePostsInitialState } from "@/types/postTypes";
 import { UserPartial } from "@/types/userTypes";
 import { ResponseData } from "@/utils/httpUtils";
-import { getLatestPostsUtils } from "@/utils/postUtils";
+import { getAllPostsByUserUtils } from "@/utils/postUtils";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   downvoteSuccessUtils,
   switchbookmarkSuccessUtils,
   upvoteSuccessUtils,
-} from "../utils";
+} from "@/features/utils";
 
 const initialState: MultiplePostsInitialState = {
   error: "",
@@ -16,11 +15,11 @@ const initialState: MultiplePostsInitialState = {
   posts: [] as PostPartial[],
 };
 
-export const fetchLatestPosts = createAsyncThunk(
-  "home/fetch/latest",
+export const getPostsByUser = createAsyncThunk(
+  "user/get/post",
   async (id: UserPartial["_id"]) => {
-    const latestPost = await getLatestPostsUtils({ page: 1, limit: 10 });
-    const updatedData = latestPost.data!.data.map((post: PostPartial) => {
+    const userposts = await getAllPostsByUserUtils({}).then((res) => res);
+    const updatedPosts = userposts.data!.data.map((post: PostPartial) => {
       const upvote_status = post.upvotes!.includes(id!);
       const downvote_status = post.downvotes!.includes(id!);
       return {
@@ -30,29 +29,32 @@ export const fetchLatestPosts = createAsyncThunk(
       };
     });
     return {
-      ...latestPost,
-      data: { ...latestPost.data, data: [...updatedData] },
+      ...userposts,
+      data: {
+        ...userposts.data,
+        data: [...updatedPosts],
+      },
     };
   }
 );
 
-const latestSlice = createSlice({
-  name: "latestpost",
+const postSlice = createSlice({
+  name: "post",
   initialState,
   reducers: {
-    upvotelatestsuccess: (
+    upvoteprofilepostsuccess: (
       state: MultiplePostsInitialState,
       action: PayloadAction<PostPartial["_id"]>
     ) => {
       upvoteSuccessUtils(state, action);
     },
-    downvotelatestsuccess: (
+    downvoteprofilepostsuccess: (
       state: MultiplePostsInitialState,
       action: PayloadAction<PostPartial["_id"]>
     ) => {
       downvoteSuccessUtils(state, action);
     },
-    switchbookmarklatestsuccess: (
+    switchbookmarkprofilepostsuccess: (
       state: MultiplePostsInitialState,
       action: PayloadAction<PostPartial["_id"]>
     ) => {
@@ -61,13 +63,13 @@ const latestSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(
-      fetchLatestPosts.pending,
+      getPostsByUser.pending,
       (state: MultiplePostsInitialState) => {
         state.loading = true;
       }
     );
     builder.addCase(
-      fetchLatestPosts.fulfilled,
+      getPostsByUser.fulfilled,
       (
         state: MultiplePostsInitialState,
         action: PayloadAction<ResponseData>
@@ -77,25 +79,19 @@ const latestSlice = createSlice({
       }
     );
     builder.addCase(
-      fetchLatestPosts.rejected,
+      getPostsByUser.rejected,
       (state: MultiplePostsInitialState, action) => {
         state.loading = false;
-        state.error = action.error.message || "";
-        toast({
-          title: "Unable to load data",
-          description: action.error.message!,
-          duration: 2000,
-          className: "bg-[#09090B] text-[#e2e2e2] border-none ",
-        });
+        state.error = action.error.message!;
       }
     );
   },
 });
 
-export default latestSlice.reducer;
+export default postSlice.reducer;
 
 export const {
-  upvotelatestsuccess,
-  downvotelatestsuccess,
-  switchbookmarklatestsuccess,
-} = latestSlice.actions;
+  upvoteprofilepostsuccess,
+  downvoteprofilepostsuccess,
+  switchbookmarkprofilepostsuccess,
+} = postSlice.actions;

@@ -1,12 +1,17 @@
-import { PostPartial, TrendingInitialState } from "@/types/postTypes";
+import { PostPartial, MultiplePostsInitialState } from "@/types/postTypes";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 // import { fetchTrendingPosts } from "./homeSlice";
 import { ResponseData } from "@/utils/httpUtils";
 import { toast } from "@/components/ui/use-toast";
 import { getTrendingPostsUtils } from "@/utils/postUtils";
 import { UserPartial } from "@/types/userTypes";
+import {
+  downvoteSuccessUtils,
+  switchbookmarkSuccessUtils,
+  upvoteSuccessUtils,
+} from "../utils";
 
-const initialState: TrendingInitialState = {
+const initialState: MultiplePostsInitialState = {
   error: "",
   loading: false,
   posts: [] as PostPartial[],
@@ -36,79 +41,37 @@ const trendingSlice = createSlice({
   name: "trendingpost",
   initialState,
   reducers: {
-    upvotetrendingsuccess: (state: TrendingInitialState, action) => {
-      const post = state.posts.find((post) => post._id === action.payload);
-      if (post) {
-        if (!post.upvote_status) {
-          post.upvotes_count! = post.upvotes_count! - 1 + 2;
-          post.upvote_status = true;
-          if (post.downvote_status) {
-            post.downvote_status = false;
-            post.downvotes_count! = post.downvotes_count! - 1;
-          }
-        } else {
-          post.upvote_status = false;
-          post.upvotes_count! = post.upvotes_count! - 1;
-        }
-      }
+    upvotetrendingsuccess: (state: MultiplePostsInitialState, action) => {
+      console.log("Clicked here");
+      upvoteSuccessUtils(state, action);
     },
     downvotetrendingsuccess: (
-      state: TrendingInitialState,
+      state: MultiplePostsInitialState,
       action: PayloadAction<PostPartial["_id"]>
     ) => {
-      const post = state.posts.find((post) => post._id === action.payload);
-      if (post) {
-        if (!post.downvote_status) {
-          post.downvotes_count! = post.downvotes_count! - 1 + 2;
-          post.downvote_status = true;
-          if (post.upvote_status) {
-            post.upvote_status = false;
-            post.upvotes_count = post.upvotes_count! - 1;
-          }
-        } else {
-          post.downvote_status = false;
-          post.downvotes_count = post.downvotes_count! - 1;
-        }
-      }
+      downvoteSuccessUtils(state, action);
     },
-    addbookmarktrendingsuccess: (
-      state: TrendingInitialState,
-      action: PayloadAction<PostPartial["_id"]>
-    ) => {
-      const post = state.posts.find((post) => post._id === action.payload);
-      if (post) {
-        post.isBookmarked = true;
-      }
-    },
-    removebookmarktrendingsuccess: (
-      state: TrendingInitialState,
-      action: PayloadAction<PostPartial["_id"]>
-    ) => {
-      const post = state.posts.find((post) => post._id === action.payload);
-      if (post) {
-        post.isBookmarked = false;
-      }
-    },
+
     switchbookmarktrendingsuccess: (
-      state: TrendingInitialState,
+      state: MultiplePostsInitialState,
       action: PayloadAction<PostPartial["_id"]>
     ) => {
-      const post = state.posts.find((post) => post._id === action.payload);
-      if (post) {
-        post.isBookmarked = !post.isBookmarked;
-      }
+      switchbookmarkSuccessUtils(state, action);
     },
   },
   extraReducers: (builder) => {
     builder.addCase(
       fetchTrendingPosts.pending,
-      (state: TrendingInitialState) => {
+      (state: MultiplePostsInitialState) => {
         state.loading = true;
       }
     );
     builder.addCase(
       fetchTrendingPosts.fulfilled,
-      (state: TrendingInitialState, action: PayloadAction<ResponseData>) => {
+      (
+        state: MultiplePostsInitialState,
+        action: PayloadAction<ResponseData>
+      ) => {
         state.loading = false;
         if (action.payload.status === 200) {
           state.posts = [...action.payload.data.data];
@@ -124,7 +87,7 @@ const trendingSlice = createSlice({
     );
     builder.addCase(
       fetchTrendingPosts.rejected,
-      (state: TrendingInitialState, action) => {
+      (state: MultiplePostsInitialState, action) => {
         state.loading = false;
         state.error = action.error.message || "";
         toast({
@@ -143,7 +106,5 @@ export default trendingSlice.reducer;
 export const {
   upvotetrendingsuccess,
   downvotetrendingsuccess,
-  addbookmarktrendingsuccess,
-  removebookmarktrendingsuccess,
   switchbookmarktrendingsuccess,
 } = trendingSlice.actions;

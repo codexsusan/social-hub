@@ -60,11 +60,11 @@ export const editPostByIdUtils = async (
 
 // Get all post by user
 // TODO: Need to work with query params
-export const getAllPostsByUserUtils = async (id: PostPartial["_id"]) => {
+export const getAllPostsByUserUtils = async (data: queryParamsType) => {
   const response = await request(
-    `/api/post/get-all-posts-by-user/${id}`,
+    `/api/post/get-all-posts-by-user`,
     "GET",
-    {}
+    data
   );
   return response;
 };

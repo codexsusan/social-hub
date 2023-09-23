@@ -6,6 +6,7 @@ import trendingReducer from "@/features/home/trendingSlice";
 import postReducer from "@/features/post/postSlice";
 import commentReducer from "@/features/comment/commentSlice";
 import mostviewedReducer from "@/features/home/mostviewedSlice";
+import profileReducer from "@/features/profile/profileSlice";
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     mostviewedpost: mostviewedReducer,
     currentpost: postReducer,
     currentcomment: commentReducer,
+    profile: profileReducer,
   },
 });
 

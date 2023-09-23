@@ -5,11 +5,14 @@ import {
 } from "@/features/bookmarks/bookmarkSlice";
 import {
   downvotelatestsuccess,
-  removebookmarklatestsuccess,
   switchbookmarklatestsuccess,
   upvotelatestsuccess,
 } from "@/features/home/latestSlice";
-import { switchbookmarkmostviewedsuccess } from "@/features/home/mostviewedSlice";
+import {
+  downvotemostviewedsuccess,
+  switchbookmarkmostviewedsuccess,
+  upvotemostviewedsuccess,
+} from "@/features/home/mostviewedSlice";
 import {
   downvotetrendingsuccess,
   switchbookmarktrendingsuccess,
@@ -23,6 +26,11 @@ import {
   upvotePost,
   upvotesuccess,
 } from "@/features/post/postSlice";
+import {
+  downvoteprofilepostsuccess,
+  switchbookmarkprofilepostsuccess,
+  upvoteprofilepostsuccess,
+} from "@/features/profile/postSlice";
 import { PostPartial } from "@/types/postTypes";
 import {
   ArrowBigDown,
@@ -58,6 +66,10 @@ export default function PostActions(props: Props) {
           dispatch(upvotetrendingsuccess(post!._id));
         } else if (type == "single-post") {
           dispatch(upvotesuccess());
+        } else if (type === "most-viewed") {
+          dispatch(upvotemostviewedsuccess(post?._id));
+        } else if (type == "profile-post") {
+          dispatch(upvoteprofilepostsuccess(post?._id));
         }
       }
     });
@@ -72,6 +84,10 @@ export default function PostActions(props: Props) {
           dispatch(downvotetrendingsuccess(post!._id));
         } else if (type == "single-post") {
           dispatch(downvotesuccess());
+        } else if (type === "most-viewed") {
+          dispatch(downvotemostviewedsuccess(post?._id));
+        } else if (type == "profile-post") {
+          dispatch(downvoteprofilepostsuccess(post?._id));
         }
       }
     });
@@ -90,13 +106,15 @@ export default function PostActions(props: Props) {
       dispatch(removeBookmark(post!._id)).then((res) => {
         if (res.meta.requestStatus === "fulfilled") {
           if (type === "latest") {
-            dispatch(removebookmarklatestsuccess(post!._id));
+            dispatch(switchbookmarklatestsuccess(post!._id));
           } else if (type === "single-post") {
             dispatch(switchbookmarksuccess());
           } else if (type === "trending") {
             dispatch(switchbookmarktrendingsuccess(post!._id));
           } else if (type === "most-viewed") {
             dispatch(switchbookmarkmostviewedsuccess(post!._id));
+          } else if (type === "profile-post") {
+            dispatch(switchbookmarkprofilepostsuccess(post!._id));
           }
         }
       });
@@ -111,6 +129,8 @@ export default function PostActions(props: Props) {
             dispatch(switchbookmarktrendingsuccess(post!._id));
           } else if (type === "most-viewed") {
             dispatch(switchbookmarkmostviewedsuccess(post!._id));
+          } else if (type === "profile-post") {
+            dispatch(switchbookmarkprofilepostsuccess(post!._id));
           }
         }
       });
