@@ -1,4 +1,3 @@
-import { toast } from "@/components/ui/use-toast";
 import { MultiplePostsInitialState, PostPartial } from "@/types/postTypes";
 import { UserPartial } from "@/types/userTypes";
 import { ResponseData } from "@/utils/httpUtils";
@@ -81,12 +80,6 @@ const latestSlice = createSlice({
       (state: MultiplePostsInitialState, action) => {
         state.loading = false;
         state.error = action.error.message || "";
-        toast({
-          title: "Unable to load data",
-          description: action.error.message!,
-          duration: 2000,
-          className: "bg-[#09090B] text-[#e2e2e2] border-none ",
-        });
       }
     );
   },

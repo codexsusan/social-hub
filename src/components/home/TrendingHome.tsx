@@ -5,13 +5,23 @@ import { useEffect } from "react";
 
 import { Loader } from "lucide-react";
 import { fetchTrendingPosts } from "@/features/home/trendingSlice";
+import { toast } from "../ui/use-toast";
 
 function TrendingHome() {
   const dispatch = useAppDispatch();
   const trending = useAppSelector((state) => state.trendingpost);
   const userId = useAppSelector((state) => state.user._id);
   useEffect(() => {
-    trending.posts.length == 0 && dispatch(fetchTrendingPosts(userId));
+    trending.posts.length == 0 &&
+      dispatch(fetchTrendingPosts(userId)).then((res) => {
+        if (res.meta.requestStatus === "rejected") {
+          toast({
+            title: "Failed to load data.",
+            duration: 2000,
+            className: "bg-[#09090B] text-[#e2e2e2] border-none ",
+          });
+        }
+      });
   }, [dispatch, trending.posts.length, userId]);
 
   return (

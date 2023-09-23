@@ -1,8 +1,6 @@
 import { PostPartial, MultiplePostsInitialState } from "@/types/postTypes";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-// import { fetchTrendingPosts } from "./homeSlice";
 import { ResponseData } from "@/utils/httpUtils";
-import { toast } from "@/components/ui/use-toast";
 import { getTrendingPostsUtils } from "@/utils/postUtils";
 import { UserPartial } from "@/types/userTypes";
 import {
@@ -73,16 +71,7 @@ const trendingSlice = createSlice({
         action: PayloadAction<ResponseData>
       ) => {
         state.loading = false;
-        if (action.payload.status === 200) {
-          state.posts = [...action.payload.data.data];
-        } else {
-          toast({
-            title: "Failed to load data.",
-            description: action.payload.data.message,
-            duration: 2000,
-            className: "bg-[#09090B] text-[#e2e2e2] border-none ",
-          });
-        }
+        state.posts = [...action.payload.data.data];
       }
     );
     builder.addCase(
@@ -90,12 +79,6 @@ const trendingSlice = createSlice({
       (state: MultiplePostsInitialState, action) => {
         state.loading = false;
         state.error = action.error.message || "";
-        toast({
-          title: "Unable to load data",
-          description: action.error.message!,
-          duration: 2000,
-          className: "bg-[#09090B] text-[#e2e2e2] border-none ",
-        });
       }
     );
   },

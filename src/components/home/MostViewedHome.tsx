@@ -4,6 +4,7 @@ import { Loader } from "lucide-react";
 import PostCard from "../post/PostCard";
 import { useEffect } from "react";
 import { fetchMostViewedPosts } from "@/features/home/mostviewedSlice";
+import { toast } from "../ui/use-toast";
 
 function MostViewedHome() {
   const dispatch = useAppDispatch();
@@ -11,7 +12,16 @@ function MostViewedHome() {
   const userId = useAppSelector((state) => state.user._id);
 
   useEffect(() => {
-    mostviewed.posts.length == 0 && dispatch(fetchMostViewedPosts(userId));
+    mostviewed.posts.length == 0 &&
+      dispatch(fetchMostViewedPosts(userId)).then((res) => {
+        if (res.meta.requestStatus === "rejected") {
+          toast({
+            title: "Failed to load data.",
+            duration: 2000,
+            className: "bg-[#09090B] text-[#e2e2e2] border-none ",
+          });
+        }
+      });
   }, [dispatch, mostviewed.posts.length, userId]);
   return (
     <Card className="bg-[#27272A]">

@@ -5,13 +5,23 @@ import { useEffect } from "react";
 
 import { Loader } from "lucide-react";
 import { fetchLatestPosts } from "@/features/home/latestSlice";
+import { toast } from "../ui/use-toast";
 
 function LatestHome() {
   const dispatch = useAppDispatch();
   const latest = useAppSelector((state) => state.latestpost);
   const userId = useAppSelector((state) => state.user._id);
   useEffect(() => {
-    latest.posts.length == 0 && dispatch(fetchLatestPosts(userId));
+    latest.posts.length == 0 &&
+      dispatch(fetchLatestPosts(userId)).then((res) => {
+        if (res.meta.requestStatus === "rejected") {
+          toast({
+            title: "Unable to load data",
+            duration: 2000,
+            className: "bg-[#09090B] text-[#e2e2e2] border-none ",
+          });
+        }
+      });
   }, [dispatch, latest.posts.length, userId]);
 
   return (
