@@ -4,6 +4,11 @@ import { UserPartial } from "@/types/userTypes";
 import { getMostViewedPostsUtils } from "@/utils/postUtils";
 import { ResponseData } from "@/utils/httpUtils";
 import { toast } from "@/components/ui/use-toast";
+import {
+  downvoteSuccessUtils,
+  switchbookmarkSuccessUtils,
+  upvoteSuccessUtils,
+} from "../utils";
 
 const initialState: MostViewedInitialState = {
   error: "",
@@ -42,48 +47,19 @@ const mostviewedSlice = createSlice({
       state: MostViewedInitialState,
       action: PayloadAction<PostPartial["_id"]>
     ) => {
-      const post = state.posts.find((post) => post._id === action.payload);
-      if (post) {
-        if (!post.upvote_status) {
-          post.upvotes_count! = post.upvotes_count! - 1 + 2;
-          post.upvote_status = true;
-          if (post.downvote_status) {
-            post.downvote_status = false;
-            post.downvotes_count! = post.downvotes_count! - 1;
-          }
-        } else {
-          post.upvote_status = false;
-          post.upvotes_count! = post.upvotes_count! - 1;
-        }
-      }
+      upvoteSuccessUtils(state, action);  
     },
     downvotemostviewedsuccess: (
       state: MostViewedInitialState,
       action: PayloadAction<PostPartial["_id"]>
     ) => {
-      const post = state.posts.find((post) => post._id === action.payload);
-      if (post) {
-        if (!post.downvote_status) {
-          post.downvotes_count! = post.downvotes_count! - 1 + 2;
-          post.downvote_status = true;
-          if (post.upvote_status) {
-            post.upvote_status = false;
-            post.upvotes_count = post.upvotes_count! - 1;
-          }
-        } else {
-          post.downvote_status = false;
-          post.downvotes_count = post.downvotes_count! - 1;
-        }
-      }
+      downvoteSuccessUtils(state, action);
     },
     switchbookmarkmostviewedsuccess: (
       state: MostViewedInitialState,
       action: PayloadAction<PostPartial["_id"]>
     ) => {
-      const post = state.posts.find((post) => post._id === action.payload);
-      if (post) {
-        post.isBookmarked = !post.isBookmarked;
-      }
+      switchbookmarkSuccessUtils(state, action);
     },
   },
   extraReducers: (builder) => {

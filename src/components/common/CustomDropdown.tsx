@@ -12,7 +12,12 @@ export default function CustomDropdown(props: { options: OptionType[] }) {
   return (
     <Menu as="div" className="relative inline-block text-left ">
       <div>
-        <Menu.Button className="inline-flex justify-center rounded-md bg-transparent text-sm ">
+        <Menu.Button
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+          className="inline-flex justify-center rounded-md bg-transparent text-sm "
+        >
           <MoreVertical strokeWidth={1} fill="white" />
         </Menu.Button>
       </div>

@@ -8,5 +8,5 @@ export default function useTokenVerify() {
     if (!token) {
       navigate("/auth/login");
     }
-  }, []);
+  }, [navigate]);
 }

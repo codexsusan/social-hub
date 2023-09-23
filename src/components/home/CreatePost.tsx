@@ -13,7 +13,7 @@ function CreatePost() {
       <div
         className=" cursor-pointer"
         onClick={() => {
-          navigate(`/user/${user.userName}`);
+          navigate(`/profile/${user.userName}`);
         }}
       >
         <CustomAvatar
