@@ -1,6 +1,6 @@
 import { PostPartial, MultiplePostsInitialState } from "@/types/postTypes";
-import { UserPartial } from "@/types/userTypes";
 import { getBookmarksUtils } from "@/utils/bookmarkUtils";
+import { hasProperty } from "@/utils/generalUtils";
 import { ResponseData } from "@/utils/httpUtils";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
@@ -12,27 +12,9 @@ const initialState: MultiplePostsInitialState = {
 
 export const getBookmarks = createAsyncThunk(
   "user/get/bookmarked/post",
-  async (id: UserPartial["_id"]) => {
+  async () => {
     const bookmarkedPosts = await getBookmarksUtils().then((res) => res);
-    // console.log(bookmarkedPosts);
-    const updatedPosts = bookmarkedPosts.data!.data.map((post: PostPartial) => {
-      console.log(post);
-      const upVoteStatus = post.upvotes!.includes(id!);
-      const downVoteStatus = post.downvotes!.includes(id!);
-      return {
-        ...post,
-        upVoteStatus,
-        downVoteStatus,
-      };
-    });
-    return {
-      ...bookmarkedPosts,
-      data: {
-        ...bookmarkedPosts.data,
-        data: [...updatedPosts],
-      },
-    };
-    // return getBookmarksUtils().then((res) => res);
+    return bookmarkedPosts;
   }
 );
 
@@ -54,7 +36,13 @@ const bookmarkSlice = createSlice({
         action: PayloadAction<ResponseData>
       ) => {
         state.loading = false;
-        state.posts = [...action.payload.data.data];
+        if (action.payload.status === 200) {
+          state.posts = [...action.payload.data.data];
+        } else {
+          if (hasProperty(action.payload, "data")) {
+            state.error = action.payload.data.message!;
+          }
+        }
       }
     );
     builder.addCase(

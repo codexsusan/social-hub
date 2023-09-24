@@ -9,7 +9,7 @@ function BookmarkTab() {
   const dispatch = useAppDispatch();
   const userId = useAppSelector((state) => state.user._id);
   useEffect(() => {
-    dispatch(getBookmarks(userId));
+    dispatch(getBookmarks());
   }, [dispatch, userId]);
   return (
     <Card className="bg-[#27272A]">
@@ -22,14 +22,18 @@ function BookmarkTab() {
 
 function View() {
   const postData = useAppSelector((state) => state.profile.bookmarks);
+  const errorMessage = postData.error.length > 0 && postData.error;
   return postData.loading ? (
     <div className="flex justify-center">
       <Loader className=" animate-spin my-4" />
     </div>
   ) : (
-    postData.posts.map((post) => {
-      return <PostCard type="profile-post" key={post._id} post={post} />;
-    })
+    <div className=" text-xl text-center">
+      {postData.posts.map((post) => {
+        return <PostCard type="profile-post" key={post._id} post={post} />;
+      })}
+      {errorMessage}
+    </div>
   );
 }
 
