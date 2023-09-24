@@ -9,8 +9,8 @@ export interface Comment {
   post_id: string;
   upvotes: string[];
   downvotes: string[];
-  upvote_status: boolean;
-  downvote_status: boolean;
+  upVoteStatus: boolean;
+  downVoteStatus: boolean;
   upvotes_count: number;
   downvotes_count: number;
   report_count: number;

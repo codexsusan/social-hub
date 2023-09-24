@@ -10,10 +10,9 @@ import { toast } from "../ui/use-toast";
 function LatestHome() {
   const dispatch = useAppDispatch();
   const latest = useAppSelector((state) => state.latestpost);
-  const userId = useAppSelector((state) => state.user._id);
   useEffect(() => {
     latest.posts.length == 0 &&
-      dispatch(fetchLatestPosts(userId)).then((res) => {
+      dispatch(fetchLatestPosts()).then((res) => {
         if (res.meta.requestStatus === "rejected") {
           toast({
             title: "Unable to load data",
@@ -22,7 +21,7 @@ function LatestHome() {
           });
         }
       });
-  }, [dispatch, latest.posts.length, userId]);
+  }, [dispatch, latest.posts.length]);
 
   return (
     <Card className="bg-[#27272A]">

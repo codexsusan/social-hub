@@ -50,19 +50,19 @@ function CommentReplyActions(props: { reply: NestedComment }) {
     });
   };
 
-  const { upvote_status, downvote_status } = reply;
+  const { upVoteStatus, downVoteStatus } = reply;
   return (
     <div className="w-full flex gap-x-8 justify-normal my-2 items-center ">
       <div className="flex gap-x-2">
         <ArrowBigUp
           onClick={handleReplyUpvote}
           strokeWidth={1}
-          fill={upvote_status ? "white" : ""}
+          fill={upVoteStatus ? "white" : ""}
         />
         <ArrowBigDown
           onClick={handleReplyDownvote}
           strokeWidth={1}
-          fill={downvote_status ? "white" : ""}
+          fill={downVoteStatus ? "white" : ""}
         />
         {VoteCount}
       </div>

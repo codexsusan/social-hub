@@ -2,7 +2,6 @@ import { PostPartial, MultiplePostsInitialState } from "@/types/postTypes";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ResponseData } from "@/utils/httpUtils";
 import { getTrendingPostsUtils } from "@/utils/postUtils";
-import { UserPartial } from "@/types/userTypes";
 import {
   downvoteSuccessUtils,
   switchbookmarkSuccessUtils,
@@ -17,21 +16,9 @@ const initialState: MultiplePostsInitialState = {
 
 export const fetchTrendingPosts = createAsyncThunk(
   "home/fetch/trending",
-  async (id: UserPartial["_id"]) => {
+  async () => {
     const trendingPost = await getTrendingPostsUtils({});
-    const updatedData = trendingPost.data!.data.map((post: PostPartial) => {
-      const upvote_status = post.upvotes!.includes(id!);
-      const downvote_status = post.downvotes!.includes(id!);
-      return {
-        ...post,
-        upvote_status,
-        downvote_status,
-      };
-    });
-    return {
-      ...trendingPost,
-      data: { ...trendingPost.data, data: [...updatedData] },
-    };
+    return trendingPost;
   }
 );
 

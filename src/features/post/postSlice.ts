@@ -92,16 +92,16 @@ export const getPost = createAsyncThunk(
   "post/get",
   async (data: PostandUserId) => {
     const postData = await getPostUtils(data.postId);
-    const upvote_status = postData.data.data.upvotes.includes(data.userId);
-    const downvote_status = postData.data.data.downvotes.includes(data.userId);
+    const upVoteStatus = postData.data.data.upvotes.includes(data.userId);
+    const downVoteStatus = postData.data.data.downvotes.includes(data.userId);
     return {
       ...postData,
       data: {
         ...postData.data,
         data: {
           ...postData.data.data,
-          upvote_status,
-          downvote_status,
+          upVoteStatus,
+          downVoteStatus,
           comment_status: true,
         },
       },
@@ -118,28 +118,28 @@ const postSlice = createSlice({
   initialState,
   reducers: {
     upvotesuccess: (state: SinglePostInitialState) => {
-      if (!state.post.upvote_status) {
+      if (!state.post.upVoteStatus) {
         state.post.upvotes_count! = state.post.upvotes_count! - 1 + 2;
-        state.post.upvote_status = true;
-        if (state.post.downvote_status) {
-          state.post.downvote_status = false;
+        state.post.upVoteStatus = true;
+        if (state.post.downVoteStatus) {
+          state.post.downVoteStatus = false;
           state.post.downvotes_count! = state.post.downvotes_count! - 1;
         }
       } else {
-        state.post.upvote_status = false;
+        state.post.upVoteStatus = false;
         state.post.upvotes_count! = state.post.upvotes_count! - 1;
       }
     },
     downvotesuccess: (state: SinglePostInitialState) => {
-      if (!state.post.downvote_status) {
+      if (!state.post.downVoteStatus) {
         state.post.downvotes_count! = state.post.downvotes_count! - 1 + 2;
-        state.post.downvote_status = true;
-        if (state.post.upvote_status) {
-          state.post.upvote_status = false;
+        state.post.downVoteStatus = true;
+        if (state.post.upVoteStatus) {
+          state.post.upVoteStatus = false;
           state.post.upvotes_count = state.post.upvotes_count! - 1;
         }
       } else {
-        state.post.downvote_status = false;
+        state.post.downVoteStatus = false;
         state.post.downvotes_count = state.post.downvotes_count! - 1;
       }
     },

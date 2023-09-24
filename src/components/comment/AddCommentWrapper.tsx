@@ -11,7 +11,7 @@ interface Props {
 }
 
 function AddCommentWrapper(props: Props) {
-  const { className, type, children } = props;
+  const { className, children } = props;
   const user = useAppSelector((state) => state.user);
   const { firstName, lastName, userName } = user;
 
@@ -25,7 +25,6 @@ function AddCommentWrapper(props: Props) {
         <div className="flex items-center gap-2">
           <div className="flex gap-x-2">
             <div className="text-base font-normal">Commenting as </div>
-
             <p
               onClick={(event: React.MouseEvent) => {
                 event.stopPropagation();

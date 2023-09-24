@@ -1,6 +1,5 @@
 import { MostViewedInitialState, PostPartial } from "@/types/postTypes";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { UserPartial } from "@/types/userTypes";
 import { getMostViewedPostsUtils } from "@/utils/postUtils";
 import { ResponseData } from "@/utils/httpUtils";
 import {
@@ -17,24 +16,8 @@ const initialState: MostViewedInitialState = {
 
 export const fetchMostViewedPosts = createAsyncThunk(
   "home/fetch/most-viewed",
-  async (userId: UserPartial["_id"]) => {
-    const mostviewedPost = await getMostViewedPostsUtils({});
-    const updatedData = mostviewedPost.data!.data.map((post: PostPartial) => {
-      const upvote_status = post.upvotes!.includes(userId!);
-      const downvote_status = post.downvotes!.includes(userId!);
-      return {
-        ...post,
-        upvote_status,
-        downvote_status,
-      };
-    });
-    return {
-      ...mostviewedPost,
-      data: {
-        ...mostviewedPost.data,
-        data: [...updatedData],
-      },
-    };
+  async () => {
+    return getMostViewedPostsUtils({});
   }
 );
 

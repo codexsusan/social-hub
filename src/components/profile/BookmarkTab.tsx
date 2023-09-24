@@ -1,24 +1,35 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { Card, CardContent } from "../ui/card";
+import { Loader } from "lucide-react";
+import PostCard from "../post/PostCard";
+import { useEffect } from "react";
+import { getBookmarks } from "@/features/profile/bookmarkSlice";
 
 function BookmarkTab() {
+  const dispatch = useAppDispatch();
+  const userId = useAppSelector((state) => state.user._id);
+  useEffect(() => {
+    dispatch(getBookmarks(userId));
+  }, [dispatch, userId]);
   return (
     <Card className="bg-[#27272A]">
-      <CardHeader>
-        <CardTitle className="text-white">Bookmarks</CardTitle>
-        <CardDescription>
-          Overview of the user bookmarks will be listed here.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="border rounded-sm border-slate-600 flex gap-2 flex-col text-white p-4 cursor-pointer"></div>
+      <CardContent className="space-y-4 p-4 text-white">
+        <View />
       </CardContent>
     </Card>
+  );
+}
+
+function View() {
+  const postData = useAppSelector((state) => state.profile.bookmarks);
+  return postData.loading ? (
+    <div className="flex justify-center">
+      <Loader className=" animate-spin my-4" />
+    </div>
+  ) : (
+    postData.posts.map((post) => {
+      return <PostCard type="profile-post" key={post._id} post={post} />;
+    })
   );
 }
 

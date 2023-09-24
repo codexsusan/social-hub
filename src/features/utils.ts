@@ -7,15 +7,15 @@ export const upvoteSuccessUtils = (
 ) => {
   const post = state.posts.find((post) => post._id === action.payload);
   if (post) {
-    if (!post.upvote_status) {
+    if (!post.upVoteStatus) {
       post.upvotes_count! = post.upvotes_count! - 1 + 2;
-      post.upvote_status = true;
-      if (post.downvote_status) {
-        post.downvote_status = false;
+      post.upVoteStatus = true;
+      if (post.downVoteStatus) {
+        post.downVoteStatus = false;
         post.downvotes_count! = post.downvotes_count! - 1;
       }
     } else {
-      post.upvote_status = false;
+      post.upVoteStatus = false;
       post.upvotes_count! = post.upvotes_count! - 1;
     }
   }
@@ -27,15 +27,15 @@ export const downvoteSuccessUtils = (
 ) => {
   const post = state.posts.find((post) => post._id === action.payload);
   if (post) {
-    if (!post.downvote_status) {
+    if (!post.downVoteStatus) {
       post.downvotes_count! = post.downvotes_count! - 1 + 2;
-      post.downvote_status = true;
-      if (post.upvote_status) {
-        post.upvote_status = false;
+      post.downVoteStatus = true;
+      if (post.upVoteStatus) {
+        post.upVoteStatus = false;
         post.upvotes_count = post.upvotes_count! - 1;
       }
     } else {
-      post.downvote_status = false;
+      post.downVoteStatus = false;
       post.downvotes_count = post.downvotes_count! - 1;
     }
   }

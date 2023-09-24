@@ -51,8 +51,8 @@ export const getCommentsOnPost = createAsyncThunk(
     const commentLength = commentData.data.data.length;
     const updateCommentData = [];
     for (let i = 0; i < commentLength; i++) {
-      const upvote_status = commentData.data.data[i].upvotes.includes(userId);
-      const downvote_status =
+      const upVoteStatus = commentData.data.data[i].upvotes.includes(userId);
+      const downVoteStatus =
         commentData.data.data[i].downvotes.includes(userId);
       const currentAuthorId = commentData.data.data[i].author_id;
       const authorData = await getUserByIdUtils(currentAuthorId);
@@ -60,8 +60,8 @@ export const getCommentsOnPost = createAsyncThunk(
       const updatedCurrentCommentData: NestedComment = {
         ...commentData.data.data[i],
         comment_reply_status: false,
-        upvote_status,
-        downvote_status,
+        upVoteStatus,
+        downVoteStatus,
         comment_count: commentData.data.data[i].replies_count,
         author: {
           _id: currentAuthor._id,
@@ -122,8 +122,8 @@ export const getCommentReplies = createAsyncThunk(
     const repliesLength = repliesData.data.data.length;
     const updatedRepliesData = [];
     for (let i = 0; i < repliesLength; i++) {
-      const upvote_status = repliesData.data.data[i].upvotes.includes(userId);
-      const downvote_status =
+      const upVoteStatus = repliesData.data.data[i].upvotes.includes(userId);
+      const downVoteStatus =
         repliesData.data.data[i].downvotes.includes(userId);
       const currentAuthorId = repliesData.data.data[i].author_id;
       const authorData = await getUserByIdUtils(currentAuthorId);
@@ -131,8 +131,8 @@ export const getCommentReplies = createAsyncThunk(
       const updatedCurrentReplyData: NestedComment = {
         ...repliesData.data.data[i],
         comment_reply_status: false,
-        upvote_status,
-        downvote_status,
+        upVoteStatus,
+        downVoteStatus,
         author: {
           _id: currentAuthor._id,
           userName: currentAuthor.userName,
@@ -163,15 +163,15 @@ const commentSlice = createSlice({
         (comment) => comment._id === action.payload
       );
       if (comment) {
-        if (!comment.upvote_status) {
+        if (!comment.upVoteStatus) {
           comment.upvotes_count = comment.upvotes_count! - 1 + 2;
-          comment.upvote_status = true;
-          if (comment.downvote_status) {
-            comment.downvote_status = false;
+          comment.upVoteStatus = true;
+          if (comment.downVoteStatus) {
+            comment.downVoteStatus = false;
             comment.downvotes_count = comment.downvotes_count! - 1;
           }
         } else {
-          comment.upvote_status = false;
+          comment.upVoteStatus = false;
           comment.upvotes_count = comment.upvotes_count! - 1;
         }
       }
@@ -184,15 +184,15 @@ const commentSlice = createSlice({
         (comment) => comment._id === action.payload
       );
       if (comment) {
-        if (!comment.downvote_status) {
-          comment.downvote_status = true;
+        if (!comment.downVoteStatus) {
+          comment.downVoteStatus = true;
           comment.downvotes_count = comment.downvotes_count! - 1 + 2;
-          if (comment.upvote_status) {
+          if (comment.upVoteStatus) {
             comment.upvotes_count = comment.upvotes_count! - 1;
-            comment.upvote_status = false;
+            comment.upVoteStatus = false;
           }
         } else {
-          comment.downvote_status = false;
+          comment.downVoteStatus = false;
           comment.downvotes_count = comment.downvotes_count! - 1;
         }
       }
@@ -251,15 +251,15 @@ const commentSlice = createSlice({
           (reply) => reply._id === action.payload.replyId
         );
         if (reply) {
-          if (!reply.upvote_status) {
-            reply.upvote_status = true;
+          if (!reply.upVoteStatus) {
+            reply.upVoteStatus = true;
             reply.upvotes_count = reply.upvotes_count! - 1 + 2;
-            if (reply.downvote_status) {
-              reply.downvote_status = false;
+            if (reply.downVoteStatus) {
+              reply.downVoteStatus = false;
               reply.downvotes_count = reply.downvotes_count! - 1;
             }
           } else {
-            reply.upvote_status = false;
+            reply.upVoteStatus = false;
             reply.upvotes_count = reply.upvotes_count! - 1;
           }
         }
@@ -277,15 +277,15 @@ const commentSlice = createSlice({
           (reply) => reply._id === action.payload.replyId
         );
         if (reply) {
-          if (!reply.downvote_status) {
-            reply.downvote_status = true;
+          if (!reply.downVoteStatus) {
+            reply.downVoteStatus = true;
             reply.downvotes_count = reply.downvotes_count! - 1 + 2;
-            if (reply.upvote_status) {
-              reply.upvote_status = false;
+            if (reply.upVoteStatus) {
+              reply.upVoteStatus = false;
               reply.upvotes_count = reply.upvotes_count! - 1;
             }
           } else {
-            reply.downvote_status = false;
+            reply.downVoteStatus = false;
             reply.downvotes_count = reply.downvotes_count! - 1;
           }
         }

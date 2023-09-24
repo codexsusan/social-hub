@@ -13,7 +13,7 @@ function TrendingHome() {
   const userId = useAppSelector((state) => state.user._id);
   useEffect(() => {
     trending.posts.length == 0 &&
-      dispatch(fetchTrendingPosts(userId)).then((res) => {
+      dispatch(fetchTrendingPosts()).then((res) => {
         if (res.meta.requestStatus === "rejected") {
           toast({
             title: "Failed to load data.",

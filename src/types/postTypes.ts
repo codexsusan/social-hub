@@ -36,8 +36,8 @@ export interface Post {
   downvotes: string[];
   upvotes_count: number;
   downvotes_count: number;
-  upvote_status: boolean;
-  downvote_status: boolean;
+  upVoteStatus: boolean;
+  downVoteStatus: boolean;
   comment_count: number;
   comment_data: NestedComment[];
   comment_status: boolean;

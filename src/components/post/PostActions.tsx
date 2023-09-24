@@ -137,7 +137,7 @@ export default function PostActions(props: Props) {
     }
   };
 
-  const { upvote_status, downvote_status, isBookmarked } = post!;
+  const { upVoteStatus, downVoteStatus, isBookmarked } = post!;
 
   return (
     <div className="w-full flex gap-x-8 justify-normal my-2 items-center ">
@@ -145,12 +145,12 @@ export default function PostActions(props: Props) {
         <ArrowBigUp
           onClick={handleUpVote}
           strokeWidth={1}
-          fill={upvote_status ? "white" : ""}
+          fill={upVoteStatus ? "white" : ""}
         />
         <ArrowBigDown
           onClick={handleDownVote}
           strokeWidth={1}
-          fill={downvote_status ? "white" : undefined}
+          fill={downVoteStatus ? "white" : undefined}
         />
         {VoteCount}
       </div>

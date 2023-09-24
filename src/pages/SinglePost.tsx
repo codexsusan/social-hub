@@ -53,7 +53,7 @@ function PostView() {
   return (
     <>
       {singlePost.loading ? (
-        <Loader className="animate-spin" />
+        <Loader className="animate-spin self-center" />
       ) : (
         <PostWrapper post={post} type="post">
           <div className="text-base mt-2 space-y-4 w-full">

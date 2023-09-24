@@ -1,5 +1,4 @@
 import { MultiplePostsInitialState, PostPartial } from "@/types/postTypes";
-import { UserPartial } from "@/types/userTypes";
 import { ResponseData } from "@/utils/httpUtils";
 import { getLatestPostsUtils } from "@/utils/postUtils";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
@@ -17,21 +16,8 @@ const initialState: MultiplePostsInitialState = {
 
 export const fetchLatestPosts = createAsyncThunk(
   "home/fetch/latest",
-  async (id: UserPartial["_id"]) => {
-    const latestPost = await getLatestPostsUtils({ page: 1, limit: 10 });
-    const updatedData = latestPost.data!.data.map((post: PostPartial) => {
-      const upvote_status = post.upvotes!.includes(id!);
-      const downvote_status = post.downvotes!.includes(id!);
-      return {
-        ...post,
-        upvote_status,
-        downvote_status,
-      };
-    });
-    return {
-      ...latestPost,
-      data: { ...latestPost.data, data: [...updatedData] },
-    };
+  async () => {
+    return getLatestPostsUtils({});
   }
 );
 

@@ -20,12 +20,12 @@ export const getPostsByUser = createAsyncThunk(
   async (id: UserPartial["_id"]) => {
     const userposts = await getAllPostsByUserUtils({}).then((res) => res);
     const updatedPosts = userposts.data!.data.map((post: PostPartial) => {
-      const upvote_status = post.upvotes!.includes(id!);
-      const downvote_status = post.downvotes!.includes(id!);
+      const upVoteStatus = post.upvotes!.includes(id!);
+      const downVoteStatus = post.downvotes!.includes(id!);
       return {
         ...post,
-        upvote_status,
-        downvote_status,
+        upVoteStatus,
+        downVoteStatus,
       };
     });
     return {

@@ -9,11 +9,10 @@ import { toast } from "../ui/use-toast";
 function MostViewedHome() {
   const dispatch = useAppDispatch();
   const mostviewed = useAppSelector((state) => state.mostviewedpost);
-  const userId = useAppSelector((state) => state.user._id);
 
   useEffect(() => {
     mostviewed.posts.length == 0 &&
-      dispatch(fetchMostViewedPosts(userId)).then((res) => {
+      dispatch(fetchMostViewedPosts()).then((res) => {
         if (res.meta.requestStatus === "rejected") {
           toast({
             title: "Failed to load data.",
@@ -22,7 +21,7 @@ function MostViewedHome() {
           });
         }
       });
-  }, [dispatch, mostviewed.posts.length, userId]);
+  }, [dispatch, mostviewed.posts.length]);
   return (
     <Card className="bg-[#27272A]">
       <CardContent className="space-y-4 p-4 text-white">
