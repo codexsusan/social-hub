@@ -1,6 +1,7 @@
 import { PostPartial } from "@/types/postTypes";
 import { ResponseData, request } from "./httpUtils";
 import { queryParamsType } from "@/types/generalTypes";
+import { AuthorPartial } from "@/types/userTypes";
 
 // Create post
 export const createPostUtils = async (post: PostPartial) => {
@@ -59,10 +60,23 @@ export const editPostByIdUtils = async (
 };
 
 // Get all post by user
-// TODO: Need to work with query params
 export const getAllPostsByUserUtils = async (data: queryParamsType) => {
   const response = await request(
-    `/api/post/get-all-posts-by-user`,
+    "/api/post/get-all-posts-by-user",
+    "GET",
+    data
+  );
+  return response;
+};
+
+// Get all post by user id
+// TODO: End point not made
+export const getAllPostsByUserIdUtils = async (
+  id: AuthorPartial["_id"],
+  data: queryParamsType
+) => {
+  const response = await request(
+    `/api/post/get-all-posts-by-user/${id}`,
     "GET",
     data
   );

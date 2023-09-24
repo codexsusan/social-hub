@@ -7,10 +7,12 @@ import postReducer from "@/features/post/postSlice";
 import commentReducer from "@/features/comment/commentSlice";
 import mostviewedReducer from "@/features/home/mostviewedSlice";
 import profileReducer from "@/features/profile/profileSlice";
+import authorReducer from "@/features/profile/authorSlice";
 
 const store = configureStore({
   reducer: {
     user: userReducer,
+    author: authorReducer,
     submit: submitReducer,
     latestpost: latestReducer,
     trendingpost: trendingReducer,

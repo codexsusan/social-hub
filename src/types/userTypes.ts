@@ -1,3 +1,5 @@
+export type Gender = "male" | "female" | "others" | "";
+
 export interface User {
   _id: string;
   firstName: string;
@@ -6,7 +8,7 @@ export interface User {
   email: string;
   password: string;
   profilePic: string;
-  gender: "male" | "female" | "others" | "";
+  gender: Gender;
   token: string;
   bio: string;
   isVerified: boolean;
@@ -22,8 +24,13 @@ export interface RegisterUser extends UserPartial {
   confirmPassword: string;
 }
 
-export type Gender = "male" | "female" | "others" | "";
-
 export interface Author extends User {}
 
 export interface AuthorPartial extends Partial<Author> {}
+
+export type MultiUserType = AuthorPartial | UserPartial;
+
+export type AuthorRedirectData = {
+  id: AuthorPartial["_id"];
+  username: AuthorPartial["userName"];
+};

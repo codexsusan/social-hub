@@ -24,7 +24,7 @@ export const userLoginUtils = async (user: UserPartial) => {
 
 // Fetch User Details
 export const fetchUserUtils = async () => {
-  const response = await request("/api/auth/user-details", "GET");
+  const response = await request("/api/auth/user-details", "GET", {});
   return response;
 };
 

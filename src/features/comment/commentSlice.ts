@@ -318,8 +318,7 @@ const commentSlice = createSlice({
     );
     builder.addCase(
       createCommentOnPost.fulfilled,
-      (state: CommentInitialState, action) => {
-        console.log(action.payload.data.data);
+      (state: CommentInitialState) => {
         state.current_comment_loading = false;
         state.current_comment = "";
       }
