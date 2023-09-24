@@ -3,9 +3,10 @@ import Auth from "../pages/Auth";
 import AuthContainer from "@/hoc/AuthContainer";
 import Home from "@/pages/Home";
 import AppContainer from "@/hoc/AppContainer";
-import Profile from "@/pages/Profile";
+import UserProfile from "@/pages/UserProfile";
 import Submit from "@/pages/Submit";
 import SinglePost from "@/pages/SinglePost";
+import AuthorProfile from "@/pages/AuthorProfile";
 
 const router = createBrowserRouter([
   {
@@ -44,7 +45,15 @@ const router = createBrowserRouter([
     path: "/profile/:username",
     element: (
       <AppContainer>
-        <Profile />
+        <UserProfile />
+      </AppContainer>
+    ),
+  },
+  {
+    path: "/user/:username",
+    element: (
+      <AppContainer>
+        <AuthorProfile />
       </AppContainer>
     ),
   },

@@ -9,6 +9,7 @@ import { deletePost, reportPost } from "@/features/post/postSlice";
 import { toast } from "../ui/use-toast";
 import { hasProperty } from "@/utils/generalUtils";
 import { useNavigate } from "react-router-dom";
+import { AuthorRedirectData } from "@/types/userTypes";
 
 interface Props {
   className?: string;
@@ -20,6 +21,7 @@ interface Props {
 function PostWrapper(props: Props) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
   const user = useAppSelector((state) => state.user);
   const { className, type, children, post } = props;
   const { firstName, lastName, userName } = user;
@@ -71,34 +73,31 @@ function PostWrapper(props: Props) {
     },
   ];
 
+  const handleRedirectToAuthorProfile = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    const userDetails: AuthorRedirectData = {
+      id: post?.author?._id,
+      username: post?.author?.userName,
+    };
+    navigate(`/user/${username}`, { state: userDetails });
+  };
+
   return (
     <div className={cn("flex gap-x-3", className)}>
-      <div
-        className={""}
-        onClick={(event: React.MouseEvent) => {
-          event.stopPropagation();
-          console.log("Redirect to user profile");
-        }}
-      >
+      <div className={""} onClick={handleRedirectToAuthorProfile}>
         <CustomAvatar />
       </div>
       <div className="w-full">
         <div className="flex justify-between">
           <div className="flex items-center gap-2">
             <p
-              onClick={(event: React.MouseEvent) => {
-                event.stopPropagation();
-                console.log("Redirect to user profile");
-              }}
+              onClick={handleRedirectToAuthorProfile}
               className="text-white opacity-70 text-base font-semibold"
             >
               {displayName}
             </p>
             <p
-              onClick={(event: React.MouseEvent) => {
-                event.stopPropagation();
-                console.log("Redirect to user profile");
-              }}
+              onClick={handleRedirectToAuthorProfile}
               className="text-white opacity-60 text-base"
             >
               @{username}
