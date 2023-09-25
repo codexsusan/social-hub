@@ -7,6 +7,7 @@ import UserProfile from "@/pages/UserProfile";
 import Submit from "@/pages/Submit";
 import SinglePost from "@/pages/SinglePost";
 import AuthorProfile from "@/pages/AuthorProfile";
+import AddCommunity from "@/pages/AddCommunity";
 
 const router = createBrowserRouter([
   {
@@ -64,6 +65,14 @@ const router = createBrowserRouter([
         <SinglePost />
       </AppContainer>
     ),
+  },
+  {
+    path: "/c/create",
+    element: (
+      <AppContainer>
+        <AddCommunity />
+      </AppContainer>
+    )
   },
   {
     path: "/*",

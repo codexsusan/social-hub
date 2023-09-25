@@ -43,7 +43,7 @@ export default function AppNavbar() {
       onClick: () => {},
     },
     { label: "Settings", href: "", onClick: () => {} },
-    { label: "Create Community", href: "", onClick: () => {} },
+    { label: "Create Community", href: "/c/create", onClick: () => {} },
     {
       label: "Sign out",
       href: "/auth/login",
