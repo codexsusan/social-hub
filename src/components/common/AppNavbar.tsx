@@ -36,6 +36,23 @@ export default function AppNavbar() {
     });
   }, [dispatch, navigate, user.error]);
 
+  const profileDetail = [
+    {
+      label: "Your Profile",
+      href: `/profile/${user.userName}`,
+      onClick: () => {},
+    },
+    { label: "Settings", href: "", onClick: () => {} },
+    { label: "Create Community", href: "", onClick: () => {} },
+    {
+      label: "Sign out",
+      href: "/auth/login",
+      onClick: () => {
+        localStorage.removeItem("token");
+      },
+    },
+  ];
+
   return (
     <Disclosure as="nav" className="bg-[#1A1A1B]">
       {({ open }) => (
@@ -96,48 +113,24 @@ export default function AppNavbar() {
                     leaveTo="transform opacity-0 scale-95"
                   >
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            to={"/profile/" + user.userName}
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                      {profileDetail.map((item) => {
+                        return (
+                          <Menu.Item key={item.label}>
+                            {({ active }) => (
+                              <Link
+                                to={item.href}
+                                onClick={item.onClick}
+                                className={classNames(
+                                  active ? "bg-gray-100" : "",
+                                  "block px-4 py-2 text-sm text-gray-700"
+                                )}
+                              >
+                                {item.label}
+                              </Link>
                             )}
-                          >
-                            Your Profile
-                          </Link>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            to="#"
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
-                          >
-                            Settings
-                          </Link>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            onClick={() => {
-                              localStorage.removeItem("token");
-                            }}
-                            to="/auth/login"
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
-                          >
-                            Sign out
-                          </Link>
-                        )}
-                      </Menu.Item>
+                          </Menu.Item>
+                        );
+                      })}
                     </Menu.Items>
                   </Transition>
                 </Menu>
