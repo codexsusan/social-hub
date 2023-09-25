@@ -13,7 +13,8 @@ const initialState: MultiplePostsInitialState = {
 export const getBookmarks = createAsyncThunk(
   "user/get/bookmarked/post",
   async () => {
-    const bookmarkedPosts = await getBookmarksUtils().then((res) => res);
+    const bookmarkedPosts = await getBookmarksUtils({}).then((res) => res);
+    console.log(bookmarkedPosts.data!.data);
     return bookmarkedPosts;
   }
 );
