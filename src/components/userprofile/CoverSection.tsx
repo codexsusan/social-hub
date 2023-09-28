@@ -1,6 +1,6 @@
 import { Camera } from "lucide-react";
 import PageLoading from "../common/PageLoading";
-import DefaultProfile from "../common/DefaultProfile";
+import ProfileImage from "../common/ProfileImage";
 import { MultiUserType } from "@/types/userTypes";
 type Props = {
   user: MultiUserType;
@@ -31,7 +31,7 @@ function UserCover(props: Props) {
           >
             <Camera />
           </div>
-          <DefaultProfile />
+          <ProfileImage src={user.profilePic} />
         </div>
         <div className="mb-4">
           <div className="text-xl font-semibold">

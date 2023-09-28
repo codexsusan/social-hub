@@ -1,7 +1,7 @@
 export interface Community {
   _id: string;
   name: string;
-  display_name: string;
+  displayName: string;
   description: string;
   community_type: string;
   icon_image: string;
@@ -15,3 +15,13 @@ export interface Community {
 }
 
 export interface PartialCommunity extends Partial<Community> {}
+
+export interface CreateCommunity extends PartialCommunity {
+  loading: boolean;
+  error: string;
+}
+
+export interface CommunityHome extends PartialCommunity {
+  loading: boolean;
+  error: string;
+}

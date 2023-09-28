@@ -78,12 +78,9 @@ export const removeBookmarkPost = createAsyncThunk(
   }
 );
 
-export const getUserPosts = createAsyncThunk(
-  "post/get/user",
-  async () => {
-    return getAllPostsByUserUtils().then((res) => res);
-  }
-);
+export const getUserPosts = createAsyncThunk("post/get/user", async () => {
+  return getAllPostsByUserUtils({}).then((res) => res);
+});
 
 /*
   This function is an async thunk that gets a post with the given ID using the getPostUtils function.

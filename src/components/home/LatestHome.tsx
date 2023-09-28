@@ -9,7 +9,7 @@ import { toast } from "../ui/use-toast";
 
 function LatestHome() {
   const dispatch = useAppDispatch();
-  const latest = useAppSelector((state) => state.latestpost);
+  const latest = useAppSelector((state) => state.home.latest);
   useEffect(() => {
     latest.posts.length == 0 &&
       dispatch(fetchLatestPosts()).then((res) => {
@@ -33,7 +33,7 @@ function LatestHome() {
 }
 
 function View() {
-  const latest = useAppSelector((state) => state.latestpost);
+  const latest = useAppSelector((state) => state.home.latest);
   return latest.loading ? (
     <div className="flex justify-center">
       <Loader className=" animate-spin my-4" />

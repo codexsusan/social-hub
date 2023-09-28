@@ -14,7 +14,7 @@ import { NestedComment } from "@/types/commentTypes";
 import CommentReply from "./CommentReply";
 
 function CommentSection() {
-  const currentcomment = useAppSelector((state) => state.currentcomment);
+  const currentcomment = useAppSelector((state) => state.singlepage.comment);
   const { loading } = currentcomment;
 
   return (
@@ -30,8 +30,8 @@ function CommentSection() {
 }
 
 function View() {
-  const currentcomment = useAppSelector((state) => state.currentcomment);
-  const currentPost = useAppSelector((state) => state.currentpost);
+  const currentcomment = useAppSelector((state) => state.singlepage.comment);
+  const currentPost = useAppSelector((state) => state.singlepage.post);
   const dispatch = useAppDispatch();
 
   const handleReplySubmitCB = (comment: NestedComment) => {
