@@ -9,7 +9,7 @@ import { toast } from "../ui/use-toast";
 
 function TrendingHome() {
   const dispatch = useAppDispatch();
-  const trending = useAppSelector((state) => state.trendingpost);
+  const trending = useAppSelector((state) => state.home.trending);
   const userId = useAppSelector((state) => state.user._id);
   useEffect(() => {
     trending.posts.length == 0 &&
@@ -34,7 +34,7 @@ function TrendingHome() {
 }
 
 function View() {
-  const trending = useAppSelector((state) => state.trendingpost);
+  const trending = useAppSelector((state) => state.home.trending);
   return trending.loading ? (
     <div className="flex justify-center">
       <Loader className=" animate-spin my-4" />

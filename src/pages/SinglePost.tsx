@@ -46,7 +46,7 @@ function SinglePost() {
 }
 
 function PostView() {
-  const singlePost = useAppSelector((state) => state.currentpost);
+  const singlePost = useAppSelector((state) => state.singlepage.post);
   const post = singlePost.post;
   const { title, content } = singlePost.post;
   const parsedContent = parser(content || "");
@@ -69,8 +69,8 @@ function PostView() {
 
 function AddComment() {
   const dispatch = useAppDispatch();
-  const singlePage = useAppSelector((state) => state.currentpost);
-  const commentsData = useAppSelector((state) => state.currentcomment);
+  const singlePage = useAppSelector((state) => state.singlepage.post);
+  const commentsData = useAppSelector((state) => state.singlepage.comment);
   const user = useAppSelector((state) => state.user);
   const post = singlePage.post;
   const comment = commentsData.current_comment;

@@ -8,7 +8,7 @@ import { toast } from "../ui/use-toast";
 
 function MostViewedHome() {
   const dispatch = useAppDispatch();
-  const mostviewed = useAppSelector((state) => state.mostviewedpost);
+  const mostviewed = useAppSelector((state) => state.home.mostviewed);
 
   useEffect(() => {
     mostviewed.posts.length == 0 &&
@@ -32,7 +32,7 @@ function MostViewedHome() {
 }
 
 function View() {
-  const mostviewed = useAppSelector((state) => state.mostviewedpost);
+  const mostviewed = useAppSelector((state) => state.home.mostviewed);
   return mostviewed.loading ? (
     <div className="flex justify-center">
       <Loader className=" animate-spin my-4" />

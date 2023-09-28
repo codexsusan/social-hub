@@ -8,6 +8,7 @@ import Submit from "@/pages/Submit";
 import SinglePost from "@/pages/SinglePost";
 import AuthorProfile from "@/pages/AuthorProfile";
 import AddCommunity from "@/pages/AddCommunity";
+import CommunityHome from "@/pages/CommunityHome";
 
 const router = createBrowserRouter([
   {
@@ -67,12 +68,20 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: "/c/:communityId",
+    element: (
+      <AppContainer>
+        <CommunityHome />
+      </AppContainer>
+    ),
+  },
+  {
     path: "/c/create",
     element: (
       <AppContainer>
         <AddCommunity />
       </AppContainer>
-    )
+    ),
   },
   {
     path: "/*",

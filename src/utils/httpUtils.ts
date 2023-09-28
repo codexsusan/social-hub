@@ -46,6 +46,29 @@ export const request = async (
     data: await response.json(),
   };
   return updatedResponse;
+};
 
-  throw new Error(response.statusText);
+export const fileRequest = async (
+  endpoint: string,
+  method: "POST",
+  data: FormData
+) => {
+  const url = `${base_url}${endpoint}`;
+  // Token Authentication
+  const token = localStorage.getItem("token");
+  const auth = token ? token : "";
+
+  const response = await fetch(url, {
+    method,
+    headers: {
+      Authorization: `Bearer ${auth}`,
+    },
+    body: data,
+  });
+  const updatedResponse: ResponseData = {
+    status: response.status,
+    statusText: response.statusText,
+    data: await response.json(),
+  };
+  return updatedResponse;
 };

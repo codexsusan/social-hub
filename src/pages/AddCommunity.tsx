@@ -1,25 +1,42 @@
-import CustomSelect from "@/components/common/CustomSelect";
-import FileUploadButton from "@/components/common/FileUploadButton";
-import { InputWithLabel } from "@/components/common/InputWithLabel";
-import ProfileUploadButton from "@/components/common/ProfileUploadButton";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import AddCommunityForm from "@/components/community/AddCommunityForm";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { toast } from "@/components/ui/use-toast";
+import { createCommunity } from "@/features/community/createCommunity";
+import { hasProperty } from "@/utils/generalUtils";
 import React from "react";
 
 function AddCommunity() {
-  const [state, setState] = React.useState(1);
+  const dispatch = useAppDispatch();
+  const [page, setPage] = React.useState(1);
+
+  const community = useAppSelector((state) => state.community.create);
   const handleNext = (e: React.MouseEvent) => {
     e.preventDefault();
-    setState(state + 1);
+    setPage(page + 1);
   };
+
   const handlePrevious = (e: React.MouseEvent) => {
     e.preventDefault();
-    setState(state - 1);
+    setPage(page - 1);
   };
 
   const handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
+    dispatch(createCommunity(community)).then((res) => {
+      if (hasProperty(res.payload, "status")) {
+        toast({
+          title: res.payload.data.message,
+          className: "bg-[#09090B] text-[#e2e2e2] border-none ",
+          duration: 2000,
+        });
+        if (res.payload.status === 200) {
+          // TODO: Naviagtion to the newly created community
+          // Redirect through the community id
+        }
+      }
+    });
   };
   return (
     <div className="w-full flex flex-col flex-1 items-center p-4 gap-y-2 overflow-auto text-white">
@@ -29,28 +46,23 @@ function AddCommunity() {
         </div>
         <Separator className="bg-gray-700" orientation="horizontal" />
         <div className="w-full flex justify-center bg-[#27272a] p-4 rounded-sm ">
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-            }}
-            className="w-full flex flex-col gap-y-6"
-          >
-            {state === 1 ? <FieldAreaA /> : <FieldAreaB />}
+          <form className="w-full flex flex-col gap-y-6">
+            <AddCommunityForm page={page} />
             <div className="flex justify-between gap-x-4">
               <Button
-                className={`${state === 1 ? "invisible" : ""}`}
+                className={`${page === 1 ? "invisible" : ""}`}
                 onClick={handlePrevious}
               >
                 Previous
               </Button>
               <Button
-                className={`${state === 2 ? "hidden" : ""}`}
+                className={`${page === 2 ? "hidden" : ""}`}
                 onClick={handleNext}
               >
                 Next
               </Button>
               <Button
-                className={`${state === 2 ? "visible" : "hidden"}`}
+                className={`${page === 2 ? "visible" : "hidden"}`}
                 onClick={handleSubmit}
               >
                 Create
@@ -58,58 +70,6 @@ function AddCommunity() {
             </div>
           </form>
         </div>
-      </div>
-    </div>
-  );
-}
-
-function FieldAreaA() {
-  return (
-    <>
-      <InputWithLabel
-        inputClassName="bg-[#09090B] text-white"
-        onValueChange={() => {}}
-        id="communityname"
-        label="Community Name"
-        placeholder="Enter Community name"
-        type="text"
-      />
-      <InputWithLabel
-        inputClassName="bg-[#09090B] text-white"
-        onValueChange={() => {}}
-        id="communitydisplayname"
-        label="Community Display Name"
-        placeholder="Enter Community display name"
-        type="text"
-      />
-      <InputWithLabel
-        inputClassName="bg-[#09090B] text-white"
-        onValueChange={() => {}}
-        id="description"
-        label="Description"
-        placeholder="Enter description"
-        type="text"
-      />
-      <div className="w-full flex flex-col gap-y-2">
-        <Label className="text-slate-200" htmlFor="email">
-          Community Type
-        </Label>
-        <CustomSelect
-          onValueChange={() => {}}
-          options={["Public", "Private"]}
-          placeholder="Select Community Type"
-        />
-      </div>
-    </>
-  );
-}
-
-function FieldAreaB() {
-  return (
-    <div className="flex flex-col gap-y-2 ">
-      <Label className="text-base">Community Icon</Label>
-      <div className="flex justify-center ">
-        <ProfileUploadButton />
       </div>
     </div>
   );

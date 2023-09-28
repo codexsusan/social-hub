@@ -9,7 +9,7 @@ function CreatePost() {
   const navigate = useNavigate();
 
   return (
-    <div className="xl:w-2/5 lg:w-3/5 md:w-4/5 w-full p-3 border rounded-2xl border-slate-600 flex gap-2">
+    <div className="xl:w-2/5 lg:w-3/5 md:w-4/5 w-full p-3 border rounded-2xl border-slate-600 flex gap-2 items-center">
       <div
         className=" cursor-pointer"
         onClick={() => {

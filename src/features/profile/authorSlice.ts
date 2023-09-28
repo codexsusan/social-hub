@@ -18,7 +18,7 @@ const initialState: AuthorPartial = {
 };
 
 export const fetchAuthorData = createAsyncThunk(
-  "/author/data/get",
+  "author/data/get",
   (id: AuthorPartial["_id"]) => {
     return getUserByIdUtils(id);
   }

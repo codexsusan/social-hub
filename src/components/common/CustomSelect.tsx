@@ -10,12 +10,13 @@ import {
 type Props = {
   options: string[];
   placeholder: string;
+  value?: string;
   onValueChange: (value: Gender) => void;
 };
 
 function CustomSelect(props: Props) {
   return (
-    <Select onValueChange={props.onValueChange}>
+    <Select value={props.value} onValueChange={props.onValueChange}>
       <SelectTrigger className="w-full bg-[#09090B]">
         <SelectValue placeholder={props.placeholder} />
       </SelectTrigger>

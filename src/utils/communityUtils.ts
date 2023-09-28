@@ -1,15 +1,15 @@
-import { PartialCommunity } from "@/types/communityTypes";
+import { CreateCommunity, PartialCommunity } from "@/types/communityTypes";
 import { request } from "./httpUtils";
 
 // Create Community
-export const createCommunityUtils = (community: PartialCommunity) => {
+export const createCommunityUtils = (community: CreateCommunity) => {
   const response = request("/api/community/create", "POST", community);
   return response;
 };
 
 // Get All Community
 export const getAllCommunityUtils = () => {
-  const response = request("/api/community/get-all-communities", "GET",{});
+  const response = request("/api/community/get-all-communities", "GET", {});
   return response;
 };
 
