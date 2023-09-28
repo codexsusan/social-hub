@@ -44,9 +44,6 @@ function CommentActions(props: { comment: NestedComment }) {
   const switchCommentReplyBox = (e: React.MouseEvent) => {
     e.stopPropagation();
     dispatch(switchcommentreplybox(comment._id));
-    // const current_selected_comment = currentComment.comments.find(
-    //   (thisComment) => thisComment._id === comment._id
-    // );
     dispatch(
       getCommentReplies({ commentId: comment._id, userId: currentUser._id })
     ).then((res) => {

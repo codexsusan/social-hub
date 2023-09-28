@@ -2,20 +2,26 @@ import { CreateCommunity, PartialCommunity } from "@/types/communityTypes";
 import { request } from "./httpUtils";
 
 // Create Community
-export const createCommunityUtils = (community: CreateCommunity) => {
-  const response = request("/api/community/create", "POST", community);
+export const createCommunityUtils = async (community: CreateCommunity) => {
+  const response = await request("/api/community/create", "POST", community);
   return response;
 };
 
 // Get All Community
-export const getAllCommunityUtils = () => {
-  const response = request("/api/community/get-all-communities", "GET", {});
+export const getAllCommunityUtils = async () => {
+  const response = await request(
+    "/api/community/get-all-communities",
+    "GET",
+    {}
+  );
   return response;
 };
 
 // Get Community By Id
-export const getCommunityByIdUtils = (communityId: PartialCommunity["_id"]) => {
-  const response = request(
+export const getCommunityByIdUtils = async (
+  communityId: PartialCommunity["_id"]
+) => {
+  const response = await request(
     `/api/community/get-community/${communityId}`,
     "GET",
     {}
@@ -23,9 +29,23 @@ export const getCommunityByIdUtils = (communityId: PartialCommunity["_id"]) => {
   return response;
 };
 
+// Get all posts by community
+export const getAllPostByCommunity = async (
+  communityId: PartialCommunity["_id"]
+) => {
+  const response = await request(
+    `/api/post/get-all-posts-by-community/${communityId}`,
+    "GET",
+    {}
+  );
+  return response;
+};
+
 // Join Community
-export const joinCommunityUtils = (communityId: PartialCommunity["_id"]) => {
-  const response = request(
+export const joinCommunityUtils = async (
+  communityId: PartialCommunity["_id"]
+) => {
+  const response = await request(
     `/api/community/join-community/${communityId}`,
     "POST",
     {}
@@ -33,10 +53,10 @@ export const joinCommunityUtils = (communityId: PartialCommunity["_id"]) => {
   return response;
 };
 
-export const promoteUserToModeratorUtils = (
+export const promoteUserToModeratorUtils = async (
   communityId: PartialCommunity["_id"]
 ) => {
-  const response = request(
+  const response = await request(
     `/api/community/promote-to-moderator/${communityId}`,
     "POST",
     {}

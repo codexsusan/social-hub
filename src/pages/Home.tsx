@@ -22,7 +22,7 @@ function StatefulScreen() {
 function View() {
   return (
     <>
-      <CreatePost />
+      <CreatePost  />
       <HomeTab />
     </>
   );

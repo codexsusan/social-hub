@@ -9,6 +9,7 @@ import SinglePost from "@/pages/SinglePost";
 import AuthorProfile from "@/pages/AuthorProfile";
 import AddCommunity from "@/pages/AddCommunity";
 import CommunityHome from "@/pages/CommunityHome";
+import ListCommunity from "@/pages/ListCommunity";
 
 const router = createBrowserRouter([
   {
@@ -80,6 +81,14 @@ const router = createBrowserRouter([
     element: (
       <AppContainer>
         <AddCommunity />
+      </AppContainer>
+    ),
+  },
+  {
+    path: "/c/lists",
+    element: (
+      <AppContainer>
+        <ListCommunity />
       </AppContainer>
     ),
   },

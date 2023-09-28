@@ -6,10 +6,12 @@ import { toast } from "@/components/ui/use-toast";
 import { createCommunity } from "@/features/community/createCommunity";
 import { hasProperty } from "@/utils/generalUtils";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function AddCommunity() {
   const dispatch = useAppDispatch();
   const [page, setPage] = React.useState(1);
+  const navigate = useNavigate();
 
   const community = useAppSelector((state) => state.community.create);
   const handleNext = (e: React.MouseEvent) => {
@@ -32,8 +34,7 @@ function AddCommunity() {
           duration: 2000,
         });
         if (res.payload.status === 200) {
-          // TODO: Naviagtion to the newly created community
-          // Redirect through the community id
+          navigate(`/c/${community._id}`);
         }
       }
     });
