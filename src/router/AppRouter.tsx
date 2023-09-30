@@ -10,6 +10,7 @@ import AuthorProfile from "@/pages/AuthorProfile";
 import AddCommunity from "@/pages/AddCommunity";
 import CommunityHome from "@/pages/CommunityHome";
 import ListCommunity from "@/pages/ListCommunity";
+import ExploreCommunity from "@/pages/ExploreCommunity";
 
 const router = createBrowserRouter([
   {
@@ -89,6 +90,14 @@ const router = createBrowserRouter([
     element: (
       <AppContainer>
         <ListCommunity />
+      </AppContainer>
+    ),
+  },
+  {
+    path: "/explore",
+    element: (
+      <AppContainer>
+        <ExploreCommunity />
       </AppContainer>
     ),
   },
