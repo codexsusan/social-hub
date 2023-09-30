@@ -9,7 +9,7 @@ const initialState: CreateCommunity = {
   displayName: "",
   description: "",
   community_type: "",
-  icon_image: "",
+  icon_image: "null",
   loading: false,
   error: "",
 };
@@ -49,6 +49,16 @@ const createCommunitySlice = createSlice({
     ) => {
       state.icon_image = action.payload;
     },
+    clear: (state) => {
+      state._id = "";
+      state.name = "";
+      state.displayName = "";
+      state.description = "";
+      state.community_type = "";
+      state.icon_image = "null";
+      state.loading = false;
+      state.error = "";
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(createCommunity.pending, (state: CreateCommunity) => {
@@ -78,4 +88,5 @@ export const {
   changeDescription,
   changeType,
   changeCommunityProfileImage,
+  clear,
 } = createCommunitySlice.actions;

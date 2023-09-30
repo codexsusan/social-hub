@@ -22,18 +22,14 @@ function BookmarkTab() {
 
 function View() {
   const postData = useAppSelector((state) => state.profile.bookmarks);
-  const errorMessage = postData.error.length > 0 && postData.error;
   return postData.loading ? (
     <div className="flex justify-center">
       <Loader className=" animate-spin my-4" />
     </div>
   ) : (
-    <div className=" text-xl text-center">
-      {postData.posts.map((post) => {
-        return <PostCard type="profile-post" key={post._id} post={post} />;
-      })}
-      {errorMessage}
-    </div>
+    postData.posts.map((post) => {
+      return <PostCard key={post._id} type="profile-post" post={post} />;
+    })
   );
 }
 

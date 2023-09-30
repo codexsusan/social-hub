@@ -1,3 +1,5 @@
+import { PostPartial } from "./postTypes";
+
 export interface Community {
   _id: string;
   name: string;
@@ -24,4 +26,21 @@ export interface CreateCommunity extends PartialCommunity {
 export interface CommunityHome extends PartialCommunity {
   loading: boolean;
   error: string;
+}
+
+export interface CommunityPosts {
+  posts: PostPartial[];
+  loading: boolean;
+  error: string;
+}
+
+export interface CommunityLists {
+  loading: boolean;
+  error: string;
+  communities: Community[];
+}
+
+export interface CommunityMultiSelectData {
+  id: string;
+  name: string;
 }

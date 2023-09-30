@@ -3,13 +3,15 @@ import AddCommunityForm from "@/components/community/AddCommunityForm";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "@/components/ui/use-toast";
-import { createCommunity } from "@/features/community/createCommunity";
+import { clear, createCommunity } from "@/features/community/createCommunity";
 import { hasProperty } from "@/utils/generalUtils";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function AddCommunity() {
   const dispatch = useAppDispatch();
   const [page, setPage] = React.useState(1);
+  const navigate = useNavigate();
 
   const community = useAppSelector((state) => state.community.create);
   const handleNext = (e: React.MouseEvent) => {
@@ -25,15 +27,19 @@ function AddCommunity() {
   const handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
     dispatch(createCommunity(community)).then((res) => {
-      if (hasProperty(res.payload, "status")) {
+      if (
+        hasProperty(res.payload, "data") &&
+        res.meta.requestStatus === "fulfilled"
+      ) {
         toast({
           title: res.payload.data.message,
           className: "bg-[#09090B] text-[#e2e2e2] border-none ",
           duration: 2000,
         });
-        if (res.payload.status === 200) {
-          // TODO: Naviagtion to the newly created community
-          // Redirect through the community id
+        if (res.payload.status === 201) {
+          console.log(res.payload.data);
+          navigate(`/c/${res.payload.data._id}`);
+          dispatch(clear());
         }
       }
     });

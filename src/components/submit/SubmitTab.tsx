@@ -7,7 +7,7 @@ import { useSearchParams } from "react-router-dom";
 import EditorView from "./EditorView";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { changeContent, changeTitle } from "@/features/submit/submitSlice";
-import { ReactNode } from "react";
+import { ReactNode,  } from "react";
 
 type Props = {
   children: ReactNode;

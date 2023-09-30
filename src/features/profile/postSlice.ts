@@ -1,5 +1,4 @@
 import { PostPartial, MultiplePostsInitialState } from "@/types/postTypes";
-import { UserPartial } from "@/types/userTypes";
 import { ResponseData } from "@/utils/httpUtils";
 import { getAllPostsByUserUtils } from "@/utils/postUtils";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
@@ -15,28 +14,10 @@ const initialState: MultiplePostsInitialState = {
   posts: [] as PostPartial[],
 };
 
-export const getPostsByUser = createAsyncThunk(
-  "user/get/post",
-  async (id: UserPartial["_id"]) => {
-    const userposts = await getAllPostsByUserUtils({}).then((res) => res);
-    const updatedPosts = userposts.data!.data.map((post: PostPartial) => {
-      const upVoteStatus = post.upvotes!.includes(id!);
-      const downVoteStatus = post.downvotes!.includes(id!);
-      return {
-        ...post,
-        upVoteStatus,
-        downVoteStatus,
-      };
-    });
-    return {
-      ...userposts,
-      data: {
-        ...userposts.data,
-        data: [...updatedPosts],
-      },
-    };
-  }
-);
+export const getPostsByUser = createAsyncThunk("user/get/post", async () => {
+  const userposts = await getAllPostsByUserUtils({}).then((res) => res);
+  return userposts;
+});
 
 const postSlice = createSlice({
   name: "post",

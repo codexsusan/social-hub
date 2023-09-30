@@ -7,10 +7,10 @@ import PostCard from "../post/PostCard";
 
 function PostTab() {
   const dispatch = useAppDispatch();
-  const userId = useAppSelector((state) => state.user._id);
+
   useEffect(() => {
-    dispatch(getPostsByUser(userId));
-  }, [dispatch, userId]);
+    dispatch(getPostsByUser());
+  }, [dispatch]);
   return (
     <Card className="bg-[#27272A]">
       <CardContent className="space-y-4 p-4 text-white">

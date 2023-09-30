@@ -1,32 +1,26 @@
-// import { Loader } from "lucide-react";
-import { Card, CardContent } from "../ui/card";
-// import { useAppSelector } from "@/app/hooks";
-// import PostCard from "../post/PostCard";
+
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { fetchAllPostsByCommunity } from "@/features/community/communityPost";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import PostCard from "../post/PostCard";
 
 function CommunityHomeTab() {
+  const dispatch = useAppDispatch();
+  const { communityId } = useParams();
+  useEffect(() => {
+    dispatch(fetchAllPostsByCommunity(communityId!));
+  }, [dispatch, communityId]);
+  const posts = useAppSelector((state) => state.community.home.posts.posts);
   return (
     <div className="xl:w-2/5 lg:w-3/5 md:w-4/5 w-full flex gap-2 text-white">
-      <Card className="bg-[#27272A]">
-        <CardContent className="space-y-4 p-4 text-white">
-          {/* <View /> */}
-          Hello
-        </CardContent>
-      </Card>
+      <div className="bg-[#27272a] p-4 rounded-md w-full">
+        {posts.map((post) => {
+          return <PostCard post={post} type="community-home" />;
+        })}
+      </div>
     </div>
   );
 }
-
-// function View() {
-//   const latest = useAppSelector((state) => state.home.latest);
-//   return latest.loading ? (
-//     <div className="flex justify-center">
-//       <Loader className=" animate-spin my-4" />
-//     </div>
-//   ) : (
-//     latest.posts.map((post) => {
-//       return <PostCard type="latest" key={post._id} post={post} />;
-//     })
-//   );
-// }
 
 export default CommunityHomeTab;
