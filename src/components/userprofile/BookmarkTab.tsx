@@ -28,7 +28,7 @@ function View() {
     </div>
   ) : (
     postData.posts.map((post) => {
-      return <PostCard key={post._id} type="profile-post" post={post} />;
+      return <PostCard key={post._id} type="profile-bookmark" post={post} />;
     })
   );
 }

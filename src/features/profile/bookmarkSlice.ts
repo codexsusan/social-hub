@@ -3,6 +3,11 @@ import { getBookmarksUtils } from "@/utils/bookmarkUtils";
 import { hasProperty } from "@/utils/generalUtils";
 import { ResponseData } from "@/utils/httpUtils";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  downvoteSuccessUtils,
+  switchbookmarkSuccessUtils,
+  upvoteSuccessUtils,
+} from "../utils";
 
 const initialState: MultiplePostsInitialState = {
   error: "",
@@ -22,7 +27,26 @@ export const getBookmarks = createAsyncThunk(
 const bookmarkSlice = createSlice({
   name: "bookmark",
   initialState,
-  reducers: {},
+  reducers: {
+    upvoteprofilebookmarkpostsuccess: (
+      state: MultiplePostsInitialState,
+      action: PayloadAction<PostPartial["_id"]>
+    ) => {
+      upvoteSuccessUtils(state, action);
+    },
+    downvoteprofilebookmarkpostsuccess: (
+      state: MultiplePostsInitialState,
+      action: PayloadAction<PostPartial["_id"]>
+    ) => {
+      downvoteSuccessUtils(state, action);
+    },
+    switchbookmarkprofilebookmarkpostsuccess: (
+      state: MultiplePostsInitialState,
+      action: PayloadAction<PostPartial["_id"]>
+    ) => {
+      switchbookmarkSuccessUtils(state, action);
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(
       getBookmarks.pending,
@@ -57,3 +81,8 @@ const bookmarkSlice = createSlice({
 });
 
 export default bookmarkSlice.reducer;
+export const {
+  upvoteprofilebookmarkpostsuccess,
+  downvoteprofilebookmarkpostsuccess,
+  switchbookmarkprofilebookmarkpostsuccess,
+} = bookmarkSlice.actions;
