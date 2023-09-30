@@ -1,7 +1,5 @@
 import { useAppDispatch } from "@/app/hooks";
-import {
-  switchBookmark,
-} from "@/features/bookmarks/bookmarkSlice";
+import { switchBookmark } from "@/features/bookmarks/bookmarkSlice";
 import {
   downvotecommunityhomepostsuccess,
   switchbookmarkcommunityhomepostsuccess,
@@ -30,6 +28,11 @@ import {
   upvotePost,
   upvotesuccess,
 } from "@/features/post/postSlice";
+import {
+  downvoteprofilebookmarkpostsuccess,
+  switchbookmarkprofilebookmarkpostsuccess,
+  upvoteprofilebookmarkpostsuccess,
+} from "@/features/profile/bookmarkSlice";
 import {
   downvoteprofilepostsuccess,
   switchbookmarkprofilepostsuccess,
@@ -74,6 +77,8 @@ export default function PostActions(props: Props) {
           dispatch(upvotemostviewedsuccess(post?._id));
         } else if (type == "profile-post") {
           dispatch(upvoteprofilepostsuccess(post?._id));
+        } else if (type == "profile-bookmark") {
+          dispatch(upvoteprofilebookmarkpostsuccess(post?._id));
         } else if (type === "community-home") {
           dispatch(upvotecommunityhomepostsuccess(post?._id));
         }
@@ -94,6 +99,8 @@ export default function PostActions(props: Props) {
           dispatch(downvotemostviewedsuccess(post?._id));
         } else if (type == "profile-post") {
           dispatch(downvoteprofilepostsuccess(post?._id));
+        } else if (type == "profile-bookmark") {
+          dispatch(downvoteprofilebookmarkpostsuccess(post?._id));
         } else if (type == "community-home") {
           dispatch(downvotecommunityhomepostsuccess(post?._id));
         }
@@ -122,6 +129,8 @@ export default function PostActions(props: Props) {
           dispatch(switchbookmarkmostviewedsuccess(post!._id));
         } else if (type === "profile-post") {
           dispatch(switchbookmarkprofilepostsuccess(post!._id));
+        } else if (type === "profile-bookmark") {
+          dispatch(switchbookmarkprofilebookmarkpostsuccess(post!._id));
         } else if (type === "community-home") {
           dispatch(switchbookmarkcommunityhomepostsuccess(post!._id));
         }
