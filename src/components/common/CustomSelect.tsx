@@ -6,6 +6,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { CommunityMultiSelectData } from "@/types/communityTypes";
+
+export type optionData = {
+  id: string;
+  name: string;
+};
 
 type Props = {
   options: string[];
@@ -13,23 +19,25 @@ type Props = {
   value?: string;
   defaultValue?: string;
   onValueChange: (value: Gender) => void;
+  optionData?: optionData[];
 };
 
 function CustomSelect(props: Props) {
+  const { placeholder, value, defaultValue, onValueChange, optionData } = props;
   return (
     <Select
-      defaultValue={props.defaultValue!}
-      value={props.value}
-      onValueChange={props.onValueChange}
+      defaultValue={defaultValue!}
+      value={value}
+      onValueChange={onValueChange}
     >
       <SelectTrigger className="w-full bg-[#09090B]">
-        <SelectValue placeholder={props.placeholder} />
+        <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent className="bg-black">
-        {props.options.map((option: string) => {
+        {optionData!.map((option: CommunityMultiSelectData) => {
           return (
-            <SelectItem key={option} value={option}>
-              {option.charAt(0).toUpperCase() + option.slice(1)}
+            <SelectItem key={option.id} value={option.id}>
+              {option.name.charAt(0).toUpperCase() + option.name.slice(1)}
             </SelectItem>
           );
         })}

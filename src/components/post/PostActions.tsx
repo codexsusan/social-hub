@@ -1,8 +1,12 @@
 import { useAppDispatch } from "@/app/hooks";
 import {
-  addBookmark,
-  removeBookmark,
+  switchBookmark,
 } from "@/features/bookmarks/bookmarkSlice";
+import {
+  downvotecommunityhomepostsuccess,
+  switchbookmarkcommunityhomepostsuccess,
+  upvotecommunityhomepostsuccess,
+} from "@/features/community/communityPost";
 import {
   downvotelatestsuccess,
   switchbookmarklatestsuccess,
@@ -70,6 +74,8 @@ export default function PostActions(props: Props) {
           dispatch(upvotemostviewedsuccess(post?._id));
         } else if (type == "profile-post") {
           dispatch(upvoteprofilepostsuccess(post?._id));
+        } else if (type === "community-home") {
+          dispatch(upvotecommunityhomepostsuccess(post?._id));
         }
       }
     });
@@ -88,6 +94,8 @@ export default function PostActions(props: Props) {
           dispatch(downvotemostviewedsuccess(post?._id));
         } else if (type == "profile-post") {
           dispatch(downvoteprofilepostsuccess(post?._id));
+        } else if (type == "community-home") {
+          dispatch(downvotecommunityhomepostsuccess(post?._id));
         }
       }
     });
@@ -100,41 +108,25 @@ export default function PostActions(props: Props) {
     }
   };
 
-  const handleBookmark = (e: React.MouseEvent) => {
+  const switchBookmarkCB = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (post?.isBookmarked) {
-      dispatch(removeBookmark(post!._id)).then((res) => {
-        if (res.meta.requestStatus === "fulfilled") {
-          if (type === "latest") {
-            dispatch(switchbookmarklatestsuccess(post!._id));
-          } else if (type === "single-post") {
-            dispatch(switchbookmarksuccess());
-          } else if (type === "trending") {
-            dispatch(switchbookmarktrendingsuccess(post!._id));
-          } else if (type === "most-viewed") {
-            dispatch(switchbookmarkmostviewedsuccess(post!._id));
-          } else if (type === "profile-post") {
-            dispatch(switchbookmarkprofilepostsuccess(post!._id));
-          }
+    dispatch(switchBookmark(post!._id)).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        if (type === "latest") {
+          dispatch(switchbookmarklatestsuccess(post!._id));
+        } else if (type === "single-post") {
+          dispatch(switchbookmarksuccess());
+        } else if (type === "trending") {
+          dispatch(switchbookmarktrendingsuccess(post!._id));
+        } else if (type === "most-viewed") {
+          dispatch(switchbookmarkmostviewedsuccess(post!._id));
+        } else if (type === "profile-post") {
+          dispatch(switchbookmarkprofilepostsuccess(post!._id));
+        } else if (type === "community-home") {
+          dispatch(switchbookmarkcommunityhomepostsuccess(post!._id));
         }
-      });
-    } else {
-      dispatch(addBookmark(post!._id)).then((res) => {
-        if (res.meta.requestStatus === "fulfilled") {
-          if (type === "latest") {
-            dispatch(switchbookmarklatestsuccess(post?._id));
-          } else if (type === "single-post") {
-            dispatch(switchbookmarksuccess());
-          } else if (type === "trending") {
-            dispatch(switchbookmarktrendingsuccess(post!._id));
-          } else if (type === "most-viewed") {
-            dispatch(switchbookmarkmostviewedsuccess(post!._id));
-          } else if (type === "profile-post") {
-            dispatch(switchbookmarkprofilepostsuccess(post!._id));
-          }
-        }
-      });
-    }
+      }
+    });
   };
 
   const { upVoteStatus, downVoteStatus, isBookmarked } = post!;
@@ -160,7 +152,7 @@ export default function PostActions(props: Props) {
       </div>
       <div>
         <Bookmark
-          onClick={handleBookmark}
+          onClick={switchBookmarkCB}
           strokeWidth={1}
           size={22}
           fill={isBookmarked ? "white" : undefined}

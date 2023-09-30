@@ -1,10 +1,6 @@
 import { BookmarkInitialState, BookmarkPartial } from "@/types/bookmarkTypes";
 import { PostPartial } from "@/types/postTypes";
-import {
-  addBookmarkUtils,
-  getBookmarksUtils,
-  removeBookmarkUtils,
-} from "@/utils/bookmarkUtils";
+import { addBookmarkUtils, getBookmarksUtils } from "@/utils/bookmarkUtils";
 import { ResponseData } from "@/utils/httpUtils";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
@@ -14,8 +10,8 @@ const initialState: BookmarkInitialState = {
   bookmarks: [] as BookmarkPartial[],
 };
 
-export const addBookmark = createAsyncThunk(
-  "bookmark/add",
+export const switchBookmark = createAsyncThunk(
+  "bookmark/switch",
   async (postId: PostPartial["_id"]) => {
     return addBookmarkUtils(postId).then((res) => res);
   }
@@ -25,36 +21,11 @@ export const fetchBookmarks = createAsyncThunk("bookmark/fetch", async () => {
   return getBookmarksUtils().then((res) => res);
 });
 
-export const removeBookmark = createAsyncThunk(
-  "bookmark/remove",
-  async (postId: PostPartial["_id"]) => {
-    return removeBookmarkUtils(postId).then((res) => res);
-  }
-);
-
 const bookmarkSlice = createSlice({
   name: "bookmark",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    // Add Bookmarks
-    builder.addCase(addBookmark.pending, (state: BookmarkInitialState) => {
-      state.loading = true;
-    });
-    builder.addCase(
-      addBookmark.fulfilled,
-      (state: BookmarkInitialState, action: PayloadAction<ResponseData>) => {
-        state.loading = false;
-        state.bookmarks = [...state.bookmarks, action.payload.data];
-      }
-    );
-    builder.addCase(
-      addBookmark.rejected,
-      (state: BookmarkInitialState, action) => {
-        state.loading = false;
-        state.error = action.error.message!;
-      }
-    );
     // Fetch User Bookmarks
     builder.addCase(fetchBookmarks.pending, (state: BookmarkInitialState) => {
       state.loading = true;
@@ -73,12 +44,12 @@ const bookmarkSlice = createSlice({
         state.error = action.error.message!;
       }
     );
-    // Remove Bookmarks
-    builder.addCase(removeBookmark.pending, (state: BookmarkInitialState) => {
+    // Switch Bookmarks
+    builder.addCase(switchBookmark.pending, (state: BookmarkInitialState) => {
       state.loading = true;
     });
     builder.addCase(
-      removeBookmark.fulfilled,
+      switchBookmark.fulfilled,
       (state: BookmarkInitialState, action: PayloadAction<ResponseData>) => {
         state.loading = false;
         state.bookmarks = state.bookmarks.filter(
@@ -87,7 +58,7 @@ const bookmarkSlice = createSlice({
       }
     );
     builder.addCase(
-      removeBookmark.rejected,
+      switchBookmark.rejected,
       (state: BookmarkInitialState, action) => {
         state.loading = false;
         state.error = action.error.message!;

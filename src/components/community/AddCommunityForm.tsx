@@ -24,6 +24,16 @@ function FieldAreaA() {
   const dispatch = useAppDispatch();
   const community = useAppSelector((state) => state.community);
   const { name, displayName, description } = community.create;
+  const options = [
+    {
+      id: "Public",
+      name: "Public",
+    },
+    {
+      id: "Private",
+      name: "Private",
+    },
+  ];
 
   return (
     <>
@@ -69,6 +79,7 @@ function FieldAreaA() {
             dispatch(changeType(value));
           }}
           options={["Public", "Private"]}
+          optionData={options}
           placeholder="Select Community Type"
         />
       </div>

@@ -3,11 +3,19 @@ import { PostPartial } from "@/types/postTypes";
 import { getAllPostByCommunity } from "@/utils/communityUtils";
 import { ResponseData } from "@/utils/httpUtils";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  downvoteSuccessUtils,
+  switchbookmarkSuccessUtils,
+  upvoteSuccessUtils,
+} from "../utils";
 
 export const fetchAllPostsByCommunity = createAsyncThunk(
   "fetch/all-posts/community",
   async (communityId: PartialCommunity["_id"]) => {
-    return getAllPostByCommunity(communityId).then((res) => res);
+    const communityPosts = await getAllPostByCommunity(communityId!).then(
+      (res) => res
+    );
+    return communityPosts;
   }
 );
 
@@ -20,7 +28,26 @@ const initialState: CommunityPosts = {
 const communityPost = createSlice({
   name: "posts",
   initialState,
-  reducers: {},
+  reducers: {
+    upvotecommunityhomepostsuccess: (
+      state: CommunityPosts,
+      action: PayloadAction<PostPartial["_id"]>
+    ) => {
+      upvoteSuccessUtils(state, action);
+    },
+    downvotecommunityhomepostsuccess: (
+      state: CommunityPosts,
+      action: PayloadAction<PostPartial["_id"]>
+    ) => {
+      downvoteSuccessUtils(state, action);
+    },
+    switchbookmarkcommunityhomepostsuccess: (
+      state: CommunityPosts,
+      action: PayloadAction<PostPartial["_id"]>
+    ) => {
+      switchbookmarkSuccessUtils(state, action);
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(
       fetchAllPostsByCommunity.pending,
@@ -32,7 +59,7 @@ const communityPost = createSlice({
       fetchAllPostsByCommunity.fulfilled,
       (state: CommunityPosts, action: PayloadAction<ResponseData>) => {
         state.loading = false;
-        console.log(action.payload);
+        state.posts = [...action.payload.data.data];
       }
     );
     builder.addCase(
@@ -45,3 +72,9 @@ const communityPost = createSlice({
 });
 
 export default communityPost.reducer;
+
+export const {
+  upvotecommunityhomepostsuccess,
+  downvotecommunityhomepostsuccess,
+  switchbookmarkcommunityhomepostsuccess,
+} = communityPost.actions;

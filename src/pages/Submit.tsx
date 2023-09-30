@@ -4,14 +4,41 @@ import SubmitTab from "@/components/submit/SubmitTab";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "@/components/ui/use-toast";
+import { fetchAllCommunityByUser } from "@/features/community/communityLists";
 import { changeCommunity, createPost } from "@/features/submit/submitSlice";
 import useDocumentTitle from "@/hooks/useDocumentTitle";
 import { Loader2 } from "lucide-react";
+import { useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 
 function Submit() {
   useDocumentTitle("Submit | Social Hub");
   const dispatch = useAppDispatch();
   const submit = useAppSelector((state) => state.submit);
+  const user = useAppSelector((state) => state.user);
+  const [searchParams] = useSearchParams();
+  const comm = searchParams.get("comm");
+  useEffect(() => {
+    dispatch(fetchAllCommunityByUser());
+  }, [dispatch]);
+
+  const optionData = useAppSelector(
+    (state) => state.community.lists.communities
+  );
+  let options = optionData.map((option) => {
+    return {
+      id: option._id,
+      name: option.displayName,
+    };
+  });
+
+  options = [
+    {
+      id: user._id,
+      name: user.userName,
+    },
+    ...options,
+  ];
 
   const handlePostSubmit = () => {
     dispatch(createPost(submit.post)).then((res) => {
@@ -46,8 +73,10 @@ function Submit() {
             onValueChange={(value: string) => {
               dispatch(changeCommunity(value));
             }}
+            defaultValue={comm !== null ? comm : undefined}
             options={["Productivity", "Gaming", "Programming", "Sports"]}
             placeholder="Choose a community"
+            optionData={options}
           />
         </div>
         <SubmitTab>

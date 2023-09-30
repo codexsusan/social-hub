@@ -37,7 +37,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/submit" || "/submit/?type=:type",
+    path: "/submit" || "/submit/?type=:type" || "/submit?comm=:comm",
     element: (
       <AppContainer>
         <Submit />

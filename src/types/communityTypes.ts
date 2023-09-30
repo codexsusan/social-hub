@@ -33,3 +33,14 @@ export interface CommunityPosts {
   loading: boolean;
   error: string;
 }
+
+export interface CommunityLists {
+  loading: boolean;
+  error: string;
+  communities: Community[];
+}
+
+export interface CommunityMultiSelectData {
+  id: string;
+  name: string;
+}

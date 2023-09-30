@@ -1,5 +1,9 @@
-import { CreateCommunity, PartialCommunity } from "@/types/communityTypes";
+import {
+  CreateCommunity,
+  PartialCommunity,
+} from "@/types/communityTypes";
 import { request } from "./httpUtils";
+import { queryParamsType } from "@/types/generalTypes";
 
 // Create Community
 export const createCommunityUtils = async (community: CreateCommunity) => {
@@ -24,7 +28,10 @@ export const getCommunityByIdUtils = async (
   const response = await request(
     `/api/community/get-community/${communityId}`,
     "GET",
-    {}
+    {
+      page: 1,
+      limit: 10,
+    }
   );
   return response;
 };
@@ -34,9 +41,19 @@ export const getAllPostByCommunity = async (
   communityId: PartialCommunity["_id"]
 ) => {
   const response = await request(
-    `/api/post/get-all-posts-by-community/${communityId}`,
+    `/api/post/get-all-posts-by-community/${communityId!}`,
     "GET",
     {}
+  );
+  return response;
+};
+
+// Get joined communities by user
+export const getJoinedCommunitiesByUser = async (data: queryParamsType) => {
+  const response = await request(
+    `/api/community/get-joined-communities`,
+    "GET",
+    data
   );
   return response;
 };
@@ -53,6 +70,19 @@ export const joinCommunityUtils = async (
   return response;
 };
 
+// Leave Community
+export const leaveCommunityUtils = async (
+  communityId: PartialCommunity["_id"]
+) => {
+  const response = await request(
+    `/api/community/leave-community/${communityId}`,
+    "GET",
+    {}
+  );
+  return response;
+};
+
+// Promote User To Moderator
 export const promoteUserToModeratorUtils = async (
   communityId: PartialCommunity["_id"]
 ) => {
@@ -64,4 +94,3 @@ export const promoteUserToModeratorUtils = async (
   return response;
 };
 
-// TODO: Leave Community
