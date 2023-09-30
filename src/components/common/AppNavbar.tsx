@@ -42,9 +42,10 @@ export default function AppNavbar() {
       href: `/profile/${user.userName}`,
       onClick: () => {},
     },
-    { label: "Settings", href: "", onClick: () => {} },
+    { label: "Explore", href: "/explore", onClick: () => {} },
     { label: "Create Community", href: "/c/create", onClick: () => {} },
     { label: "Your Community", href: "/c/lists", onClick: () => {} },
+    { label: "Settings", href: "", onClick: () => {} },
     {
       label: "Sign out",
       href: "/auth/login",
