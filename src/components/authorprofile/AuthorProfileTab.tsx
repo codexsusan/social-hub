@@ -1,20 +1,15 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import PostTab from "./PostTab";
-import BookmarkTab from "./BookmarkTab";
+import AuthorPostTab from "./AuthorPostTab";
 
-export function ProfileTab() {
+export function AuthorProfileTab() {
   return (
     <div className="xl:w-2/5 lg:w-3/5 md:w-4/5 w-full p-2  flex gap-2 flex-1">
       <Tabs defaultValue="posts" className="w-full">
-        <TabsList className="grid w-full bg-[#27272A] grid-cols-2">
+        <TabsList className="grid w-full bg-[#27272A] grid-cols-1">
           <TabsTrigger value="posts">Posts</TabsTrigger>
-          <TabsTrigger value="bookmarks">Bookmarks</TabsTrigger>
         </TabsList>
         <TabsContent value="posts">
-          <PostTab />
-        </TabsContent>
-        <TabsContent value="bookmarks">
-          <BookmarkTab />
+          <AuthorPostTab />
         </TabsContent>
       </Tabs>
     </div>

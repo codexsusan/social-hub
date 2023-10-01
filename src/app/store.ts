@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "@/features/user/userSlice";
 import submitReducer from "@/features/submit/submitSlice";
 import profileReducer from "@/features/profile/profileSlice";
-import authorReducer from "@/features/profile/authorSlice";
+import authorReducer from "@/features/authorprofile/authorSlice";
 import homeReducer from "@/features/home/homeSlice";
 import singlepostReducer from "@/features/general/singlePostSlice";
 import communityReducer from "@/features/community/communitySlice";
