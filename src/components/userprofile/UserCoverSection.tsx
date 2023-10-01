@@ -8,7 +8,7 @@ type Props = {
   user: MultiUserType;
 };
 
-function CoverSection(props: Props) {
+function UserCoverSection(props: Props) {
   const { user } = props;
   return user.loading ? (
     <PageLoading className="my-12" />
@@ -36,11 +36,11 @@ function UserCover(props: Props) {
           <div className="text-xl font-semibold">
             {user.firstName + " " + user.lastName}
           </div>
-          <div className="">{"u/" + user.userName}</div>
+          <div className="">{"@" + user.userName}</div>
         </div>
       </div>
     </div>
   );
 }
 
-export default CoverSection;
+export default UserCoverSection;

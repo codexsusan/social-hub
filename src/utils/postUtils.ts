@@ -70,13 +70,12 @@ export const getAllPostsByUserUtils = async (data: queryParamsType) => {
 };
 
 // Get all post by user id
-// TODO: End point not made
 export const getAllPostsByUserIdUtils = async (
   id: AuthorPartial["_id"],
   data: queryParamsType
 ) => {
   const response = await request(
-    `/api/post/get-all-posts-by-user/${id}`,
+    `/api/post/get-all-posts-by-user-id/${id}`,
     "GET",
     data
   );

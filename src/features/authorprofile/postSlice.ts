@@ -1,12 +1,13 @@
-import { PostPartial, MultiplePostsInitialState } from "@/types/postTypes";
+import { MultiplePostsInitialState, PostPartial } from "@/types/postTypes";
+import { AuthorPartial } from "@/types/userTypes";
 import { ResponseData } from "@/utils/httpUtils";
-import { getAllPostsByUserUtils } from "@/utils/postUtils";
+import { getAllPostsByUserIdUtils } from "@/utils/postUtils";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   downvoteSuccessUtils,
   switchbookmarkSuccessUtils,
   upvoteSuccessUtils,
-} from "@/features/utils";
+} from "../utils";
 
 const initialState: MultiplePostsInitialState = {
   error: "",
@@ -14,27 +15,31 @@ const initialState: MultiplePostsInitialState = {
   posts: [] as PostPartial[],
 };
 
-export const getPostsByUser = createAsyncThunk("user/get/post", async () => {
-  return getAllPostsByUserUtils({}).then((res) => res);
-});
+export const fetchPostsByUserId = createAsyncThunk(
+  "user/get/post/by/id",
+  async (id: AuthorPartial["_id"]) => {
+    const response = await getAllPostsByUserIdUtils(id, {}).then((res) => res);
+    return response;
+  }
+);
 
 const postSlice = createSlice({
   name: "post",
   initialState,
   reducers: {
-    upvoteprofilepostsuccess: (
+    upvoteauthorprofilepostsuccess: (
       state: MultiplePostsInitialState,
       action: PayloadAction<PostPartial["_id"]>
     ) => {
       upvoteSuccessUtils(state, action);
     },
-    downvoteprofilepostsuccess: (
+    downvoteauthorprofilepostsuccess: (
       state: MultiplePostsInitialState,
       action: PayloadAction<PostPartial["_id"]>
     ) => {
       downvoteSuccessUtils(state, action);
     },
-    switchbookmarkprofilepostsuccess: (
+    switchbookmarkauthorprofilepostsuccess: (
       state: MultiplePostsInitialState,
       action: PayloadAction<PostPartial["_id"]>
     ) => {
@@ -43,13 +48,13 @@ const postSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(
-      getPostsByUser.pending,
+      fetchPostsByUserId.pending,
       (state: MultiplePostsInitialState) => {
         state.loading = true;
       }
     );
     builder.addCase(
-      getPostsByUser.fulfilled,
+      fetchPostsByUserId.fulfilled,
       (
         state: MultiplePostsInitialState,
         action: PayloadAction<ResponseData>
@@ -59,19 +64,18 @@ const postSlice = createSlice({
       }
     );
     builder.addCase(
-      getPostsByUser.rejected,
+      fetchPostsByUserId.rejected,
       (state: MultiplePostsInitialState, action) => {
         state.loading = false;
-        state.error = action.error.message!;
+        state.error = action.error.message! || "Error fetching posts";
       }
     );
   },
 });
 
 export default postSlice.reducer;
-
 export const {
-  upvoteprofilepostsuccess,
-  downvoteprofilepostsuccess,
-  switchbookmarkprofilepostsuccess,
+  upvoteauthorprofilepostsuccess,
+  downvoteauthorprofilepostsuccess,
+  switchbookmarkauthorprofilepostsuccess,
 } = postSlice.actions;

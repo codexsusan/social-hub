@@ -91,20 +91,19 @@ const userSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(fetchUserData.fulfilled, (state, action) => {
-      // console.log(action.payload.user);
       state.loading = false;
       state.error = "";
-      state._id = action.payload.user._id;
-      state.firstName = action.payload.user.firstName;
-      state.lastName = action.payload.user.lastName;
-      state.email = action.payload.user.email;
-      state.userName = action.payload.user.userName;
-      state.bio = action.payload.user.bio;
-      state.gender = action.payload.user.gender;
-      state.profilePic = action.payload.user.profilePic;
-      state.isBanned = action.payload.user.isBanned;
-      state.isVerified = action.payload.user.isVerified;
-      state.banReason = action.payload.user.banReason;
+      state._id = action.payload.data._id;
+      state.firstName = action.payload.data.firstName;
+      state.lastName = action.payload.data.lastName;
+      state.email = action.payload.data.email;
+      state.userName = action.payload.data.userName;
+      state.bio = action.payload.data.bio;
+      state.gender = action.payload.data.gender;
+      state.profilePic = action.payload.data.profilePic;
+      state.isBanned = action.payload.data.isBanned;
+      state.isVerified = action.payload.data.isVerified;
+      state.banReason = action.payload.data.banReason;
       state.token = localStorage.getItem("token") || "";
     });
     builder.addCase(fetchUserData.rejected, (state) => {

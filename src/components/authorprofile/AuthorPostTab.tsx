@@ -1,16 +1,9 @@
-import { Card, CardContent } from "../ui/card";
-import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { useEffect } from "react";
-import { getPostsByUser } from "@/features/profile/postSlice";
+import { useAppSelector } from "@/app/hooks";
 import { Loader } from "lucide-react";
 import PostCard from "../post/PostCard";
+import { Card, CardContent } from "../ui/card";
 
-function PostTab() {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(getPostsByUser());
-  }, [dispatch]);
+function UserPostTab() {
   return (
     <Card className="bg-[#27272A]">
       <CardContent className="space-y-4 p-4 text-white">
@@ -21,7 +14,7 @@ function PostTab() {
 }
 
 function View() {
-  const postData = useAppSelector((state) => state.profile.posts);
+  const postData = useAppSelector((state) => state.author.post);
   return postData.loading ? (
     <div className="flex justify-center">
       <Loader className=" animate-spin my-4" />
@@ -33,4 +26,4 @@ function View() {
   );
 }
 
-export default PostTab;
+export default UserPostTab;

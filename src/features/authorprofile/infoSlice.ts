@@ -19,13 +19,13 @@ const initialState: AuthorPartial = {
 
 export const fetchAuthorData = createAsyncThunk(
   "author/data/get",
-  (id: AuthorPartial["_id"]) => {
-    return getUserByIdUtils(id);
+  async (id: AuthorPartial["_id"]) => {
+    return getUserByIdUtils(id).then((res) => res);
   }
 );
 
-const authorSlice = createSlice({
-  name: "author",
+const infoSlice = createSlice({
+  name: "info",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -35,8 +35,8 @@ const authorSlice = createSlice({
     builder.addCase(
       fetchAuthorData.fulfilled,
       (state: AuthorPartial, action: PayloadAction<ResponseData>) => {
-        const { user } = action.payload.data;
         state.loading = false;
+        const user = action.payload.data.data;
         state._id = user._id;
         state.firstName = user.firstName;
         state.lastName = user.lastName;
@@ -53,4 +53,4 @@ const authorSlice = createSlice({
   },
 });
 
-export default authorSlice.reducer;
+export default infoSlice.reducer;
