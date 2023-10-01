@@ -33,3 +33,11 @@ export const getUserByIdUtils = async (userId: UserPartial["_id"]) => {
   const response = await request(`/api/auth/user-details/${userId}`, "GET", {});
   return response;
 };
+
+// Update Profile Image
+export const updateProfileImageUtils = async (value: string) => {
+  const response = await request("/api/uploads/update-profile-image", "PUT", {
+    imageLink: value,
+  });
+  return response;
+};

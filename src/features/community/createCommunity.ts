@@ -1,4 +1,4 @@
-import { CreateCommunity } from "@/types/communityTypes";
+import { Community, CreateCommunity } from "@/types/communityTypes";
 import { createCommunityUtils } from "@/utils/communityUtils";
 import { ResponseData } from "@/utils/httpUtils";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
@@ -45,7 +45,7 @@ const createCommunitySlice = createSlice({
     },
     changeCommunityProfileImage: (
       state: CreateCommunity,
-      action: PayloadAction<string>
+      action: PayloadAction<Community["icon_image"]>
     ) => {
       state.icon_image = action.payload;
     },
