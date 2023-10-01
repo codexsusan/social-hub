@@ -87,7 +87,7 @@ function PostWrapper(props: Props) {
       <div className={""} onClick={handleRedirectToAuthorProfile}>
         <CustomAvatar
           src={post?.author?.profilePic}
-          fallBack={user.firstName.charAt(0)}
+          fallBack={post?.author?.firstName?.charAt(0)}
         />
       </div>
       <div className="w-full">

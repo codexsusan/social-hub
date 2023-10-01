@@ -1,7 +1,4 @@
-import {
-  CreateCommunity,
-  PartialCommunity,
-} from "@/types/communityTypes";
+import { CreateCommunity, PartialCommunity } from "@/types/communityTypes";
 import { request } from "./httpUtils";
 import { queryParamsType } from "@/types/generalTypes";
 
@@ -28,10 +25,7 @@ export const getCommunityByIdUtils = async (
   const response = await request(
     `/api/community/get-community/${communityId}`,
     "GET",
-    {
-      page: 1,
-      limit: 10,
-    }
+    {}
   );
   return response;
 };
@@ -76,7 +70,7 @@ export const leaveCommunityUtils = async (
 ) => {
   const response = await request(
     `/api/community/leave-community/${communityId}`,
-    "GET",
+    "POST",
     {}
   );
   return response;
@@ -93,4 +87,3 @@ export const promoteUserToModeratorUtils = async (
   );
   return response;
 };
-

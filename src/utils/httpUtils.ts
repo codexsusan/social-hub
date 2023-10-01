@@ -14,7 +14,7 @@ export type ResponseData = {
 export const request = async (
   endpoint: string,
   method: methodType = "GET",
-  data: any
+  data: any = null
 ) => {
   let url: string;
   if (method === "GET") {

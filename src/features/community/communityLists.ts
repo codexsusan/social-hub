@@ -39,7 +39,6 @@ const communityLists = createSlice({
     builder.addCase(
       leaveCommunity.fulfilled,
       (state: CommunityLists, action) => {
-        console.log(action.payload);
         state.communities = state.communities.filter((community) => {
           return community._id !== action.payload.data.data._id;
         });

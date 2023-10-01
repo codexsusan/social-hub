@@ -1,9 +1,9 @@
-
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { fetchAllPostsByCommunity } from "@/features/community/communityPost";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import PostCard from "../post/PostCard";
+import PostSectionWrapper from "../common/PostSectionWrapper";
 
 function CommunityHomeTab() {
   const dispatch = useAppDispatch();
@@ -13,13 +13,14 @@ function CommunityHomeTab() {
   }, [dispatch, communityId]);
   const posts = useAppSelector((state) => state.community.home.posts.posts);
   return (
-    <div className="xl:w-2/5 lg:w-3/5 md:w-4/5 w-full flex gap-2 text-white">
-      <div className="bg-[#27272a] p-4 rounded-md w-full">
-        {posts.map((post) => {
-          return <PostCard post={post} type="community-home" />;
-        })}
-      </div>
-    </div>
+    <PostSectionWrapper>
+      {posts.length === 0 && (
+        <div className="text-xl text-center font-semibold ">No Posts Found</div>
+      )}
+      {posts.map((post) => {
+        return <PostCard key={post._id} post={post} type="community-home" />;
+      })}
+    </PostSectionWrapper>
   );
 }
 

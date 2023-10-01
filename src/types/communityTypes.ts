@@ -1,11 +1,12 @@
 import { PostPartial } from "./postTypes";
 
+type CommunityTypes = "public" | "private";
 export interface Community {
   _id: string;
   name: string;
   displayName: string;
   description: string;
-  community_type: string;
+  community_type: CommunityTypes;
   icon_image: string;
   creator_id: string;
   member_count: number;
@@ -24,6 +25,8 @@ export interface CreateCommunity extends PartialCommunity {
 }
 
 export interface CommunityHome extends PartialCommunity {
+  isMember: boolean;
+  isAdmin: boolean;
   loading: boolean;
   error: string;
 }
