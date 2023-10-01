@@ -1,8 +1,7 @@
-import { Camera } from "lucide-react";
+import { MultiUserType } from "@/types/userTypes";
 import PageLoading from "../common/PageLoading";
 import ProfileImage from "../common/ProfileImage";
-import { MultiUserType } from "@/types/userTypes";
-import ModalWindow from "../common/ModalWindow";
+import ProfilePictureUpdate from "./ProfilePictureUpdate";
 
 type Props = {
   user: MultiUserType;
@@ -25,11 +24,7 @@ function UserCover(props: Props) {
     <div className="w-full bg-gradient-to-br from-cyan-500 to-blue-500 h-40 relative">
       <div className="absolute left-4 bottom-2 flex place-items-end gap-x-4">
         <div className="w-28 h-28 bg-black rounded-full overflow-hidden relative">
-          <ModalWindow>
-            <div className="absolute right-4 bottom-4 bg-black rounded-full p-1 cursor-pointer">
-              <Camera />
-            </div>
-          </ModalWindow>
+          <ProfilePictureUpdate />
           <ProfileImage src={user.profilePic} />
         </div>
         <div className="mb-4">

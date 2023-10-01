@@ -3,6 +3,7 @@ import { PayloadAction, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { User, UserPartial } from "@/types/userTypes";
 import {
   fetchUserUtils,
+  updateProfileImageUtils,
   userLoginUtils,
   userSignupUtils,
 } from "@/utils/userUtils";
@@ -38,6 +39,13 @@ export const registerUser = createAsyncThunk(
     return userSignupUtils(user).then((res) => res);
   }
 );
+// Upload Image
+export const uploadImage = createAsyncThunk(
+  "user/uploadImage",
+  async (value: string) => {
+    return updateProfileImageUtils(value).then((res) => res);
+  }
+);
 
 // Login User
 export const loginUser = createAsyncThunk(
@@ -50,47 +58,54 @@ export const loginUser = createAsyncThunk(
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    changeUserProfileImage: (
+      state: User,
+      action: PayloadAction<User["profilePic"]>
+    ) => {
+      state.profilePic = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     // User Registration
-    builder.addCase(registerUser.pending, (state) => {
+    builder.addCase(registerUser.pending, (state: User) => {
       state.loading = true;
     });
     builder.addCase(
       registerUser.fulfilled,
-      (state, action: PayloadAction<ResponseData>) => {
+      (state: User, action: PayloadAction<ResponseData>) => {
         state.loading = false;
         state.error = "";
         state.token = action.payload.data.token!;
         localStorage.setItem("token", action.payload.data.token);
       }
     );
-    builder.addCase(registerUser.rejected, (state, action) => {
+    builder.addCase(registerUser.rejected, (state: User, action) => {
       state.loading = false;
       state.error = action.error.message!;
     });
     // User Login
-    builder.addCase(loginUser.pending, (state) => {
+    builder.addCase(loginUser.pending, (state: User) => {
       state.loading = true;
     });
     builder.addCase(
       loginUser.fulfilled,
-      (state, action: PayloadAction<ResponseData>) => {
+      (state: User, action: PayloadAction<ResponseData>) => {
         state.loading = false;
         state.error = "";
         state.token = action.payload.data.token;
         localStorage.setItem("token", action.payload.data.token);
       }
     );
-    builder.addCase(loginUser.rejected, (state, action) => {
+    builder.addCase(loginUser.rejected, (state: User, action) => {
       state.loading = false;
       state.error = action.error?.message || "Failed to login.";
     });
     // Fetch User Data
-    builder.addCase(fetchUserData.pending, (state) => {
+    builder.addCase(fetchUserData.pending, (state: User) => {
       state.loading = true;
     });
-    builder.addCase(fetchUserData.fulfilled, (state, action) => {
+    builder.addCase(fetchUserData.fulfilled, (state: User, action) => {
       state.loading = false;
       state.error = "";
       state._id = action.payload.data._id;
@@ -106,11 +121,19 @@ const userSlice = createSlice({
       state.banReason = action.payload.data.banReason;
       state.token = localStorage.getItem("token") || "";
     });
-    builder.addCase(fetchUserData.rejected, (state) => {
+    builder.addCase(fetchUserData.rejected, (state: User) => {
       state.loading = false;
       state.error = "Failed to load user data";
+    });
+    // Upload Image
+    builder.addCase(uploadImage.fulfilled, (state: User, action) => {
+      state.loading = false;
+      state.error = "";
+      console.log(action.payload);
+      state.profilePic = action.payload.data.profilePic;
     });
   },
 });
 
 export default userSlice.reducer;
+export const { changeUserProfileImage } = userSlice.actions;

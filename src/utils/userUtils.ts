@@ -35,11 +35,9 @@ export const getUserByIdUtils = async (userId: UserPartial["_id"]) => {
 };
 
 // Update Profile Image
-export const updateProfileImageUtils = async () => {
-  const response = await request(
-    "/api/uploads/upload-profile-image",
-    "POST",
-    {}
-  );
+export const updateProfileImageUtils = async (value: string) => {
+  const response = await request("/api/uploads/update-profile-image", "PUT", {
+    imageLink: value,
+  });
   return response;
 };

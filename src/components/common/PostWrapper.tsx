@@ -85,7 +85,10 @@ function PostWrapper(props: Props) {
   return (
     <div className={cn("flex gap-x-3", className)}>
       <div className={""} onClick={handleRedirectToAuthorProfile}>
-        <CustomAvatar />
+        <CustomAvatar
+          src={post?.author?.profilePic}
+          fallBack={user.firstName.charAt(0)}
+        />
       </div>
       <div className="w-full">
         <div className="flex justify-between">
