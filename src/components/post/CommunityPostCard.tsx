@@ -1,10 +1,10 @@
+import { cn } from "@/lib/utils";
+import { PostPartial } from "@/types/postTypes";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import UserPostWrapper from "../common/UserPostWrapper";
 import PostActions from "./PostActions";
 
-import { cn } from "@/lib/utils";
-import { PostPartial } from "@/types/postTypes";
-import { useNavigate } from "react-router-dom";
 import parser from "html-react-parser";
 
 interface Props {
@@ -13,15 +13,15 @@ interface Props {
   post?: PostPartial;
 }
 
-function PostCard(props: Props) {
-  const { post, className } = props;
+function CommunityPostCard(props: Props) {
+  const { className, post } = props;
   const navigate = useNavigate();
   const routeToSinglePost = (e: React.MouseEvent) => {
     e.preventDefault();
     navigate(`/c/${post!.community_id}/post/${post!._id}`);
   };
-  const content = parser(post!.content || "");
 
+  const content = parser(post!.content || "");
   return (
     <div
       onClick={routeToSinglePost}
@@ -41,4 +41,4 @@ function PostCard(props: Props) {
   );
 }
 
-export default PostCard;
+export default CommunityPostCard;

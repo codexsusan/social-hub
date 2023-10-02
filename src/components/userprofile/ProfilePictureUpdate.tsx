@@ -8,7 +8,10 @@ import ProfileUploadButton from "../common/ProfileUploadButton";
 import { Button } from "../ui/button";
 import { Camera } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { changeUserProfileImage, uploadImage } from "@/features/user/userSlice";
+import {
+  changeUserProfileImage,
+  uploadUserImage,
+} from "@/features/user/userSlice";
 
 function ProfilePictureUpdate() {
   const dispatch = useAppDispatch();
@@ -34,7 +37,7 @@ function ProfilePictureUpdate() {
           <DialogFooter>
             <Button
               onClick={() => {
-                dispatch(uploadImage(profilePic));
+                dispatch(uploadUserImage(profilePic));
               }}
               type="submit"
             >

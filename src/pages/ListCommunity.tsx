@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import CommunityListCard from "@/components/community/CommunityListCard";
+import CommunityListCard from "@/components/explorecommunity/CommunityListCard";
 import { fetchAllCommunityByUser } from "@/features/community/communityLists";
 import { PartialCommunity } from "@/types/communityTypes";
 import { useEffect } from "react";

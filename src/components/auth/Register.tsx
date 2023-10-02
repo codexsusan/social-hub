@@ -8,7 +8,7 @@ import useDocumentTitle from "@/hooks/useDocumentTitle";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { registerUser } from "@/features/user/userSlice";
 
-import CustomSelect from "../common/CustomSelect";
+import CustomSelect, { optionData } from "../common/CustomSelect";
 import { Gender, RegisterUser } from "@/types/userTypes";
 import { toast } from "../ui/use-toast";
 
@@ -30,6 +30,17 @@ function Register() {
     gender: "",
     confirmPassword: "",
   });
+
+  const genderOption: optionData[] = [
+    {
+      id: "male",
+      name: "Male",
+    },
+    {
+      id: "female",
+      name: "Female",
+    },
+  ];
 
   const userData = useAppSelector((state) => state.user);
 
@@ -110,6 +121,7 @@ function Register() {
                 Gender
               </Label>
               <CustomSelect
+                optionData={genderOption}
                 onValueChange={(value: Gender) => {
                   setUser({ ...user, gender: value });
                 }}

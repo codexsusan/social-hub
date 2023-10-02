@@ -34,10 +34,10 @@ export const getUserByIdUtils = async (userId: UserPartial["_id"]) => {
   return response;
 };
 
-// Update Profile Image
-export const updateProfileImageUtils = async (value: string) => {
+export const updateUserProfileImageUtils = async (imageLink: string) => {
   const response = await request("/api/uploads/update-profile-image", "PUT", {
-    imageLink: value,
+    imageLink: imageLink,
+    type: "user",
   });
   return response;
 };

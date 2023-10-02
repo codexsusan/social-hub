@@ -3,7 +3,7 @@ import { PayloadAction, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { User, UserPartial } from "@/types/userTypes";
 import {
   fetchUserUtils,
-  updateProfileImageUtils,
+  updateUserProfileImageUtils,
   userLoginUtils,
   userSignupUtils,
 } from "@/utils/userUtils";
@@ -40,10 +40,10 @@ export const registerUser = createAsyncThunk(
   }
 );
 // Upload Image
-export const uploadImage = createAsyncThunk(
-  "user/uploadImage",
+export const uploadUserImage = createAsyncThunk(
+  "user/uploadUserImage",
   async (value: string) => {
-    return updateProfileImageUtils(value).then((res) => res);
+    return updateUserProfileImageUtils(value).then((res) => res);
   }
 );
 
@@ -126,7 +126,7 @@ const userSlice = createSlice({
       state.error = "Failed to load user data";
     });
     // Upload Image
-    builder.addCase(uploadImage.fulfilled, (state: User, action) => {
+    builder.addCase(uploadUserImage.fulfilled, (state: User, action) => {
       state.loading = false;
       state.error = "";
       console.log(action.payload);

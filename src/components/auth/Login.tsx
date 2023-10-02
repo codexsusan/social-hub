@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FormEventHandler } from "react";
 import { Button } from "../ui/button";
 import { InputWithLabel } from "../common/InputWithLabel";
 import { useNavigate } from "react-router-dom";
@@ -21,7 +21,8 @@ function Login() {
     password: "",
   });
 
-  const handleLogin = () => {
+  const handleLogin: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
     dispatch(loginUser(user)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
         toast({
@@ -55,19 +56,11 @@ function Login() {
           </div>
         </div>
         <div className="w-full flex justify-center">
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleLogin();
-              // Working  till here
-            }}
-            className="w-full flex flex-col gap-y-3"
-          >
+          <form onSubmit={handleLogin} className="w-full flex flex-col gap-4">
             <InputWithLabel
               value={user.email}
               inputClassName="bg-[#09090B] text-white"
               onValueChange={(value: string) => {
-                // setEmail(value);
                 setUser({ ...user, email: value });
               }}
               id="user-email"
@@ -79,7 +72,6 @@ function Login() {
               value={user.password}
               inputClassName="bg-[#09090B] text-white"
               onValueChange={(value: string) => {
-                // setPassword(value);
                 setUser({ ...user, password: value });
               }}
               id="user-password"

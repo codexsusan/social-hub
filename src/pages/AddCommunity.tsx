@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import AddCommunityForm from "@/components/community/AddCommunityForm";
+import AddCommunityForm from "@/components/addcommunity/AddCommunityForm";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "@/components/ui/use-toast";

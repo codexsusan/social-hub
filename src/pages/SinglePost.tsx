@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import PostWrapper from "@/components/common/PostWrapper";
+import UserPostWrapper from "@/components/common/UserPostWrapper";
 import EditorView from "@/components/submit/EditorView";
 import { getPost } from "@/features/post/postSlice";
 import { cn } from "@/lib/utils";
@@ -55,13 +55,13 @@ function PostView() {
       {singlePost.loading ? (
         <Loader className="animate-spin self-center" />
       ) : (
-        <PostWrapper post={post} type="post">
+        <UserPostWrapper post={post} type="post">
           <div className="text-base mt-2 space-y-4 w-full">
             <div className="text-xl font-semibold">{title}</div>
             <div>{parsedContent}</div>
             <PostActions post={post} type={"single-post"} />
           </div>
-        </PostWrapper>
+        </UserPostWrapper>
       )}
     </>
   );

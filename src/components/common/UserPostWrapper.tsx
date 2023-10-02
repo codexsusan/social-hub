@@ -18,7 +18,7 @@ interface Props {
   children?: React.ReactNode;
 }
 
-function PostWrapper(props: Props) {
+function UserPostWrapper(props: Props) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -114,4 +114,4 @@ function PostWrapper(props: Props) {
   );
 }
 
-export default PostWrapper;
+export default UserPostWrapper;

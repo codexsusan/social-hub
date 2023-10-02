@@ -1,5 +1,5 @@
-import { useAppDispatch } from "@/app/hooks";
-import { uploadImage } from "@/features/user/userSlice";
+// import { useAppDispatch } from "@/app/hooks";
+// import { uploadUserImage } from "@/features/user/userSlice";
 import { Camera } from "lucide-react";
 import ProfileUploadButton from "../common/ProfileUploadButton";
 import { Button } from "../ui/button";
@@ -11,7 +11,7 @@ import {
 } from "../ui/dialog";
 
 function CommunityProfilePictureUpdate() {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -35,7 +35,7 @@ function CommunityProfilePictureUpdate() {
             <Button
               onClick={() => {
                 // TODO: Get profile picture
-                dispatch(uploadImage("profilePic"));
+                // dispatch(uploadUserImage("profilePic"));
               }}
               type="submit"
             >

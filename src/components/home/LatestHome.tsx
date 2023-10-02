@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { Loader } from "lucide-react";
 import { fetchLatestPosts } from "@/features/home/latestSlice";
 import { toast } from "../ui/use-toast";
+import CommunityPostCard from "../post/CommunityPostCard";
 
 function LatestHome() {
   const dispatch = useAppDispatch();
@@ -40,7 +41,11 @@ function View() {
     </div>
   ) : (
     latest.posts.map((post) => {
-      return <PostCard type="latest" key={post._id} post={post} />;
+      if (post.author!._id === post.community_id) {
+        return <PostCard type="latest" key={post._id} post={post} />;
+      } else {
+        return <CommunityPostCard type="latest" key={post._id} post={post} />;
+      }
     })
   );
 }

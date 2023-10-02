@@ -11,6 +11,7 @@ import AddCommunity from "@/pages/AddCommunity";
 import CommunityHome from "@/pages/CommunityHome";
 import ListCommunity from "@/pages/ListCommunity";
 import ExploreCommunity from "@/pages/ExploreCommunity";
+import { UserSettings } from "@/pages/UserSettings";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,14 @@ const router = createBrowserRouter([
     element: (
       <AppContainer>
         <UserProfile />
+      </AppContainer>
+    ),
+  },
+  {
+    path: "/profile/:username/settings",
+    element: (
+      <AppContainer>
+        <UserSettings />
       </AppContainer>
     ),
   },

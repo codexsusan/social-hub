@@ -45,7 +45,7 @@ export default function AppNavbar() {
     { label: "Explore", href: "/explore", onClick: () => {} },
     { label: "Create Community", href: "/c/create", onClick: () => {} },
     { label: "Your Community", href: "/c/lists", onClick: () => {} },
-    { label: "Settings", href: "", onClick: () => {} },
+    { label: "Settings", href: `/profile/${user.userName}/settings`, onClick: () => {} },
     {
       label: "Sign out",
       href: "/auth/login",

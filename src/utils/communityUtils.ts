@@ -87,3 +87,16 @@ export const promoteUserToModeratorUtils = async (
   );
   return response;
 };
+
+// Update Community Profile Picture
+export const updateCommunityProfileImageUtils = async (
+  imageLink: string,
+  communityId: PartialCommunity["_id"]
+) => {
+  const response = request("/api/uploads/update-profile-image", "PUT", {
+    imageLink,
+    type: "community",
+    communityId,
+  });
+  return response;
+};
