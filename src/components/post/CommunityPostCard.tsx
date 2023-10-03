@@ -26,7 +26,7 @@ function CommunityPostCard(props: Props) {
     <div
       onClick={routeToSinglePost}
       className={cn(
-        "w-full border rounded-sm bg-[#27272a] border-slate-600 flex gap-2 flex-col text-white p-4 cursor-pointer hover:bg-[#1e1e1e]",
+        "w-full rounded-sm bg-[#27272a] flex gap-2 flex-col text-white p-4 cursor-pointer hover:bg-[#1e1e1e]",
         className
       )}
     >

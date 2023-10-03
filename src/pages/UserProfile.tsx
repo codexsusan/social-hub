@@ -8,11 +8,16 @@ function UserProfile() {
   const user = useAppSelector((state) => state.user);
 
   return (
-    <div className="w-full flex flex-col flex-1 items-center p-4 gap-y-2 overflow-auto text-white bg-[#030303]">
-      <div className="xl:w-2/5 lg:w-3/5 md:w-4/5 w-full p-2 flex gap-2">
-        <UserCoverSection user={user} />
+    <div className="text-white bg-[#030303]">
+      <div className="grid grid-cols-1 sm:grid-cols-5 md:grid-cols-4">
+        <div className="col-span-1 sm:col-start-2 sm:col-span-3 md:col-span-2 md:col-start-2 overflow-y-auto">
+          <div className="w-full flex gap-2 items-center bg-[#030303] flex-col p-4">
+            <UserCoverSection user={user} />
+            <UserProfileTab />
+          </div>
+        </div>
+        <div className="hidden lg:block "></div>
       </div>
-      <UserProfileTab />
     </div>
   );
 }

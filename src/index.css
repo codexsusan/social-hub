@@ -91,6 +91,11 @@
   }
 }
 
+::-webkit-scrollbar {
+  width: 0.05rem; /* Set a very narrow width */
+  background: transparent; /* Make the scrollbar background transparent */
+}
+
 td {
   border: 1px solid #ddd;
   padding: 0.5rem;

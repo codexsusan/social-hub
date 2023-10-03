@@ -34,7 +34,6 @@ const trendingSlice = createSlice({
   initialState,
   reducers: {
     upvotetrendingsuccess: (state: MultiplePostsInitialState, action) => {
-      console.log("Clicked here");
       upvoteSuccessUtils(state, action);
     },
     downvotetrendingsuccess: (

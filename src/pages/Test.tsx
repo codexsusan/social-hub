@@ -1,55 +1,23 @@
-import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { fetchLatestPosts } from "@/features/home/latestSlice";
-import { Loader } from "lucide-react";
-import { Suspense, useEffect } from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { useAppSelector } from "@/app/hooks";
+import UserCoverSection from "@/components/userprofile/UserCoverSection";
+import { UserProfileTab } from "@/components/userprofile/UserProfileTab";
 
 function Test() {
-  const latestPosts = useAppSelector((state) => state.home.latest.posts);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(fetchLatestPosts());
-  }, [dispatch]);
-
-  const fetchData = () => {
-    console.log("Fetch more data");
-    // Fetch more data here and append it to the 'items' array.
-    // Update 'hasMore' to indicate if there is more data to fetch.
-  };
+  const user = useAppSelector((state) => state.user);
   return (
-    <div className="w-full flex flex-col flex-1 items-center p-4 gap-y-2 bg-[#030303]">
-      <div className="xl:w-2/5 lg:w-3/5 md:w-4/5 w-full flex gap-2 items-center ">
-        <Tabs defaultValue={"latest"} className="w-full">
-          <TabsList className="grid w-full bg-[#27272A] grid-cols-3 ">
-            <TabsTrigger value="latest">Latest</TabsTrigger>
-            <TabsTrigger value="trending">Trending</TabsTrigger>
-            <TabsTrigger value="popular">Most Viewed</TabsTrigger>
-          </TabsList>
-          <TabsContent value="latest">
-            <Suspense fallback={<Loader />}>
-              <InfiniteScroll
-              className="mt-0"
-                dataLength={latestPosts.length}
-                next={fetchData}
-                hasMore={true}
-                loader={<h4 className="bg-slate-700">Loading...</h4>}
-              >
-                {latestPosts.map((post, index) => (
-                  <div className="text-white p-10" key={post._id}>
-                    div - #{index}
-                  </div>
-                ))}
-              </InfiniteScroll>
-            </Suspense>
-          </TabsContent>
-        </Tabs>
+    <div className="text-white bg-[#030303]">
+      <div className="grid grid-cols-1 sm:grid-cols-5 md:grid-cols-4">
+        <div className="col-span-1 sm:col-start-2 sm:col-span-3 md:col-span-2 md:col-start-2 overflow-y-auto">
+          <div className="w-full flex gap-2 items-center bg-[#030303] flex-col p-4">
+            <UserCoverSection user={user} />
+            <UserProfileTab />
+          </div>
+        </div>
+        <div className="hidden lg:block ">
+        </div>
       </div>
     </div>
   );
 }
 
 export default Test;
-
-// <div className="xl:w-2/5 lg:w-3/5 md:w-4/5 w-full flex gap-2 text-white">

@@ -1,10 +1,10 @@
-import HomeTab from "@/components/home/HomeTab";
 import AppContainer from "@/hoc/AppContainer";
 import AuthContainer from "@/hoc/AuthContainer";
 import AddCommunity from "@/pages/AddCommunity";
 import AuthorProfile from "@/pages/AuthorProfile";
 import CommunityHome from "@/pages/CommunityHome";
 import ExploreCommunity from "@/pages/ExploreCommunity";
+import Home from "@/pages/Home";
 import ListCommunity from "@/pages/ListCommunity";
 import SinglePost from "@/pages/SinglePost";
 import Submit from "@/pages/Submit";
@@ -19,7 +19,7 @@ const router = createBrowserRouter([
     path: "/",
     element: (
       <AppContainer>
-        <HomeTab />
+        <Home />
       </AppContainer>
     ),
   },
