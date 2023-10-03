@@ -58,7 +58,7 @@ function TrendingHome() {
         } else {
           return (
             <CommunityPostCard
-              type="latest"
+              type="trending"
               key={`${post._id}${index}`}
               post={post}
             />

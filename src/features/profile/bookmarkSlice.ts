@@ -8,6 +8,7 @@ import {
   switchbookmarkSuccessUtils,
   upvoteSuccessUtils,
 } from "../utils";
+import { queryParamsType } from "@/types/generalTypes";
 
 const initialState: MultiplePostsInitialState = {
   error: "",
@@ -17,9 +18,15 @@ const initialState: MultiplePostsInitialState = {
 
 export const getBookmarks = createAsyncThunk(
   "user/get/bookmarked/post",
-  async () => {
-    const bookmarkedPosts = await getBookmarksUtils().then((res) => res);
-    return bookmarkedPosts;
+  async (data: queryParamsType) => {
+    return await getBookmarksUtils(data).then((res) => res);
+  }
+);
+
+export const getUpdatedBookmarks = createAsyncThunk(
+  "user/get/updated/bookmarked/post",
+  async (data: queryParamsType) => {
+    return await getBookmarksUtils(data).then((res) => res);
   }
 );
 
@@ -74,6 +81,21 @@ const bookmarkSlice = createSlice({
       (state: MultiplePostsInitialState, action) => {
         state.loading = false;
         state.error = action.error.message!;
+      }
+    );
+    builder.addCase(
+      getUpdatedBookmarks.fulfilled,
+      (
+        state: MultiplePostsInitialState,
+        action: PayloadAction<ResponseData>
+      ) => {
+        state.loading = false;
+        if (state.posts.length > 0) {
+          state.posts = state.posts.concat(action.payload.data.data);
+          return;
+        } else {
+          state.posts = [...action.payload.data.data];
+        }
       }
     );
   },

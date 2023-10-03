@@ -1,5 +1,6 @@
 import { PostPartial } from "@/types/postTypes";
 import { request } from "./httpUtils";
+import { queryParamsType } from "@/types/generalTypes";
 
 // Add Bookmark
 export const addBookmarkUtils = (postId: PostPartial["_id"]) => {
@@ -8,8 +9,8 @@ export const addBookmarkUtils = (postId: PostPartial["_id"]) => {
 };
 
 // Get Bookmarks
-export const getBookmarksUtils = () => {
-  const response = request("/api/bookmarks/get-bookmarks", "GET", {});
+export const getBookmarksUtils = (data: queryParamsType) => {
+  const response = request("/api/bookmarks/get-bookmarks", "GET", data);
   return response;
 };
 

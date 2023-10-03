@@ -55,12 +55,12 @@ function MostViewedHome() {
       {mostviewedPosts.map((post, index) => {
         if (post.author!._id === post.community_id) {
           return (
-            <PostCard type="trending" key={`${post._id}${index}`} post={post} />
+            <PostCard type="most-viewed" key={`${post._id}${index}`} post={post} />
           );
         } else {
           return (
             <CommunityPostCard
-              type="latest"
+              type="most-viewed"
               key={`${post._id}${index}`}
               post={post}
             />

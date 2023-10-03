@@ -1,4 +1,4 @@
-import DuplicateHomeTab from "@/components/home/DuplicateHomeTab";
+import HomeTab from "@/components/home/HomeTab";
 import AppContainer from "@/hoc/AppContainer";
 import AuthContainer from "@/hoc/AuthContainer";
 import AddCommunity from "@/pages/AddCommunity";
@@ -19,7 +19,7 @@ const router = createBrowserRouter([
     path: "/",
     element: (
       <AppContainer>
-        <DuplicateHomeTab />
+        <HomeTab />
       </AppContainer>
     ),
   },

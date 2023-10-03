@@ -1,35 +1,62 @@
-import { Card, CardContent } from "../ui/card";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { useEffect } from "react";
-import { getPostsByUser } from "@/features/profile/postSlice";
+import {
+  getPostsByUser,
+  getUpdatedPostsByUser,
+} from "@/features/profile/postSlice";
 import { Loader } from "lucide-react";
+import { useEffect, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import CommunityPostCard from "../post/CommunityPostCard";
 import PostCard from "../post/PostCard";
 
 function UserPostTab() {
   const dispatch = useAppDispatch();
+  const postData = useAppSelector((state) => state.profile.posts);
+  const userPosts = useAppSelector((state) => state.profile.posts.posts);
+
+  const [state, setState] = useState({
+    page: 1,
+    limit: 10,
+  });
+
+  const fetchMoreData = () => {
+    dispatch(getUpdatedPostsByUser({ page: state.page, limit: state.limit }));
+    // TODO: Handle hasMore check
+    setState({ ...state, page: state.page + 1 });
+  };
 
   useEffect(() => {
-    dispatch(getPostsByUser());
+    dispatch(getPostsByUser({ page: 1, limit: 10 }));
   }, [dispatch]);
-  return (
-    <Card className="bg-[#27272A]">
-      <CardContent className="space-y-4 p-4 text-white">
-        <View />
-      </CardContent>
-    </Card>
-  );
-}
 
-function View() {
-  const postData = useAppSelector((state) => state.profile.posts);
   return postData.loading ? (
     <div className="flex justify-center">
       <Loader className=" animate-spin my-4" />
     </div>
   ) : (
-    postData.posts.map((post) => {
-      return <PostCard type="profile-post" key={post._id} post={post} />;
-    })
+    <InfiniteScroll
+      className="mt-0 no-scrollbar flex flex-col gap-2"
+      dataLength={userPosts.length}
+      next={fetchMoreData}
+      hasMore={true}
+      loader={<Loader className="animate-spin text-white scroll" />}
+    >
+      {userPosts.map((post, index) => {
+        if (post.author!._id === post.community_id) {
+          return (
+            <PostCard type="profile-post" key={`${post._id}${index}`} post={post} />
+          );
+        } else {
+          return (
+            <CommunityPostCard
+              type="profile-post"
+              key={`${post._id}${index}`}
+              post={post}
+            />
+          );
+        }
+      })}
+    </InfiniteScroll>
   );
 }
 

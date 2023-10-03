@@ -22,6 +22,7 @@ function LatestHome() {
 
   const fetchMoreData = () => {
     dispatch(fetchUpdatedLatestPosts({ page: state.page, limit: state.limit }));
+    // TODO: Handle hasMore check
     setState({ ...state, page: state.page + 1 });
   };
   useEffect(() => {

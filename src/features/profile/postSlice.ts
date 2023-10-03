@@ -7,6 +7,7 @@ import {
   switchbookmarkSuccessUtils,
   upvoteSuccessUtils,
 } from "@/features/utils";
+import { queryParamsType } from "@/types/generalTypes";
 
 const initialState: MultiplePostsInitialState = {
   error: "",
@@ -14,9 +15,19 @@ const initialState: MultiplePostsInitialState = {
   posts: [] as PostPartial[],
 };
 
-export const getPostsByUser = createAsyncThunk("user/get/post", async () => {
-  return getAllPostsByUserUtils({}).then((res) => res);
-});
+export const getPostsByUser = createAsyncThunk(
+  "user/get/post",
+  async (data: queryParamsType) => {
+    return getAllPostsByUserUtils(data).then((res) => res);
+  }
+);
+
+export const getUpdatedPostsByUser = createAsyncThunk(
+  "user/get/updated/post",
+  async (data: queryParamsType) => {
+    return getAllPostsByUserUtils(data).then((res) => res);
+  }
+);
 
 const postSlice = createSlice({
   name: "post",
@@ -63,6 +74,21 @@ const postSlice = createSlice({
       (state: MultiplePostsInitialState, action) => {
         state.loading = false;
         state.error = action.error.message!;
+      }
+    );
+    builder.addCase(
+      getUpdatedPostsByUser.fulfilled,
+      (
+        state: MultiplePostsInitialState,
+        action: PayloadAction<ResponseData>
+      ) => {
+        state.loading = false;
+        if (state.posts.length > 0) {
+          state.posts = state.posts.concat(action.payload.data.data);
+          return;
+        } else {
+          state.posts = [...action.payload.data.data];
+        }
       }
     );
   },
