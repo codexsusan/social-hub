@@ -56,7 +56,7 @@ export default function AppNavbar() {
   ];
 
   return (
-    <Disclosure as="nav" className="bg-[#1A1A1B]">
+    <Disclosure as="nav" className="bg-[#1A1A1B] fixed top-0 w-full z-10">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">

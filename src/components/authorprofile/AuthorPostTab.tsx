@@ -21,7 +21,7 @@ function View() {
     </div>
   ) : (
     postData.posts.map((post) => {
-      return <PostCard type="profile-post" key={post._id} post={post} />;
+      return <PostCard type="author-post" key={post._id} post={post} />;
     })
   );
 }

@@ -7,6 +7,7 @@ import {
   switchbookmarkSuccessUtils,
   upvoteSuccessUtils,
 } from "../utils";
+import { queryParamsType } from "@/types/generalTypes";
 
 const initialState: MultiplePostsInitialState = {
   error: "",
@@ -16,9 +17,15 @@ const initialState: MultiplePostsInitialState = {
 
 export const fetchTrendingPosts = createAsyncThunk(
   "home/fetch/trending",
-  async () => {
-    const trendingPost = await getTrendingPostsUtils({});
-    return trendingPost;
+  async (data: queryParamsType) => {
+    return getTrendingPostsUtils(data).then((res) => res);
+  }
+);
+
+export const fetchUpdatedTrendingPosts = createAsyncThunk(
+  "home/fetch/updated/trending",
+  async (data: queryParamsType) => {
+    return getTrendingPostsUtils(data).then((res) => res);
   }
 );
 
@@ -66,6 +73,21 @@ const trendingSlice = createSlice({
       (state: MultiplePostsInitialState, action) => {
         state.loading = false;
         state.error = action.error.message || "";
+      }
+    );
+    builder.addCase(
+      fetchUpdatedTrendingPosts.fulfilled,
+      (
+        state: MultiplePostsInitialState,
+        action: PayloadAction<ResponseData>
+      ) => {
+        state.loading = false;
+        if (state.posts.length > 0) {
+          state.posts = state.posts.concat(action.payload.data.data);
+          return;
+        } else {
+          state.posts = [...action.payload.data.data];
+        }
       }
     );
   },

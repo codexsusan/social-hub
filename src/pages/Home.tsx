@@ -1,8 +1,8 @@
-import CreatePost from "@/components/home/CreatePost";
-import useDocumentTitle from "@/hooks/useDocumentTitle";
 import { useAppSelector } from "@/app/hooks";
 import PageLoading from "@/components/common/PageLoading";
-import HomeTab from "@/components/home/HomeTab";
+import CreatePost from "@/components/home/CreatePost";
+import DuplicateHomeTab from "@/components/home/DuplicateHomeTab";
+import useDocumentTitle from "@/hooks/useDocumentTitle";
 
 function Home() {
   useDocumentTitle("Home | Social Hub");
@@ -22,8 +22,8 @@ function StatefulScreen() {
 function View() {
   return (
     <>
-      <CreatePost  />
-      <HomeTab />
+      <CreatePost />
+      <DuplicateHomeTab />
     </>
   );
 }

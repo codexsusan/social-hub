@@ -1,24 +1,25 @@
+import DuplicateHomeTab from "@/components/home/DuplicateHomeTab";
+import AppContainer from "@/hoc/AppContainer";
+import AuthContainer from "@/hoc/AuthContainer";
+import AddCommunity from "@/pages/AddCommunity";
+import AuthorProfile from "@/pages/AuthorProfile";
+import CommunityHome from "@/pages/CommunityHome";
+import ExploreCommunity from "@/pages/ExploreCommunity";
+import ListCommunity from "@/pages/ListCommunity";
+import SinglePost from "@/pages/SinglePost";
+import Submit from "@/pages/Submit";
+import Test from "@/pages/Test";
+import UserProfile from "@/pages/UserProfile";
+import { UserSettings } from "@/pages/UserSettings";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Auth from "../pages/Auth";
-import AuthContainer from "@/hoc/AuthContainer";
-import Home from "@/pages/Home";
-import AppContainer from "@/hoc/AppContainer";
-import UserProfile from "@/pages/UserProfile";
-import Submit from "@/pages/Submit";
-import SinglePost from "@/pages/SinglePost";
-import AuthorProfile from "@/pages/AuthorProfile";
-import AddCommunity from "@/pages/AddCommunity";
-import CommunityHome from "@/pages/CommunityHome";
-import ListCommunity from "@/pages/ListCommunity";
-import ExploreCommunity from "@/pages/ExploreCommunity";
-import { UserSettings } from "@/pages/UserSettings";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
       <AppContainer>
-        <Home />
+        <DuplicateHomeTab />
       </AppContainer>
     ),
   },
@@ -107,6 +108,14 @@ const router = createBrowserRouter([
     element: (
       <AppContainer>
         <ExploreCommunity />
+      </AppContainer>
+    ),
+  },
+  {
+    path: "/test",
+    element: (
+      <AppContainer>
+        <Test />
       </AppContainer>
     ),
   },

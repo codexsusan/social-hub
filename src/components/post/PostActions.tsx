@@ -1,4 +1,9 @@
 import { useAppDispatch } from "@/app/hooks";
+import {
+  downvoteauthorprofilepostsuccess,
+  switchbookmarkauthorprofilepostsuccess,
+  upvoteauthorprofilepostsuccess,
+} from "@/features/authorprofile/postSlice";
 import { switchBookmark } from "@/features/bookmarks/bookmarkSlice";
 import {
   downvotecommunityhomepostsuccess,
@@ -67,20 +72,22 @@ export default function PostActions(props: Props) {
     e.stopPropagation();
     dispatch(upvotePost(post!._id)).then((res) => {
       if (res.meta.requestStatus == "fulfilled") {
-        if (type == "latest") {
+        if (type === "latest") {
           dispatch(upvotelatestsuccess(post!._id));
-        } else if (type == "trending") {
+        } else if (type === "trending") {
           dispatch(upvotetrendingsuccess(post!._id));
-        } else if (type == "single-post") {
+        } else if (type === "single-post") {
           dispatch(upvotesuccess());
         } else if (type === "most-viewed") {
           dispatch(upvotemostviewedsuccess(post?._id));
-        } else if (type == "profile-post") {
+        } else if (type === "profile-post") {
           dispatch(upvoteprofilepostsuccess(post?._id));
-        } else if (type == "profile-bookmark") {
+        } else if (type === "profile-bookmark") {
           dispatch(upvoteprofilebookmarkpostsuccess(post?._id));
         } else if (type === "community-home") {
           dispatch(upvotecommunityhomepostsuccess(post?._id));
+        } else if (type === "author-post") {
+          dispatch(upvoteauthorprofilepostsuccess(post!._id));
         }
       }
     });
@@ -103,6 +110,8 @@ export default function PostActions(props: Props) {
           dispatch(downvoteprofilebookmarkpostsuccess(post?._id));
         } else if (type == "community-home") {
           dispatch(downvotecommunityhomepostsuccess(post?._id));
+        } else if (type === "author-post") {
+          dispatch(downvoteauthorprofilepostsuccess(post?._id));
         }
       }
     });
@@ -133,6 +142,8 @@ export default function PostActions(props: Props) {
           dispatch(switchbookmarkprofilebookmarkpostsuccess(post!._id));
         } else if (type === "community-home") {
           dispatch(switchbookmarkcommunityhomepostsuccess(post!._id));
+        } else if (type === "author-post") {
+          dispatch(switchbookmarkauthorprofilepostsuccess(post?._id));
         }
       }
     });

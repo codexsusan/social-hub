@@ -7,6 +7,7 @@ import {
   switchbookmarkSuccessUtils,
   upvoteSuccessUtils,
 } from "../utils";
+import { queryParamsType } from "@/types/generalTypes";
 
 const initialState: MostViewedInitialState = {
   error: "",
@@ -16,8 +17,15 @@ const initialState: MostViewedInitialState = {
 
 export const fetchMostViewedPosts = createAsyncThunk(
   "home/fetch/most-viewed",
-  async () => {
-    return getMostViewedPostsUtils({});
+  async (data: queryParamsType) => {
+    return getMostViewedPostsUtils(data).then((res) => res);
+  }
+);
+
+export const fetchUpdatedMostViewedPosts = createAsyncThunk(
+  "home/fetch/updated/most-viewed",
+  async (data: queryParamsType) => {
+    return getMostViewedPostsUtils(data).then((res) => res);
   }
 );
 
@@ -63,6 +71,18 @@ const mostviewedSlice = createSlice({
       (state: MostViewedInitialState, action) => {
         state.loading = false;
         state.error = action.error.message || "";
+      }
+    );
+    builder.addCase(
+      fetchUpdatedMostViewedPosts.fulfilled,
+      (state: MostViewedInitialState, action: PayloadAction<ResponseData>) => {
+        state.loading = false;
+        if (state.posts.length > 0) {
+          state.posts = state.posts.concat(action.payload.data.data);
+          return;
+        } else {
+          state.posts = [...action.payload.data.data];
+        }
       }
     );
   },

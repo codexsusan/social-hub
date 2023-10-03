@@ -1,52 +1,69 @@
-import { Card, CardContent } from "@/components/ui/card";
-import PostCard from "../post/PostCard";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import PostCard from "../post/PostCard";
 
+import {
+  fetchLatestPosts,
+  fetchUpdatedLatestPosts,
+} from "@/features/home/latestSlice";
 import { Loader } from "lucide-react";
-import { fetchLatestPosts } from "@/features/home/latestSlice";
-import { toast } from "../ui/use-toast";
+import InfiniteScroll from "react-infinite-scroll-component";
 import CommunityPostCard from "../post/CommunityPostCard";
+import { toast } from "../ui/use-toast";
 
 function LatestHome() {
   const dispatch = useAppDispatch();
   const latest = useAppSelector((state) => state.home.latest);
+  const latestPosts = useAppSelector((state) => state.home.latest.posts);
+  const [state, setState] = useState({
+    page: 1,
+    limit: 10,
+  });
+
+  const fetchMoreData = () => {
+    dispatch(fetchUpdatedLatestPosts({ page: state.page, limit: state.limit }));
+    setState({ ...state, page: state.page + 1 });
+  };
   useEffect(() => {
-    latest.posts.length == 0 &&
-      dispatch(fetchLatestPosts()).then((res) => {
-        if (res.meta.requestStatus === "rejected") {
-          toast({
-            title: "Unable to load data",
-            duration: 2000,
-            className: "bg-[#09090B] text-[#e2e2e2] border-none ",
-          });
-        }
-      });
-  }, [dispatch, latest.posts.length]);
+    dispatch(fetchLatestPosts({ page: 1, limit: 10 })).then((res) => {
+      if (res.meta.requestStatus === "rejected") {
+        toast({
+          title: "Unable to load data",
+          duration: 2000,
+          className: "bg-[#09090B] text-[#e2e2e2] border-none ",
+        });
+      }
+    });
+  }, [dispatch]);
 
-  return (
-    <Card className="bg-[#27272A]">
-      <CardContent className="space-y-4 p-4 text-white">
-        <View />
-      </CardContent>
-    </Card>
-  );
-}
-
-function View() {
-  const latest = useAppSelector((state) => state.home.latest);
   return latest.loading ? (
     <div className="flex justify-center">
-      <Loader className=" animate-spin my-4" />
+      <Loader className=" animate-spin my-4 text-white" />
     </div>
   ) : (
-    latest.posts.map((post) => {
-      if (post.author!._id === post.community_id) {
-        return <PostCard type="latest" key={post._id} post={post} />;
-      } else {
-        return <CommunityPostCard type="latest" key={post._id} post={post} />;
-      }
-    })
+    <InfiniteScroll
+      className="mt-0 no-scrollbar flex flex-col gap-2"
+      dataLength={latestPosts.length}
+      next={fetchMoreData}
+      hasMore={true}
+      loader={<Loader className="animate-spin text-white scroll" />}
+    >
+      {latestPosts.map((post, index) => {
+        if (post.author!._id === post.community_id) {
+          return (
+            <PostCard type="latest" key={`${post._id}${index}`} post={post} />
+          );
+        } else {
+          return (
+            <CommunityPostCard
+              type="latest"
+              key={`${post._id}${index}`}
+              post={post}
+            />
+          );
+        }
+      })}
+    </InfiniteScroll>
   );
 }
 

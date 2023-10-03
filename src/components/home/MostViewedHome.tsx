@@ -1,46 +1,73 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { Card, CardContent } from "../ui/card";
+import {
+  fetchMostViewedPosts,
+  fetchUpdatedMostViewedPosts,
+} from "@/features/home/mostviewedSlice";
 import { Loader } from "lucide-react";
+import { useEffect, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import CommunityPostCard from "../post/CommunityPostCard";
 import PostCard from "../post/PostCard";
-import { useEffect } from "react";
-import { fetchMostViewedPosts } from "@/features/home/mostviewedSlice";
 import { toast } from "../ui/use-toast";
 
 function MostViewedHome() {
   const dispatch = useAppDispatch();
   const mostviewed = useAppSelector((state) => state.home.mostviewed);
+  const mostviewedPosts = useAppSelector(
+    (state) => state.home.mostviewed.posts
+  );
+
+  const [state, setState] = useState({
+    page: 1,
+    limit: 10,
+  });
+
+  const fetchMoreData = () => {
+    dispatch(
+      fetchUpdatedMostViewedPosts({ page: state.page, limit: state.limit })
+    );
+    setState({ ...state, page: state.page + 1 });
+  };
 
   useEffect(() => {
-    mostviewed.posts.length == 0 &&
-      dispatch(fetchMostViewedPosts()).then((res) => {
-        if (res.meta.requestStatus === "rejected") {
-          toast({
-            title: "Failed to load data.",
-            duration: 2000,
-            className: "bg-[#09090B] text-[#e2e2e2] border-none ",
-          });
-        }
-      });
-  }, [dispatch, mostviewed.posts.length]);
-  return (
-    <Card className="bg-[#27272A]">
-      <CardContent className="space-y-4 p-4 text-white">
-        <View />
-      </CardContent>
-    </Card>
-  );
-}
-
-function View() {
-  const mostviewed = useAppSelector((state) => state.home.mostviewed);
+    dispatch(fetchMostViewedPosts({ page: 1, limit: 10 })).then((res) => {
+      if (res.meta.requestStatus === "rejected") {
+        toast({
+          title: "Failed to load data.",
+          duration: 2000,
+          className: "bg-[#09090B] text-[#e2e2e2] border-none ",
+        });
+      }
+    });
+  }, [dispatch]);
   return mostviewed.loading ? (
     <div className="flex justify-center">
-      <Loader className=" animate-spin my-4" />
+      <Loader className=" animate-spin my-4 text-white" />
     </div>
   ) : (
-    mostviewed.posts.map((post) => {
-      return <PostCard type="most-viewed" key={post._id} post={post} />;
-    })
+    <InfiniteScroll
+      className="mt-0 no-scrollbar flex flex-col gap-2"
+      dataLength={mostviewedPosts.length}
+      next={fetchMoreData}
+      hasMore={true}
+      loader={<Loader className="animate-spin text-white scroll" />}
+    >
+      {mostviewedPosts.map((post, index) => {
+        if (post.author!._id === post.community_id) {
+          return (
+            <PostCard type="trending" key={`${post._id}${index}`} post={post} />
+          );
+        } else {
+          return (
+            <CommunityPostCard
+              type="latest"
+              key={`${post._id}${index}`}
+              post={post}
+            />
+          );
+        }
+      })}
+    </InfiniteScroll>
   );
 }
 

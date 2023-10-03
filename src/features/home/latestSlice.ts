@@ -7,6 +7,7 @@ import {
   switchbookmarkSuccessUtils,
   upvoteSuccessUtils,
 } from "../utils";
+import { queryParamsType } from "@/types/generalTypes";
 
 const initialState: MultiplePostsInitialState = {
   error: "",
@@ -16,8 +17,15 @@ const initialState: MultiplePostsInitialState = {
 
 export const fetchLatestPosts = createAsyncThunk(
   "home/fetch/latest",
-  async () => {
-    return getLatestPostsUtils({});
+  async (data: queryParamsType) => {
+    return getLatestPostsUtils(data);
+  }
+);
+
+export const fetchUpdatedLatestPosts = createAsyncThunk(
+  "home/fetch/updated/latest",
+  async (data: queryParamsType) => {
+    return getLatestPostsUtils(data);
   }
 );
 
@@ -66,6 +74,21 @@ const latestSlice = createSlice({
       (state: MultiplePostsInitialState, action) => {
         state.loading = false;
         state.error = action.error.message || "";
+      }
+    );
+    builder.addCase(
+      fetchUpdatedLatestPosts.fulfilled,
+      (
+        state: MultiplePostsInitialState,
+        action: PayloadAction<ResponseData>
+      ) => {
+        state.loading = false;
+        if (state.posts.length > 0) {
+          state.posts = state.posts.concat(action.payload.data.data);
+          return;
+        } else {
+          state.posts = [...action.payload.data.data];
+        }
       }
     );
   },
