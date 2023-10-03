@@ -8,14 +8,29 @@ import {
   switchbookmarkSuccessUtils,
   upvoteSuccessUtils,
 } from "../utils";
+import { queryParamsType } from "@/types/generalTypes";
 
 export const fetchAllPostsByCommunity = createAsyncThunk(
   "fetch/all-posts/community",
-  async (communityId: PartialCommunity["_id"]) => {
-    const communityPosts = await getAllPostByCommunity(communityId!).then(
+  async (post: {
+    communityId: PartialCommunity["_id"];
+    data: queryParamsType;
+  }) => {
+    return getAllPostByCommunity(post.communityId!, post.data).then(
       (res) => res
     );
-    return communityPosts;
+  }
+);
+
+export const fetchUpdatedAllPostsByCommunity = createAsyncThunk(
+  "fetch/updated-all-posts/community",
+  async (post: {
+    communityId: PartialCommunity["_id"];
+    data: queryParamsType;
+  }) => {
+    return getAllPostByCommunity(post.communityId!, post.data).then(
+      (res) => res
+    );
   }
 );
 
@@ -66,6 +81,18 @@ const communityPost = createSlice({
       fetchAllPostsByCommunity.rejected,
       (state: CommunityPosts, action) => {
         state.error = action.error.message!;
+      }
+    );
+    builder.addCase(
+      fetchUpdatedAllPostsByCommunity.fulfilled,
+      (state: CommunityPosts, action: PayloadAction<ResponseData>) => {
+        state.loading = false;
+        if (state.posts.length > 0) {
+          state.posts = state.posts.concat(action.payload.data.data);
+          return;
+        } else {
+          state.posts = [...action.payload.data.data];
+        }
       }
     );
   },

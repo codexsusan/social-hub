@@ -13,9 +13,7 @@ function CommunityHome() {
   const { communityId } = useParams();
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(fetchCommunityById(communityId)).then((res) => {
-      console.log(res);
-    });
+    dispatch(fetchCommunityById(communityId));
   }, [dispatch, communityId]);
   const loadingStatus = useAppSelector(
     (state) => state.community.home.info.loading
@@ -34,7 +32,7 @@ function ViewScreen() {
   // TODO: Check for admin and make the necessary changes
   const { isMember } = communityInfo;
   return (
-    <div className="w-full flex flex-col flex-1 items-center p-4 gap-y-2 overflow-auto text-white">
+    <div className="w-full flex flex-col flex-1 items-center p-4 gap-y-2 overflow-auto bg-[#030303]">
       <CommunityCover />
       {isPublic ? (
         <>

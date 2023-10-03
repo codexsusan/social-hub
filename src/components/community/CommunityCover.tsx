@@ -19,7 +19,7 @@ function CommunityCover() {
   };
 
   return (
-    <div className="xl:w-2/5 lg:w-3/5 md:w-4/5 w-full p-2 flex gap-2">
+    <div className="xl:w-1/2 lg:w-3/5 md:w-4/5 w-full flex gap-2 items-center bg-[#030303] flex-col">
       <div className="w-full bg-gradient-to-br from-cyan-500 to-blue-500 h-40 relative">
         <div className="absolute left-4 bottom-2 flex place-items-end gap-x-4 w-full">
           <div className="w-28 h-28 bg-black rounded-full overflow-hidden relative">

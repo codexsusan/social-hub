@@ -47,7 +47,7 @@ function LatestHome() {
       dataLength={latestPosts.length}
       next={fetchMoreData}
       hasMore={true}
-      loader={<Loader className="animate-spin text-white scroll" />}
+      loader={<Loader className="animate-spin text-white scroll self-center" />}
     >
       {latestPosts.map((post, index) => {
         if (post.author!._id === post.community_id) {

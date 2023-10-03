@@ -32,12 +32,13 @@ export const getCommunityByIdUtils = async (
 
 // Get all posts by community
 export const getAllPostByCommunity = async (
-  communityId: PartialCommunity["_id"]
+  communityId: PartialCommunity["_id"],
+  data: queryParamsType
 ) => {
   const response = await request(
     `/api/post/get-all-posts-by-community/${communityId!}`,
     "GET",
-    {}
+    data
   );
   return response;
 };
