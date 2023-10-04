@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import CustomSelect from "@/components/common/CustomSelect";
+import PageWrapper from "@/components/common/PageWrapper";
 import SubmitTab from "@/components/submit/SubmitTab";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -13,6 +14,15 @@ import { useSearchParams } from "react-router-dom";
 
 function Submit() {
   useDocumentTitle("Submit | Social Hub");
+  return (
+    <PageWrapper
+      LeftContent={<LeftContent />}
+      RightContent={<RightContent />}
+    />
+  );
+}
+
+function LeftContent() {
   const dispatch = useAppDispatch();
   const submit = useAppSelector((state) => state.submit);
   const user = useAppSelector((state) => state.user);
@@ -62,7 +72,7 @@ function Submit() {
 
   return (
     <div className="w-full flex flex-col flex-1 items-center p-4 gap-y-2 overflow-auto text-white">
-      <div className="xl:w-2/5 lg:w-3/5 md:w-4/5 w-full p-2 rounded-sm border-slate-600 flex flex-col gap-6">
+      <div className=" w-full p-2 rounded-sm border-slate-600 flex flex-col gap-6">
         <div className="text-xl font-medium flex justify-between w-full items-baseline">
           <div>Create a post</div>
           <div className="text-sm">Draft</div>
@@ -83,10 +93,16 @@ function Submit() {
           <Separator className="bg-gray-700" orientation="horizontal" />
           <div className="flex justify-end gap-x-4">
             <Button>Save Draft</Button>
-            <PostButton
-              loading={submit.loading}
-              handlePostSubmit={handlePostSubmit}
-            />
+            <>
+              {submit.loading ? (
+                <Button disabled>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Please wait
+                </Button>
+              ) : (
+                <Button onClick={handlePostSubmit}>Post</Button>
+              )}
+            </>
           </div>
         </SubmitTab>
       </div>
@@ -94,24 +110,26 @@ function Submit() {
   );
 }
 
-type PostButtonProps = {
-  loading: boolean;
-  handlePostSubmit: () => void;
-};
-
-function PostButton(props: PostButtonProps) {
-  const { loading, handlePostSubmit } = props;
+function RightContent() {
+  const user = useAppSelector((state) => state.user);
   return (
-    <>
-      {loading ? (
-        <Button disabled>
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          Please wait
-        </Button>
-      ) : (
-        <Button onClick={handlePostSubmit}>Post</Button>
-      )}
-    </>
+    <div className="relative rounded-md top-36 w-full bg-[#111111] overflow-hidden">
+      <div className="p-8 flex items-center gap-x-2 bg-[#202020] border-b border-[#2B2B2B]">
+        <p className="text-lg font-semibold">
+          About <span className="font-medium px-2 "> @/{user.userName}</span>
+        </p>
+      </div>
+      <div className="px-6 grid grid-cols-1 p-5 divide-y divide-zinc-500">
+        <div className="w-full flex justify-between p-5">
+          <p>Joined</p>
+          <p>2023-08-21</p>
+        </div>
+        <div className="w-full flex justify-between p-5">
+          <p>Followers</p>
+          <p>21</p>
+        </div>
+      </div>
+    </div>
   );
 }
 

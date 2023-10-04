@@ -3,6 +3,7 @@ import { PayloadAction, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { User, UserPartial } from "@/types/userTypes";
 import {
   fetchUserUtils,
+  updateUserDetailsUtils,
   updateUserProfileImageUtils,
   userLoginUtils,
   userSignupUtils,
@@ -47,6 +48,14 @@ export const uploadUserImage = createAsyncThunk(
   }
 );
 
+// Update User Details
+export const updateUserDetails = createAsyncThunk(
+  "user/update/details",
+  async (user: UserPartial) => {
+    return updateUserDetailsUtils(user._id!, user).then((res) => res);
+  }
+);
+
 // Login User
 export const loginUser = createAsyncThunk(
   "/user/login",
@@ -64,6 +73,9 @@ const userSlice = createSlice({
       action: PayloadAction<User["profilePic"]>
     ) => {
       state.profilePic = action.payload;
+    },
+    updateUser: (state: User, action: PayloadAction<UserPartial>) => {
+      state.firstName = action.payload.firstName!;
     },
   },
   extraReducers: (builder) => {
@@ -136,4 +148,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const { changeUserProfileImage } = userSlice.actions;
+export const { changeUserProfileImage, updateUser } = userSlice.actions;

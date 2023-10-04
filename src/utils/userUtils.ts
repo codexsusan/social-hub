@@ -1,4 +1,4 @@
-import { UserPartial } from "@/types/userTypes";
+import { User, UserPartial } from "@/types/userTypes";
 import { request } from "./httpUtils";
 
 // Register User
@@ -34,10 +34,24 @@ export const getUserByIdUtils = async (userId: UserPartial["_id"]) => {
   return response;
 };
 
+// Update user profile image
 export const updateUserProfileImageUtils = async (imageLink: string) => {
   const response = await request("/api/uploads/update-profile-image", "PUT", {
     imageLink: imageLink,
     type: "user",
   });
+  return response;
+};
+
+// Update user details
+export const updateUserDetailsUtils = async (
+  userId: User["_id"],
+  user: Omit<UserPartial, "_id">
+) => {
+  const response = await request(
+    `/api/auth/update-user/${userId}`,
+    "PUT",
+    user
+  );
   return response;
 };

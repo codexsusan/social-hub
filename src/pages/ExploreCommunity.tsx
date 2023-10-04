@@ -12,15 +12,18 @@ function ExploreCommunity() {
   const exploreData = useAppSelector((state) => state.community.explore);
   const communities = exploreData.communities;
   return (
-    <div className="w-full flex flex-col flex-1 items-center p-4 gap-y-2 overflow-auto text-white">
-      <div className="xl:w-2/5 lg:w-3/5 md:w-4/5 w-full p-2 rounded-sm border-slate-600 flex flex-col gap-6">
-        <div className="bg-[#27272a] p-2 rounded-md flex flex-col gap-4">
-          {communities.map((community: PartialCommunity) => {
-            return (
-              <CommunityListCard key={community._id} community={community} />
-            );
-          })}
+    <div className="text-white bg-[#030303]">
+      <div className="grid grid-cols-1 sm:grid-cols-5 md:grid-cols-5 lg:grid-cols-6">
+        <div className="col-span-1 sm:col-start-2 sm:col-span-3 md:col-span-3 md:col-start-2 lg:col-span-2 lg:col-start-3 overflow-y-auto ">
+          <div className="w-full flex gap-4 items-center bg-[#030303] flex-col p-4">
+            {communities.map((community: PartialCommunity) => {
+              return (
+                <CommunityListCard key={community._id} community={community} />
+              );
+            })}
+          </div>
         </div>
+        <div className="hidden lg:block col-span-1"></div>
       </div>
     </div>
   );

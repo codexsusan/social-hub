@@ -1,3 +1,4 @@
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import CustomSelect, { optionData } from "@/components/common/CustomSelect";
 import { InputWithLabel } from "@/components/common/InputWithLabel";
 import { Button } from "@/components/ui/button";
@@ -8,6 +9,8 @@ import {
   DialogHeader,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { updateUser, updateUserDetails } from "@/features/user/userSlice";
+import { useState } from "react";
 
 const genderOption: optionData[] = [
   {
@@ -26,48 +29,36 @@ function AccountTab() {
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-1">
           <h3>Email address</h3>
-          <p className="text-sm">susan@gmail.com</p>
         </div>
         <EmailDialog />
       </div>
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-1">
           <h3>First Name</h3>
-          <p className="text-sm">Susan </p>
         </div>
         <FirstnameDialog />
       </div>
       <div className="flex items-center justify-between">
-        <div className="flex flex-col gap-1">
+        <div className="">
           <h3>Last Name</h3>
-          <p className="text-sm">Khadka </p>
         </div>
         <LastnameDialog />
       </div>
       <div className="flex items-center justify-between">
-        <div className="flex flex-col gap-1">
+        <div className="">
           <h3>Username</h3>
-          <p className="text-sm">susankhadka</p>
         </div>
         <UsernameDialog />
       </div>
       <div className="flex items-center justify-between">
-        <div className="flex flex-col gap-1">
+        <div className="">
           <h3>Gender</h3>
         </div>
-        <div className="w-[10rem]">
-          <CustomSelect
-            onValueChange={() => {}}
-            options={["male", "female", "others"]}
-            placeholder="Select gender"
-            optionData={genderOption}
-          />
-        </div>
+        <GenderDialog />
       </div>
       <div className="flex items-center justify-between">
-        <div className="flex flex-col gap-1">
+        <div className=" gap-1">
           <h3>Password</h3>
-          <p className="text-sm">•••••••••</p>
         </div>
         <PasswordDialog />
       </div>
@@ -83,10 +74,25 @@ function AccountTab() {
 }
 
 function EmailDialog() {
+  const userData = useAppSelector((state) => state.user);
+  const [user, setUser] = useState(userData);
+  // const dispatch = useAppDispatch();
+  const [isOpen, setIsOpen] = useState(false);
   return (
-    <Dialog>
+    <Dialog
+      open={isOpen}
+      onOpenChange={() => {
+        setIsOpen(!isOpen);
+      }}
+    >
       <DialogTrigger asChild>
-        <Button>Edit</Button>
+        <Button
+          onClick={() => {
+            setIsOpen(true);
+          }}
+        >
+          Edit
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]  bg-[#09090b] text-white">
         <DialogHeader className="text-lg font-semibold">
@@ -94,12 +100,91 @@ function EmailDialog() {
         </DialogHeader>
         <div className="">
           <InputWithLabel
-            value={"susan@gmail.com"}
-            onValueChange={() => {}}
+            value={user.email}
+            onValueChange={(value: string) => {
+              setUser({ ...userData, email: value });
+            }}
             inputClassName="bg-[#09090B] text-white"
             id="email"
             label="Email"
             placeholder="Enter your email"
+            type="text"
+          />
+        </div>
+        <DialogFooter>
+          <Button onClick={() => {}} variant="secondary" type="submit">
+            Save changes
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function FirstnameDialog() {
+  const userData = useAppSelector((state) => state.user);
+  const [user, setUser] = useState(userData);
+  const dispatch = useAppDispatch();
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button>Edit</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]  bg-[#09090b] text-white">
+        <DialogHeader className="text-lg font-semibold">
+          Update First Name
+        </DialogHeader>
+        <div className="">
+          <InputWithLabel
+            value={user.firstName}
+            onValueChange={(value: string) => {
+              setUser({ ...userData, firstName: value });
+            }}
+            inputClassName="bg-[#09090B] text-white"
+            id="firstname"
+            label="First Name"
+            placeholder="Enter your firstname"
+            type="text"
+          />
+        </div>
+        <DialogFooter>
+          <Button
+            onClick={() => {
+              dispatch(updateUserDetails(user)).then((res) => {
+                if (res.meta.requestStatus === "fulfilled") {
+                  dispatch(updateUser(user));
+                }
+              });
+            }}
+            variant="secondary"
+            type="submit"
+          >
+            Save changes
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function LastnameDialog() {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button>Edit</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]  bg-[#09090b] text-white">
+        <DialogHeader className="text-lg font-semibold">
+          Update Last Name
+        </DialogHeader>
+        <div className="">
+          <InputWithLabel
+            value={"Khadka"}
+            onValueChange={() => {}}
+            inputClassName="bg-[#09090B] text-white"
+            id="lastname"
+            label="Last Name"
+            placeholder="Enter your lastname"
             type="text"
           />
         </div>
@@ -144,7 +229,7 @@ function UsernameDialog() {
   );
 }
 
-function FirstnameDialog() {
+function GenderDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -152,48 +237,22 @@ function FirstnameDialog() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]  bg-[#09090b] text-white">
         <DialogHeader className="text-lg font-semibold">
-          Update First Name
+          Update Gender
         </DialogHeader>
         <div className="">
-          <InputWithLabel
-            value={"Susan"}
+          {/* <div className="w-[10rem]">
+          <CustomSelect
             onValueChange={() => {}}
-            inputClassName="bg-[#09090B] text-white"
-            id="firstname"
-            label="First Name"
-            placeholder="Enter your firstname"
-            type="text"
+            options={["male", "female", "others"]}
+            placeholder="Select gender"
+            optionData={genderOption}
           />
-        </div>
-        <DialogFooter>
-          <Button variant="secondary" type="submit">
-            Save changes
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  );
-}
-
-function LastnameDialog() {
-  return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button>Edit</Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]  bg-[#09090b] text-white">
-        <DialogHeader className="text-lg font-semibold">
-          Update Last Name
-        </DialogHeader>
-        <div className="">
-          <InputWithLabel
-            value={"Khadka"}
+        </div> */}
+          <CustomSelect
             onValueChange={() => {}}
-            inputClassName="bg-[#09090B] text-white"
-            id="lastname"
-            label="Last Name"
-            placeholder="Enter your lastname"
-            type="text"
+            options={["male", "female", "others"]}
+            placeholder="Select gender"
+            optionData={genderOption}
           />
         </div>
         <DialogFooter>
