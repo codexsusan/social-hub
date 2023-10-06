@@ -1,7 +1,8 @@
 import { PayloadAction, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import { User, UserPartial } from "@/types/userTypes";
+import { RegisterUser, User, UserPartial } from "@/types/userTypes";
 import {
+  deleteUserUtils,
   fetchUserUtils,
   updateUserDetailsUtils,
   updateUserProfileImageUtils,
@@ -19,6 +20,7 @@ const initialState: User = {
   password: "",
   bio: "",
   profilePic: "",
+  phoneNo: "",
   gender: "",
   isBanned: false,
   isVerified: false,
@@ -36,7 +38,7 @@ export const fetchUserData = createAsyncThunk("user/fetch", async () => {
 // Register User
 export const registerUser = createAsyncThunk(
   "user/register",
-  async (user: UserPartial) => {
+  async (user: Partial<RegisterUser>) => {
     return userSignupUtils(user).then((res) => res);
   }
 );
@@ -64,6 +66,10 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const deleteUser = createAsyncThunk("user/delete", async () => {
+  return deleteUserUtils().then((res) => res);
+});
+
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -74,8 +80,17 @@ const userSlice = createSlice({
     ) => {
       state.profilePic = action.payload;
     },
-    updateUser: (state: User, action: PayloadAction<UserPartial>) => {
+    updateUserFirstName: (state: User, action: PayloadAction<UserPartial>) => {
       state.firstName = action.payload.firstName!;
+    },
+    updateUserLastName: (state: User, action: PayloadAction<UserPartial>) => {
+      state.lastName = action.payload.lastName!;
+    },
+    updateUserGender: (state: User, action: PayloadAction<UserPartial>) => {
+      state.gender = action.payload.gender!;
+    },
+    updateUserBio: (state: User, action: PayloadAction<UserPartial>) => {
+      state.bio = action.payload.bio!;
     },
   },
   extraReducers: (builder) => {
@@ -148,4 +163,10 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const { changeUserProfileImage, updateUser } = userSlice.actions;
+export const {
+  changeUserProfileImage,
+  updateUserFirstName,
+  updateUserLastName,
+  updateUserGender,
+  updateUserBio,
+} = userSlice.actions;

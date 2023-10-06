@@ -30,7 +30,7 @@ function CustomSelect(props: Props) {
       value={value}
       onValueChange={onValueChange}
     >
-      <SelectTrigger className="w-full bg-[#09090B]">
+      <SelectTrigger className="w-full bg-[#09090B] border border-gray-500/30">
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent className="bg-black">

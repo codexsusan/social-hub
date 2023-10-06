@@ -8,6 +8,7 @@ export interface User {
   email: string;
   password: string;
   profilePic: string;
+  phoneNo: string;
   gender: Gender;
   token: string;
   bio: string;

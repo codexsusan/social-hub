@@ -40,7 +40,6 @@ export const request = async (
     },
     body: method !== "GET" ? JSON.stringify(data) : undefined,
   });
-  // console.log(await response.json());
   const updatedResponse: ResponseData = {
     status: response.status,
     statusText: response.statusText,

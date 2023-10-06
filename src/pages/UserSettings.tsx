@@ -55,6 +55,10 @@ function RightContent() {
           <CustomAvatar src={user.profilePic} />
         </div>
         <div className="w-full flex justify-between p-4">
+          <p className=" font-medium">Email</p>
+          <p>{user.email}</p>
+        </div>
+        <div className="w-full flex justify-between p-4">
           <p className=" font-medium">Fullname</p>
           <p>{user.firstName + " " + user.lastName}</p>
         </div>

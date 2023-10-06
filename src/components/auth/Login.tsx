@@ -9,6 +9,7 @@ import { UserPartial } from "@/types/userTypes";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { loginUser } from "@/features/user/userSlice";
 import { toast } from "../ui/use-toast";
+import { hasProperty } from "@/utils/generalUtils";
 
 function Login() {
   useDocumentTitle("Login | Social Hub");
@@ -24,20 +25,24 @@ function Login() {
   const handleLogin: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     dispatch(loginUser(user)).then((res) => {
-      if (res.meta.requestStatus === "fulfilled") {
-        toast({
-          title: "Welcome back.",
-          description: "We've logged you in.",
-          className: "bg-[#09090B] text-[#e2e2e2] border-none ",
-          duration: 2000,
-        });
-        navigate("/");
-      } else if (res.meta.requestStatus === "rejected") {
-        toast({
-          title: "Login failed.",
-          description: userData.error,
-          duration: 2000,
-        });
+      console.log(res);
+      if (hasProperty(res.payload, "data")) {
+        if (res.payload.status == 200) {
+          console.log("Hello")
+          toast({
+            title: "Welcome back.",
+            description: "We've logged you in.",
+            className: "bg-[#09090B] text-[#e2e2e2] border-none ",
+            duration: 2000,
+          });
+          navigate("/");
+        } else {
+          toast({
+            title: "Login failed.",
+            description: res.payload.data.message,
+            duration: 2000,
+          });
+        }
       }
     });
   };

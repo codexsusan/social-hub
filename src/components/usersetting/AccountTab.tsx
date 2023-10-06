@@ -9,8 +9,16 @@ import {
   DialogHeader,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { updateUser, updateUserDetails } from "@/features/user/userSlice";
+import {
+  deleteUser,
+  updateUserDetails,
+  updateUserFirstName,
+  updateUserGender,
+  updateUserLastName,
+} from "@/features/user/userSlice";
+import { Gender } from "@/types/userTypes";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const genderOption: optionData[] = [
   {
@@ -25,13 +33,7 @@ const genderOption: optionData[] = [
 
 function AccountTab() {
   return (
-    <div className="flex flex-col gap-4 mt-8">
-      <div className="flex items-center justify-between">
-        <div className="flex flex-col gap-1">
-          <h3>Email address</h3>
-        </div>
-        <EmailDialog />
-      </div>
+    <div className="flex flex-col gap-10 mt-8">
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-1">
           <h3>First Name</h3>
@@ -43,12 +45,6 @@ function AccountTab() {
           <h3>Last Name</h3>
         </div>
         <LastnameDialog />
-      </div>
-      <div className="flex items-center justify-between">
-        <div className="">
-          <h3>Username</h3>
-        </div>
-        <UsernameDialog />
       </div>
       <div className="flex items-center justify-between">
         <div className="">
@@ -73,11 +69,12 @@ function AccountTab() {
   );
 }
 
-function EmailDialog() {
+function FirstnameDialog() {
   const userData = useAppSelector((state) => state.user);
   const [user, setUser] = useState(userData);
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
+
   return (
     <Dialog
       open={isOpen}
@@ -93,42 +90,6 @@ function EmailDialog() {
         >
           Edit
         </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]  bg-[#09090b] text-white">
-        <DialogHeader className="text-lg font-semibold">
-          Update Email
-        </DialogHeader>
-        <div className="">
-          <InputWithLabel
-            value={user.email}
-            onValueChange={(value: string) => {
-              setUser({ ...userData, email: value });
-            }}
-            inputClassName="bg-[#09090B] text-white"
-            id="email"
-            label="Email"
-            placeholder="Enter your email"
-            type="text"
-          />
-        </div>
-        <DialogFooter>
-          <Button onClick={() => {}} variant="secondary" type="submit">
-            Save changes
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  );
-}
-
-function FirstnameDialog() {
-  const userData = useAppSelector((state) => state.user);
-  const [user, setUser] = useState(userData);
-  const dispatch = useAppDispatch();
-  return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button>Edit</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]  bg-[#09090b] text-white">
         <DialogHeader className="text-lg font-semibold">
@@ -152,9 +113,10 @@ function FirstnameDialog() {
             onClick={() => {
               dispatch(updateUserDetails(user)).then((res) => {
                 if (res.meta.requestStatus === "fulfilled") {
-                  dispatch(updateUser(user));
+                  dispatch(updateUserFirstName(user));
                 }
               });
+              setIsOpen(false);
             }}
             variant="secondary"
             type="submit"
@@ -168,10 +130,25 @@ function FirstnameDialog() {
 }
 
 function LastnameDialog() {
+  const userData = useAppSelector((state) => state.user);
+  const [user, setUser] = useState(userData);
+  const dispatch = useAppDispatch();
+  const [isOpen, setIsOpen] = useState(false);
   return (
-    <Dialog>
+    <Dialog
+      open={isOpen}
+      onOpenChange={() => {
+        setIsOpen(!isOpen);
+      }}
+    >
       <DialogTrigger asChild>
-        <Button>Edit</Button>
+        <Button
+          onClick={() => {
+            setIsOpen(true);
+          }}
+        >
+          Edit
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]  bg-[#09090b] text-white">
         <DialogHeader className="text-lg font-semibold">
@@ -179,8 +156,10 @@ function LastnameDialog() {
         </DialogHeader>
         <div className="">
           <InputWithLabel
-            value={"Khadka"}
-            onValueChange={() => {}}
+            value={user.lastName}
+            onValueChange={(value: string) => {
+              setUser({ ...userData, lastName: value });
+            }}
             inputClassName="bg-[#09090B] text-white"
             id="lastname"
             label="Last Name"
@@ -189,38 +168,18 @@ function LastnameDialog() {
           />
         </div>
         <DialogFooter>
-          <Button variant="secondary" type="submit">
-            Save changes
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  );
-}
-
-function UsernameDialog() {
-  return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button>Edit</Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]  bg-[#09090b] text-white">
-        <DialogHeader className="text-lg font-semibold">
-          Update Username
-        </DialogHeader>
-        <div className="">
-          <InputWithLabel
-            value={"susankhadka"}
-            onValueChange={() => {}}
-            inputClassName="bg-[#09090B] text-white"
-            id="username"
-            label="Username"
-            placeholder="Enter your username"
-            type="text"
-          />
-        </div>
-        <DialogFooter>
-          <Button variant="secondary" type="submit">
+          <Button
+            onClick={() => {
+              dispatch(updateUserDetails(user)).then((res) => {
+                if (res.meta.requestStatus === "fulfilled") {
+                  dispatch(updateUserLastName(user));
+                }
+              });
+              setIsOpen(false);
+            }}
+            variant="secondary"
+            type="submit"
+          >
             Save changes
           </Button>
         </DialogFooter>
@@ -230,33 +189,53 @@ function UsernameDialog() {
 }
 
 function GenderDialog() {
+  const userData = useAppSelector((state) => state.user);
+  const [user, setUser] = useState(userData);
+  const dispatch = useAppDispatch();
+  const [isOpen, setIsOpen] = useState(false);
   return (
-    <Dialog>
+    <Dialog
+      open={isOpen}
+      onOpenChange={() => {
+        setIsOpen(!isOpen);
+      }}
+    >
       <DialogTrigger asChild>
-        <Button>Edit</Button>
+        <Button
+          onClick={() => {
+            setIsOpen(true);
+          }}
+        >
+          Edit
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]  bg-[#09090b] text-white">
         <DialogHeader className="text-lg font-semibold">
           Update Gender
         </DialogHeader>
         <div className="">
-          {/* <div className="w-[10rem]">
           <CustomSelect
-            onValueChange={() => {}}
-            options={["male", "female", "others"]}
-            placeholder="Select gender"
-            optionData={genderOption}
-          />
-        </div> */}
-          <CustomSelect
-            onValueChange={() => {}}
+            onValueChange={(value: Gender) => {
+              setUser({ ...userData, gender: value });
+            }}
             options={["male", "female", "others"]}
             placeholder="Select gender"
             optionData={genderOption}
           />
         </div>
         <DialogFooter>
-          <Button variant="secondary" type="submit">
+          <Button
+            onClick={() => {
+              dispatch(updateUserDetails(user)).then((res) => {
+                if (res.meta.requestStatus === "fulfilled") {
+                  dispatch(updateUserGender(user));
+                }
+              });
+              setIsOpen(false);
+            }}
+            variant="secondary"
+            type="submit"
+          >
             Save changes
           </Button>
         </DialogFooter>
@@ -306,21 +285,49 @@ function PasswordDialog() {
 }
 
 function DeleteDialog() {
+  const userData = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
   return (
-    <Dialog>
+    <Dialog
+      open={isOpen}
+      onOpenChange={() => {
+        setIsOpen(!isOpen);
+      }}
+    >
       <DialogTrigger asChild>
-        <Button variant="destructive">Delete</Button>
+        <Button
+          variant="destructive"
+          onClick={() => {
+            setIsOpen(true);
+          }}
+        >
+          Delete
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]  bg-[#09090b] text-white">
-        <DialogHeader className="text-lg font-semibold">
-          Delete Account
+        <DialogHeader className="text-lg font-semibold ">
+          <p>Delete Account</p>
         </DialogHeader>
-        <div className="text-base text-center">
-          Are you sure you want to delete your account? <br />
-          Please confirm your decision.
+        <div className="text-base">
+          Are you sure you want to delete your account ? Please confirm your
+          decision.
         </div>
         <DialogFooter>
-          <Button variant="destructive" type="submit">
+          <Button
+            onClick={() => {
+              dispatch(deleteUser()).then((res) => {
+                if (res.meta.requestStatus === "fulfilled") {
+                  navigate("/auth/login");
+                  localStorage.removeItem("token");
+                }
+              });
+            }}
+            className="w-full"
+            variant="destructive"
+            type="submit"
+          >
             Confirm Delete
           </Button>
         </DialogFooter>

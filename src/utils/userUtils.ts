@@ -1,18 +1,9 @@
-import { User, UserPartial } from "@/types/userTypes";
+import { RegisterUser, User, UserPartial } from "@/types/userTypes";
 import { request } from "./httpUtils";
 
 // Register User
-export const userSignupUtils = async (user: UserPartial) => {
-  const response = await request("/api/auth/register", "POST", {
-    firstName: user.firstName,
-    lastName: user.lastName,
-    userName: user.userName,
-    email: user.email,
-    password: user.password,
-    confirmPassword: user.password,
-    gender: user.gender,
-    bio: user.bio,
-  });
+export const userSignupUtils = async (user: Partial<RegisterUser>) => {
+  const response = await request("/api/auth/register", "POST", user);
   return response;
 };
 
@@ -53,5 +44,10 @@ export const updateUserDetailsUtils = async (
     "PUT",
     user
   );
+  return response;
+};
+
+export const deleteUserUtils = async () => {
+  const response = await request("/api/auth/delete-user", "DELETE", {});
   return response;
 };

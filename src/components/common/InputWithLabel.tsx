@@ -20,7 +20,7 @@ export function InputWithLabel(props: Props) {
         {props.label}
       </Label>
       <Input
-        className={cn("border border-gray-700", props.inputClassName)}
+        className={cn("border border-gray-500/30", props.inputClassName)}
         value={props.value!}
         onChange={(e) => {
           props.onValueChange!(e.target.value);
