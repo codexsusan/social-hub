@@ -8,7 +8,6 @@ import { fetchCommunityById } from "@/features/community/communityInfo";
 import { BoxesIcon, Lock, Unlock } from "lucide-react";
 import { useEffect } from "react";
 
-import { format } from "date-fns";
 import { useNavigate, useParams } from "react-router-dom";
 
 function CommunityHome() {
@@ -67,11 +66,10 @@ function RightContent() {
             <p>Memebers</p>
             <p>{communityInfo.member_count}</p>
           </div>
-          <div className="text-white flex justify-between">
+          {/* <div className="text-white flex justify-between">
             <p>Created At</p>
-            {/* <p>{communityInfo.created_at}</p> */}
-            <p>{format(new Date(communityInfo.created_at!), "dd MMM yyyy")}</p>
-          </div>
+            <p>{format(new Date(communityInfo.created_at!), "MMM yyyy")}</p>
+          </div> */}
         </div>
         <div className="w-full">
           <Button

@@ -3,6 +3,7 @@ import {
   getCommunityByIdUtils,
   joinCommunityUtils,
   leaveCommunityUtils,
+  updateCommunityDetailsUtils,
 } from "@/utils/communityUtils";
 import { ResponseData } from "@/utils/httpUtils";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
@@ -12,7 +13,7 @@ const initialState: CommunityHome = {
   name: "",
   displayName: "",
   description: "",
-  community_type: "private",
+  community_type: "",
   isAdmin: false,
   icon_image: "",
   loading: false,
@@ -41,10 +42,41 @@ export const leaveCommunity = createAsyncThunk(
   }
 );
 
+export const updateCommunityDetails = createAsyncThunk(
+  "/update/community/details",
+  async (data: {
+    community: PartialCommunity;
+    communityId: PartialCommunity["_id"];
+  }) => {
+    return updateCommunityDetailsUtils(data.community, data.communityId).then(
+      (res) => res
+    );
+  }
+);
+
 const communityInfo = createSlice({
   name: "home",
   initialState,
-  reducers: {},
+  reducers: {
+    updateDisplayName: (
+      state: CommunityHome,
+      action: PayloadAction<PartialCommunity>
+    ) => {
+      state.displayName = action.payload.displayName;
+    },
+    updateDescription: (
+      state: CommunityHome,
+      action: PayloadAction<PartialCommunity>
+    ) => {
+      state.description = action.payload.description;
+    },
+    updateType: (
+      state: CommunityHome,
+      action: PayloadAction<PartialCommunity>
+    ) => {
+      state.community_type = action.payload.community_type;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchCommunityById.pending, (state: CommunityHome) => {
       state.loading = true;
@@ -75,18 +107,17 @@ const communityInfo = createSlice({
     builder.addCase(leaveCommunity.fulfilled, (state: CommunityHome) => {
       state.isMember = false;
     });
-    builder.addCase(
-      joinCommunity.fulfilled,
-      (state: CommunityHome, action: PayloadAction<ResponseData>) => {
-        console.log(action.payload);
-        if (state.community_type === "public") {
-          state.isMember = true;
-        } else if (state.community_type === "private") {
-          state.isMember = false;
-        }
+    builder.addCase(joinCommunity.fulfilled, (state: CommunityHome) => {
+      if (state.community_type === "public") {
+        state.isMember = true;
+      } else if (state.community_type === "private") {
+        state.isMember = false;
       }
-    );
+    });
   },
 });
 
 export default communityInfo.reducer;
+
+export const { updateDisplayName, updateDescription, updateType } =
+  communityInfo.actions;

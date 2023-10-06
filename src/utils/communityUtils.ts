@@ -8,6 +8,19 @@ export const createCommunityUtils = async (community: CreateCommunity) => {
   return response;
 };
 
+// Update Community Details
+export const updateCommunityDetailsUtils = async (
+  community: PartialCommunity,
+  communityId: PartialCommunity["_id"]
+) => {
+  const response = await request(
+    `/api/community/update-community/${communityId}`,
+    "PUT",
+    community
+  );
+  return response;
+};
+
 // Get All Community
 export const getAllCommunityUtils = async () => {
   const response = await request(

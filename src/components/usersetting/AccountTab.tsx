@@ -20,6 +20,7 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "../ui/use-toast";
+import { Loader2 } from "lucide-react";
 
 const genderOption: optionData[] = [
   {
@@ -75,6 +76,7 @@ function FirstnameDialog() {
   const [user, setUser] = useState(userData);
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   return (
     <Dialog
@@ -110,20 +112,29 @@ function FirstnameDialog() {
           />
         </div>
         <DialogFooter>
-          <Button
-            onClick={() => {
-              dispatch(updateUserDetails(user)).then((res) => {
-                if (res.meta.requestStatus === "fulfilled") {
-                  dispatch(updateUserFirstName(user));
-                }
-              });
-              setIsOpen(false);
-            }}
-            variant="secondary"
-            type="submit"
-          >
-            Save changes
-          </Button>
+          {loading ? (
+            <Button className="mt-2" disabled>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Please wait
+            </Button>
+          ) : (
+            <Button
+              onClick={() => {
+                setLoading(true);
+                dispatch(updateUserDetails(user)).then((res) => {
+                  if (res.meta.requestStatus === "fulfilled") {
+                    dispatch(updateUserFirstName(user));
+                  }
+                });
+                setLoading(false);
+                setIsOpen(false);
+              }}
+              variant="secondary"
+              type="submit"
+            >
+              Save changes
+            </Button>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -135,6 +146,7 @@ function LastnameDialog() {
   const [user, setUser] = useState(userData);
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   return (
     <Dialog
       open={isOpen}
@@ -169,20 +181,29 @@ function LastnameDialog() {
           />
         </div>
         <DialogFooter>
-          <Button
-            onClick={() => {
-              dispatch(updateUserDetails(user)).then((res) => {
-                if (res.meta.requestStatus === "fulfilled") {
-                  dispatch(updateUserLastName(user));
-                }
-              });
-              setIsOpen(false);
-            }}
-            variant="secondary"
-            type="submit"
-          >
-            Save changes
-          </Button>
+          {loading ? (
+            <Button className="mt-2" disabled>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Please wait
+            </Button>
+          ) : (
+            <Button
+              onClick={() => {
+                setLoading(true);
+                dispatch(updateUserDetails(user)).then((res) => {
+                  if (res.meta.requestStatus === "fulfilled") {
+                    dispatch(updateUserLastName(user));
+                  }
+                });
+                setLoading(false);
+                setIsOpen(false);
+              }}
+              variant="secondary"
+              type="submit"
+            >
+              Save changes
+            </Button>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -194,6 +215,7 @@ function GenderDialog() {
   const [user, setUser] = useState(userData);
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   return (
     <Dialog
       open={isOpen}
@@ -224,20 +246,29 @@ function GenderDialog() {
           />
         </div>
         <DialogFooter>
-          <Button
-            onClick={() => {
-              dispatch(updateUserDetails(user)).then((res) => {
-                if (res.meta.requestStatus === "fulfilled") {
-                  dispatch(updateUserGender(user));
-                }
-              });
-              setIsOpen(false);
-            }}
-            variant="secondary"
-            type="submit"
-          >
-            Save changes
-          </Button>
+          {loading ? (
+            <Button className="mt-2" disabled>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Please wait
+            </Button>
+          ) : (
+            <Button
+              onClick={() => {
+                setLoading(true);
+                dispatch(updateUserDetails(user)).then((res) => {
+                  if (res.meta.requestStatus === "fulfilled") {
+                    dispatch(updateUserGender(user));
+                  }
+                });
+                setLoading(false);
+                setIsOpen(false);
+              }}
+              variant="secondary"
+              type="submit"
+            >
+              Save changes
+            </Button>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -245,11 +276,11 @@ function GenderDialog() {
 }
 
 function PasswordDialog() {
-  const userData = useAppSelector((state) => state.user);
   const [userPassword, setUserPassword] = useState({
     confirmPassword: "",
     password: "",
   });
+  const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -297,24 +328,33 @@ function PasswordDialog() {
           />
         </div>
         <DialogFooter>
-          <Button
-            onClick={() => {
-              dispatch(resetPassword(userPassword)).then((res) => {
-                if (res.meta.requestStatus === "fulfilled") {
-                  toast({
-                    title: "Password Updated.",
-                    className: "bg-[#09090B] text-[#e2e2e2] border-none ",
-                    duration: 2000,
-                  });
-                }
-              });
-              setIsOpen(false);
-            }}
-            variant="secondary"
-            type="submit"
-          >
-            Save changes
-          </Button>
+          {loading ? (
+            <Button className="mt-2" disabled>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Please wait
+            </Button>
+          ) : (
+            <Button
+              onClick={() => {
+                setLoading(true);
+                dispatch(resetPassword(userPassword)).then((res) => {
+                  if (res.meta.requestStatus === "fulfilled") {
+                    toast({
+                      title: "Password Updated.",
+                      className: "bg-[#09090B] text-[#e2e2e2] border-none ",
+                      duration: 2000,
+                    });
+                  }
+                  setLoading(false);
+                });
+                setIsOpen(false);
+              }}
+              variant="secondary"
+              type="submit"
+            >
+              Save changes
+            </Button>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -322,10 +362,10 @@ function PasswordDialog() {
 }
 
 function DeleteDialog() {
-  const userData = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
     <Dialog
       open={isOpen}
@@ -352,21 +392,30 @@ function DeleteDialog() {
           decision.
         </div>
         <DialogFooter>
-          <Button
-            onClick={() => {
-              dispatch(deleteUser()).then((res) => {
-                if (res.meta.requestStatus === "fulfilled") {
-                  navigate("/auth/login");
-                  localStorage.removeItem("token");
-                }
-              });
-            }}
-            className="w-full"
-            variant="destructive"
-            type="submit"
-          >
-            Confirm Delete
-          </Button>
+          {loading ? (
+            <Button className="mt-2" disabled>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Please wait
+            </Button>
+          ) : (
+            <Button
+              onClick={() => {
+                dispatch(deleteUser()).then((res) => {
+                  if (res.meta.requestStatus === "fulfilled") {
+                    setLoading(false);
+                    setIsOpen(false);
+                    navigate("/auth/login");
+                    localStorage.removeItem("token");
+                  }
+                });
+              }}
+              className="w-full"
+              variant="destructive"
+              type="submit"
+            >
+              Confirm Delete
+            </Button>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>

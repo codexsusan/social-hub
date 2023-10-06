@@ -8,9 +8,16 @@ import {
 import { Button } from "../ui/button";
 import { InputWithLabel } from "../common/InputWithLabel";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { useState } from "react";
+import { MouseEventHandler, useState } from "react";
 import CustomSelect, { optionData } from "../common/CustomSelect";
 import { CommunityTypes } from "@/types/communityTypes";
+import {
+  updateCommunityDetails,
+  updateDescription,
+  updateDisplayName,
+  updateType,
+} from "@/features/community/communityInfo";
+import { Loader2 } from "lucide-react";
 
 const communityOption: optionData[] = [
   {
@@ -55,8 +62,25 @@ function DisplaynameDialog() {
     description: communityData.description!,
     community_type: communityData.community_type!,
   });
+  const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
+
+  const changeDisplayname: MouseEventHandler = () => {
+    setLoading(true);
+    dispatch(
+      updateCommunityDetails({
+        community,
+        communityId: communityData._id!,
+      })
+    ).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        dispatch(updateDisplayName(community));
+      }
+      setLoading(false);
+    });
+    setIsOpen(false);
+  };
 
   return (
     <Dialog
@@ -86,9 +110,20 @@ function DisplaynameDialog() {
           />
         </div>
         <DialogFooter>
-          <Button onClick={() => {}} variant="secondary" type="submit">
-            Save changes
-          </Button>
+          {loading ? (
+            <Button className="mt-2" disabled>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Please wait
+            </Button>
+          ) : (
+            <Button
+              onClick={changeDisplayname}
+              variant="secondary"
+              type="submit"
+            >
+              Save changes
+            </Button>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -102,8 +137,26 @@ function DescriptionDialog() {
     description: communityData.description!,
     community_type: communityData.community_type!,
   });
+
+  const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
+
+  const changeDescription: MouseEventHandler = () => {
+    setLoading(true);
+    dispatch(
+      updateCommunityDetails({
+        community,
+        communityId: communityData._id!,
+      })
+    ).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        dispatch(updateDescription(community));
+      }
+      setLoading(false);
+    });
+    setIsOpen(false);
+  };
 
   return (
     <Dialog
@@ -133,15 +186,20 @@ function DescriptionDialog() {
           />
         </div>
         <DialogFooter>
-          <Button
-            onClick={() => {
-              setIsOpen(false);
-            }}
-            variant="secondary"
-            type="submit"
-          >
-            Save changes
-          </Button>
+          {loading ? (
+            <Button className="mt-2" disabled>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Please wait
+            </Button>
+          ) : (
+            <Button
+              onClick={changeDescription}
+              variant="secondary"
+              type="submit"
+            >
+              Save changes
+            </Button>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -155,8 +213,25 @@ function CommunityTypeDialog() {
     description: communityData.description!,
     community_type: communityData.community_type!,
   });
+  const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
+
+  const changeType: MouseEventHandler = () => {
+    setLoading(true);
+    dispatch(
+      updateCommunityDetails({
+        community,
+        communityId: communityData._id!,
+      })
+    ).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        dispatch(updateType(community));
+      }
+      setLoading(false);
+    });
+    setIsOpen(false);
+  };
 
   return (
     <Dialog
@@ -182,15 +257,16 @@ function CommunityTypeDialog() {
           />
         </div>
         <DialogFooter>
-          <Button
-            onClick={() => {
-              setIsOpen(false);
-            }}
-            variant="secondary"
-            type="submit"
-          >
-            Save changes
-          </Button>
+          {loading ? (
+            <Button className="mt-2" disabled>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Please wait
+            </Button>
+          ) : (
+            <Button onClick={changeType} variant="secondary" type="submit">
+              Save changes
+            </Button>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>
