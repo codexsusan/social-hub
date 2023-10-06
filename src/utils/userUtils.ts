@@ -47,6 +47,14 @@ export const updateUserDetailsUtils = async (
   return response;
 };
 
+export const resetPasswordUtils = async (data: {
+  password: RegisterUser["password"];
+  confirmPassword: RegisterUser["confirmPassword"];
+}) => {
+  const response = await request("/api/auth/reset-password", "POST", data);
+  return response;
+};
+
 export const deleteUserUtils = async () => {
   const response = await request("/api/auth/delete-user", "DELETE", {});
   return response;

@@ -1,6 +1,6 @@
 import { PostPartial } from "./postTypes";
 
-type CommunityTypes = "public" | "private";
+export type CommunityTypes = "public" | "private" | string;
 export interface Community {
   _id: string;
   name: string;

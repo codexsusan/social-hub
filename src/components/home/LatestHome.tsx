@@ -50,7 +50,7 @@ function LatestHome() {
       loader={<Loader className="animate-spin text-white scroll self-center" />}
     >
       {latestPosts.map((post, index) => {
-        if (post.author!._id === post.community_id) {
+        if (post.community_id === null) {
           return (
             <PostCard type="latest" key={`${post._id}${index}`} post={post} />
           );

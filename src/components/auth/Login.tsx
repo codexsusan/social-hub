@@ -25,10 +25,8 @@ function Login() {
   const handleLogin: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     dispatch(loginUser(user)).then((res) => {
-      console.log(res);
       if (hasProperty(res.payload, "data")) {
         if (res.payload.status == 200) {
-          console.log("Hello")
           toast({
             title: "Welcome back.",
             description: "We've logged you in.",

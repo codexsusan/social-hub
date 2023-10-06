@@ -39,7 +39,7 @@ function CommunityHomeTab() {
   }, [dispatch, communityId]);
 
   return (
-    <div className="xl:w-1/2 lg:w-3/5 md:w-4/5 w-full flex gap-2 bg-[#030303] flex-col">
+    <div className="w-full flex gap-2 bg-[#030303] flex-col">
       {posts.length === 0 && (
         <div className="text-xl text-center font-semibold ">No Posts Found</div>
       )}

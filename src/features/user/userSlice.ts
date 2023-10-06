@@ -4,6 +4,7 @@ import { RegisterUser, User, UserPartial } from "@/types/userTypes";
 import {
   deleteUserUtils,
   fetchUserUtils,
+  resetPasswordUtils,
   updateUserDetailsUtils,
   updateUserProfileImageUtils,
   userLoginUtils,
@@ -63,6 +64,16 @@ export const loginUser = createAsyncThunk(
   "/user/login",
   async (user: UserPartial) => {
     return userLoginUtils(user).then((res) => res);
+  }
+);
+
+export const resetPassword = createAsyncThunk(
+  "user/resetPassword",
+  async (passwords: {
+    password: RegisterUser["password"];
+    confirmPassword: RegisterUser["confirmPassword"];
+  }) => {
+    return resetPasswordUtils(passwords).then((res) => res);
   }
 );
 
@@ -159,6 +170,13 @@ const userSlice = createSlice({
       console.log(action.payload);
       state.profilePic = action.payload.data.profilePic;
     });
+    // builder.addCase(
+    //   resetPassword.fulfilled,
+    //   (state: User, action: PayloadAction<ResponseData>) => {
+    //     state.loading = false;
+    //     state.error = "";
+    //   }
+    // );
   },
 });
 

@@ -1,4 +1,4 @@
-export type Gender = "male" | "female" | "others" | "";
+export type Gender = "male" | "female" | "others" | "" | string;
 
 export interface User {
   _id: string;

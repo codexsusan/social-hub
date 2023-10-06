@@ -1,11 +1,10 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import ProfileImage from "../common/ProfileImage";
-import { Button } from "../ui/button";
-import CommunityProfilePictureUpdate from "./CommunityProfilePictureUpdate";
 import {
   joinCommunity,
   leaveCommunity,
 } from "@/features/community/communityInfo";
+import ProfileImage from "../common/ProfileImage";
+import { Button } from "../ui/button";
 
 function CommunityCover() {
   const home = useAppSelector((state) => state.community.home.info);
@@ -19,11 +18,12 @@ function CommunityCover() {
   };
 
   return (
-    <div className="xl:w-1/2 lg:w-3/5 md:w-4/5 w-full flex gap-2 items-center bg-[#030303] flex-col">
+    <div className="w-full flex gap-2 items-center bg-[#030303] flex-col">
       <div className="w-full bg-gradient-to-br from-cyan-500 to-blue-500 h-40 relative">
         <div className="absolute left-4 bottom-2 flex place-items-end gap-x-4 w-full">
           <div className="w-28 h-28 bg-black rounded-full overflow-hidden relative">
-            <CommunityProfilePictureUpdate />
+            {/* Keep this in community setting section */}
+            {/* <CommunityProfilePictureUpdate /> */}
             <ProfileImage src={icon_image} />
           </div>
           <div className=" flex justify-between mb-3 flex-grow mr-10">

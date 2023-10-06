@@ -60,7 +60,9 @@ const communityInfo = createSlice({
         state.description = data.description;
         state.icon_image = data.icon_image;
         state.isMember = data.isMember;
+        state.member_count = data.member_count;
         state.community_type = data.community_type;
+        state.created_at = data.createdAt;
       }
     );
     builder.addCase(

@@ -1,4 +1,4 @@
-import { Gender } from "@/types/userTypes";
+import { CommunityMultiSelectData } from "@/types/communityTypes";
 import {
   Select,
   SelectContent,
@@ -6,7 +6,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { CommunityMultiSelectData } from "@/types/communityTypes";
 
 export type optionData = {
   id: string;
@@ -14,11 +13,10 @@ export type optionData = {
 };
 
 type Props = {
-  options: string[];
   placeholder: string;
   value?: string;
   defaultValue?: string;
-  onValueChange: (value: Gender) => void;
+  onValueChange: (value: string ) => void;
   optionData?: optionData[];
 };
 

@@ -14,6 +14,7 @@ import { UserSettings } from "@/pages/UserSettings";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Auth from "../pages/Auth";
 import RootPage from "@/pages/RootPage";
+import CommunitySettings from "@/pages/CommunitySettings";
 
 const router = createBrowserRouter([
   {
@@ -89,6 +90,14 @@ const router = createBrowserRouter([
     element: (
       <AppContainer>
         <CommunityHome />
+      </AppContainer>
+    ),
+  },
+  {
+    path: "/c/:communityId/settings",
+    element: (
+      <AppContainer>
+        <CommunitySettings />
       </AppContainer>
     ),
   },

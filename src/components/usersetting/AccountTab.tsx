@@ -11,14 +11,15 @@ import {
 } from "@/components/ui/dialog";
 import {
   deleteUser,
+  resetPassword,
   updateUserDetails,
   updateUserFirstName,
   updateUserGender,
   updateUserLastName,
 } from "@/features/user/userSlice";
-import { Gender } from "@/types/userTypes";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "../ui/use-toast";
 
 const genderOption: optionData[] = [
   {
@@ -215,10 +216,9 @@ function GenderDialog() {
         </DialogHeader>
         <div className="">
           <CustomSelect
-            onValueChange={(value: Gender) => {
+            onValueChange={(value: string) => {
               setUser({ ...userData, gender: value });
             }}
-            options={["male", "female", "others"]}
             placeholder="Select gender"
             optionData={genderOption}
           />
@@ -245,10 +245,28 @@ function GenderDialog() {
 }
 
 function PasswordDialog() {
+  const userData = useAppSelector((state) => state.user);
+  const [userPassword, setUserPassword] = useState({
+    confirmPassword: "",
+    password: "",
+  });
+  const dispatch = useAppDispatch();
+  const [isOpen, setIsOpen] = useState(false);
   return (
-    <Dialog>
+    <Dialog
+      open={isOpen}
+      onOpenChange={() => {
+        setIsOpen(!isOpen);
+      }}
+    >
       <DialogTrigger asChild>
-        <Button>Edit</Button>
+        <Button
+          onClick={() => {
+            setIsOpen(true);
+          }}
+        >
+          Edit
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]  bg-[#09090b] text-white">
         <DialogHeader className="text-lg font-semibold">
@@ -256,8 +274,10 @@ function PasswordDialog() {
         </DialogHeader>
         <div className="flex flex-col gap-4">
           <InputWithLabel
-            value={"passwordhere"}
-            onValueChange={() => {}}
+            value={userPassword.password}
+            onValueChange={(value: string) => {
+              setUserPassword({ ...userPassword, password: value });
+            }}
             inputClassName="bg-[#09090B] text-white"
             id="password"
             label="Password"
@@ -265,8 +285,10 @@ function PasswordDialog() {
             type="password"
           />
           <InputWithLabel
-            value={"passwordhere"}
-            onValueChange={() => {}}
+            value={userPassword.confirmPassword}
+            onValueChange={(value: string) => {
+              setUserPassword({ ...userPassword, confirmPassword: value });
+            }}
             inputClassName="bg-[#09090B] text-white"
             id="confirm-password"
             label="ConfirmPassword"
@@ -275,7 +297,22 @@ function PasswordDialog() {
           />
         </div>
         <DialogFooter>
-          <Button variant="secondary" type="submit">
+          <Button
+            onClick={() => {
+              dispatch(resetPassword(userPassword)).then((res) => {
+                if (res.meta.requestStatus === "fulfilled") {
+                  toast({
+                    title: "Password Updated.",
+                    className: "bg-[#09090B] text-[#e2e2e2] border-none ",
+                    duration: 2000,
+                  });
+                }
+              });
+              setIsOpen(false);
+            }}
+            variant="secondary"
+            type="submit"
+          >
             Save changes
           </Button>
         </DialogFooter>
