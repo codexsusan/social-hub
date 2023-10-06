@@ -13,10 +13,15 @@ import UserProfile from "@/pages/UserProfile";
 import { UserSettings } from "@/pages/UserSettings";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Auth from "../pages/Auth";
+import RootPage from "@/pages/RootPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <RootPage />,
+  },
+  {
+    path: "/home",
     element: (
       <AppContainer>
         <Home />
@@ -115,7 +120,7 @@ const router = createBrowserRouter([
     path: "/test",
     element: (
       <AppContainer>
-        <Test />
+        <Test childrenA={<></>} childrenB={<></>} />
       </AppContainer>
     ),
   },

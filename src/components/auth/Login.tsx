@@ -35,7 +35,7 @@ function Login() {
             className: "bg-[#09090B] text-[#e2e2e2] border-none ",
             duration: 2000,
           });
-          navigate("/");
+          navigate("/home");
         } else {
           toast({
             title: "Login failed.",

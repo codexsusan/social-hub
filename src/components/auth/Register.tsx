@@ -66,7 +66,7 @@ function Register() {
             duration: 2000,
             className: "bg-[#09090B] text-[#e2e2e2] border-none ",
           });
-          navigate("/");
+          navigate("/home");
         } else {
           toast({
             title: "Unable to create an account.",

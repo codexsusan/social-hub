@@ -78,7 +78,7 @@ export default function AppNavbar() {
                 {/* Logo will be here below */}
                 <div
                   onClick={() => {
-                    navigate("/");
+                    navigate("/home");
                   }}
                   className="flex flex-shrink-0 items-center cursor-pointer"
                 >
