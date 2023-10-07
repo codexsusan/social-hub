@@ -10,6 +10,7 @@ import CommunityPostCard from "../post/CommunityPostCard";
 import PostCard from "../post/PostCard";
 import { toast } from "../ui/use-toast";
 
+
 function MostViewedHome() {
   const dispatch = useAppDispatch();
   const mostviewed = useAppSelector((state) => state.home.mostviewed);
@@ -53,9 +54,13 @@ function MostViewedHome() {
       loader={<Loader className="animate-spin text-white scroll" />}
     >
       {mostviewedPosts.map((post, index) => {
-        if (post.author!._id === post.community_id) {
+        if (post.community === null) {
           return (
-            <PostCard type="most-viewed" key={`${post._id}${index}`} post={post} />
+            <PostCard
+              type="most-viewed"
+              key={`${post._id}${index}`}
+              post={post}
+            />
           );
         } else {
           return (

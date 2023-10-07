@@ -18,7 +18,7 @@ function PostCard(props: Props) {
   const navigate = useNavigate();
   const routeToSinglePost = (e: React.MouseEvent) => {
     e.preventDefault();
-    navigate(`/c/${post!.community_id}/post/${post!._id}`);
+    navigate(`/c/${post!.author?._id}/post/${post!._id}`);
   };
   const content = parser(post!.content || "");
 

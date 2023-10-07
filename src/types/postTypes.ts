@@ -51,7 +51,9 @@ export interface Post {
   comment_status: boolean;
 }
 
-export interface PostPartial extends Partial<Post> {}
+export interface PostPartial extends Partial<Post> {
+  community: PartialCommunity;
+}
 
 export interface UserPost extends PostPartial {}
 export interface CommunityPost extends PostPartial {
@@ -61,7 +63,7 @@ export interface CommunityPost extends PostPartial {
 export type MostViewedInitialState = {
   error: string;
   loading: boolean;
-  posts: PostPartial[];
+  posts: UserPost[] | CommunityPost[];
 };
 
 export type SinglePostInitialState = {

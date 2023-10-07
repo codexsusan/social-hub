@@ -129,7 +129,7 @@ const router = createBrowserRouter([
     path: "/test",
     element: (
       <AppContainer>
-        <Test childrenA={<></>} childrenB={<></>} />
+        <Test childrenB={<></>} />
       </AppContainer>
     ),
   },

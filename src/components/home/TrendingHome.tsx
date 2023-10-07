@@ -51,7 +51,7 @@ function TrendingHome() {
       loader={<Loader className="animate-spin text-white scroll" />}
     >
       {trendingPosts.map((post, index) => {
-        if (post.author!._id === post.community_id) {
+        if (post.community === null) {
           return (
             <PostCard type="trending" key={`${post._id}${index}`} post={post} />
           );

@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { CommunityPost } from "@/types/postTypes";
+import { PostPartial } from "@/types/postTypes";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import PostActions from "./PostActions";
@@ -10,7 +10,7 @@ import CommunityPostWrapper from "../community/CommunityPostWrapper";
 interface Props {
   className?: string;
   type?: string;
-  post?: CommunityPost;
+  post?: PostPartial;
 }
 
 function CommunityPostCard(props: Props) {

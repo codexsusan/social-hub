@@ -152,7 +152,7 @@ export default function PostActions(props: Props) {
   const { upVoteStatus, downVoteStatus, isBookmarked } = post!;
 
   return (
-    <div className="w-full flex gap-x-8 justify-normal my-2 items-center ">
+    <div className="w-full flex gap-x-8 justify-normal items-center">
       <div className="flex gap-x-2">
         <ArrowBigUp
           onClick={handleUpVote}

@@ -38,6 +38,7 @@ function Login() {
           toast({
             title: "Login failed.",
             description: res.payload.data.message,
+            className: "bg-[#09090B] text-[#e2e2e2] border-none ",
             duration: 2000,
           });
         }

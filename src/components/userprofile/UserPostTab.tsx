@@ -42,9 +42,13 @@ function UserPostTab() {
       loader={<Loader className="animate-spin text-white scroll" />}
     >
       {userPosts.map((post, index) => {
-        if (post.author!._id === post.community_id) {
+        if (post.community === null) {
           return (
-            <PostCard type="profile-post" key={`${post._id}${index}`} post={post} />
+            <PostCard
+              type="profile-post"
+              key={`${post._id}${index}`}
+              post={post}
+            />
           );
         } else {
           return (

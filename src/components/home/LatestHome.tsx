@@ -50,22 +50,22 @@ function LatestHome() {
       loader={<Loader className="animate-spin text-white scroll self-center" />}
     >
       {latestPosts.map((post, index) => {
-        return (
-          <PostCard type="latest" key={`${post._id}${index}`} post={post} />
-        );
-        // if (post.community_id === null) {
-        //   return (
-        //     <PostCard type="latest" key={`${post._id}${index}`} post={post} />
-        //   );
-        // } else {
-        //   return (
-        //     <CommunityPostCard
-        //       type="latest"
-        //       key={`${post._id}${index}`}
-        //       post={post}
-        //     />
-        //   );
-        // }
+        // return (
+        //   <PostCard type="latest" key={`${post._id}${index}`} post={post} />
+        // );
+        if (post.community === null) {
+          return (
+            <PostCard type="latest" key={`${post._id}${index}`} post={post} />
+          );
+        } else {
+          return (
+            <CommunityPostCard
+              type="latest"
+              key={`${post._id}${index}`}
+              post={post}
+            />
+          );
+        }
       })}
     </InfiniteScroll>
   );
