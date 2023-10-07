@@ -1,5 +1,8 @@
-import { CommunityPosts, PartialCommunity } from "@/types/communityTypes";
-import { PostPartial } from "@/types/postTypes";
+import {
+  CommunityHomePostState,
+  PartialCommunity,
+} from "@/types/communityTypes";
+import { CommunityPost, PostPartial } from "@/types/postTypes";
 import { getAllPostByCommunity } from "@/utils/communityUtils";
 import { ResponseData } from "@/utils/httpUtils";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
@@ -34,8 +37,8 @@ export const fetchUpdatedAllPostsByCommunity = createAsyncThunk(
   }
 );
 
-const initialState: CommunityPosts = {
-  posts: [] as PostPartial[],
+const initialState: CommunityHomePostState = {
+  posts: [] as CommunityPost[],
   loading: false,
   error: "",
 };
@@ -45,19 +48,19 @@ const communityPost = createSlice({
   initialState,
   reducers: {
     upvotecommunityhomepostsuccess: (
-      state: CommunityPosts,
+      state: CommunityHomePostState,
       action: PayloadAction<PostPartial["_id"]>
     ) => {
       upvoteSuccessUtils(state, action);
     },
     downvotecommunityhomepostsuccess: (
-      state: CommunityPosts,
+      state: CommunityHomePostState,
       action: PayloadAction<PostPartial["_id"]>
     ) => {
       downvoteSuccessUtils(state, action);
     },
     switchbookmarkcommunityhomepostsuccess: (
-      state: CommunityPosts,
+      state: CommunityHomePostState,
       action: PayloadAction<PostPartial["_id"]>
     ) => {
       switchbookmarkSuccessUtils(state, action);
@@ -66,26 +69,26 @@ const communityPost = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       fetchAllPostsByCommunity.pending,
-      (state: CommunityPosts) => {
+      (state: CommunityHomePostState) => {
         state.loading = true;
       }
     );
     builder.addCase(
       fetchAllPostsByCommunity.fulfilled,
-      (state: CommunityPosts, action: PayloadAction<ResponseData>) => {
+      (state: CommunityHomePostState, action: PayloadAction<ResponseData>) => {
         state.loading = false;
         state.posts = [...action.payload.data.data];
       }
     );
     builder.addCase(
       fetchAllPostsByCommunity.rejected,
-      (state: CommunityPosts, action) => {
+      (state: CommunityHomePostState, action) => {
         state.error = action.error.message!;
       }
     );
     builder.addCase(
       fetchUpdatedAllPostsByCommunity.fulfilled,
-      (state: CommunityPosts, action: PayloadAction<ResponseData>) => {
+      (state: CommunityHomePostState, action: PayloadAction<ResponseData>) => {
         state.loading = false;
         if (state.posts.length > 0) {
           state.posts = state.posts.concat(action.payload.data.data);

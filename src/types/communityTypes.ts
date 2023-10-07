@@ -1,4 +1,4 @@
-import { PostPartial } from "./postTypes";
+import { CommunityPost } from "./postTypes";
 
 export type CommunityTypes = "public" | "private" | string;
 export interface Community {
@@ -31,8 +31,8 @@ export interface CommunityHome extends PartialCommunity {
   error: string;
 }
 
-export interface CommunityPosts {
-  posts: PostPartial[];
+export interface CommunityHomePostState {
+  posts: CommunityPost[];
   loading: boolean;
   error: string;
 }

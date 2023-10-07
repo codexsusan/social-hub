@@ -13,11 +13,14 @@ import {
   changeUserProfileImage,
   uploadUserImage,
 } from "@/features/user/userSlice";
+import { hasProperty } from "@/utils/generalUtils";
 import { useState } from "react";
+import { toast } from "../ui/use-toast";
 
 function ProfileTab() {
   const dispatch = useAppDispatch();
   const { profilePic } = useAppSelector((state) => state.user);
+  const [serverImage, setServerImage] = useState<string>(profilePic);
   return (
     <div className="flex flex-col gap-4 mt-8">
       <div>
@@ -26,9 +29,9 @@ function ProfileTab() {
           <div className="w-full flex justify-center my-4">
             <ProfileUploadButton
               callBackFn={(value: string) => {
-                dispatch(changeUserProfileImage(value));
+                setServerImage(value);
               }}
-              value={profilePic}
+              value={serverImage}
             />
           </div>
         </div>
@@ -43,7 +46,20 @@ function ProfileTab() {
       <Button
         className="w-full"
         onClick={() => {
-          dispatch(uploadUserImage(profilePic));
+          dispatch(uploadUserImage(serverImage)).then((res) => {
+            if (
+              hasProperty(res.payload, "status") &&
+              res.payload.status == 200
+            ) {
+              dispatch(changeUserProfileImage(serverImage));
+              toast({
+                title: "Updated successfully.",
+                description: "User image updated successfully",
+                className: "bg-[#09090B] text-[#e2e2e2] border-none ",
+                duration: 2000,
+              });
+            }
+          });
         }}
         type="submit"
       >

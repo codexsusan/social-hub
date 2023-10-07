@@ -4,6 +4,7 @@ import {
   joinCommunityUtils,
   leaveCommunityUtils,
   updateCommunityDetailsUtils,
+  updateCommunityProfileIconUtils,
 } from "@/utils/communityUtils";
 import { ResponseData } from "@/utils/httpUtils";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
@@ -32,6 +33,16 @@ export const joinCommunity = createAsyncThunk(
   "join/community",
   async (id: PartialCommunity["_id"]) => {
     return joinCommunityUtils(id).then((res) => res);
+  }
+);
+
+export const uploadCommunityIcon = createAsyncThunk(
+  "upload/community/icon",
+  async (data: { imageLink: string; communityId: PartialCommunity["_id"] }) => {
+    return updateCommunityProfileIconUtils(
+      data.imageLink,
+      data.communityId
+    ).then((res) => res);
   }
 );
 
@@ -76,6 +87,12 @@ const communityInfo = createSlice({
     ) => {
       state.community_type = action.payload.community_type;
     },
+    changeCommunityIcon: (
+      state: CommunityHome,
+      action: PayloadAction<PartialCommunity["icon_image"]>
+    ) => {
+      state.icon_image = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchCommunityById.pending, (state: CommunityHome) => {
@@ -119,5 +136,9 @@ const communityInfo = createSlice({
 
 export default communityInfo.reducer;
 
-export const { updateDisplayName, updateDescription, updateType } =
-  communityInfo.actions;
+export const {
+  updateDisplayName,
+  updateDescription,
+  updateType,
+  changeCommunityIcon,
+} = communityInfo.actions;

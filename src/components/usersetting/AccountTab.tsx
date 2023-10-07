@@ -124,6 +124,11 @@ function FirstnameDialog() {
                 dispatch(updateUserDetails(user)).then((res) => {
                   if (res.meta.requestStatus === "fulfilled") {
                     dispatch(updateUserFirstName(user));
+                    toast({
+                      title: "Firstname updated successfully.",
+                      className: "bg-[#09090B] text-[#e2e2e2] border-none ",
+                      duration: 2000,
+                    });
                   }
                 });
                 setLoading(false);
@@ -193,6 +198,11 @@ function LastnameDialog() {
                 dispatch(updateUserDetails(user)).then((res) => {
                   if (res.meta.requestStatus === "fulfilled") {
                     dispatch(updateUserLastName(user));
+                    toast({
+                      title: "Lastname updated successfully.",
+                      className: "bg-[#09090B] text-[#e2e2e2] border-none ",
+                      duration: 2000,
+                    });
                   }
                 });
                 setLoading(false);
@@ -258,6 +268,11 @@ function GenderDialog() {
                 dispatch(updateUserDetails(user)).then((res) => {
                   if (res.meta.requestStatus === "fulfilled") {
                     dispatch(updateUserGender(user));
+                    toast({
+                      title: "Gender updated successfully.",
+                      className: "bg-[#09090B] text-[#e2e2e2] border-none ",
+                      duration: 2000,
+                    });
                   }
                 });
                 setLoading(false);
@@ -340,7 +355,7 @@ function PasswordDialog() {
                 dispatch(resetPassword(userPassword)).then((res) => {
                   if (res.meta.requestStatus === "fulfilled") {
                     toast({
-                      title: "Password Updated.",
+                      title: "Password updated successfully.",
                       className: "bg-[#09090B] text-[#e2e2e2] border-none ",
                       duration: 2000,
                     });

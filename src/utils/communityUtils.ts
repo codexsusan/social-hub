@@ -103,7 +103,7 @@ export const promoteUserToModeratorUtils = async (
 };
 
 // Update Community Profile Picture
-export const updateCommunityProfileImageUtils = async (
+export const updateCommunityProfileIconUtils = async (
   imageLink: string,
   communityId: PartialCommunity["_id"]
 ) => {
