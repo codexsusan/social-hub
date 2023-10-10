@@ -66,10 +66,6 @@ function RightContent() {
             <p>Memebers</p>
             <p>{communityInfo.member_count}</p>
           </div>
-          {/* <div className="text-white flex justify-between">
-            <p>Created At</p>
-            <p>{format(new Date(communityInfo.created_at!), "MMM yyyy")}</p>
-          </div> */}
         </div>
         <div className="w-full">
           <Button

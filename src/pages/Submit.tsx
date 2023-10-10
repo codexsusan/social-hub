@@ -84,7 +84,6 @@ function LeftContent() {
               dispatch(changeCommunity(value));
             }}
             defaultValue={comm !== null ? comm : undefined}
-            options={["Productivity", "Gaming", "Programming", "Sports"]}
             placeholder="Choose a community"
             optionData={options}
           />

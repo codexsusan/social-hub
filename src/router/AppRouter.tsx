@@ -15,6 +15,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Auth from "../pages/Auth";
 import RootPage from "@/pages/RootPage";
 import CommunitySettings from "@/pages/CommunitySettings";
+import SubmitPage from "@/pages/SubmitPage";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,14 @@ const router = createBrowserRouter([
     element: (
       <AppContainer>
         <Submit />
+      </AppContainer>
+    ),
+  },
+  {
+    path: "/submitpage",
+    element: (
+      <AppContainer>
+        <SubmitPage />
       </AppContainer>
     ),
   },

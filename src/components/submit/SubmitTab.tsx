@@ -7,16 +7,23 @@ import { useSearchParams } from "react-router-dom";
 import EditorView from "./EditorView";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { changeContent, changeTitle } from "@/features/submit/submitSlice";
-import { ReactNode,  } from "react";
+import { ReactNode, useEffect } from "react";
+import Editor from "../common/Editor";
+import { fetchAllCommunityByUser } from "@/features/community/communityLists";
 
 type Props = {
   children: ReactNode;
 };
 
 function SubmitTab(props: Props) {
+  const dispatch = useAppDispatch();
+  const submit = useAppSelector((state) => state.submit);
+  const user = useAppSelector((state) => state.user);
   const [searchParams] = useSearchParams();
-  const type = searchParams.get("type");
-  const defaultValue = type ? type : "posts";
+  const comm = searchParams.get("comm");
+  useEffect(() => {
+    dispatch(fetchAllCommunityByUser());
+  }, [dispatch]);
 
   return (
     <Tabs defaultValue={defaultValue} className="w-full">
@@ -56,11 +63,12 @@ function PostView(props: Props) {
           type="text"
           placeholder="Title"
         />
-        <EditorView
+        {/* <Editor contentChangeCB={handleContentChange} /> */}
+        {/* <EditorView
           contentChangeCB={handleContentChange}
           src="post"
           content={post.content}
-        />
+        /> */}
         {props.children}
       </CardContent>
     </Card>
