@@ -28,9 +28,7 @@ function PostCard(props: Props) {
     e.preventDefault();
     navigate(`/c/${post!.author?._id}/post/${post!._id}`);
   };
-  // const content = parser(post!.content || "");
   const content = post!.content!.length > 0 ? JSON.parse(post!.content!) : "";
-  // TODO: Add content parser
 
   return (
     <div

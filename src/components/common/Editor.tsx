@@ -2,11 +2,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type EditorJS from "@editorjs/editorjs";
 
 function Editor(props: {
-  changeCB: (value: string) => void;
   changeContentCB: (content: string) => void;
   placeholder?: string;
 }) {
-  const { changeCB, placeholder } = props;
+  const { placeholder, changeContentCB } = props;
   const ref = useRef<EditorJS>();
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
@@ -15,8 +14,6 @@ function Editor(props: {
       setIsMounted(true);
     }
   }, []);
-
-  // const [content, setContent] = useState("");
 
   const initializeEditor = useCallback(async () => {
     const EditorJS = (await import("@editorjs/editorjs")).default;
@@ -37,8 +34,7 @@ function Editor(props: {
         async onChange() {
           const blocks = await ref.current?.save();
           const stringJSON = JSON.stringify(blocks);
-          changeCB(stringJSON);
-          props.changeContentCB(stringJSON);
+          changeContentCB(stringJSON);
         },
 
         placeholder: placeholder || "Start writing something...",
@@ -91,7 +87,7 @@ function Editor(props: {
         defaultBlock: "paragraph",
       });
     }
-  }, [changeCB]);
+  }, [changeContentCB, placeholder]);
 
   useEffect(() => {
     const init = async () => {

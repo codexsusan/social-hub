@@ -224,7 +224,6 @@ function ChooseGender({
         onValueChange={(value: Gender) => {
           setUser({ ...user, gender: value });
         }}
-        options={["male", "female", "others"]}
         placeholder="Select your gender"
       />
       <div className="w-full flex justify-between">
@@ -303,117 +302,5 @@ function CredentialForm({
     </div>
   );
 }
-
-// function FormHere() {
-//   return (
-//     <form
-//       onSubmit={(e) => {
-//         e.preventDefault();
-//         handleRegister();
-//       }}
-//       className="w-full flex flex-col gap-y-3"
-//     >
-//       <InputWithLabel
-//         value={user.firstName}
-//         onValueChange={(value: string) => {
-//           setUser({ ...user, firstName: value });
-//         }}
-//         inputClassName="bg-[#09090B] text-white"
-//         id="firstname"
-//         label="First Name"
-//         placeholder="Enter your first name"
-//         type="text"
-//       />
-//       <InputWithLabel
-//         value={user.lastName}
-//         inputClassName="bg-[#09090B] text-white"
-//         onValueChange={(value: string) => {
-//           setUser({ ...user, lastName: value });
-//         }}
-//         id="lastname"
-//         label="Last Name"
-//         placeholder="Enter your last name"
-//         type="text"
-//       />
-//       <InputWithLabel
-//         value={user.userName}
-//         inputClassName="bg-[#09090B] text-white"
-//         onValueChange={(value: string) => {
-//           setUser({ ...user, userName: value });
-//         }}
-//         id="username"
-//         label="Username"
-//         placeholder="Enter your username"
-//         type="text"
-//       />
-//       <div>
-//         <Label className="text-slate-200" htmlFor="gender">
-//           Gender
-//         </Label>
-//         <CustomSelect
-//           optionData={genderOption}
-//           onValueChange={(value: Gender) => {
-//             setUser({ ...user, gender: value });
-//           }}
-//           options={["male", "female", "others"]}
-//           placeholder="Select your gender"
-//         />
-//       </div>
-//       <InputWithLabel
-//         value={user.email}
-//         inputClassName="bg-[#09090B] text-white"
-//         onValueChange={(value: string) => {
-//           setUser({ ...user, email: value });
-//         }}
-//         id="email"
-//         label="Email"
-//         placeholder="Enter your email"
-//         type="email"
-//       />
-//       <InputWithLabel
-//         value={user.password}
-//         inputClassName="bg-[#09090B] text-white"
-//         onValueChange={(value: string) => setUser({ ...user, password: value })}
-//         id="password"
-//         label="Password"
-//         placeholder="•••••••••"
-//         type="password"
-//       />
-//       <InputWithLabel
-//         value={user.confirmPassword}
-//         inputClassName="bg-[#09090B] text-white"
-//         onValueChange={(value: string) => {
-//           setUser({ ...user, confirmPassword: value });
-//         }}
-//         id="confirm-password"
-//         label="Confirm Password"
-//         placeholder="•••••••••"
-//         type="password"
-//       />
-//       {userData.loading ? (
-//         <Button className="mt-2" disabled>
-//           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-//           Please wait
-//         </Button>
-//       ) : (
-//         <Button type="submit" className="mt-2">
-//           Sign up
-//         </Button>
-//       )}
-
-//       <div className="text-center text-slate-400">
-//         Already a member?{" "}
-//         <span
-//           onClick={() => {
-//             navigate("/auth/login");
-//           }}
-//           className="text-blue-600 hover:text-blue-800 cursor-pointer"
-//         >
-//           Log in
-//         </span>
-//       </div>
-//     </form>
-//   );
-// }
 
 export default Register;

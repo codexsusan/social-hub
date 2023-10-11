@@ -1,21 +1,21 @@
-import React, { FormEventHandler } from "react";
-import { Button } from "../ui/button";
-import { InputWithLabel } from "../common/InputWithLabel";
-import { useNavigate } from "react-router-dom";
-import { Loader2 } from "lucide-react";
 import useDocumentTitle from "@/hooks/useDocumentTitle";
 import { UserPartial } from "@/types/userTypes";
+import { Loader2 } from "lucide-react";
+import React, { FormEventHandler, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { InputWithLabel } from "../common/InputWithLabel";
+import { Button } from "../ui/button";
 
-import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { useAppDispatch } from "@/app/hooks";
 import { loginUser } from "@/features/user/userSlice";
-import { toast } from "../ui/use-toast";
 import { hasProperty } from "@/utils/generalUtils";
+import { toast } from "../ui/use-toast";
 
 function Login() {
   useDocumentTitle("Login | Social Hub");
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const userData = useAppSelector((state) => state.user);
+  const [loading, setLoading] = useState(false);
 
   const [user, setUser] = React.useState<UserPartial>({
     email: "",
@@ -23,9 +23,11 @@ function Login() {
   });
 
   const handleLogin: FormEventHandler<HTMLFormElement> = (e) => {
+    setLoading(true);
     e.preventDefault();
     dispatch(loginUser(user)).then((res) => {
       if (hasProperty(res.payload, "data")) {
+        setLoading(false);
         if (res.payload.status == 200) {
           toast({
             title: "Welcome back.",
@@ -83,7 +85,7 @@ function Login() {
               placeholder="•••••••••"
               type="password"
             />
-            {userData.loading ? (
+            {loading ? (
               <Button className="mt-2" disabled>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 Please wait

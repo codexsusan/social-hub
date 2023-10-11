@@ -13,7 +13,7 @@ import {
   changeTitle,
   createPost,
 } from "@/features/submit/submitSlice";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import TextareaAutosize from "react-textarea-autosize";
 import { Label } from "@/components/ui/label";
@@ -30,11 +30,13 @@ function SubmitPage() {
 }
 
 function LeftContent() {
-  const dispatch = useAppDispatch();
-  const submit = useAppSelector((state) => state.submit);
-  const user = useAppSelector((state) => state.user);
   const [searchParams] = useSearchParams();
   const comm = searchParams.get("comm");
+
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
+  const submitPage = useAppSelector((state) => state.submit);
+  
   useEffect(() => {
     dispatch(fetchAllCommunityByUser());
   }, [dispatch]);
@@ -57,9 +59,9 @@ function LeftContent() {
     ...options,
   ];
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const submitPage = useAppSelector((state) => state.submit);
+  const changeContentCB = (content: string) => {
+    dispatch(changeContent(content));
+  };
 
   const handlePostSubmit = () => {
     dispatch(createPost(submitPage.post)).then((res) => {
@@ -79,10 +81,6 @@ function LeftContent() {
         });
       }
     });
-  };
-
-  const changeContentCB = (content: string) => {
-    dispatch(changeContent(content));
   };
 
   return (
@@ -109,7 +107,7 @@ function LeftContent() {
             dispatch(changeTitle(e.target.value));
           }}
         />
-        <Editor changeContentCB={changeContentCB} changeCB={setDescription} />
+        <Editor changeContentCB={changeContentCB} />
         <Button onClick={handlePostSubmit} variant={"default"}>Post</Button>
       </div>
     </div>
