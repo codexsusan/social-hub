@@ -7,10 +7,17 @@ import useDocumentTitle from "@/hooks/useDocumentTitle";
 
 import CustomSelect from "@/components/common/CustomSelect";
 import { Button } from "@/components/ui/button";
-import { changeCommunity } from "@/features/submit/submitSlice";
+import {
+  changeCommunity,
+  changeContent,
+  changeTitle,
+  createPost,
+} from "@/features/submit/submitSlice";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import TextareaAutosize from "react-textarea-autosize";
+import { Label } from "@/components/ui/label";
+import { toast } from "@/components/ui/use-toast";
 
 function SubmitPage() {
   useDocumentTitle("Submit | Social Hub");
@@ -52,36 +59,39 @@ function LeftContent() {
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const submitPage = useAppSelector((state) => state.submit);
 
   const handlePostSubmit = () => {
-    // dispatch(createPost()).then((res) => {
-    //   if (res.meta.requestStatus === "fulfilled") {
-    //     toast({
-    //       title: "Post Submitted",
-    //       description: "Post created successfully.",
-    //       className: "bg-[#09090B] text-[#e2e2e2] border-none ",
-    //       duration: 2000,
-    //     });
-    //   } else {
-    //     toast({
-    //       title: "Post submission failed.",
-    //       description: "Please try again.",
-    //       className: "bg-[#09090B] text-[#e2e2e2] border-none ",
-    //       duration: 2000,
-    //     });
-    //   }
-    // });
+    dispatch(createPost(submitPage.post)).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        toast({
+          title: "Post Submitted",
+          description: "Post created successfully.",
+          className: "bg-[#09090B] text-[#e2e2e2] border-none ",
+          duration: 2000,
+        });
+      } else {
+        toast({
+          title: "Post submission failed.",
+          description: "Please try again.",
+          className: "bg-[#09090B] text-[#e2e2e2] border-none ",
+          duration: 2000,
+        });
+      }
+    });
+  };
+
+  const changeContentCB = (content: string) => {
+    dispatch(changeContent(content));
   };
 
   return (
     <div className="w-full flex flex-col flex-1 items-center p-4 gap-y-2 overflow-auto text-white">
-      <div className=" w-full p-2 rounded-sm border-slate-600 flex flex-col gap-6">
-        <div className="text-xl font-medium flex justify-between w-full items-baseline">
-          <div>Create a post</div>
-          <div className="text-sm">Draft</div>
-        </div>
+      <div className=" w-full p-2 rounded-sm border-slate-600 flex flex-col gap-4">
+        <div className="text-xl font-semibold">Create a post</div>
         <Separator className="bg-gray-700" orientation="horizontal" />
-        <div className="w-1/2">
+        <div className="w-1/2 flex flex-col gap-2">
+          <Label>Select community</Label>
           <CustomSelect
             onValueChange={(value: string) => {
               dispatch(changeCommunity(value));
@@ -92,15 +102,15 @@ function LeftContent() {
           />
         </div>
         <TextareaAutosize
-          className="w-full resize-none appearance-none overflow-hidden rounded-sm p-2 text-black text-3xl font-bold focus:outline-none"
-          placeholder="Title"
-          value={title}
+          className="w-full resize-none appearance-none overflow-hidden rounded-sm p-2 text-3xl font-bold focus:outline-none text-black"
+          placeholder="Title Here"
+          value={submitPage.post.title}
           onChange={(e) => {
-            setTitle(e.target.value);
+            dispatch(changeTitle(e.target.value));
           }}
         />
-        <Editor changeCB={setDescription} />
-        <Button variant={"default"}>Post</Button>
+        <Editor changeContentCB={changeContentCB} changeCB={setDescription} />
+        <Button onClick={handlePostSubmit} variant={"default"}>Post</Button>
       </div>
     </div>
   );

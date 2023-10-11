@@ -1,8 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type EditorJS from "@editorjs/editorjs";
 
-function Editor(props: { changeCB: (value: string) => void }) {
-  const { changeCB } = props;
+function Editor(props: {
+  changeCB: (value: string) => void;
+  changeContentCB: (content: string) => void;
+  placeholder?: string;
+}) {
+  const { changeCB, placeholder } = props;
   const ref = useRef<EditorJS>();
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
@@ -34,8 +38,10 @@ function Editor(props: { changeCB: (value: string) => void }) {
           const blocks = await ref.current?.save();
           const stringJSON = JSON.stringify(blocks);
           changeCB(stringJSON);
+          props.changeContentCB(stringJSON);
         },
-        placeholder: "Type here to write your post...",
+
+        placeholder: placeholder || "Start writing something...",
         inlineToolbar: true,
         data: {
           blocks: [],

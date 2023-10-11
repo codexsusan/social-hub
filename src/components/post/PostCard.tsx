@@ -5,13 +5,21 @@ import PostActions from "./PostActions";
 import { cn } from "@/lib/utils";
 import { PostPartial } from "@/types/postTypes";
 import { useNavigate } from "react-router-dom";
-import parser from "html-react-parser";
+import Output from "editorjs-react-renderer";
+// import parser from "html-react-parser";
 
 interface Props {
   className?: string;
   type?: string;
   post?: PostPartial;
 }
+
+const style = {
+  paragraph: {
+    fontSize: "0.875rem",
+    lineHeight: "1.25rem",
+  },
+};
 
 function PostCard(props: Props) {
   const { post, className } = props;
@@ -20,7 +28,9 @@ function PostCard(props: Props) {
     e.preventDefault();
     navigate(`/c/${post!.author?._id}/post/${post!._id}`);
   };
-  const content = parser(post!.content || "");
+  // const content = parser(post!.content || "");
+  const content = post!.content!.length > 0 ? JSON.parse(post!.content!) : "";
+  // TODO: Add content parser
 
   return (
     <div
@@ -33,7 +43,7 @@ function PostCard(props: Props) {
       <UserPostWrapper post={post}>
         <div className="text-base mt-2 space-y-4 flex-1">
           <div className="text-xl font-semibold">{post!.title}</div>
-          <div>{content}</div>
+          <Output className="text-white border" style={style} data={content} />
           <PostActions {...props} />
         </div>
       </UserPostWrapper>
