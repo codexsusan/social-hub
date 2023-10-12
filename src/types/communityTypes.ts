@@ -1,4 +1,5 @@
 import { CommunityPost } from "./postTypes";
+import { MemberUser } from "./userTypes";
 
 export type CommunityTypes = "public" | "private" | string;
 export interface Community {
@@ -46,4 +47,12 @@ export interface CommunityLists {
 export interface CommunityMultiSelectData {
   id: string;
   name: string;
+}
+
+
+
+export interface CommunityUsersState{
+  loading: boolean,
+  error: string,
+  users: MemberUser[],
 }

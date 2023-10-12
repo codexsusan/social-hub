@@ -3,19 +3,20 @@ import AuthContainer from "@/hoc/AuthContainer";
 import AddCommunity from "@/pages/AddCommunity";
 import AuthorProfile from "@/pages/AuthorProfile";
 import CommunityHome from "@/pages/CommunityHome";
+import CommunitySettings from "@/pages/CommunitySettings";
+import CommunityUsers from "@/pages/CommunityUsers";
 import ExploreCommunity from "@/pages/ExploreCommunity";
 import Home from "@/pages/Home";
 import ListCommunity from "@/pages/ListCommunity";
+import RootPage from "@/pages/RootPage";
 import SinglePost from "@/pages/SinglePost";
 import Submit from "@/pages/Submit";
+import SubmitPage from "@/pages/SubmitPage";
 import Test from "@/pages/Test";
 import UserProfile from "@/pages/UserProfile";
 import { UserSettings } from "@/pages/UserSettings";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Auth from "../pages/Auth";
-import RootPage from "@/pages/RootPage";
-import CommunitySettings from "@/pages/CommunitySettings";
-import SubmitPage from "@/pages/SubmitPage";
 
 const router = createBrowserRouter([
   {
@@ -99,6 +100,14 @@ const router = createBrowserRouter([
     element: (
       <AppContainer>
         <CommunityHome />
+      </AppContainer>
+    ),
+  },
+  {
+    path: "/c/:communityId/members",
+    element: (
+      <AppContainer>
+        <CommunityUsers />
       </AppContainer>
     ),
   },

@@ -1,15 +1,25 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import {
+  fetchCommunityById,
   joinCommunity,
   leaveCommunity,
 } from "@/features/community/communityInfo";
 import ProfileImage from "../common/ProfileImage";
 import { Button } from "../ui/button";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 function CommunityCover() {
+  const { communityId } = useParams();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCommunityById(communityId));
+  }, [dispatch, communityId]);
+
   const home = useAppSelector((state) => state.community.home.info);
   const { icon_image, isMember, displayName, name, _id } = home;
-  const dispatch = useAppDispatch();
+  
   const handleLeaveCommunity = () => {
     dispatch(leaveCommunity(_id));
   };

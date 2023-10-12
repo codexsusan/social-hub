@@ -70,7 +70,7 @@ function RightContent() {
         <div className="w-full">
           <Button
             variant="secondary"
-            onClick={() => navigate("/c/create")}
+            onClick={() => navigate(`/c/${communityInfo._id}/members`)}
             className="mt-5 w-full"
           >
             View Members

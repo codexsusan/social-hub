@@ -66,6 +66,19 @@ export const getJoinedCommunitiesByUser = async (data: queryParamsType) => {
   return response;
 };
 
+// Get joined members by community
+export const getJoinedMembersByCommunityIdUtils = async (
+  data: queryParamsType,
+  communityId: PartialCommunity["_id"]
+) => {
+  const response = await request(
+    `/api/community/get-joined-members/${communityId}`,
+    "GET",
+    data
+  );
+  return response;
+};
+
 // Join Community
 export const joinCommunityUtils = async (
   communityId: PartialCommunity["_id"]

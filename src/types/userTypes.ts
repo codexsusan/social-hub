@@ -35,3 +35,11 @@ export type AuthorRedirectData = {
   id: AuthorPartial["_id"];
   username: AuthorPartial["userName"];
 };
+
+export interface MemberUser {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  userName: string;
+  profilePic: string;
+}
