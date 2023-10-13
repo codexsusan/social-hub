@@ -49,8 +49,8 @@ function Register() {
     if (user.password !== user.confirmPassword) {
       return toast({
         title: "Password didn't match",
-        duration: 2000,
-        className: "bg-[#09090B] text-[#e2e2e2] border-none ",
+        className: "bg-[#09090B] text-[#e2e2e2] border-[#e2e2e2]/20",
+        duration: 1000,
       });
     }
   };
@@ -63,15 +63,16 @@ function Register() {
           toast({
             title: "Account created.",
             description: res.payload.data.message,
-            duration: 2000,
-            className: "bg-[#09090B] text-[#e2e2e2] border-none ",
+            className: "bg-[#09090B] text-[#e2e2e2] border-[#e2e2e2]/20",
+            duration: 1000,
           });
           navigate("/home");
         } else {
           toast({
             title: "Unable to create an account.",
             description: res.payload.data.message,
-            duration: 2000,
+            className: "bg-[#09090B] text-[#e2e2e2] border-[#e2e2e2]/20",
+            duration: 1000,
           });
         }
       }

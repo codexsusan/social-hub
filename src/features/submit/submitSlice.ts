@@ -1,3 +1,4 @@
+import { PartialCommunity } from "@/types/communityTypes";
 import { PostPartial } from "@/types/postTypes";
 import { ResponseData } from "@/utils/httpUtils";
 import { createPostUtils } from "@/utils/postUtils";
@@ -25,7 +26,6 @@ export const createPost = createAsyncThunk(
   }
 );
 
-
 const submitSlice = createSlice({
   name: "submit",
   initialState,
@@ -52,9 +52,11 @@ const submitSlice = createSlice({
         state.loading = false;
         if (action.payload.status === 200) {
           state.post = {
+            ...state.post,
             title: "",
             content: "",
             tags: [],
+            community_id: "",
           };
         }
       }

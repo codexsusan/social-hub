@@ -1,10 +1,24 @@
-import { MemberUser } from "@/types/userTypes";
+import { SuperUser } from "@/types/userTypes";
 import { CustomAvatar } from "../common/CustomAvatar";
-import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
+import { Card, CardContent } from "../ui/card";
+import { MouseEventHandler } from "react";
+import { useAppDispatch } from "@/app/hooks";
+import {
+  promoteToModerator,
+  promoteToModeratorSuccess,
+} from "@/features/communitysettings/manageSlice";
+import { useParams } from "react-router-dom";
+import { hasProperty } from "@/utils/generalUtils";
 
-function SwitchModeratorCard({ user }: { user: MemberUser }) {
-  const {  firstName, lastName, userName, profilePic, isFollowing } = user;
+function SwitchModeratorCard({ user }: { user: SuperUser }) {
+  const {
+    firstName,
+    lastName,
+    userName,
+    profilePic,
+    isAdmin,
+  } = user;
   return (
     <Card className="w-full bg-[#27272a] text-white">
       <CardContent className="p-4 flex justify-between">
@@ -19,17 +33,38 @@ function SwitchModeratorCard({ user }: { user: MemberUser }) {
             </p>
           </div>
         </div>
-        <ActionButton isFollowing={isFollowing} />
+        {isAdmin ? null : <ActionButton user={user} />}
       </CardContent>
     </Card>
   );
 }
 
-function ActionButton({ isFollowing }: { isFollowing: boolean }) {
-  return isFollowing ? (
-    <Button variant={"default"}>Remove</Button>
+function ActionButton({ user }: { user: SuperUser }) {
+  const { _id, isModerator } = user;
+  const dispatch = useAppDispatch();
+  const { communityId } = useParams<{ communityId: string }>();
+
+  const promoteToModeratorCB: MouseEventHandler = (e) => {
+    e.preventDefault();
+    dispatch(promoteToModerator({ communityId, userId: _id })).then((res) => {
+      if (hasProperty(res.payload, "data")) {
+        dispatch(promoteToModeratorSuccess(_id));
+      }
+    });
+  };
+  // TODO: API call also not done
+  const demoteToUserCB: MouseEventHandler = (e) => {
+    e.preventDefault();
+  };
+
+  return isModerator ? (
+    <Button onClick={demoteToUserCB} variant={"default"}>
+      Remove
+    </Button>
   ) : (
-    <Button variant={"secondary"}>Promote</Button>
+    <Button onClick={promoteToModeratorCB} variant={"secondary"}>
+      Promote
+    </Button>
   );
 }
 

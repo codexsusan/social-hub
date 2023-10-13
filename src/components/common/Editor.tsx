@@ -1,9 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from "react";
 import type EditorJS from "@editorjs/editorjs";
+import { OutputData } from "@editorjs/editorjs";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 function Editor(props: {
   changeContentCB: (content: string) => void;
   placeholder?: string;
+  value?: OutputData;
 }) {
   const { placeholder, changeContentCB } = props;
   const ref = useRef<EditorJS>();
@@ -30,6 +32,9 @@ function Editor(props: {
         holder: "editor",
         onReady() {
           ref.current = editor;
+          if (props.value) {
+            editor.render(props.value!);
+          }
         },
         async onChange() {
           const blocks = await ref.current?.save();
@@ -40,6 +45,7 @@ function Editor(props: {
         placeholder: placeholder || "Start writing something...",
         inlineToolbar: true,
         data: {
+          // TODO: Set value of editor
           blocks: [],
         },
         tools: {
@@ -48,14 +54,14 @@ function Editor(props: {
             class: ImageTool,
             config: {
               uploader: {
+                // TODO: Change this to some abstraction layer
                 async uploadByFile(file: File) {
                   const baseUrl =
                     "https://sea-turtle-app-bk4cx.ondigitalocean.app";
                   const endpoint = "/api/uploads/single-file-upload";
                   const url = `${baseUrl}${endpoint}`;
                   // Token Authentication
-                  const token =
-                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGVmMDg1MjU0YWE1Yjk2OWFhNmRkYTYiLCJpYXQiOjE2OTY4MzM0NDQsImV4cCI6MTcyODM2OTQ0NH0.EoU0vd_dij3wc2MhhbZiS4NrqGWa69gDK3WChCHTrdc";
+                  const token = localStorage.getItem("token");
 
                   const formData = new FormData();
                   formData.append("upload", file);
@@ -103,9 +109,12 @@ function Editor(props: {
   }, [isMounted, initializeEditor]);
 
   return (
-    <div className="w-full  bg-zinc-50 rounded-lg border border-zinc-200">
-      <div className="prose prose-stone dark:prose-invert w-max-[50px]">
-        <div id="editor" className="text-start flex text-black px-10" />
+    <div className="w-full bg-zinc-50 rounded-lg border border-zinc-200">
+      <div className="prose prose-stone dark:prose-invert">
+        <div
+          id="editor"
+          className="flex flex-col text-start text-black px-5 w-full h-[10rem] overflow-auto"
+        />
       </div>
     </div>
   );

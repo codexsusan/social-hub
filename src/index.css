@@ -96,7 +96,15 @@
   background: transparent; /* Make the scrollbar background transparent */
 }
 
-td {
-  border: 1px solid #ddd;
-  padding: 0.5rem;
+
+
+.editorjs.dark-mode {
+  background-color: #333; /* Dark background color */
+  color: #fff; /* Light text color */
+}
+
+/* Style a specific block type (e.g., paragraph) for dark mode */
+.ce-paragraph.dark-mode {
+  background-color: #333; /* Dark background color */
+  color: #fff; /* Light text color */
 }

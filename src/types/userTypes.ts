@@ -42,5 +42,15 @@ export interface MemberUser {
   lastName: string;
   userName: string;
   profilePic: string;
-  isFollowing: boolean
+  isFollowing: boolean;
+}
+
+export interface SuperUser {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  userName: string;
+  profilePic: string;
+  isModerator: boolean;
+  isAdmin: boolean;
 }

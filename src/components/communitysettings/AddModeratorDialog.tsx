@@ -1,9 +1,9 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import {
-  fetchCommunityMembers,
-  fetchUpdatedCommunityMembers,
-} from "@/features/communityusers/communityUser";
+import { fetchCommunityUserForMod } from "@/features/communitysettings/manageSlice";
+import { hasProperty } from "@/utils/generalUtils";
+import { Loader } from "lucide-react";
 import { useEffect, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -11,20 +11,18 @@ import {
   DialogHeader,
   DialogTrigger,
 } from "../ui/dialog";
-import { hasProperty } from "@/utils/generalUtils";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { Loader } from "lucide-react";
-import { MemberUser } from "@/types/userTypes";
 import SwitchModeratorCard from "./SwitchModeratorCard";
+import { useParams } from "react-router-dom";
+import { SuperUser } from "@/types/userTypes";
 
 function AddModeratorDialog() {
-  const communityData = useAppSelector((state) => state.community.home.info);
+  const { communityId } = useParams();
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [totalPages, setTotalPages] = useState(0);
   const [hasMore, setHasMore] = useState<boolean>(true);
-  const communityMembers = useAppSelector(
-    (state) => state.community.members.user
+  const moderator = useAppSelector(
+    (state) => state.community.settings.manage.moderators
   );
   const [state, setState] = useState({
     page: 1,
@@ -37,9 +35,9 @@ function AddModeratorDialog() {
       limit: 10,
     };
     dispatch(
-      fetchCommunityMembers({
+      fetchCommunityUserForMod({
         data: queryData,
-        communityId: communityData._id,
+        communityId,
       })
     ).then((res) => {
       if (hasProperty(res.payload, "data")) {
@@ -49,13 +47,13 @@ function AddModeratorDialog() {
         }
       }
     });
-  }, [dispatch, communityData._id]);
+  }, [dispatch, communityId]);
 
   const fetchMoreData = () => {
     dispatch(
-      fetchUpdatedCommunityMembers({
+      fetchCommunityUserForMod({
         data: { page: state.page + 1, limit: state.limit },
-        communityId: communityData._id,
+        communityId,
       })
     );
     if (state.page + 1 === totalPages) {
@@ -80,14 +78,14 @@ function AddModeratorDialog() {
         <div className="flex flex-col gap-y-2 max-h-[425px] overflow-auto">
           <InfiniteScroll
             className="mt-0 flex flex-col gap-4"
-            dataLength={communityMembers.users.length}
+            dataLength={moderator.users.length}
             next={fetchMoreData}
             hasMore={hasMore}
             height={400}
             loader={<Loader className="animate-spin text-white " />}
           >
             <div className="flex flex-col gap-y-2">
-              {communityMembers.users.map((user: MemberUser) => {
+              {moderator.users.map((user: SuperUser) => {
                 return <SwitchModeratorCard key={`${user._id}`} user={user} />;
               })}
             </div>

@@ -36,7 +36,7 @@ function LeftContent() {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
   const submitPage = useAppSelector((state) => state.submit);
-  
+
   useEffect(() => {
     dispatch(fetchAllCommunityByUser());
   }, [dispatch]);
@@ -107,8 +107,13 @@ function LeftContent() {
             dispatch(changeTitle(e.target.value));
           }}
         />
-        <Editor changeContentCB={changeContentCB} />
-        <Button onClick={handlePostSubmit} variant={"default"}>Post</Button>
+        <Editor
+          value={JSON.parse(submitPage.post.content!)}
+          changeContentCB={changeContentCB}
+        />
+        <Button onClick={handlePostSubmit} variant={"default"}>
+          Post
+        </Button>
       </div>
     </div>
   );
