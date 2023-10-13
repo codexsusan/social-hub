@@ -42,4 +42,5 @@ export interface MemberUser {
   lastName: string;
   userName: string;
   profilePic: string;
+  isFollowing: boolean
 }

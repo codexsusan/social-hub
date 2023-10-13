@@ -3,7 +3,7 @@ import createCommunity from "./createCommunity";
 import communityHome from "./communityHome";
 import communityLists from "./communityLists";
 import exploreReducer from "../explore-community/exploreSlice";
-import membersReducer from "../communityusers/communityUser"
+import membersReducer from "../communityusers/communityMembers"
 
 const communityReducer = combineReducers({
   create: createCommunity,

@@ -86,7 +86,8 @@ const postSlice = createSlice({
         state.loading = false;
         if (state.posts.length > 0) {
           state.posts = state.posts.concat(action.payload.data.data);
-          return;
+          // Check: Remaining for the below comment
+          // return;
         } else {
           state.posts = [...action.payload.data.data];
         }

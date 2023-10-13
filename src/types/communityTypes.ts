@@ -12,6 +12,7 @@ export interface Community {
   creator_id: string;
   member_count: number;
   report_count: number;
+  community_guidelines: string;
   is_banned: boolean;
   ban_reason: string;
   created_at: string;

@@ -3,6 +3,7 @@ import { CustomAvatar } from "@/components/common/CustomAvatar";
 import PageWrapper from "@/components/common/PageWrapper";
 import AppearanceSection from "@/components/communitysettings/AppearanceSection";
 import GeneralSection from "@/components/communitysettings/GeneralSection";
+import ManageSection from "@/components/communitysettings/ManageSection";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { fetchCommunityById } from "@/features/community/communityInfo";
@@ -33,15 +34,19 @@ function LeftContent() {
           <Separator className="bg-gray-700" orientation="horizontal" />
         </div>
         <Tabs defaultValue="general" className="w-full">
-          <TabsList className="grid w-full  bg-[#27272A] grid-cols-2">
+          <TabsList className="grid w-full  bg-[#27272A] grid-cols-3">
             <TabsTrigger value="general">General</TabsTrigger>
             <TabsTrigger value="appearance">Appearance</TabsTrigger>
+            <TabsTrigger value="manage">Manage</TabsTrigger>
           </TabsList>
           <TabsContent value="general">
             <GeneralSection />
           </TabsContent>
           <TabsContent className="" value="appearance">
             <AppearanceSection />
+          </TabsContent>
+          <TabsContent className="" value="manage">
+            <ManageSection />
           </TabsContent>
         </Tabs>
       </div>

@@ -50,6 +50,7 @@
     "react-textarea-autosize": "^8.5.3",
     "sort-by": "^1.2.0",
     "tailwind-merge": "^1.14.0",
+    "tailwind-scrollbar": "^3.0.5",
     "tailwindcss-animate": "^1.0.6"
   },
   "devDependencies": {

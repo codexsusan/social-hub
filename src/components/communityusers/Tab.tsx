@@ -17,7 +17,6 @@ function MembersTab() {
       </TabsContent>
       <TabsContent value="moderator">
         <ModeratorSection />
-        
       </TabsContent>
       <TabsContent value="admin">
         <AdminSection />

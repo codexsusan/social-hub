@@ -105,7 +105,7 @@ function Editor(props: {
   return (
     <div className="w-full  bg-zinc-50 rounded-lg border border-zinc-200">
       <div className="prose prose-stone dark:prose-invert w-max-[50px]">
-        <div id="editor" className="text-start text-black" />
+        <div id="editor" className="text-start flex text-black px-10" />
       </div>
     </div>
   );

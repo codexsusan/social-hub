@@ -13,7 +13,7 @@ function CommunityMembers() {
 
 function LeftContent() {
   return (
-    <div className="">
+    <div className=" p-4">
       <CommunityCover />
       <Tab />
     </div>
