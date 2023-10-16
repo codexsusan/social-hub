@@ -41,11 +41,9 @@ function Editor(props: {
           const stringJSON = JSON.stringify(blocks);
           changeContentCB(stringJSON);
         },
-
         placeholder: placeholder || "Start writing something...",
         inlineToolbar: true,
         data: {
-          // TODO: Set value of editor
           blocks: [],
         },
         tools: {

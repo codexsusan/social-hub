@@ -6,6 +6,7 @@ import authorReducer from "@/features/authorprofile/authorSlice";
 import homeReducer from "@/features/home/homeSlice";
 import singlepostReducer from "@/features/general/singlePostSlice";
 import communityReducer from "@/features/community/communitySlice";
+import userSinglePostReducer from "@/features/usersinglepost/usersinglepostslice";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     submit: submitReducer,
     home: homeReducer,
     singlepage: singlepostReducer,
+    usersinglepost: userSinglePostReducer,
     profile: profileReducer,
     community: communityReducer,
   },

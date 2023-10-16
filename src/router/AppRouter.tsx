@@ -9,13 +9,13 @@ import ExploreCommunity from "@/pages/ExploreCommunity";
 import Home from "@/pages/Home";
 import ListCommunity from "@/pages/ListCommunity";
 import RootPage from "@/pages/RootPage";
-import SinglePost from "@/pages/SinglePost";
 import SubmitPage from "@/pages/SubmitPage";
 import Test from "@/pages/Test";
 import UserProfile from "@/pages/UserProfile";
 import { UserSettings } from "@/pages/UserSettings";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Auth from "../pages/Auth";
+import UserSinglePost from "@/pages/UserSinglePost";
 
 const router = createBrowserRouter([
   {
@@ -86,14 +86,25 @@ const router = createBrowserRouter([
       </AppContainer>
     ),
   },
+  // Community post single page
+  // {
+  //   path: "/c/:communityId/post/:postId" || "/u/:userId/post/:postId/",
+  //   element: (
+  //     <AppContainer>
+  //       <UpdatedSinglePost />
+  //       {/* <SinglePost /> */}
+  //     </AppContainer>
+  //   ),
+  // },
   {
-    path: "/c/:communityId/post/:postId",
+    path: "/u/:userId/post/:postId/",
     element: (
       <AppContainer>
-        <SinglePost />
+        <UserSinglePost />
       </AppContainer>
     ),
   },
+
   {
     path: "/c/:communityId",
     element: (

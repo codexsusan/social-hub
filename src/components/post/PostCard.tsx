@@ -25,10 +25,10 @@ function PostCard(props: Props) {
   const navigate = useNavigate();
   const routeToSinglePost = (e: React.MouseEvent) => {
     e.preventDefault();
-    navigate(`/c/${post!.author?._id}/post/${post!._id}`);
+    navigate(`/u/${post!.author?._id}/post/${post!._id}`);
   };
   const content = post!.content!.length > 0 ? JSON.parse(post!.content!) : "";
-
+  // "/c/:communityId/post/:postId" || "/u/:userId/post/:postId/"
   return (
     <div
       onClick={routeToSinglePost}
