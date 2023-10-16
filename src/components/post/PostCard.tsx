@@ -5,7 +5,7 @@ import PostActions from "./PostActions";
 import { cn } from "@/lib/utils";
 import { PostPartial } from "@/types/postTypes";
 import { useNavigate } from "react-router-dom";
-import Output from "editorjs-react-renderer";
+import CustomOutput from "../common/CustomOutput";
 
 interface Props {
   className?: string;
@@ -13,12 +13,7 @@ interface Props {
   post?: PostPartial;
 }
 
-const style = {
-  paragraph: {
-    fontSize: "0.875rem",
-    lineHeight: "1.25rem",
-  },
-};
+
 
 function PostCard(props: Props) {
   const { post, className } = props;
@@ -28,7 +23,6 @@ function PostCard(props: Props) {
     navigate(`/u/${post!.author?._id}/post/${post!._id}`);
   };
   const content = post!.content!.length > 0 ? JSON.parse(post!.content!) : "";
-  // "/c/:communityId/post/:postId" || "/u/:userId/post/:postId/"
   return (
     <div
       onClick={routeToSinglePost}
@@ -40,7 +34,7 @@ function PostCard(props: Props) {
       <UserPostWrapper post={post}>
         <div className="text-base mt-2 space-y-4 flex-1">
           <div className="text-xl font-semibold">{post!.title}</div>
-          <Output className="text-white border" style={style} data={content} />
+          <CustomOutput content={content} />
           <PostActions {...props} />
         </div>
       </UserPostWrapper>

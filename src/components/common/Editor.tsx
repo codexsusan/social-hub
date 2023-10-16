@@ -1,3 +1,4 @@
+import { uploadFile } from "@/utils/fileUtils";
 import type EditorJS from "@editorjs/editorjs";
 import { OutputData } from "@editorjs/editorjs";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -54,30 +55,16 @@ function Editor(props: {
               uploader: {
                 // TODO: Change this to some abstraction layer
                 async uploadByFile(file: File) {
-                  const baseUrl =
-                    "https://sea-turtle-app-bk4cx.ondigitalocean.app";
-                  const endpoint = "/api/uploads/single-file-upload";
-                  const url = `${baseUrl}${endpoint}`;
-                  // Token Authentication
-                  const token = localStorage.getItem("token");
-
                   const formData = new FormData();
                   formData.append("upload", file);
-
-                  const response = await fetch(url, {
-                    method: "POST",
-                    headers: {
-                      Authorization: `Bearer ${token}`,
-                    },
-                    body: formData,
+                  return uploadFile(formData).then((res) => {
+                    return {
+                      success: 1,
+                      file: {
+                        url: res.data.url,
+                      },
+                    };
                   });
-                  const res = await response.json();
-                  return {
-                    success: 1,
-                    file: {
-                      url: res.url,
-                    },
-                  };
                 },
               },
             },
@@ -91,7 +78,7 @@ function Editor(props: {
         defaultBlock: "paragraph",
       });
     }
-  }, [changeContentCB, placeholder]);
+  }, [changeContentCB, placeholder, props.value]);
 
   useEffect(() => {
     const init = async () => {
@@ -111,7 +98,7 @@ function Editor(props: {
       <div className="prose prose-stone dark:prose-invert">
         <div
           id="editor"
-          className="flex flex-col text-start text-black px-5 w-full h-[10rem] overflow-auto"
+          className="flex flex-col text-start text-black px-5 w-full h-[20rem] overflow-auto"
         />
       </div>
     </div>

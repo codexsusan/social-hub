@@ -1,4 +1,3 @@
-import { PartialCommunity } from "@/types/communityTypes";
 import { PostPartial } from "@/types/postTypes";
 import { ResponseData } from "@/utils/httpUtils";
 import { createPostUtils } from "@/utils/postUtils";
@@ -13,6 +12,8 @@ type SubmitInitialState = {
 const initialState: SubmitInitialState = {
   post: {
     title: "",
+    content:
+      '{"time":1697208637870,"blocks":[{"id":"FuZcoTwXqM","type":"paragraph","data":{"text":""}}],"version":"2.28.0"}',
   } as PostPartial,
   loading: false,
   error: "",

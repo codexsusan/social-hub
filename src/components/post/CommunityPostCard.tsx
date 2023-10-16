@@ -2,22 +2,15 @@ import { cn } from "@/lib/utils";
 import { PostPartial } from "@/types/postTypes";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import PostActions from "./PostActions";
+import CustomOutput from "../common/CustomOutput";
 import CommunityPostWrapper from "../community/CommunityPostWrapper";
-import Output from "editorjs-react-renderer";
+import PostActions from "./PostActions";
 
 interface Props {
   className?: string;
   type?: string;
   post?: PostPartial;
 }
-
-const style = {
-  paragraph: {
-    fontSize: "0.875rem",
-    lineHeight: "1.25rem",
-  },
-};
 
 function CommunityPostCard(props: Props) {
   const { className, post } = props;
@@ -39,7 +32,7 @@ function CommunityPostCard(props: Props) {
       <CommunityPostWrapper post={post}>
         <div className="text-base mt-2 space-y-4 flex-1">
           <div className="text-xl font-semibold">{post!.title}</div>
-          <Output className="text-white border" style={style} data={content} />
+          <CustomOutput content={content} />
           <PostActions {...props} />
         </div>
       </CommunityPostWrapper>
