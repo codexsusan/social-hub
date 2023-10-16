@@ -22,13 +22,13 @@ function MemberSection() {
 
   const [state, setState] = useState({
     page: 1,
-    limit: 15,
+    limit: 12,
   });
 
   useEffect(() => {
     const queryData = {
       page: 1,
-      limit: 15,
+      limit: 12,
     };
     dispatch(fetchCommunityMembers({ data: queryData, communityId })).then(
       (res) => {
@@ -63,10 +63,11 @@ function MemberSection() {
     <div className="flex justify-center">No members yet</div>
   ) : (
     <InfiniteScroll
-      className="mt-0 flex flex-col gap-4"
+      className="mt-5 flex flex-col gap-4"
       dataLength={communityMembers.users.length}
       next={fetchMoreData}
       hasMore={hasMore}
+      height={820}
       loader={<Loader className="animate-spin text-white" />}
     >
       <div className="flex flex-col gap-y-2">

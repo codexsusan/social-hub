@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils";
 import { PostPartial } from "@/types/postTypes";
 import { useNavigate } from "react-router-dom";
 import Output from "editorjs-react-renderer";
-// import parser from "html-react-parser";
 
 interface Props {
   className?: string;

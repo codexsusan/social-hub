@@ -10,7 +10,6 @@ import Home from "@/pages/Home";
 import ListCommunity from "@/pages/ListCommunity";
 import RootPage from "@/pages/RootPage";
 import SinglePost from "@/pages/SinglePost";
-import Submit from "@/pages/Submit";
 import SubmitPage from "@/pages/SubmitPage";
 import Test from "@/pages/Test";
 import UserProfile from "@/pages/UserProfile";
@@ -51,7 +50,7 @@ const router = createBrowserRouter([
     path: "/submit" || "/submit/?type=:type" || "/submit?comm=:comm",
     element: (
       <AppContainer>
-        <Submit />
+        <SubmitPage />
       </AppContainer>
     ),
   },

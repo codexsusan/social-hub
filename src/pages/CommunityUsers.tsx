@@ -1,6 +1,6 @@
 import PageWrapper from "@/components/common/PageWrapper";
 import CommunityCover from "@/components/community/CommunityCover";
-import Tab from "@/components/communityusers/Tab";
+import Tab from "@/components/communityusers/MembersTab";
 
 function CommunityMembers() {
   return (
@@ -13,7 +13,7 @@ function CommunityMembers() {
 
 function LeftContent() {
   return (
-    <div className=" p-4">
+    <div className="">
       <CommunityCover />
       <Tab />
     </div>

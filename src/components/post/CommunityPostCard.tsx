@@ -3,15 +3,21 @@ import { PostPartial } from "@/types/postTypes";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import PostActions from "./PostActions";
-
-import parser from "html-react-parser";
 import CommunityPostWrapper from "../community/CommunityPostWrapper";
+import Output from "editorjs-react-renderer";
 
 interface Props {
   className?: string;
   type?: string;
   post?: PostPartial;
 }
+
+const style = {
+  paragraph: {
+    fontSize: "0.875rem",
+    lineHeight: "1.25rem",
+  },
+};
 
 function CommunityPostCard(props: Props) {
   const { className, post } = props;
@@ -21,7 +27,7 @@ function CommunityPostCard(props: Props) {
     navigate(`/c/${post!.community_id}/post/${post!._id}`);
   };
 
-  const content = parser(post!.content || "");
+  const content = post!.content!.length > 0 ? JSON.parse(post!.content!) : "";
   return (
     <div
       onClick={routeToSinglePost}
@@ -33,7 +39,7 @@ function CommunityPostCard(props: Props) {
       <CommunityPostWrapper post={post}>
         <div className="text-base mt-2 space-y-4 flex-1">
           <div className="text-xl font-semibold">{post!.title}</div>
-          <div>{content}</div>
+          <Output className="text-white border" style={style} data={content} />
           <PostActions {...props} />
         </div>
       </CommunityPostWrapper>
