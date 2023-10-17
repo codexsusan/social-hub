@@ -13,7 +13,7 @@ export interface Comment {
   upvotes_count: number;
   downvotes_count: number;
   report_count: number;
-  comment_count: number;
+  replies_count: number;
   comment_context: string;
   comment_reply_status: boolean;
   comment_reply: NestedComment[];
@@ -25,10 +25,7 @@ export interface Comment {
 
 export interface CommentPartial extends Partial<Comment> {}
 
-export interface NestedComment extends Comment {
-  replies_count: number;
-  comment_current_reply: string;
-  comment_current_reply_loading: boolean;
+export interface NestedComment extends CommentPartial {
   comment_replies: NestedComment[];
 }
 

@@ -3,7 +3,10 @@ import { PostPartial } from "@/types/postTypes";
 import { ResponseData } from "@/utils/httpUtils";
 import { getPostUtils } from "@/utils/postUtils";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getCommentsOnPostById } from "../comment/commentSlice";
+import {
+  getCommentRepliesById,
+  getCommentsOnPostById,
+} from "../comment/commentSlice";
 
 export const fetchSinglePost = createAsyncThunk(
   "usersinglepost/fetch",
@@ -82,6 +85,59 @@ const usersinglepost = createSlice({
     ) => {
       state.comment.comments.unshift(action.payload);
     },
+    upvoteSinglePostCommentSuccess: (
+      state: UserSinglePostInitialState,
+      action: PayloadAction<CommentPartial["_id"]>
+    ) => {
+      state.comment.comments = state.comment.comments.map((comment) => {
+        if (comment._id === action.payload) {
+          if (!comment.upVoteStatus) {
+            comment.upvotes_count! = comment.upvotes_count! - 1 + 2;
+            comment.upVoteStatus = true;
+            if (comment.downVoteStatus) {
+              comment.downVoteStatus = false;
+              comment.downvotes_count! = comment.downvotes_count! - 1;
+            }
+          } else {
+            comment.upVoteStatus = false;
+            comment.upvotes_count! = comment.upvotes_count! - 1;
+          }
+        }
+        return comment;
+      });
+    },
+    switchReplies: (
+      state: UserSinglePostInitialState,
+      action: PayloadAction<CommentPartial["_id"]>
+    ) => {
+      state.comment.comments = state.comment.comments.map((comment) => {
+        if (comment._id === action.payload) {
+          comment.comment_reply_status = !comment.comment_reply_status;
+        }
+        return comment;
+      });
+    },
+    downvoteSinglePostCommentSuccess: (
+      state: UserSinglePostInitialState,
+      action: PayloadAction<CommentPartial["_id"]>
+    ) => {
+      state.comment.comments = state.comment.comments.map((comment) => {
+        if (comment._id === action.payload) {
+          if (!comment.downVoteStatus) {
+            comment.downvotes_count! = comment.downvotes_count! - 1 + 2;
+            comment.downVoteStatus = true;
+            if (comment.upVoteStatus) {
+              comment.upVoteStatus = false;
+              comment.upvotes_count = comment.upvotes_count! - 1;
+            }
+          } else {
+            comment.downVoteStatus = false;
+            comment.downvotes_count = comment.downvotes_count! - 1;
+          }
+        }
+        return comment;
+      });
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(
@@ -138,6 +194,23 @@ const usersinglepost = createSlice({
         state.comment.error = "Something went wrong";
       }
     );
+    builder.addCase(
+      getCommentRepliesById.fulfilled,
+      (
+        state: UserSinglePostInitialState,
+        action: PayloadAction<ResponseData>
+      ) => {
+        console.log(action.payload);
+        const parentId = action.payload.data.data[0].parent_id;
+        state.comment.comments = state.comment.comments.map((comment) => {
+          if (comment._id === parentId) {
+            comment.comment_reply_status = true;
+            comment.comment_reply = [...action.payload.data.data];
+          }
+          return comment;
+        });
+      }
+    );
   },
 });
 
@@ -148,4 +221,7 @@ export const {
   downvoteSinglePostSuccess,
   switchSinglePostBookmarkSuccess,
   addcommentSinglePostSuccess,
+  upvoteSinglePostCommentSuccess,
+  downvoteSinglePostCommentSuccess,
+  switchReplies,
 } = usersinglepost.actions;

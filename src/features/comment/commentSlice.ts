@@ -88,6 +88,12 @@ export const getCommentsOnPostById = createAsyncThunk(
   }
 );
 
+export const getCommentRepliesById = createAsyncThunk(
+  "fetch/comment/replies",
+  async (commentId: NestedComment["_id"]) => {
+    return getCommentRepliesUtils(commentId).then((res) => res);
+  }
+);
 // Create comment on Post
 export const createCommentOnPost = createAsyncThunk(
   "comment/create",
@@ -221,17 +227,17 @@ const commentSlice = createSlice({
     ) => {
       state.current_comment = action.payload;
     },
-    changecommentreply: (
-      state: CommentInitialState,
-      action: PayloadAction<{ commentId: NestedComment["_id"]; reply: string }>
-    ) => {
-      const comment = state.comments.find(
-        (comment) => comment._id === action.payload.commentId
-      );
-      if (comment) {
-        comment.comment_current_reply = action.payload.reply;
-      }
-    },
+    // changecommentreply: (
+    //   state: CommentInitialState,
+    //   action: PayloadAction<{ commentId: NestedComment["_id"]; reply: string }>
+    // ) => {
+    //   const comment = state.comments.find(
+    //     (comment) => comment._id === action.payload.commentId
+    //   );
+    //   if (comment) {
+    //     comment.comment_current_reply = action.payload.reply;
+    //   }
+    // },
     initcommentreplies: (
       state: CommentInitialState,
       action: PayloadAction<{
@@ -347,7 +353,6 @@ export const {
   commentdownvotesuccess,
   switchcommentreplybox,
   changepostcomment,
-  changecommentreply,
   initcommentreplies,
   replyupvotesuccess,
   replydownvotesuccess,

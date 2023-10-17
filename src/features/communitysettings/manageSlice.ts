@@ -2,6 +2,7 @@ import { PartialCommunity } from "@/types/communityTypes";
 import { queryParamsType } from "@/types/generalTypes";
 import { SuperUser, UserPartial } from "@/types/userTypes";
 import {
+  demoteModeratorToUserUtils,
   getCommunityGuidelinesUtils,
   getJoinedMembersByCommunityIdUtils,
   promoteUserToModeratorUtils,
@@ -64,6 +65,18 @@ export const promoteToModerator = createAsyncThunk(
   }
 );
 
+export const demoteToUser = createAsyncThunk(
+  "demote-to-user",
+  async (attr: {
+    communityId: PartialCommunity["_id"];
+    userId: UserPartial["_id"];
+  }) => {
+    return demoteModeratorToUserUtils(attr.communityId, attr.userId).then(
+      (res) => res
+    );
+  }
+);
+
 export const fetchCommunityGuideLines = createAsyncThunk(
   "fetch-community-guidelines",
   async (communityId: PartialCommunity["_id"]) => {
@@ -99,6 +112,17 @@ const manageSlice = createSlice({
         return user;
       });
     },
+    demoteToUserSuccess: (
+      state: ManageState,
+      action: PayloadAction<SuperUser["_id"]>
+    ) => {
+      state.moderators.users = state.moderators.users.map((user) => {
+        if (user._id === action.payload) {
+          user.isModerator = false;
+        }
+        return user;
+      });
+    },
     updateCommunityGuidelinesSuccess: (
       state: ManageState,
       action: PayloadAction<PartialCommunity["community_guidelines"]>
@@ -127,15 +151,6 @@ const manageSlice = createSlice({
       }
     );
     builder.addCase(
-      promoteToModerator.fulfilled,
-      (state: ManageState, action: PayloadAction<ResponseData>) => {
-        console.log(action.payload);
-        state.moderators.users = state.moderators.users.map((user) => {
-          return user;
-        });
-      }
-    );
-    builder.addCase(
       updateCommunityGuideLines.fulfilled,
       (state: ManageState, action: PayloadAction<ResponseData>) => {
         if (action.payload.status === 200) {
@@ -160,5 +175,8 @@ const manageSlice = createSlice({
 
 export default manageSlice.reducer;
 
-export const { promoteToModeratorSuccess, updateCommunityGuidelinesSuccess } =
-  manageSlice.actions;
+export const {
+  demoteToUserSuccess,
+  promoteToModeratorSuccess,
+  updateCommunityGuidelinesSuccess,
+} = manageSlice.actions;

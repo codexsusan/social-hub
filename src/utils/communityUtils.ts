@@ -241,6 +241,18 @@ export const promoteUserToModeratorUtils = async (
   return response;
 };
 
+export const demoteModeratorToUserUtils = async (
+  communityId: PartialCommunity["_id"],
+  userId: UserPartial["_id"]
+) => {
+  const response = await request(
+    `/api/community/demote-moderator/${communityId}`,
+    "POST",
+    { moderatorId: userId }
+  );
+  return response;
+};
+
 // Update Community Profile Picture
 export const updateCommunityProfileIconUtils = async (
   imageLink: string,

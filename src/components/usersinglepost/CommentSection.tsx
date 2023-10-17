@@ -4,8 +4,19 @@ import { CommentPartial } from "@/types/commentTypes";
 import { ArrowBigDown, ArrowBigUp, Loader2, MessageCircle } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { CustomAvatar } from "../common/CustomAvatar";
-import { getCommentsOnPostById } from "@/features/comment/commentSlice";
-import { useEffect } from "react";
+import {
+  downvoteCommentById,
+  getCommentRepliesById,
+  getCommentsOnPostById,
+  upvoteCommentById,
+} from "@/features/comment/commentSlice";
+import { MouseEventHandler, useEffect } from "react";
+import {
+  downvoteSinglePostCommentSuccess,
+  switchReplies,
+  upvoteSinglePostCommentSuccess,
+} from "@/features/usersinglepost/usersinglepostslice";
+import CommentDialog from "./CommentDialog";
 
 function CommentSection() {
   const { postId } = useParams();
@@ -17,33 +28,58 @@ function CommentSection() {
   const commentsData = useAppSelector((state) => state.usersinglepost.comment);
 
   return commentsData.loading ? (
-    <div className="flex justify-center">
+    <div className="flex justify-center py-10">
       <Loader2 className="animate-spin h-4 w-4" />
     </div>
   ) : (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col divide-y divide-slate-400/90">
       {commentsData.comments &&
         commentsData.comments.map((comment) => {
-          return <CommentCard comment={comment} />;
+          return <CommentCard key={comment._id} comment={comment} />;
         })}
     </div>
   );
 }
 
 function CommentCard({ comment }: { comment: CommentPartial }) {
+  const dispatch = useAppDispatch();
+
+  const {
+    _id,
+    upvotes_count,
+    downvotes_count,
+    upVoteStatus,
+    downVoteStatus,
+    replies_count,
+    comment_reply,
+    comment_reply_status,
+  } = comment;
+
+  const VoteCount =
+    upvotes_count! - downvotes_count! == 0
+      ? "Vote"
+      : upvotes_count! - downvotes_count!;
+
   const handleRedirectToAuthorProfile = () => {};
-  const handleUpVote = () => {};
-  const handleDownVote = () => {};
-
-  //   TODO: Need to update from backend
-  const VoteCount = 0;
-  const CommentCount = 0;
-
-  const upVoteStatus = false;
-  const downVoteStatus = false;
+  const handleUpVote: MouseEventHandler = (e) => {
+    e.stopPropagation();
+    dispatch(upvoteCommentById(comment._id!)).then((res) => {
+      if (res.meta.requestStatus == "fulfilled") {
+        dispatch(upvoteSinglePostCommentSuccess(comment._id!));
+      }
+    });
+  };
+  const handleDownVote: MouseEventHandler = (e) => {
+    e.stopPropagation();
+    dispatch(downvoteCommentById(comment._id!)).then((res) => {
+      if (res.meta.requestStatus == "fulfilled") {
+        dispatch(downvoteSinglePostCommentSuccess(comment._id!));
+      }
+    });
+  };
 
   return (
-    <div className={cn("flex gap-x-3")}>
+    <div className={cn("flex gap-x-3 p-4")}>
       <div onClick={handleRedirectToAuthorProfile}>
         <CustomAvatar />
       </div>
@@ -60,31 +96,70 @@ function CommentCard({ comment }: { comment: CommentPartial }) {
               onClick={handleRedirectToAuthorProfile}
               className="text-white opacity-60 text-base"
             >
-              @{comment.author?.userName}
+              @{comment.author!.userName}
             </p>
           </div>
         </div>
-        <div>Hello</div>
+        <div>{comment.content}</div>
         <div className="w-full">
           <div className="w-full flex gap-x-8 justify-normal items-center">
             <div className="flex gap-x-2">
-              <ArrowBigUp
-                onClick={handleUpVote}
-                strokeWidth={1}
-                fill={upVoteStatus ? "white" : ""}
-              />
-              <ArrowBigDown
-                onClick={handleDownVote}
-                strokeWidth={1}
-                fill={downVoteStatus ? "white" : undefined}
-              />
+              {upVoteStatus ? (
+                <ArrowBigUp
+                  onClick={handleUpVote}
+                  strokeWidth={1}
+                  fill={"white"}
+                />
+              ) : (
+                <ArrowBigUp onClick={handleUpVote} strokeWidth={1} />
+              )}
+              {downVoteStatus ? (
+                <ArrowBigDown
+                  onClick={handleDownVote}
+                  strokeWidth={1}
+                  fill={"white"}
+                />
+              ) : (
+                <ArrowBigDown onClick={handleDownVote} strokeWidth={1} />
+              )}
               {VoteCount}
             </div>
-            <div className="flex gap-x-2">
-              <MessageCircle strokeWidth={1} size={22} />
-              {CommentCount}
-            </div>
+            <CommentDialog comment={comment}>
+              <div className="flex gap-x-2 items-center">
+                <MessageCircle strokeWidth={1} size={22} />
+                <div className="text-cl">{replies_count}</div>
+              </div>
+            </CommentDialog>
           </div>
+        </div>
+        <div>
+          {replies_count! > 0 && !comment_reply_status && (
+            <div
+              onClick={() => {
+                dispatch(getCommentRepliesById(_id!));
+              }}
+              className="text-blue-500"
+            >
+              Show Replies
+            </div>
+          )}
+          {comment_reply_status && (
+            <div>
+              <div className="-m-4">
+                {comment_reply?.map((reply) => {
+                  return <CommentCard key={reply._id} comment={reply} />;
+                })}
+              </div>
+              <div
+                onClick={() => {
+                  dispatch(switchReplies(_id!));
+                }}
+                className="text-blue-500"
+              >
+                Hide Replies
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

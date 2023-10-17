@@ -37,7 +37,6 @@ function AddCommunity() {
           duration: 2000,
         });
         if (res.payload.status === 201) {
-          console.log(res.payload.data);
           navigate(`/c/${res.payload.data._id}`);
           dispatch(clear());
         }

@@ -5,20 +5,17 @@ import { Card, CardContent } from "../ui/card";
 import { MouseEventHandler } from "react";
 import { useAppDispatch } from "@/app/hooks";
 import {
+  demoteToUser,
+  demoteToUserSuccess,
   promoteToModerator,
   promoteToModeratorSuccess,
 } from "@/features/communitysettings/manageSlice";
 import { useParams } from "react-router-dom";
 import { hasProperty } from "@/utils/generalUtils";
+import { toast } from "../ui/use-toast";
 
 function SwitchModeratorCard({ user }: { user: SuperUser }) {
-  const {
-    firstName,
-    lastName,
-    userName,
-    profilePic,
-    isAdmin,
-  } = user;
+  const { firstName, lastName, userName, profilePic, isAdmin } = user;
   return (
     <Card className="w-full bg-[#27272a] text-white">
       <CardContent className="p-4 flex justify-between">
@@ -49,12 +46,29 @@ function ActionButton({ user }: { user: SuperUser }) {
     dispatch(promoteToModerator({ communityId, userId: _id })).then((res) => {
       if (hasProperty(res.payload, "data")) {
         dispatch(promoteToModeratorSuccess(_id));
+        toast({
+          title: "Added",
+          description: "User added to moderator list",
+          variant: "default",
+          duration: 1000,
+        });
       }
     });
   };
-  // TODO: API call also not done
+  
   const demoteToUserCB: MouseEventHandler = (e) => {
     e.preventDefault();
+    dispatch(demoteToUser({ communityId, userId: _id })).then((res) => {
+      if (hasProperty(res.payload, "data")) {
+        dispatch(demoteToUserSuccess(_id));
+        toast({
+          title: "Removed",
+          description: "User removed from moderator list",
+          variant: "destructive",
+          duration: 1000,
+        });
+      }
+    });
   };
 
   return isModerator ? (
