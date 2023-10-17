@@ -1,15 +1,16 @@
 import { PartialCommunity } from "@/types/communityTypes";
+import { queryParamsType } from "@/types/generalTypes";
 import { getAllCommunityUtils } from "@/utils/communityUtils";
 import { ResponseData } from "@/utils/httpUtils";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-export interface ExploreState {
+export interface ExplorePageState {
   loading: boolean;
   error: string | null;
   communities: PartialCommunity[];
 }
 
-const initialState: ExploreState = {
+const initialState: ExplorePageState = {
   loading: false,
   error: null,
   communities: [],
@@ -17,8 +18,15 @@ const initialState: ExploreState = {
 
 export const fetchExploreCommunities = createAsyncThunk(
   "explore/fetch/communities",
-  async () => {
-    return getAllCommunityUtils().then((res) => res);
+  async (data: queryParamsType) => {
+    return getAllCommunityUtils(data).then((res) => res);
+  }
+);
+
+export const fetchUpdatedExploreCommunities = createAsyncThunk(
+  "updated/fetch/communities",
+  async (data: queryParamsType) => {
+    return getAllCommunityUtils(data).then((res) => res);
   }
 );
 
@@ -27,21 +35,30 @@ const exploreSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchExploreCommunities.pending, (state: ExploreState) => {
-      state.loading = true;
-    });
+    builder.addCase(
+      fetchExploreCommunities.pending,
+      (state: ExplorePageState) => {
+        state.loading = true;
+      }
+    );
     builder.addCase(
       fetchExploreCommunities.fulfilled,
-      (state: ExploreState, action: PayloadAction<ResponseData>) => {
+      (state: ExplorePageState, action: PayloadAction<ResponseData>) => {
         state.loading = false;
         state.communities = action.payload.data.data;
       }
     );
     builder.addCase(
       fetchExploreCommunities.rejected,
-      (state: ExploreState, action) => {
+      (state: ExplorePageState, action) => {
         state.loading = false;
         state.error = action.error.message! || "Failed to load data";
+      }
+    );
+    builder.addCase(
+      fetchUpdatedExploreCommunities.fulfilled,
+      (state: ExplorePageState, action: PayloadAction<ResponseData>) => {
+        state.communities = state.communities.concat(action.payload.data.data);
       }
     );
   },

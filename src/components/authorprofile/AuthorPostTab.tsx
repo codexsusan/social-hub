@@ -51,7 +51,7 @@ function UserPostTab() {
     </div>
   ) : (
     <InfiniteScroll
-      className="mt-0 no-scrollbar flex flex-col gap-2"
+      className="mt-0 flex flex-col gap-2"
       dataLength={userPosts.length}
       next={fetchMoreData}
       hasMore={true}

@@ -3,11 +3,19 @@ import { getJoinedCommunitiesByUser } from "@/utils/communityUtils";
 import { ResponseData } from "@/utils/httpUtils";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { leaveCommunity } from "./communityGeneral";
+import { queryParamsType } from "@/types/generalTypes";
 
 export const fetchAllCommunityByUser = createAsyncThunk(
   "fetch/all-community/user",
-  async () => {
-    return getJoinedCommunitiesByUser({}).then((res) => res);
+  async (data: queryParamsType) => {
+    return getJoinedCommunitiesByUser(data).then((res) => res);
+  }
+);
+
+export const fetchUpdatedAllCommunityByUser = createAsyncThunk(
+  "fetch/updated-all-community/user",
+  async (data: queryParamsType) => {
+    return getJoinedCommunitiesByUser(data).then((res) => res);
   }
 );
 
@@ -38,10 +46,16 @@ const communityLists = createSlice({
     });
     builder.addCase(
       leaveCommunity.fulfilled,
-      (state: CommunityLists, action) => {
+      (state: CommunityLists, action: PayloadAction<ResponseData>) => {
         state.communities = state.communities.filter((community) => {
           return community._id !== action.payload.data.data._id;
         });
+      }
+    );
+    builder.addCase(
+      fetchUpdatedAllCommunityByUser.fulfilled,
+      (state: CommunityLists, action: PayloadAction<ResponseData>) => {
+        state.communities = state.communities.concat(action.payload.data.data);
       }
     );
   },

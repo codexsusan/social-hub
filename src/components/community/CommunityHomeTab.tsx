@@ -44,7 +44,7 @@ function CommunityHomeTab() {
         <div className="text-xl text-center font-semibold ">No Posts Found</div>
       )}
       <InfiniteScroll
-        className="mt-0 no-scrollbar flex flex-col gap-2 w-full"
+        className="mt-0 flex flex-col gap-2 w-full"
         dataLength={posts.length}
         next={fetchMoreData}
         hasMore={true}

@@ -7,6 +7,7 @@ import homeReducer from "@/features/home/homeSlice";
 import singlepostReducer from "@/features/general/singlePostSlice";
 import communityReducer from "@/features/community/communitySlice";
 import userSinglePostReducer from "@/features/usersinglepost/usersinglepostslice";
+import exploreReducer from "@/features/explore-community/exploreSlice";
 
 const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ const store = configureStore({
     usersinglepost: userSinglePostReducer,
     profile: profileReducer,
     community: communityReducer,
+    explore: exploreReducer,
   },
 });
 
