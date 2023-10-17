@@ -81,6 +81,13 @@ export const getCommentsOnPost = createAsyncThunk(
   }
 );
 
+export const getCommentsOnPostById = createAsyncThunk(
+  "fetch/post/comments",
+  async (postId: PostPartial["_id"]) => {
+    return getCommentsOnPostUtils(postId).then((res) => res);
+  }
+);
+
 // Create comment on Post
 export const createCommentOnPost = createAsyncThunk(
   "comment/create",

@@ -25,6 +25,7 @@ function LeftContent() {
   useEffect(() => {
     dispatch(fetchSinglePost(postId));
   }, [dispatch, postId]);
+  
 
   const postData = useAppSelector((state) => state.usersinglepost.post);
 

@@ -4,7 +4,6 @@ import { AuthorPartial, UserPartial } from "./userTypes";
 export interface Comment {
   _id: string;
   content: string;
-  author_id: string;
   author: AuthorPartial;
   post_id: string;
   upvotes: string[];

@@ -18,7 +18,7 @@ export const switchBookmark = createAsyncThunk(
 );
 
 export const fetchBookmarks = createAsyncThunk("bookmark/fetch", async () => {
-  return getBookmarksUtils().then((res) => res);
+  return getBookmarksUtils({}).then((res) => res);
 });
 
 const bookmarkSlice = createSlice({

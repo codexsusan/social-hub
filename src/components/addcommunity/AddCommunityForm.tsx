@@ -78,7 +78,6 @@ function FieldAreaA() {
           onValueChange={(value: string) => {
             dispatch(changeType(value));
           }}
-          options={["Public", "Private"]}
           optionData={options}
           placeholder="Select Community Type"
         />

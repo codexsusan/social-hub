@@ -1,16 +1,36 @@
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { cn } from "@/lib/utils";
-import { ArrowBigDown, ArrowBigUp, MessageCircle } from "lucide-react";
+import { CommentPartial } from "@/types/commentTypes";
+import { ArrowBigDown, ArrowBigUp, Loader2, MessageCircle } from "lucide-react";
+import { useParams } from "react-router-dom";
 import { CustomAvatar } from "../common/CustomAvatar";
+import { getCommentsOnPostById } from "@/features/comment/commentSlice";
+import { useEffect } from "react";
 
 function CommentSection() {
-  return (
+  const { postId } = useParams();
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getCommentsOnPostById(postId));
+  }, [dispatch, postId]);
+
+  const commentsData = useAppSelector((state) => state.usersinglepost.comment);
+
+  return commentsData.loading ? (
+    <div className="flex justify-center">
+      <Loader2 className="animate-spin h-4 w-4" />
+    </div>
+  ) : (
     <div className="flex flex-col gap-2">
-      <CommentCard />
+      {commentsData.comments &&
+        commentsData.comments.map((comment) => {
+          return <CommentCard comment={comment} />;
+        })}
     </div>
   );
 }
 
-function CommentCard() {
+function CommentCard({ comment }: { comment: CommentPartial }) {
   const handleRedirectToAuthorProfile = () => {};
   const handleUpVote = () => {};
   const handleDownVote = () => {};
@@ -34,13 +54,13 @@ function CommentCard() {
               onClick={handleRedirectToAuthorProfile}
               className="text-white opacity-70 text-base font-semibold"
             >
-              {"displayName"}
+              {comment.author?.firstName + " " + comment.author?.lastName}
             </p>
             <p
               onClick={handleRedirectToAuthorProfile}
               className="text-white opacity-60 text-base"
             >
-              @{"username"}
+              @{comment.author?.userName}
             </p>
           </div>
         </div>

@@ -3,6 +3,7 @@ import { PostPartial } from "@/types/postTypes";
 import { ResponseData } from "@/utils/httpUtils";
 import { getPostUtils } from "@/utils/postUtils";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { getCommentsOnPostById } from "../comment/commentSlice";
 
 export const fetchSinglePost = createAsyncThunk(
   "usersinglepost/fetch",
@@ -107,6 +108,34 @@ const usersinglepost = createSlice({
         state.loading = false;
         state.post.loading = false;
         state.post.error = action.error.message!;
+      }
+    );
+    builder.addCase(
+      getCommentsOnPostById.pending,
+      (state: UserSinglePostInitialState) => {
+        state.comment.loading = true;
+        state.comment.error = "";
+      }
+    );
+    builder.addCase(
+      getCommentsOnPostById.fulfilled,
+      (
+        state: UserSinglePostInitialState,
+        action: PayloadAction<ResponseData>
+      ) => {
+        state.comment.loading = false;
+        if (action.payload.data.data.length !== 0) {
+          state.comment.comments = action.payload.data.data;
+        } else {
+          state.comment.comments = [];
+        }
+      }
+    );
+    builder.addCase(
+      getCommentsOnPostById.rejected,
+      (state: UserSinglePostInitialState) => {
+        state.comment.loading = false;
+        state.comment.error = "Something went wrong";
       }
     );
   },

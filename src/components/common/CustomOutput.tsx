@@ -12,6 +12,7 @@ const renderers = {
   //   code: CustomCodeRenderer,
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function CustomOutput({ content }: { content: any }) {
   return (
     <Output
@@ -23,6 +24,7 @@ function CustomOutput({ content }: { content: any }) {
   );
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function CustomImageRenderer({ data }: any) {
   const src = data.file.url;
   return (
