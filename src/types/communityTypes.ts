@@ -19,7 +19,15 @@ export interface Community {
   updated_at: string;
 }
 
-export interface PartialCommunity extends Partial<Community> {}
+export enum CommunityJoinStatus {
+  JOINED = "JOINED",
+  NOTJOINED = "NOTJOINED",
+  REQUESTED = "REQUESTED",
+}
+export interface PartialCommunity extends Partial<Community> {
+  isMember?: boolean;
+  joinStatus?: CommunityJoinStatus;
+}
 
 export interface CreateCommunity extends PartialCommunity {
   loading: boolean;
@@ -50,10 +58,8 @@ export interface CommunityMultiSelectData {
   name: string;
 }
 
-
-
-export interface CommunityUsersState{
-  loading: boolean,
-  error: string,
-  users: MemberUser[],
+export interface CommunityUsersState {
+  loading: boolean;
+  error: string;
+  users: MemberUser[];
 }

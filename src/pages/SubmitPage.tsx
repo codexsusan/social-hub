@@ -14,7 +14,7 @@ import {
   createPost,
 } from "@/features/submit/submitSlice";
 import { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import TextareaAutosize from "react-textarea-autosize";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/use-toast";
@@ -32,13 +32,18 @@ function SubmitPage() {
 function LeftContent() {
   const [searchParams] = useSearchParams();
   const comm = searchParams.get("comm");
-
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
   const submitPage = useAppSelector((state) => state.submit);
 
   useEffect(() => {
-    dispatch(fetchAllCommunityByUser());
+    dispatch(
+      fetchAllCommunityByUser({
+        page: 1,
+        limit: 100,
+      })
+    );
   }, [dispatch]);
 
   const optionData = useAppSelector(
@@ -66,6 +71,7 @@ function LeftContent() {
   const handlePostSubmit = () => {
     dispatch(createPost(submitPage.post)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
+        navigate("/");
         toast({
           title: "Post Submitted",
           description: "Post created successfully.",

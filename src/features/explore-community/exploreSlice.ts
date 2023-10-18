@@ -1,4 +1,4 @@
-import { PartialCommunity } from "@/types/communityTypes";
+import { CommunityJoinStatus, PartialCommunity } from "@/types/communityTypes";
 import { queryParamsType } from "@/types/generalTypes";
 import { getAllCommunityUtils } from "@/utils/communityUtils";
 import { ResponseData } from "@/utils/httpUtils";
@@ -19,21 +19,87 @@ const initialState: ExplorePageState = {
 export const fetchExploreCommunities = createAsyncThunk(
   "explore/fetch/communities",
   async (data: queryParamsType) => {
-    return getAllCommunityUtils(data).then((res) => res);
+    return getAllCommunityUtils(data).then((res) => {
+      const communityData = res.data.data;
+      communityData.forEach((community: PartialCommunity) => {
+        if (community.isMember) {
+          community.joinStatus = CommunityJoinStatus.JOINED;
+        } else {
+          community.joinStatus = CommunityJoinStatus.NOTJOINED;
+        }
+      });
+      return {
+        ...res,
+        data: {
+          ...res.data,
+          data: communityData,
+        },
+      };
+    });
   }
 );
 
 export const fetchUpdatedExploreCommunities = createAsyncThunk(
   "updated/fetch/communities",
   async (data: queryParamsType) => {
-    return getAllCommunityUtils(data).then((res) => res);
+    return getAllCommunityUtils(data).then((res) => {
+      const communityData = res.data.data;
+      communityData.forEach((community: PartialCommunity) => {
+        if (community.isMember) {
+          community.joinStatus = CommunityJoinStatus.JOINED;
+        } else {
+          community.joinStatus = CommunityJoinStatus.NOTJOINED;
+        }
+      });
+      return {
+        ...res,
+        data: {
+          ...res.data,
+          data: communityData,
+        },
+      };
+    });
   }
 );
 
 const exploreSlice = createSlice({
   name: "explore",
   initialState,
-  reducers: {},
+  reducers: {
+    joinCommunitySuccess(
+      state: ExplorePageState,
+      action: PayloadAction<PartialCommunity["_id"]>
+    ) {
+      state.communities = state.communities.map((community) => {
+        if (
+          community._id === action.payload &&
+          community.community_type === "public"
+        ) {
+          community.isMember = true;
+          community.joinStatus = CommunityJoinStatus.JOINED;
+        } else if (
+          community._id === action.payload &&
+          community.community_type === "private"
+        ) {
+          community.isMember = false;
+          community.joinStatus = CommunityJoinStatus.REQUESTED;
+        }
+        return community;
+      });
+    },
+    leaveCommunitySuccess(
+      state: ExplorePageState,
+      action: PayloadAction<PartialCommunity["_id"]>
+    ) {
+      state.communities = state.communities.map((community) => {
+        if (community._id === action.payload) {
+          community.isMember = false;
+          community.joinStatus = CommunityJoinStatus.NOTJOINED;
+        }
+        return community;
+      });
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(
       fetchExploreCommunities.pending,
@@ -65,3 +131,6 @@ const exploreSlice = createSlice({
 });
 
 export default exploreSlice.reducer;
+
+export const { joinCommunitySuccess, leaveCommunitySuccess } =
+  exploreSlice.actions;
