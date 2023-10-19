@@ -52,7 +52,12 @@ function LatestHome() {
       {latestPosts.map((post, index) => {
         if (post.community === null) {
           return (
-            <PostCard type="latest" key={`${post._id}${index}`} post={post} />
+            <PostCard
+              optionsVisibility={false}
+              type="latest"
+              key={`${post._id}${index}`}
+              post={post}
+            />
           );
         } else {
           return (

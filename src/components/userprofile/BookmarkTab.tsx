@@ -45,6 +45,7 @@ function BookmarkTab() {
         if (post.author!._id === post.community_id) {
           return (
             <PostCard
+              optionsVisibility={false}
               type="profile-bookmark"
               key={`${post._id}${index}`}
               post={post}

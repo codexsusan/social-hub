@@ -32,6 +32,7 @@ function SubmitPage() {
 function LeftContent() {
   const [searchParams] = useSearchParams();
   const comm = searchParams.get("comm");
+  const origin = searchParams.get("origin");
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
@@ -71,7 +72,7 @@ function LeftContent() {
   const handlePostSubmit = () => {
     dispatch(createPost(submitPage.post)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
-        navigate("/");
+        navigate(origin ? origin : "/", { replace: true });
         toast({
           title: "Post Submitted",
           description: "Post created successfully.",

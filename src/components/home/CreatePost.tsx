@@ -1,12 +1,13 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { CustomAvatar } from "../common/CustomAvatar";
 import { useAppSelector } from "@/app/hooks";
-import { Input } from "../ui/input";
 import { ImagePlus } from "lucide-react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { CustomAvatar } from "../common/CustomAvatar";
+import { Input } from "../ui/input";
 
 function CreatePost() {
   const user = useAppSelector((state) => state.user);
   const navigate = useNavigate();
+  const location = useLocation();
   const { communityId } = useParams();
   const communityData = {
     type: communityId ? "community" : "user",
@@ -28,7 +29,7 @@ function CreatePost() {
       </div>
       <Input
         onClick={() => {
-          navigate(`/submit`, { state: communityData });
+          navigate(`/submit?origin=${location.pathname}`, { state: communityData });
         }}
         className="bg-[#171717] border-none border-0 text-gray-400"
         placeholder="Create Post"

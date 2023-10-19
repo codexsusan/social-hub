@@ -55,7 +55,7 @@ const submitSlice = createSlice({
           state.post = {
             ...state.post,
             title: "",
-            content: "",
+            content: initialState.post.content,
             tags: [],
             community_id: "",
           };

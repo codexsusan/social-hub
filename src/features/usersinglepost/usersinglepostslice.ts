@@ -200,7 +200,6 @@ const usersinglepost = createSlice({
         state: UserSinglePostInitialState,
         action: PayloadAction<ResponseData>
       ) => {
-        console.log(action.payload);
         const parentId = action.payload.data.data[0].parent_id;
         state.comment.comments = state.comment.comments.map((comment) => {
           if (comment._id === parentId) {

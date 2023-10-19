@@ -53,7 +53,12 @@ function TrendingHome() {
       {trendingPosts.map((post, index) => {
         if (post.community === null) {
           return (
-            <PostCard type="trending" key={`${post._id}${index}`} post={post} />
+            <PostCard
+              optionsVisibility={false}
+              type="trending"
+              key={`${post._id}${index}`}
+              post={post}
+            />
           );
         } else {
           return (

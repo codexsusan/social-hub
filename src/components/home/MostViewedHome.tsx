@@ -57,6 +57,7 @@ function MostViewedHome() {
         if (post.community === null) {
           return (
             <PostCard
+              optionsVisibility={false}
               type="most-viewed"
               key={`${post._id}${index}`}
               post={post}

@@ -11,12 +11,11 @@ interface Props {
   className?: string;
   type?: string;
   post?: PostPartial;
+  optionsVisibility: boolean;
 }
 
-
-
 function PostCard(props: Props) {
-  const { post, className } = props;
+  const { post, className, optionsVisibility } = props;
   const navigate = useNavigate();
   const routeToSinglePost = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -31,7 +30,7 @@ function PostCard(props: Props) {
         className
       )}
     >
-      <UserPostWrapper post={post}>
+      <UserPostWrapper post={post} optionsVisibility={optionsVisibility}>
         <div className="text-base mt-2 space-y-4 flex-1">
           <div className="text-xl font-semibold">{post!.title}</div>
           <CustomOutput content={content} />

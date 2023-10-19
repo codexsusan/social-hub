@@ -16,6 +16,7 @@ interface Props {
   type?: contentType;
   post?: PostPartial;
   children?: React.ReactNode;
+  optionsVisibility: boolean;
 }
 
 function UserPostWrapper(props: Props) {
@@ -23,7 +24,7 @@ function UserPostWrapper(props: Props) {
   const navigate = useNavigate();
 
   const user = useAppSelector((state) => state.user);
-  const { className, type, children, post } = props;
+  const { className, type, children, post, optionsVisibility } = props;
   const { firstName, lastName, userName } = user;
 
   const displayName =
@@ -48,7 +49,6 @@ function UserPostWrapper(props: Props) {
   const deletePostCB = () => {
     dispatch(deletePost(post!._id)).then((res) => {
       if (hasProperty(res.payload, "data")) {
-        navigate("/home");
         toast({
           description: res.payload.data.message,
           duration: 2000,
@@ -106,7 +106,7 @@ function UserPostWrapper(props: Props) {
               @{username}
             </p>
           </div>
-          <CustomDropdown options={options} />
+          {optionsVisibility && <CustomDropdown options={options} />}
         </div>
         <div className="w-full">{children}</div>
       </div>
