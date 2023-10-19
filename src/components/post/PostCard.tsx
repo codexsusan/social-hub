@@ -4,7 +4,7 @@ import PostActions from "./PostActions";
 
 import { cn } from "@/lib/utils";
 import { PostPartial } from "@/types/postTypes";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import CustomOutput from "../common/CustomOutput";
 
 interface Props {
@@ -17,9 +17,10 @@ interface Props {
 function PostCard(props: Props) {
   const { post, className, optionsVisibility } = props;
   const navigate = useNavigate();
+  const location = useLocation();
   const routeToSinglePost = (e: React.MouseEvent) => {
     e.preventDefault();
-    navigate(`/u/${post!.author?._id}/post/${post!._id}`);
+    navigate(`/u/${post!.author?._id}/post/${post!._id}?origin=${location.pathname}`);
   };
   const content = post!.content!.length > 0 ? JSON.parse(post!.content!) : "";
   return (

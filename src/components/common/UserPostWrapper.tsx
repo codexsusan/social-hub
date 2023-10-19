@@ -8,7 +8,7 @@ import { OptionType, contentType } from "@/types/generalTypes";
 import { deletePost, reportPost } from "@/features/post/postSlice";
 import { toast } from "../ui/use-toast";
 import { hasProperty } from "@/utils/generalUtils";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { AuthorRedirectData } from "@/types/userTypes";
 
 interface Props {
@@ -21,6 +21,8 @@ interface Props {
 
 function UserPostWrapper(props: Props) {
   const dispatch = useAppDispatch();
+  const [searchParams] = useSearchParams();
+  const origin = searchParams.get("origin");
   const navigate = useNavigate();
 
   const user = useAppSelector((state) => state.user);
@@ -48,6 +50,7 @@ function UserPostWrapper(props: Props) {
 
   const deletePostCB = () => {
     dispatch(deletePost(post!._id)).then((res) => {
+      navigate(origin ? origin : "/", { replace: true });
       if (hasProperty(res.payload, "data")) {
         toast({
           description: res.payload.data.message,

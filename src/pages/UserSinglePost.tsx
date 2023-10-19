@@ -62,7 +62,12 @@ function LeftContent() {
     <div className="mt-4 flex justify-center">
       <div className="w-3/4 rounded-sm bg-[#27272a] flex flex-col divide-y divide-slate-400/90 text-white cursor-pointer hover:bg-[#1e1e1e]">
         {!postData.loading ? (
-          <UserPostWrapper className="p-4" post={postData} type="post">
+          <UserPostWrapper
+            optionsVisibility={true}
+            className="p-4"
+            post={postData}
+            type="post"
+          >
             <div className="text-base mt-2 space-y-4 w-full">
               <div className="text-xl font-semibold mb-2">{postData.title}</div>
               <CustomOutput content={content} />
@@ -71,7 +76,7 @@ function LeftContent() {
           </UserPostWrapper>
         ) : (
           <div className="flex w-full justify-center font-semibold py-5">
-            <Loader2 className="animate-spin w-4 h-4"/>
+            <Loader2 className="animate-spin w-4 h-4" />
           </div>
         )}
 
