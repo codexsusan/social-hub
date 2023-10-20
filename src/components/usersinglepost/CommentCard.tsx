@@ -16,8 +16,19 @@ import { MouseEventHandler } from "react";
 import CommentReply from "../common/CommentReply";
 import { CustomAvatar } from "../common/CustomAvatar";
 import CommentDialog from "./CommentDialog";
+import {
+  downvoteCommunitySinglePostCommentSuccess,
+  switchRepliesCommunity,
+  upvoteCommunitySinglePostCommentSuccess,
+} from "@/features/communitysinglepost/communitysinglepostslice";
 
-function CommentCard({ comment }: { comment: CommentPartial }) {
+function CommentCard({
+  comment,
+  source,
+}: {
+  comment: CommentPartial;
+  source: string;
+}) {
   const dispatch = useAppDispatch();
 
   const {
@@ -42,17 +53,35 @@ function CommentCard({ comment }: { comment: CommentPartial }) {
     e.stopPropagation();
     dispatch(upvoteCommentById(comment._id!)).then((res) => {
       if (res.meta.requestStatus == "fulfilled") {
-        dispatch(upvoteSinglePostCommentSuccess(comment._id!));
+        if (source === "community-post") {
+          dispatch(upvoteCommunitySinglePostCommentSuccess(comment._id!));
+        } else if (source === "user-post") {
+          dispatch(upvoteSinglePostCommentSuccess(comment._id!));
+        }
       }
     });
   };
+
   const handleDownVote: MouseEventHandler = (e) => {
     e.stopPropagation();
     dispatch(downvoteCommentById(comment._id!)).then((res) => {
       if (res.meta.requestStatus == "fulfilled") {
-        dispatch(downvoteSinglePostCommentSuccess(comment._id!));
+        if (source === "community-post") {
+          dispatch(downvoteCommunitySinglePostCommentSuccess(comment._id!));
+        } else if (source === "user-post") {
+          dispatch(downvoteSinglePostCommentSuccess(comment._id!));
+        }
       }
     });
+  };
+
+  const handleSwitchReplies: MouseEventHandler = (e) => {
+    e.stopPropagation();
+    if (source === "community-post") {
+      dispatch(switchRepliesCommunity(_id!));
+    } else if (source === "user-post") {
+      dispatch(switchReplies(_id!));
+    }
   };
 
   return (
@@ -101,7 +130,7 @@ function CommentCard({ comment }: { comment: CommentPartial }) {
               )}
               {VoteCount}
             </div>
-            <CommentDialog comment={comment}>
+            <CommentDialog source={source} comment={comment}>
               <div className="flex gap-x-2 items-center">
                 <MessageCircle strokeWidth={1} size={22} />
                 <div className="text-cl">{replies_count}</div>
@@ -124,15 +153,16 @@ function CommentCard({ comment }: { comment: CommentPartial }) {
             <div>
               <div className="-m-4">
                 {comment_reply?.map((reply) => {
-                  return <CommentReply key={reply._id} comment={reply} />;
+                  return (
+                    <CommentReply
+                      source={source}
+                      key={reply._id}
+                      comment={reply}
+                    />
+                  );
                 })}
               </div>
-              <div
-                onClick={() => {
-                  dispatch(switchReplies(_id!));
-                }}
-                className="text-blue-500"
-              >
+              <div onClick={handleSwitchReplies} className="text-blue-500">
                 Hide Replies
               </div>
             </div>

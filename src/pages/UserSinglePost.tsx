@@ -5,7 +5,10 @@ import UserPostWrapper from "@/components/common/UserPostWrapper";
 import ActionButtons from "@/components/usersinglepost/ActionButtons";
 import CommentSection from "@/components/usersinglepost/CommentSection";
 import CommentTextArea from "@/components/usersinglepost/CommentTextArea";
-import { createCommentOnPost } from "@/features/comment/commentSlice";
+import {
+  createCommentOnPost,
+  getCommentsOnPostById,
+} from "@/features/comment/commentSlice";
 import {
   addcommentSinglePostSuccess,
   fetchSinglePost,
@@ -34,7 +37,11 @@ function LeftContent() {
   const { postId } = useParams();
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(fetchSinglePost(postId));
+    dispatch(fetchSinglePost(postId)).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        dispatch(getCommentsOnPostById(postId));
+      }
+    });
   }, [dispatch, postId]);
 
   const postData = useAppSelector((state) => state.usersinglepost.post);
@@ -89,7 +96,7 @@ function LeftContent() {
           handleCommentChange={handleCommentChange}
           handleSubmit={handleSubmitComment}
         />
-        <CommentSection commentsData={commentsData} />
+        <CommentSection source="user-post" commentsData={commentsData} />
       </div>
     </div>
   );

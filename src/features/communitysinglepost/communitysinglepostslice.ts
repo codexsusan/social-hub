@@ -1,4 +1,4 @@
-import { CommentPartial } from "@/types/commentTypes";
+import { CommentPartial, NestedComment } from "@/types/commentTypes";
 import { PostPartial } from "@/types/postTypes";
 import { ResponseData } from "@/utils/httpUtils";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
@@ -105,7 +105,7 @@ const communitysinglepostslice = createSlice({
         return comment;
       });
     },
-    switchReplies: (
+    switchRepliesCommunity: (
       state: CommunitySinglePostInitialState,
       action: PayloadAction<CommentPartial["_id"]>
     ) => {
@@ -133,6 +133,70 @@ const communitysinglepostslice = createSlice({
             comment.downVoteStatus = false;
             comment.downvotes_count = comment.downvotes_count! - 1;
           }
+        }
+        return comment;
+      });
+    },
+    addRepliesCommunitySuccess: (
+      state: CommunitySinglePostInitialState,
+      action: PayloadAction<NestedComment>
+    ) => {
+      state.comment.comments = state.comment.comments.map((comment) => {
+        if (comment._id === action.payload.parent_id) {
+          comment.replies_count = comment.replies_count! - 1 + 2;
+          comment.comment_reply!.unshift(action.payload);
+        }
+        return comment;
+      });
+    },
+    upvoteRepliesCommunity: (
+      state: CommunitySinglePostInitialState,
+      action
+    ) => {
+      state.comment.comments = state.comment.comments.map((comment) => {
+        if (comment._id === action.payload.parent_id) {
+          comment.comment_reply = comment.comment_reply!.map((reply) => {
+            if (reply._id === action.payload._id) {
+              if (!reply.upVoteStatus) {
+                reply.upvotes_count! = reply.upvotes_count! - 1 + 2;
+                reply.upVoteStatus = true;
+                if (reply.downVoteStatus) {
+                  reply.downVoteStatus = false;
+                  reply.downvotes_count! = reply.downvotes_count! - 1;
+                }
+              } else {
+                reply.upVoteStatus = false;
+                reply.upvotes_count! = reply.upvotes_count! - 1;
+              }
+            }
+            return reply;
+          });
+        }
+        return comment;
+      });
+    },
+    downvoteRepliesCommunity: (
+      state: CommunitySinglePostInitialState,
+      action
+    ) => {
+      state.comment.comments = state.comment.comments.map((comment) => {
+        if (comment._id === action.payload.parent_id) {
+          comment.comment_reply = comment.comment_reply!.map((reply) => {
+            if (reply._id === action.payload._id) {
+              if (!reply.downVoteStatus) {
+                reply.downvotes_count! = reply.downvotes_count! - 1 + 2;
+                reply.downVoteStatus = true;
+                if (reply.upVoteStatus) {
+                  reply.upVoteStatus = false;
+                  reply.upvotes_count = reply.upvotes_count! - 1;
+                }
+              } else {
+                reply.downVoteStatus = false;
+                reply.downvotes_count = reply.downvotes_count! - 1;
+              }
+            }
+            return reply;
+          });
         }
         return comment;
       });
@@ -221,5 +285,8 @@ export const {
   addcommentCommunitySinglePostSuccess,
   upvoteCommunitySinglePostCommentSuccess,
   downvoteCommunitySinglePostCommentSuccess,
-  switchReplies,
+  switchRepliesCommunity,
+  addRepliesCommunitySuccess,
+  upvoteRepliesCommunity,
+  downvoteRepliesCommunity,
 } = communitysinglepostslice.actions;

@@ -9,14 +9,17 @@ import { useAppDispatch } from "@/app/hooks";
 import { createReplyOnComment } from "@/features/comment/commentSlice";
 import { hasProperty } from "@/utils/generalUtils";
 import { addRepliesSuccess } from "@/features/usersinglepost/usersinglepostslice";
+import { addRepliesCommunitySuccess } from "@/features/communitysinglepost/communitysinglepostslice";
 // import { addReplies } from "@/features/usersinglepost/usersinglepostslice";
 
 function CommentDialog({
   children,
   comment,
+  source,
 }: {
   children: React.ReactNode;
   comment: CommentPartial;
+  source: string;
 }) {
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
@@ -36,7 +39,11 @@ function CommentDialog({
     ).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
         if (hasProperty(res.payload, "data")) {
-          dispatch(addRepliesSuccess(res.payload.data.data));
+          if (source === "community-post") {
+            dispatch(addRepliesCommunitySuccess(res.payload.data.data));
+          } else if (source === "user-post") {
+            dispatch(addRepliesSuccess(res.payload.data.data));
+          }
           setIsOpen(false);
           setReply("");
         }

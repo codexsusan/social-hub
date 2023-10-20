@@ -5,7 +5,10 @@ import CommunityPostWrapper from "@/components/community/CommunityPostWrapper";
 import { ActionButtons } from "@/components/communitysinglepost/ActionButtons";
 import CommentSection from "@/components/usersinglepost/CommentSection";
 import CommentTextArea from "@/components/usersinglepost/CommentTextArea";
-import { createCommentOnPost } from "@/features/comment/commentSlice";
+import {
+  createCommentOnPost,
+  getCommentsOnPostById,
+} from "@/features/comment/commentSlice";
 import { addcommentCommunitySinglePostSuccess } from "@/features/communitysinglepost/communitysinglepostslice";
 import { fetchSinglePost } from "@/features/usersinglepost/usersinglepostslice";
 import { hasProperty } from "@/utils/generalUtils";
@@ -27,12 +30,18 @@ function LeftContent() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchSinglePost(postId));
+    dispatch(fetchSinglePost(postId)).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        dispatch(getCommentsOnPostById(postId));
+      }
+    });
   }, [dispatch, postId]);
 
   const postData = useAppSelector((state) => state.communitysinglepost.post);
 
-  const commentsData = useAppSelector((state) => state.usersinglepost.comment);
+  const commentsData = useAppSelector(
+    (state) => state.communitysinglepost.comment
+  );
 
   const content = JSON.parse(postData!.content!);
 
@@ -57,7 +66,7 @@ function LeftContent() {
 
   return (
     <div className="mt-4 flex justify-center">
-      <div className="w-3/4 rounded-sm bg-[#27272a] flex flex-col divide-y divide-slate-400/90 text-white cursor-pointer hover:bg-[#1e1e1e]">
+      <div className="rounded-sm bg-[#27272a] flex flex-col divide-y divide-slate-400/90 text-white cursor-pointer hover:bg-[#1e1e1e]">
         {!postData.loading ? (
           <CommunityPostWrapper
             optionsVisibility={true}
@@ -82,14 +91,15 @@ function LeftContent() {
           handleCommentChange={handleCommentChange}
           handleSubmit={handleSubmitComment}
         />
-        <CommentSection commentsData={commentsData} />
+        <CommentSection source="community-post" commentsData={commentsData} />
       </div>
     </div>
   );
 }
 
+// TODO: implement right content
 function RightContent() {
-  return <div></div>;
+  return <div>Right Content</div>;
 }
 
 export default CommunitySinglePost;

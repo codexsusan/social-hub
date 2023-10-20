@@ -139,7 +139,10 @@ const usersinglepost = createSlice({
         return comment;
       });
     },
-    addRepliesSuccess: (state, action: PayloadAction<NestedComment>) => {
+    addRepliesSuccess: (
+      state: UserSinglePostInitialState,
+      action: PayloadAction<NestedComment>
+    ) => {
       state.comment.comments = state.comment.comments.map((comment) => {
         if (comment._id === action.payload.parent_id) {
           comment.replies_count = comment.replies_count! + 1;

@@ -1,6 +1,6 @@
 import { useAppSelector } from "@/app/hooks";
 import { cn } from "@/lib/utils";
-import { ChangeEventHandler, MouseEventHandler, useRef, useState } from "react";
+import { ChangeEventHandler, MouseEventHandler, useRef } from "react";
 import { CustomAvatar } from "../common/CustomAvatar";
 import { Button } from "../ui/button";
 
@@ -19,6 +19,14 @@ function CommentTextArea({
   const postButtonRef = useRef<HTMLButtonElement>(null);
   const currentUser = useAppSelector((state) => state.user);
 
+  const updatedHandleSubmit: MouseEventHandler = (e) => {
+    e.stopPropagation();
+    handleSubmit(e);
+    textAreaRef.current!.style.height = "50px";
+    postButtonRef.current!.style.display = "none";
+  };
+
+  // TODO: handle redirect to author profile
   const handleRedirectToAuthorProfile = () => {};
   return (
     <div className={cn("flex gap-x-3 items-start px-2", className)}>
@@ -56,7 +64,7 @@ function CommentTextArea({
           </div>
         </div>
         <Button
-          onClick={handleSubmit}
+          onClick={updatedHandleSubmit}
           className="hidden"
           ref={postButtonRef}
           variant={"secondary"}

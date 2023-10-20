@@ -12,8 +12,15 @@ import {
   downvoteReplies,
   upvoteReplies,
 } from "@/features/usersinglepost/usersinglepostslice";
+import { downvoteRepliesCommunity, upvoteRepliesCommunity } from "@/features/communitysinglepost/communitysinglepostslice";
 
-function CommentReply({ comment }: { comment: CommentPartial }) {
+function CommentReply({
+  comment,
+  source,
+}: {
+  comment: CommentPartial;
+  source: string;
+}) {
   const {
     _id,
     upvotes_count,
@@ -36,17 +43,24 @@ function CommentReply({ comment }: { comment: CommentPartial }) {
     e.stopPropagation();
     dispatch(upvoteCommentById(_id)).then((res) => {
       if (res.meta.requestStatus == "fulfilled") {
-        dispatch(upvoteReplies({ parent_id, _id }));
+        if (source === "community-post") {
+          dispatch(upvoteRepliesCommunity({ parent_id, _id }));
+        } else if (source === "user-post") {
+          dispatch(upvoteReplies({ parent_id, _id }));
+        }
       }
     });
   };
 
-  // TODO:
   const handleDownVote: MouseEventHandler = (e) => {
     e.stopPropagation();
     dispatch(downvoteCommentById(_id)).then((res) => {
       if (res.meta.requestStatus == "fulfilled") {
-        dispatch(downvoteReplies({ parent_id, _id }));
+        if (source === "community-post") {
+          dispatch(downvoteRepliesCommunity({ parent_id, _id }));
+        } else if (source === "user-post") {
+          dispatch(downvoteReplies({ parent_id, _id }));
+        }
       }
     });
   };

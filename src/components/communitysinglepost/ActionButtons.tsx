@@ -47,7 +47,6 @@ export function ActionButtons() {
     });
   };
 
-  //   TODO: Implement the functionality
   const switchBookmarkCB: MouseEventHandler = (e) => {
     e.stopPropagation();
     dispatch(switchBookmark(postData._id)).then((res) => {
