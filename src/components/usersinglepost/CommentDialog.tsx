@@ -8,6 +8,7 @@ import CommentTextArea from "./CommentTextArea";
 import { useAppDispatch } from "@/app/hooks";
 import { createReplyOnComment } from "@/features/comment/commentSlice";
 import { hasProperty } from "@/utils/generalUtils";
+import { addRepliesSuccess } from "@/features/usersinglepost/usersinglepostslice";
 // import { addReplies } from "@/features/usersinglepost/usersinglepostslice";
 
 function CommentDialog({
@@ -35,9 +36,9 @@ function CommentDialog({
     ).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
         if (hasProperty(res.payload, "data")) {
+          dispatch(addRepliesSuccess(res.payload.data.data));
           setIsOpen(false);
           setReply("");
-          // addReplies(res.payload.data.data);
         }
       }
     });

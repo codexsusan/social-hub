@@ -16,6 +16,7 @@ import { UserSettings } from "@/pages/UserSettings";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Auth from "../pages/Auth";
 import UserSinglePost from "@/pages/UserSinglePost";
+import CommunitySinglePost from "@/pages/CommunitySinglePost";
 
 const router = createBrowserRouter([
   {
@@ -87,15 +88,14 @@ const router = createBrowserRouter([
     ),
   },
   // Community post single page
-  // {
-  //   path: "/c/:communityId/post/:postId" || "/u/:userId/post/:postId/",
-  //   element: (
-  //     <AppContainer>
-  //       <UpdatedSinglePost />
-  //       {/* <SinglePost /> */}
-  //     </AppContainer>
-  //   ),
-  // },
+  {
+    path: "/c/:communityId/post/:postId",
+    element: (
+      <AppContainer>
+        <CommunitySinglePost />
+      </AppContainer>
+    ),
+  },
   {
     path: "/u/:userId/post/:postId/",
     element: (

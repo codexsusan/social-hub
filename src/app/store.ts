@@ -7,6 +7,7 @@ import homeReducer from "@/features/home/homeSlice";
 import singlepostReducer from "@/features/general/singlePostSlice";
 import communityReducer from "@/features/community/communitySlice";
 import userSinglePostReducer from "@/features/usersinglepost/usersinglepostslice";
+import communitySinglePOstReducer from "@/features/communitysinglepost/communitysinglepostslice";
 import exploreReducer from "@/features/explore-community/exploreSlice";
 
 const store = configureStore({
@@ -17,6 +18,7 @@ const store = configureStore({
     home: homeReducer,
     singlepage: singlepostReducer,
     usersinglepost: userSinglePostReducer,
+    communitysinglepost: communitySinglePOstReducer,
     profile: profileReducer,
     community: communityReducer,
     explore: exploreReducer,

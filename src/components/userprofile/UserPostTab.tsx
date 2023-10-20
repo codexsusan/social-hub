@@ -54,6 +54,7 @@ function UserPostTab() {
         } else {
           return (
             <CommunityPostCard
+            optionsVisibility={false}
               type="profile-post"
               key={`${post._id}${index}`}
               post={post}

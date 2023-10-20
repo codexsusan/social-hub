@@ -10,7 +10,6 @@ import CommunityPostCard from "../post/CommunityPostCard";
 import PostCard from "../post/PostCard";
 import { toast } from "../ui/use-toast";
 
-
 function MostViewedHome() {
   const dispatch = useAppDispatch();
   const mostviewed = useAppSelector((state) => state.home.mostviewed);
@@ -66,6 +65,7 @@ function MostViewedHome() {
         } else {
           return (
             <CommunityPostCard
+              optionsVisibility={false}
               type="most-viewed"
               key={`${post._id}${index}`}
               post={post}

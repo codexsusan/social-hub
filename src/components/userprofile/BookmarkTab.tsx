@@ -54,6 +54,7 @@ function BookmarkTab() {
         } else {
           return (
             <CommunityPostCard
+            optionsVisibility={false}
               type="profile-bookmark"
               key={`${post._id}${index}`}
               post={post}

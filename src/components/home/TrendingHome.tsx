@@ -63,6 +63,7 @@ function TrendingHome() {
         } else {
           return (
             <CommunityPostCard
+              optionsVisibility={false}
               type="trending"
               key={`${post._id}${index}`}
               post={post}

@@ -11,11 +11,13 @@ interface Props {
   type?: string;
   post?: PostPartial;
   children?: React.ReactNode;
+  optionsVisibility: boolean;
 }
 
 function CommunityPostWrapper(props: Props) {
-  const { className, post, children } = props;
+  const { className, post, children, optionsVisibility } = props;
   const options: OptionType[] = [
+    // TODO: Add report and delete functionality
     {
       displayStatus: true,
       label: "Report",
@@ -70,7 +72,7 @@ function CommunityPostWrapper(props: Props) {
               </div>
             </div>
           </div>
-          <CustomDropdown options={options} />
+          {optionsVisibility && <CustomDropdown options={options} />}
         </div>
         <div className="w-full">{children}</div>
       </div>

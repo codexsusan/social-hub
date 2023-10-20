@@ -10,14 +10,15 @@ interface Props {
   className?: string;
   type?: string;
   post?: PostPartial;
+  optionsVisibility: boolean;
 }
 
 function CommunityPostCard(props: Props) {
-  const { className, post } = props;
+  const { className, post, optionsVisibility } = props;
   const navigate = useNavigate();
   const routeToSinglePost = (e: React.MouseEvent) => {
     e.preventDefault();
-    navigate(`/c/${post!.community_id}/post/${post!._id}`);
+    navigate(`/c/${post!.community._id}/post/${post!._id}`);
   };
 
   const content = post!.content!.length > 0 ? JSON.parse(post!.content!) : "";
@@ -29,7 +30,7 @@ function CommunityPostCard(props: Props) {
         className
       )}
     >
-      <CommunityPostWrapper post={post}>
+      <CommunityPostWrapper optionsVisibility={optionsVisibility} post={post}>
         <div className="text-base mt-2 space-y-4 flex-1">
           <div className="text-xl font-semibold">{post!.title}</div>
           <CustomOutput content={content} />

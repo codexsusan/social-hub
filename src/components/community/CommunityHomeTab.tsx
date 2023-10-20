@@ -53,6 +53,7 @@ function CommunityHomeTab() {
         {posts.map((post, index) => {
           return (
             <CommunityPostCard
+              optionsVisibility={false}
               className="w-full"
               key={`${post._id}${index}`}
               post={post}

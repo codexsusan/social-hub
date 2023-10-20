@@ -1,11 +1,11 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { switchBookmark } from "@/features/bookmarks/bookmarkSlice";
-import { downvotePost, upvotePost } from "@/features/post/postSlice";
 import {
-  downvoteSinglePostSuccess,
-  switchSinglePostBookmarkSuccess,
-  upvoteSinglePostSuccess,
-} from "@/features/usersinglepost/usersinglepostslice";
+  downvoteCommunitySinglePostSuccess,
+  switchCommunitySinglePostBookmarkSuccess,
+  upvoteCommunitySinglePostSuccess,
+} from "@/features/communitysinglepost/communitysinglepostslice";
+import { downvotePost, upvotePost } from "@/features/post/postSlice";
 import {
   ArrowBigDown,
   ArrowBigUp,
@@ -14,9 +14,9 @@ import {
 } from "lucide-react";
 import { MouseEventHandler } from "react";
 
-function ActionButtons() {
+export function ActionButtons() {
   const dispatch = useAppDispatch();
-  const postData = useAppSelector((state) => state.usersinglepost.post);
+  const postData = useAppSelector((state) => state.communitysinglepost.post);
   const {
     upVoteStatus,
     downVoteStatus,
@@ -27,14 +27,13 @@ function ActionButtons() {
   } = postData;
 
   const VoteCount = upvotes_count! - downvotes_count!;
-
-  const CommentCount = comment_count == 0 ? "Comment" : comment_count;
+  const CommentCount = comment_count === 0 ? "Comment" : comment_count;
 
   const handleUpVote: MouseEventHandler = (e) => {
     e.stopPropagation();
     dispatch(upvotePost(postData._id)).then((res) => {
-      if (res.meta.requestStatus == "fulfilled") {
-        dispatch(upvoteSinglePostSuccess());
+      if (res.meta.requestStatus === "fulfilled") {
+        dispatch(upvoteCommunitySinglePostSuccess());
       }
     });
   };
@@ -43,19 +42,21 @@ function ActionButtons() {
     e.stopPropagation();
     dispatch(downvotePost(postData._id)).then((res) => {
       if (res.meta.requestStatus == "fulfilled") {
-        dispatch(downvoteSinglePostSuccess());
+        dispatch(downvoteCommunitySinglePostSuccess());
       }
     });
   };
 
+  //   TODO: Implement the functionality
   const switchBookmarkCB: MouseEventHandler = (e) => {
     e.stopPropagation();
     dispatch(switchBookmark(postData._id)).then((res) => {
       if (res.meta.requestStatus == "fulfilled") {
-        dispatch(switchSinglePostBookmarkSuccess());
+        dispatch(switchCommunitySinglePostBookmarkSuccess());
       }
     });
   };
+
   return (
     <div className="w-full flex gap-x-8 justify-normal items-center">
       <div className="flex gap-x-2">
@@ -94,5 +95,3 @@ function ActionButtons() {
     </div>
   );
 }
-
-export default ActionButtons;

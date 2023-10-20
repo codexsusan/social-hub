@@ -70,6 +70,7 @@ function UserPostTab() {
         } else {
           return (
             <CommunityPostCard
+              optionsVisibility={false}
               type="latest"
               key={`${post._id}${index}`}
               post={post}

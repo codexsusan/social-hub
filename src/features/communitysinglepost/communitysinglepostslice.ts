@@ -1,39 +1,32 @@
-import { CommentPartial, NestedComment } from "@/types/commentTypes";
+import { CommentPartial } from "@/types/commentTypes";
 import { PostPartial } from "@/types/postTypes";
 import { ResponseData } from "@/utils/httpUtils";
-import { getPostUtils } from "@/utils/postUtils";
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { fetchSinglePost } from "../usersinglepost/usersinglepostslice";
 import {
   getCommentRepliesById,
   getCommentsOnPostById,
 } from "../comment/commentSlice";
-
-export const fetchSinglePost = createAsyncThunk(
-  "singlepost/fetch",
-  async (postId: PostPartial["_id"]) => {
-    return getPostUtils(postId).then((res) => res);
-  }
-);
 
 interface SinglePostInitialState extends PostPartial {
   loading: boolean;
   error: string;
 }
 
-interface CommentSectionInitialState {
+export interface CommentSectionInitialState {
   loading: boolean;
   error: string;
   comments: CommentPartial[];
 }
 
-type UserSinglePostInitialState = {
+type CommunitySinglePostInitialState = {
   error: string;
   loading: boolean;
   post: SinglePostInitialState;
   comment: CommentSectionInitialState;
 };
 
-const initialState: UserSinglePostInitialState = {
+const initialState: CommunitySinglePostInitialState = {
   error: "",
   loading: true,
   post: {
@@ -46,11 +39,13 @@ const initialState: UserSinglePostInitialState = {
   } as CommentSectionInitialState,
 };
 
-const usersinglepost = createSlice({
-  name: "usersinglepost",
+const communitysinglepostslice = createSlice({
+  name: "communitysinglepost",
   initialState,
   reducers: {
-    upvoteSinglePostSuccess: (state: UserSinglePostInitialState) => {
+    upvoteCommunitySinglePostSuccess: (
+      state: CommunitySinglePostInitialState
+    ) => {
       if (!state.post.upVoteStatus) {
         state.post.upvotes_count! = state.post.upvotes_count! - 1 + 2;
         state.post.upVoteStatus = true;
@@ -63,7 +58,9 @@ const usersinglepost = createSlice({
         state.post.upvotes_count! = state.post.upvotes_count! - 1;
       }
     },
-    downvoteSinglePostSuccess: (state: UserSinglePostInitialState) => {
+    downvoteCommunitySinglePostSuccess: (
+      state: CommunitySinglePostInitialState
+    ) => {
       if (!state.post.downVoteStatus) {
         state.post.downvotes_count! = state.post.downvotes_count! - 1 + 2;
         state.post.downVoteStatus = true;
@@ -76,18 +73,19 @@ const usersinglepost = createSlice({
         state.post.downvotes_count = state.post.downvotes_count! - 1;
       }
     },
-    switchSinglePostBookmarkSuccess: (state: UserSinglePostInitialState) => {
+    switchCommunitySinglePostBookmarkSuccess: (
+      state: CommunitySinglePostInitialState
+    ) => {
       state.post.isBookmarked = !state.post.isBookmarked;
     },
-    addcommentSinglePostSuccess: (
-      state: UserSinglePostInitialState,
+    addcommentCommunitySinglePostSuccess: (
+      state: CommunitySinglePostInitialState,
       action: PayloadAction<CommentPartial>
     ) => {
-      state.post.comment_count = state.post.comment_count! + 1;
       state.comment.comments.unshift(action.payload);
     },
-    upvoteSinglePostCommentSuccess: (
-      state: UserSinglePostInitialState,
+    upvoteCommunitySinglePostCommentSuccess: (
+      state: CommunitySinglePostInitialState,
       action: PayloadAction<CommentPartial["_id"]>
     ) => {
       state.comment.comments = state.comment.comments.map((comment) => {
@@ -108,7 +106,7 @@ const usersinglepost = createSlice({
       });
     },
     switchReplies: (
-      state: UserSinglePostInitialState,
+      state: CommunitySinglePostInitialState,
       action: PayloadAction<CommentPartial["_id"]>
     ) => {
       state.comment.comments = state.comment.comments.map((comment) => {
@@ -118,8 +116,8 @@ const usersinglepost = createSlice({
         return comment;
       });
     },
-    downvoteSinglePostCommentSuccess: (
-      state: UserSinglePostInitialState,
+    downvoteCommunitySinglePostCommentSuccess: (
+      state: CommunitySinglePostInitialState,
       action: PayloadAction<CommentPartial["_id"]>
     ) => {
       state.comment.comments = state.comment.comments.map((comment) => {
@@ -139,67 +137,11 @@ const usersinglepost = createSlice({
         return comment;
       });
     },
-    addRepliesSuccess: (state, action: PayloadAction<NestedComment>) => {
-      state.comment.comments = state.comment.comments.map((comment) => {
-        if (comment._id === action.payload.parent_id) {
-          comment.replies_count = comment.replies_count! + 1;
-          comment.comment_reply!.unshift(action.payload);
-        }
-        return comment;
-      });
-    },
-    // TODO: Take care of action state
-    upvoteReplies: (state: UserSinglePostInitialState, action) => {
-      state.comment.comments = state.comment.comments.map((comment) => {
-        if (comment._id === action.payload.parent_id) {
-          comment.comment_reply = comment.comment_reply!.map((reply) => {
-            if (reply._id === action.payload._id) {
-              if (!reply.upVoteStatus) {
-                reply.upvotes_count! = reply.upvotes_count! - 1 + 2;
-                reply.upVoteStatus = true;
-                if (reply.downVoteStatus) {
-                  reply.downVoteStatus = false;
-                  reply.downvotes_count! = reply.downvotes_count! - 1;
-                }
-              } else {
-                reply.upVoteStatus = false;
-                reply.upvotes_count! = reply.upvotes_count! - 1;
-              }
-            }
-            return reply;
-          });
-        }
-        return comment;
-      });
-    },
-    downvoteReplies: (state: UserSinglePostInitialState, action) => {
-      state.comment.comments = state.comment.comments.map((comment) => {
-        if (comment._id === action.payload.parent_id) {
-          comment.comment_reply = comment.comment_reply!.map((reply) => {
-            if (reply._id === action.payload._id) {
-              if (!reply.downVoteStatus) {
-                reply.downvotes_count! = reply.downvotes_count! - 1 + 2;
-                reply.downVoteStatus = true;
-                if (reply.upVoteStatus) {
-                  reply.upVoteStatus = false;
-                  reply.upvotes_count = reply.upvotes_count! - 1;
-                }
-              } else {
-                reply.downVoteStatus = false;
-                reply.downvotes_count = reply.downvotes_count! - 1;
-              }
-            }
-            return reply;
-          });
-        }
-        return comment;
-      });
-    },
   },
   extraReducers: (builder) => {
     builder.addCase(
       fetchSinglePost.pending,
-      (state: UserSinglePostInitialState) => {
+      (state: CommunitySinglePostInitialState) => {
         state.loading = true;
         state.post.loading = true;
         state.post.error = "";
@@ -208,7 +150,7 @@ const usersinglepost = createSlice({
     builder.addCase(
       fetchSinglePost.fulfilled,
       (
-        state: UserSinglePostInitialState,
+        state: CommunitySinglePostInitialState,
         action: PayloadAction<ResponseData>
       ) => {
         state.loading = false;
@@ -217,7 +159,7 @@ const usersinglepost = createSlice({
     );
     builder.addCase(
       fetchSinglePost.rejected,
-      (state: UserSinglePostInitialState, action) => {
+      (state: CommunitySinglePostInitialState, action) => {
         state.loading = false;
         state.post.loading = false;
         state.post.error = action.error.message!;
@@ -225,7 +167,7 @@ const usersinglepost = createSlice({
     );
     builder.addCase(
       getCommentsOnPostById.pending,
-      (state: UserSinglePostInitialState) => {
+      (state: CommunitySinglePostInitialState) => {
         state.comment.loading = true;
         state.comment.error = "";
       }
@@ -233,7 +175,7 @@ const usersinglepost = createSlice({
     builder.addCase(
       getCommentsOnPostById.fulfilled,
       (
-        state: UserSinglePostInitialState,
+        state: CommunitySinglePostInitialState,
         action: PayloadAction<ResponseData>
       ) => {
         state.comment.loading = false;
@@ -246,7 +188,7 @@ const usersinglepost = createSlice({
     );
     builder.addCase(
       getCommentsOnPostById.rejected,
-      (state: UserSinglePostInitialState) => {
+      (state: CommunitySinglePostInitialState) => {
         state.comment.loading = false;
         state.comment.error = "Something went wrong";
       }
@@ -254,7 +196,7 @@ const usersinglepost = createSlice({
     builder.addCase(
       getCommentRepliesById.fulfilled,
       (
-        state: UserSinglePostInitialState,
+        state: CommunitySinglePostInitialState,
         action: PayloadAction<ResponseData>
       ) => {
         const parentId = action.payload.data.data[0].parent_id;
@@ -270,17 +212,14 @@ const usersinglepost = createSlice({
   },
 });
 
-export default usersinglepost.reducer;
+export default communitysinglepostslice.reducer;
 
 export const {
-  upvoteSinglePostSuccess,
-  downvoteSinglePostSuccess,
-  switchSinglePostBookmarkSuccess,
-  addcommentSinglePostSuccess,
-  upvoteSinglePostCommentSuccess,
-  downvoteSinglePostCommentSuccess,
+  upvoteCommunitySinglePostSuccess,
+  downvoteCommunitySinglePostSuccess,
+  switchCommunitySinglePostBookmarkSuccess,
+  addcommentCommunitySinglePostSuccess,
+  upvoteCommunitySinglePostCommentSuccess,
+  downvoteCommunitySinglePostCommentSuccess,
   switchReplies,
-  addRepliesSuccess,
-  upvoteReplies,
-  downvoteReplies,
-} = usersinglepost.actions;
+} = communitysinglepostslice.actions;
