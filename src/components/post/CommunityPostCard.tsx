@@ -18,7 +18,7 @@ function CommunityPostCard(props: Props) {
   const navigate = useNavigate();
   const routeToSinglePost = (e: React.MouseEvent) => {
     e.preventDefault();
-    navigate(`/c/${post!.community._id}/post/${post!._id}`);
+    navigate(`/c/${post!.community._id}/post/${post!._id}?origin=${location.pathname}`);
   };
 
   const content = post!.content!.length > 0 ? JSON.parse(post!.content!) : "";

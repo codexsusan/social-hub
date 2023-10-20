@@ -5,6 +5,11 @@ import { Flag, Trash2 } from "lucide-react";
 import React from "react";
 import { CustomAvatar } from "../common/CustomAvatar";
 import CustomDropdown from "../common/CustomDropdown";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { deletePost, reportPost } from "@/features/post/postSlice";
+import { hasProperty } from "@/utils/generalUtils";
+import { toast } from "../ui/use-toast";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 interface Props {
   className?: string;
@@ -16,19 +21,50 @@ interface Props {
 
 function CommunityPostWrapper(props: Props) {
   const { className, post, children, optionsVisibility } = props;
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const origin = searchParams.get("origin");
+
+  const currentUser = useAppSelector((state) => state.user);
+
+  const reportPostCB = () => {
+    dispatch(reportPost(post!._id)).then((res) => {
+      if (hasProperty(res.payload, "data")) {
+        toast({
+          description: res.payload.data.message,
+          duration: 2000,
+          className: "bg-[#09090B] text-[#e2e2e2] border-none ",
+        });
+      }
+    });
+  };
+
+  const deletePostCB = () => {
+    dispatch(deletePost(post!._id)).then((res) => {
+      navigate(origin ? origin : "/", { replace: true });
+      if (hasProperty(res.payload, "data")) {
+        toast({
+          description: res.payload.data.message,
+          duration: 2000,
+          className: "bg-[#09090B] text-[#e2e2e2] border-none ",
+        });
+      }
+    });
+  };
+
   const options: OptionType[] = [
-    // TODO: Add report and delete functionality
     {
       displayStatus: true,
       label: "Report",
       icon: <Flag />,
-      action: () => {},
+      action: reportPostCB,
     },
     {
-      displayStatus: true,
+      displayStatus: post?.author?._id === currentUser._id,
       label: "Delete",
       icon: <Trash2 />,
-      action: () => {},
+      action: deletePostCB,
     },
   ];
   return (
