@@ -1,4 +1,8 @@
-import { MostViewedInitialState, PostPartial } from "@/types/postTypes";
+import {
+  MostViewedInitialState,
+  MultiplePostsInitialState,
+  PostPartial,
+} from "@/types/postTypes";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getMostViewedPostsUtils } from "@/utils/postUtils";
 import { ResponseData } from "@/utils/httpUtils";
@@ -9,10 +13,11 @@ import {
 } from "../utils";
 import { queryParamsType } from "@/types/generalTypes";
 
-const initialState: MostViewedInitialState = {
+const initialState: MultiplePostsInitialState = {
   error: "",
   loading: false,
   posts: [] as PostPartial[],
+  totalPages: 0,
 };
 
 export const fetchMostViewedPosts = createAsyncThunk(

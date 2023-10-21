@@ -76,4 +76,5 @@ export type MultiplePostsInitialState = {
   error: string;
   loading: boolean;
   posts: PostPartial[];
+  totalPages?: number;
 };

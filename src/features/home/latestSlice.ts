@@ -13,6 +13,7 @@ const initialState: MultiplePostsInitialState = {
   error: "",
   loading: false,
   posts: [] as PostPartial[],
+  totalPages: 0,
 };
 
 export const fetchLatestPosts = createAsyncThunk(

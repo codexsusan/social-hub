@@ -154,16 +154,20 @@ export default function PostActions(props: Props) {
   return (
     <div className="w-full flex gap-x-8 justify-normal items-center">
       <div className="flex gap-x-2">
-        <ArrowBigUp
-          onClick={handleUpVote}
-          strokeWidth={1}
-          fill={upVoteStatus ? "white" : ""}
-        />
-        <ArrowBigDown
-          onClick={handleDownVote}
-          strokeWidth={1}
-          fill={downVoteStatus ? "white" : undefined}
-        />
+        {upVoteStatus ? (
+          <ArrowBigUp onClick={handleUpVote} strokeWidth={1} fill={"white"} />
+        ) : (
+          <ArrowBigUp onClick={handleUpVote} strokeWidth={1} />
+        )}
+        {downVoteStatus ? (
+          <ArrowBigDown
+            onClick={handleDownVote}
+            strokeWidth={1}
+            fill={"white"}
+          />
+        ) : (
+          <ArrowBigDown onClick={handleDownVote} strokeWidth={1} />
+        )}
         {VoteCount}
       </div>
       <div onClick={handleCommentSection} className="flex gap-x-2">
@@ -171,12 +175,16 @@ export default function PostActions(props: Props) {
         {CommentCount}
       </div>
       <div>
-        <Bookmark
-          onClick={switchBookmarkCB}
-          strokeWidth={1}
-          size={22}
-          fill={isBookmarked ? "white" : undefined}
-        />
+        {isBookmarked ? (
+          <Bookmark
+            onClick={switchBookmarkCB}
+            strokeWidth={1}
+            size={22}
+            fill={"white"}
+          />
+        ) : (
+          <Bookmark onClick={switchBookmarkCB} strokeWidth={1} size={22} />
+        )}
       </div>
     </div>
   );

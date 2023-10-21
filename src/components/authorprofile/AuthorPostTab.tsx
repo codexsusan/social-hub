@@ -17,6 +17,7 @@ function UserPostTab() {
   const postData = useAppSelector((state) => state.author.post);
   const userPosts = useAppSelector((state) => state.author.post.posts);
   const data: AuthorRedirectData = location.state;
+  const [hasMore, setHasMore] = useState<boolean>(true);
 
   const [state, setState] = useState({
     page: 1,
@@ -27,11 +28,15 @@ function UserPostTab() {
     dispatch(
       fetchUpdatedPostsByUserId({
         id: data.id,
-        data: { page: state.page, limit: state.limit },
+        data: { page: state.page + 1, limit: state.limit },
       })
     );
-    // TODO: Handle hasMore check
-    setState({ ...state, page: state.page + 1 });
+    if (state.page < postData.totalPages!) {
+      setHasMore(true);
+      setState({ ...state, page: state.page + 1 });
+    } else {
+      setHasMore(false);
+    }
   };
 
   useEffect(() => {
@@ -54,16 +59,16 @@ function UserPostTab() {
       className="mt-0 flex flex-col gap-2"
       dataLength={userPosts.length}
       next={fetchMoreData}
-      hasMore={true}
+      hasMore={hasMore}
       loader={<Loader className="animate-spin text-white scroll" />}
     >
-      {userPosts.map((post, index) => {
+      {userPosts.map((post) => {
         if (post.community === null) {
           return (
             <PostCard
               optionsVisibility={false}
               type="latest"
-              key={`${post._id}${index}`}
+              key={`${post._id}`}
               post={post}
             />
           );
@@ -72,7 +77,7 @@ function UserPostTab() {
             <CommunityPostCard
               optionsVisibility={false}
               type="latest"
-              key={`${post._id}${index}`}
+              key={`${post._id}`}
               post={post}
             />
           );

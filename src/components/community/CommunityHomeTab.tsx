@@ -12,21 +12,27 @@ import CommunityPostCard from "../post/CommunityPostCard";
 function CommunityHomeTab() {
   const dispatch = useAppDispatch();
   const { communityId } = useParams();
-  const posts = useAppSelector((state) => state.community.home.posts.posts);
+  const postData = useAppSelector((state) => state.community.home.posts);
+  const posts = postData.posts;
   const [state, setState] = useState({
     page: 1,
     limit: 10,
   });
+  const [hasMore, setHasMore] = useState<boolean>(true);
 
   const fetchMoreData = () => {
     dispatch(
       fetchUpdatedAllPostsByCommunity({
         communityId: communityId!,
-        data: { page: state.page, limit: state.limit },
+        data: { page: state.page + 1, limit: state.limit },
       })
     );
-    // TODO: Handle hasMore check
-    setState({ ...state, page: state.page + 1 });
+    if (state.page < postData.totalPages!) {
+      setHasMore(true);
+      setState({ ...state, page: state.page + 1 });
+    } else {
+      setHasMore(false);
+    }
   };
 
   useEffect(() => {
@@ -47,7 +53,7 @@ function CommunityHomeTab() {
         className="mt-0 flex flex-col gap-2 w-full"
         dataLength={posts.length}
         next={fetchMoreData}
-        hasMore={true}
+        hasMore={hasMore}
         loader={<Loader className="animate-spin text-white scroll" />}
       >
         {posts.map((post, index) => {

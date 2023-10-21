@@ -19,12 +19,18 @@ function TrendingHome() {
     page: 1,
     limit: 10,
   });
+  const [hasMore, setHasMore] = useState<boolean>(true);
 
   const fetchMoreData = () => {
     dispatch(
-      fetchUpdatedTrendingPosts({ page: state.page, limit: state.limit })
+      fetchUpdatedTrendingPosts({ page: state.page + 1, limit: state.limit })
     );
-    setState({ ...state, page: state.page + 1 });
+    if (state.page < trending.totalPages!) {
+      setHasMore(true);
+      setState({ ...state, page: state.page + 1 });
+    } else {
+      setHasMore(false);
+    }
   };
   useEffect(() => {
     dispatch(fetchTrendingPosts({ page: 1, limit: 10 })).then((res) => {
@@ -47,7 +53,7 @@ function TrendingHome() {
       className="mt-0 flex flex-col gap-2"
       dataLength={trendingPosts.length}
       next={fetchMoreData}
-      hasMore={true}
+      hasMore={hasMore}
       loader={<Loader className="animate-spin text-white scroll" />}
     >
       {trendingPosts.map((post, index) => {

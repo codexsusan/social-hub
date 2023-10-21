@@ -23,6 +23,7 @@ const initialState: CommunityLists = {
   loading: false,
   error: "",
   communities: [],
+  totalPages: 0,
 };
 
 const communityLists = createSlice({
@@ -38,6 +39,7 @@ const communityLists = createSlice({
       (state, action: PayloadAction<ResponseData>) => {
         state.loading = false;
         state.communities = [...action.payload.data.data];
+        state.totalPages = action.payload.data.totalPages;
       }
     );
     builder.addCase(fetchAllCommunityByUser.rejected, (state, action) => {
@@ -56,6 +58,7 @@ const communityLists = createSlice({
       fetchUpdatedAllCommunityByUser.fulfilled,
       (state: CommunityLists, action: PayloadAction<ResponseData>) => {
         state.communities = state.communities.concat(action.payload.data.data);
+        state.totalPages = action.payload.data.totalPages;
       }
     );
   },

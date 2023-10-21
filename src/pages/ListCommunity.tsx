@@ -32,13 +32,16 @@ function ListCommunity() {
 
 function LeftContent() {
   const dispatch = useAppDispatch();
-  const communityList = useAppSelector(
+  const communityLists = useAppSelector((state) => state.community.lists);
+  const communityData = useAppSelector(
     (state) => state.community.lists.communities
   );
   const [state, setState] = useState({
     page: 1,
     limit: 10,
   });
+
+  const [hasMore, setHasMore] = useState<boolean>(true);
 
   const fetchMoreData = () => {
     dispatch(
@@ -47,22 +50,25 @@ function LeftContent() {
         limit: 10,
       })
     );
-    // TODO: Handle hasMore check
-    setState((prev) => {
-      return { ...prev, page: prev.page + 1 };
-    });
+
+    if (state.page < communityLists.totalPages!) {
+      setHasMore(true);
+      setState({ ...state, page: state.page + 1 });
+    } else {
+      setHasMore(false);
+    }
   };
 
   return (
     <div className="w-full p-2 rounded-md flex flex-col items-center gap-5">
       <InfiniteScroll
         className="mt-0 flex flex-col gap-4"
-        dataLength={communityList.length}
+        dataLength={communityData.length}
         next={fetchMoreData}
-        hasMore={true}
+        hasMore={hasMore}
         loader={<Loader className="animate-spin w-full text-white scroll" />}
       >
-        {communityList.map((community: PartialCommunity) => {
+        {communityData.map((community: PartialCommunity) => {
           return (
             <CommunityListCard key={community._id} community={community} />
           );

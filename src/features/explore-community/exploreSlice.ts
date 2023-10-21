@@ -8,12 +8,14 @@ export interface ExplorePageState {
   loading: boolean;
   error: string | null;
   communities: PartialCommunity[];
+  totalPages?: number;
 }
 
 const initialState: ExplorePageState = {
   loading: false,
   error: null,
   communities: [],
+  totalPages: 0,
 };
 
 export const fetchExploreCommunities = createAsyncThunk(
@@ -112,6 +114,7 @@ const exploreSlice = createSlice({
       (state: ExplorePageState, action: PayloadAction<ResponseData>) => {
         state.loading = false;
         state.communities = action.payload.data.data;
+        state.totalPages = action.payload.data.totalPages;
       }
     );
     builder.addCase(
@@ -125,6 +128,7 @@ const exploreSlice = createSlice({
       fetchUpdatedExploreCommunities.fulfilled,
       (state: ExplorePageState, action: PayloadAction<ResponseData>) => {
         state.communities = state.communities.concat(action.payload.data.data);
+        state.totalPages = action.payload.data.totalPages;
       }
     );
   },

@@ -37,7 +37,7 @@ function LeftContent() {
     page: 1,
     limit: 10,
   });
-
+  const [hasMore, setHasMore] = useState<boolean>(true);
   const fetchMoreData = () => {
     dispatch(
       fetchUpdatedExploreCommunities({
@@ -45,10 +45,12 @@ function LeftContent() {
         limit: 10,
       })
     );
-    // TODO: Handle hasMore check
-    setState((prev) => {
-      return { ...prev, page: prev.page + 1 };
-    });
+    if (state.page < exploreData.totalPages!) {
+      setHasMore(true);
+      setState({ ...state, page: state.page + 1 });
+    } else {
+      setHasMore(false);
+    }
   };
   return (
     <div className="w-full p-2 rounded-md flex flex-col gap-5">
@@ -56,7 +58,7 @@ function LeftContent() {
         className="mt-0 flex flex-col gap-4"
         dataLength={communitiesData.length}
         next={fetchMoreData}
-        hasMore={true}
+        hasMore={hasMore}
         loader={<Loader className="animate-spin text-white scroll" />}
       >
         {communitiesData.map((community: PartialCommunity, index) => {

@@ -17,6 +17,8 @@ function MostViewedHome() {
     (state) => state.home.mostviewed.posts
   );
 
+  const [hasMore, setHasMore] = useState<boolean>(true);
+
   const [state, setState] = useState({
     page: 1,
     limit: 10,
@@ -24,9 +26,14 @@ function MostViewedHome() {
 
   const fetchMoreData = () => {
     dispatch(
-      fetchUpdatedMostViewedPosts({ page: state.page, limit: state.limit })
+      fetchUpdatedMostViewedPosts({ page: state.page + 1, limit: state.limit })
     );
-    setState({ ...state, page: state.page + 1 });
+    if (state.page < mostviewed.totalPages!) {
+      setHasMore(true);
+      setState({ ...state, page: state.page + 1 });
+    } else {
+      setHasMore(false);
+    }
   };
 
   useEffect(() => {
@@ -49,7 +56,7 @@ function MostViewedHome() {
       className="mt-0 flex flex-col gap-2"
       dataLength={mostviewedPosts.length}
       next={fetchMoreData}
-      hasMore={true}
+      hasMore={hasMore}
       loader={<Loader className="animate-spin text-white scroll" />}
     >
       {mostviewedPosts.map((post, index) => {

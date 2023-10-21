@@ -144,7 +144,7 @@ const communitysinglepostslice = createSlice({
       state.comment.comments = state.comment.comments.map((comment) => {
         if (comment._id === action.payload.parent_id) {
           comment.replies_count = comment.replies_count! - 1 + 2;
-          comment.comment_reply!.unshift(action.payload);
+          comment.comment_reply?.unshift(action.payload);
         }
         return comment;
       });

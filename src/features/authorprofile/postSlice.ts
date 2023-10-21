@@ -14,6 +14,7 @@ const initialState: MultiplePostsInitialState = {
   error: "",
   loading: false,
   posts: [] as PostPartial[],
+  totalPages: 0,
 };
 
 export const fetchPostsByUserId = createAsyncThunk(
@@ -66,8 +67,10 @@ const postSlice = createSlice({
         state: MultiplePostsInitialState,
         action: PayloadAction<ResponseData>
       ) => {
+        console.log(action.payload);
         state.loading = false;
         state.posts = [...action.payload.data.data];
+        state.totalPages = action.payload.data.totalPages;
       }
     );
     builder.addCase(

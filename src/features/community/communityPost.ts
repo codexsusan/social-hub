@@ -41,6 +41,7 @@ const initialState: CommunityHomePostState = {
   posts: [] as CommunityPost[],
   loading: false,
   error: "",
+  totalPages: 0,
 };
 
 const communityPost = createSlice({

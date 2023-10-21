@@ -18,11 +18,18 @@ function UserPostTab() {
     page: 1,
     limit: 10,
   });
+  const [hasMore, setHasMore] = useState<boolean>(true);
 
   const fetchMoreData = () => {
-    dispatch(getUpdatedPostsByUser({ page: state.page, limit: state.limit }));
-    // TODO: Handle hasMore check
-    setState({ ...state, page: state.page + 1 });
+    dispatch(
+      getUpdatedPostsByUser({ page: state.page + 1, limit: state.limit })
+    );
+    if (state.page < postData.totalPages!) {
+      setHasMore(true);
+      setState({ ...state, page: state.page + 1 });
+    } else {
+      setHasMore(false);
+    }
   };
 
   useEffect(() => {
@@ -38,7 +45,7 @@ function UserPostTab() {
       className="mt-0 flex flex-col gap-2"
       dataLength={userPosts.length}
       next={fetchMoreData}
-      hasMore={true}
+      hasMore={hasMore}
       loader={<Loader className="animate-spin text-white scroll" />}
     >
       {userPosts.map((post, index) => {
@@ -54,7 +61,7 @@ function UserPostTab() {
         } else {
           return (
             <CommunityPostCard
-            optionsVisibility={false}
+              optionsVisibility={false}
               type="profile-post"
               key={`${post._id}${index}`}
               post={post}

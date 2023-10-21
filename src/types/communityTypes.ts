@@ -45,12 +45,14 @@ export interface CommunityHomePostState {
   posts: CommunityPost[];
   loading: boolean;
   error: string;
+  totalPages?: number;
 }
 
 export interface CommunityLists {
   loading: boolean;
   error: string;
   communities: Community[];
+  totalPages?: number;
 }
 
 export interface CommunityMultiSelectData {
