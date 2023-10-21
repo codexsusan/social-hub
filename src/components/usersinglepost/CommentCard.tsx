@@ -21,6 +21,8 @@ import {
   switchRepliesCommunity,
   upvoteCommunitySinglePostCommentSuccess,
 } from "@/features/communitysinglepost/communitysinglepostslice";
+import { AuthorRedirectData } from "@/types/userTypes";
+import { useNavigate } from "react-router-dom";
 
 function CommentCard({
   comment,
@@ -30,6 +32,7 @@ function CommentCard({
   source: string;
 }) {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const {
     _id,
@@ -47,8 +50,14 @@ function CommentCard({
       ? "Vote"
       : upvotes_count! - downvotes_count!;
 
-  // TODO: Handle Author Profile Redirect
-  const handleRedirectToAuthorProfile = () => {};
+  const handleRedirectToAuthorProfile: MouseEventHandler = (e) => {
+    e.stopPropagation();
+    const userDetails: AuthorRedirectData = {
+      id: comment.author?._id,
+      username: comment.author?.userName,
+    };
+    navigate(`/user/${comment.author?.userName}`, { state: userDetails });
+  };
   const handleUpVote: MouseEventHandler = (e) => {
     e.stopPropagation();
     dispatch(upvoteCommentById(comment._id!)).then((res) => {

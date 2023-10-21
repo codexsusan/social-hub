@@ -12,7 +12,12 @@ import {
   downvoteReplies,
   upvoteReplies,
 } from "@/features/usersinglepost/usersinglepostslice";
-import { downvoteRepliesCommunity, upvoteRepliesCommunity } from "@/features/communitysinglepost/communitysinglepostslice";
+import {
+  downvoteRepliesCommunity,
+  upvoteRepliesCommunity,
+} from "@/features/communitysinglepost/communitysinglepostslice";
+import { useNavigate } from "react-router-dom";
+import { AuthorRedirectData } from "@/types/userTypes";
 
 function CommentReply({
   comment,
@@ -31,12 +36,16 @@ function CommentReply({
   } = comment;
 
   const dispatch = useAppDispatch();
-
+  const navigate = useNavigate();
   const VoteCount = upvotes_count! - downvotes_count!;
 
-  // TODO: Handle this or else make a global handler for this one
   const handleRedirectToAuthorProfile: MouseEventHandler = (e) => {
     e.stopPropagation();
+    const userDetails: AuthorRedirectData = {
+      id: comment.author?._id,
+      username: comment.author?.userName,
+    };
+    navigate(`/user/${comment.author?.userName}`, { state: userDetails });
   };
 
   const handleUpVote: MouseEventHandler = (e) => {

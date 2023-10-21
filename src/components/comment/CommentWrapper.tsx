@@ -3,7 +3,6 @@ import { CustomAvatar } from "../common/CustomAvatar";
 import { cn } from "@/lib/utils";
 import { NestedComment } from "@/types/commentTypes";
 
-// TODO: Test with just nested comment
 type Props = {
   comment?: NestedComment ;
   children: React.ReactNode;

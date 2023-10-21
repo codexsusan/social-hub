@@ -53,7 +53,6 @@ function Editor(props: {
             class: ImageTool,
             config: {
               uploader: {
-                // TODO: Change this to some abstraction layer
                 async uploadByFile(file: File) {
                   const formData = new FormData();
                   formData.append("upload", file);
@@ -83,9 +82,6 @@ function Editor(props: {
   useEffect(() => {
     const init = async () => {
       await initializeEditor();
-      setTimeout(() => {
-        // Set focus to title
-      });
     };
     if (isMounted) {
       init();

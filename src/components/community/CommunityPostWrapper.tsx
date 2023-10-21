@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { OptionType } from "@/types/generalTypes";
 import { PostPartial } from "@/types/postTypes";
 import { Flag, Trash2 } from "lucide-react";
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import { CustomAvatar } from "../common/CustomAvatar";
 import CustomDropdown from "../common/CustomDropdown";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
@@ -10,6 +10,7 @@ import { deletePost, reportPost } from "@/features/post/postSlice";
 import { hasProperty } from "@/utils/generalUtils";
 import { toast } from "../ui/use-toast";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { AuthorRedirectData } from "@/types/userTypes";
 
 interface Props {
   className?: string;
@@ -27,6 +28,20 @@ function CommunityPostWrapper(props: Props) {
   const origin = searchParams.get("origin");
 
   const currentUser = useAppSelector((state) => state.user);
+
+  const handleRedirectToCommunityProfile: MouseEventHandler = (e) => {
+    e.stopPropagation();
+    navigate(`/c/${post?.community._id}`);
+  };
+
+  const handleRedirectToAuthorProfile: MouseEventHandler = (e) => {
+    e.stopPropagation();
+    const userDetails: AuthorRedirectData = {
+      id: post?.author?._id,
+      username: post?.author?.userName,
+    };
+    navigate(`/user/${post?.author?.userName}`, { state: userDetails });
+  };
 
   const reportPostCB = () => {
     dispatch(reportPost(post!._id)).then((res) => {
@@ -80,13 +95,13 @@ function CommunityPostWrapper(props: Props) {
           <div className="flex flex-col md:flex-row gap-x-2 items-start ">
             <div className="flex">
               <p
-                onClick={() => {}}
+                onClick={handleRedirectToCommunityProfile}
                 className="text-white opacity-70 text-base font-semibold hover:underline mr-1"
               >
                 {post?.community?.name}
               </p>
               <p
-                onClick={() => {}}
+                onClick={handleRedirectToCommunityProfile}
                 className="text-white opacity-60 text-base "
               >
                 @
@@ -97,12 +112,15 @@ function CommunityPostWrapper(props: Props) {
             </div>
             <div className="border-l pl-2 border-gray-400/30 flex items-center gap-x-2">
               <p>via </p>
-              <div className=" flex items-center ">
+              <div
+                onClick={handleRedirectToAuthorProfile}
+                className=" flex items-center "
+              >
                 <CustomAvatar
                   src={post?.author?.profilePic}
                   className="w-4 h-4 mr-1"
                 />
-                <span className="text-white opacity-60 text-base ">
+                <span className="text-white opacity-60 text-base hover:underline">
                   @{post?.author?.userName}
                 </span>
               </div>

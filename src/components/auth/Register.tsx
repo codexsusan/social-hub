@@ -31,7 +31,6 @@ function Register() {
 
   // TODO: Remove bio in backend and from here too
   // TODO: Use Validation for all the fields
-  // TODO: Add a loading state
 
   const [user, setUser] = React.useState<Partial<RegisterUser>>({
     firstName: "",

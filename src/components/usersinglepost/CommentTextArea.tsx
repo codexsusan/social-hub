@@ -1,8 +1,10 @@
 import { useAppSelector } from "@/app/hooks";
 import { cn } from "@/lib/utils";
+import { AuthorRedirectData } from "@/types/userTypes";
 import { ChangeEventHandler, MouseEventHandler, useRef } from "react";
 import { CustomAvatar } from "../common/CustomAvatar";
 import { Button } from "../ui/button";
+import { useNavigate } from "react-router-dom";
 
 function CommentTextArea({
   comment,
@@ -15,19 +17,19 @@ function CommentTextArea({
   handleCommentChange: ChangeEventHandler<HTMLTextAreaElement>;
   handleSubmit: MouseEventHandler;
 }) {
+  const navigate = useNavigate();
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const postButtonRef = useRef<HTMLButtonElement>(null);
   const currentUser = useAppSelector((state) => state.user);
 
-  const updatedHandleSubmit: MouseEventHandler = (e) => {
+  const handleRedirectToAuthorProfile: MouseEventHandler = (e) => {
     e.stopPropagation();
-    handleSubmit(e);
-    textAreaRef.current!.style.height = "50px";
-    postButtonRef.current!.style.display = "none";
+    const userDetails: AuthorRedirectData = {
+      id: currentUser._id,
+      username: currentUser.userName,
+    };
+    navigate(`/user/${currentUser.userName}`, { state: userDetails });
   };
-
-  // TODO: handle redirect to author profile
-  const handleRedirectToAuthorProfile = () => {};
   return (
     <div className={cn("flex gap-x-3 items-start px-2", className)}>
       <div className={"mt-1"} onClick={handleRedirectToAuthorProfile}>
@@ -64,7 +66,7 @@ function CommentTextArea({
           </div>
         </div>
         <Button
-          onClick={updatedHandleSubmit}
+          onClick={handleSubmit}
           className="hidden"
           ref={postButtonRef}
           variant={"secondary"}

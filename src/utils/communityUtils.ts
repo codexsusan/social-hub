@@ -23,7 +23,6 @@ export const updateCommunityDetailsUtils = async (
 };
 
 // Get All Community
-// TODO: Add query params
 export const getAllCommunityUtils = async (data: queryParamsType) => {
   const response = await request(
     "/api/community/get-all-communities",
