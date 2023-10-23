@@ -26,16 +26,18 @@ function Login() {
     setLoading(true);
     e.preventDefault();
     dispatch(loginUser(user)).then((res) => {
+      console.log(res.payload);
       if (hasProperty(res.payload, "data")) {
         setLoading(false);
-        if (res.payload.status == 200) {
-          toast({
-            title: "Welcome back.",
-            description: "We've logged you in.",
-            className: "bg-[#09090B] text-[#e2e2e2] border-[#e2e2e2]/20",
-            duration: 1000,
-          });
-          navigate("/home");
+        if (res.payload.status === 200) {
+          // toast({
+          //   title: "Welcome back.",
+          //   description: "We've logged you in.",
+          //   className: "bg-[#09090B] text-[#e2e2e2] border-[#e2e2e2]/20",
+          //   duration: 1000,
+          // });
+          navigate("/auth/otp/verify");
+          // navigate("/home");
         } else {
           toast({
             title: "Login failed.",

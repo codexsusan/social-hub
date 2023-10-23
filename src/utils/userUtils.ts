@@ -47,6 +47,13 @@ export const updateUserDetailsUtils = async (
   return response;
 };
 
+export const verifyOtpUtils = async (data: string) => {
+  const response = await request(`/api/auth/verify-otp`, "POST", {
+    otp: data,
+  });
+  return response;
+};
+
 export const resetPasswordUtils = async (data: {
   password: RegisterUser["password"];
   confirmPassword: RegisterUser["confirmPassword"];

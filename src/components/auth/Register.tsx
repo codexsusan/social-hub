@@ -29,9 +29,6 @@ function Register() {
   const dispatch = useAppDispatch();
   useDocumentTitle("Register | Social Hub");
 
-  // TODO: Remove bio in backend and from here too
-  // TODO: Use Validation for all the fields
-
   const [user, setUser] = React.useState<Partial<RegisterUser>>({
     firstName: "",
     lastName: "",
@@ -46,19 +43,25 @@ function Register() {
 
   const checkPasswordMatch = () => {
     if (user.password !== user.confirmPassword) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  const handleRegister = () => {
+    const match = checkPasswordMatch();
+    if (!match) {
       return toast({
         title: "Password didn't match",
         className: "bg-[#09090B] text-[#e2e2e2] border-[#e2e2e2]/20",
         duration: 1000,
       });
     }
-  };
-
-  const handleRegister = () => {
-    checkPasswordMatch();
     dispatch(registerUser(user)).then((res) => {
       if (hasProperty(res.payload, "status")) {
-        if (res.payload.status === 201) {
+        console.log(res.payload);
+        if (res.payload.status === 200) {
           toast({
             title: "Account created.",
             description: res.payload.data.message,

@@ -48,6 +48,14 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: "/auth/otp/verify",
+    element: (
+      <AuthContainer authMethod="otp-verify">
+        <Auth authMethod="otp-verify" />
+      </AuthContainer>
+    ),
+  },
+  {
     path: "/submit" || "/submit/?type=:type" || "/submit?comm=:comm",
     element: (
       <AppContainer>

@@ -1,4 +1,4 @@
-export type authMethod = "login" | "signup";
+export type authMethod = "login" | "signup" | "otp-verify";
 
 export type contentType = "post" | "comment";
 
