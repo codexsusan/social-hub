@@ -8,6 +8,7 @@ import ProfileImage from "../common/ProfileImage";
 import { Button } from "../ui/button";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { CustomAvatar } from "../common/CustomAvatar";
 
 function CommunityCover() {
   const { communityId } = useParams();
@@ -34,7 +35,12 @@ function CommunityCover() {
           <div className="w-28 h-28 bg-black rounded-full overflow-hidden relative">
             {/* Keep this in community setting section */}
             {/* <CommunityProfilePictureUpdate /> */}
-            <ProfileImage src={icon_image} />
+            {/* <ProfileImage src={icon_image} /> */}
+            <CustomAvatar
+              src={icon_image}
+              fallBack={displayName?.charAt(0)}
+              className="w-full h-full mr-1"
+            />
           </div>
           <div className=" flex justify-between mb-3 flex-grow mr-10">
             <div>
