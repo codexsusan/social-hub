@@ -35,15 +35,18 @@ function BookmarkTab() {
   };
   useEffect(() => {
     dispatch(getBookmarks({ page: 1, limit: 10 }));
-    if(bookmarkPosts.length === 0) {
+    if (bookmarkPosts.length === 0) {
       setHasMore(false);
     }
   }, [dispatch, bookmarkPosts]);
-  return bookmark.loading ? (
-    <div className="flex justify-center">
-      <Loader className=" animate-spin my-4" />
-    </div>
-  ) : (
+  // return bookmark.loading ? (
+  //   <div className="flex justify-center">
+  //     <Loader className=" animate-spin my-4" />
+  //   </div>
+  // ) : (
+
+  // );
+  return (
     <InfiniteScroll
       className="mt-0 flex flex-col gap-2"
       dataLength={bookmarkPosts.length}
