@@ -26,22 +26,35 @@ function AddCommunity() {
 
   const handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
-    dispatch(createCommunity(community)).then((res) => {
-      if (
-        hasProperty(res.payload, "data") &&
-        res.meta.requestStatus === "fulfilled"
-      ) {
-        toast({
-          title: res.payload.data.message,
-          className: "bg-[#09090B] text-[#e2e2e2] border-none ",
-          duration: 2000,
-        });
-        if (res.payload.status === 201) {
-          navigate(`/c/${res.payload.data._id}`);
-          dispatch(clear());
+    const check =
+      community.displayName?.length !== 0 &&
+      community.name?.length !== 0 &&
+      community.description?.length !== 0;
+    if (check) {
+      dispatch(createCommunity(community)).then((res) => {
+        if (
+          hasProperty(res.payload, "data") &&
+          res.meta.requestStatus === "fulfilled"
+        ) {
+          toast({
+            title: res.payload.data.message,
+            className: "bg-[#09090B] text-[#e2e2e2] border-none ",
+            duration: 2000,
+          });
+          if (res.payload.status === 201) {
+            navigate(`/c/${res.payload.data._id}`);
+            dispatch(clear());
+          }
         }
-      }
-    });
+      });
+    } else {
+      toast({
+        title: "Please fill all field properly.",
+        className: "bg-[#09090B] text-[#e2e2e2] border-none ",
+        duration: 2000,
+      });
+      setPage(1);
+    }
   };
   return (
     <div className="w-full flex flex-col flex-1 items-center p-4 gap-y-2 overflow-auto">

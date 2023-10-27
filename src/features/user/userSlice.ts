@@ -43,6 +43,7 @@ export const registerUser = createAsyncThunk(
     return userSignupUtils(user).then((res) => res);
   }
 );
+
 // Upload Image
 export const uploadUserImage = createAsyncThunk(
   "user/uploadUserImage",

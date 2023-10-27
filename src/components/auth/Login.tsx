@@ -26,7 +26,6 @@ function Login() {
     setLoading(true);
     e.preventDefault();
     dispatch(loginUser(user)).then((res) => {
-      console.log(res.payload);
       if (hasProperty(res.payload, "data")) {
         setLoading(false);
         if (res.payload.status === 200) {
@@ -36,7 +35,6 @@ function Login() {
             className: "bg-[#09090B] text-[#e2e2e2] border-[#e2e2e2]/20",
             duration: 1000,
           });
-          // navigate("/auth/otp/verify");
           navigate("/home");
         } else {
           toast({
@@ -51,9 +49,6 @@ function Login() {
   };
 
   return (
-    // bg-[#030303]
-    // [#fbfffe]
-    // bg-[#AFFEFA]
     <div className="w-full  flex flex-col flex-1 items-center justify-center p-4 gap-y-2 overflow-auto  bg-[#fbfffe]">
       <div className="xl:w-2/5 lg:w-3/5 md:w-4/5 w-full p-2 rounded-sm flex flex-col gap-2">
         <div className="w-full text-center">
@@ -74,7 +69,7 @@ function Login() {
               id="user-email"
               label="Email"
               placeholder="Enter your email"
-              type="text"
+              type="email"
             />
             <InputWithLabel
               value={user.password}

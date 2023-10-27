@@ -18,6 +18,7 @@ import Auth from "../pages/Auth";
 import UserSinglePost from "@/pages/UserSinglePost";
 import CommunitySinglePost from "@/pages/CommunitySinglePost";
 import SearchPage from "@/pages/SearchPage";
+import ErrorPage from "@/pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
@@ -84,7 +85,7 @@ const router = createBrowserRouter([
     path: "/search",
     element: (
       <AppContainer>
-        <SearchPage/>
+        <SearchPage />
       </AppContainer>
     ),
   },
@@ -179,7 +180,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/*",
-    element: <>404 page</>,
+    element: <ErrorPage />,
   },
 ]);
 

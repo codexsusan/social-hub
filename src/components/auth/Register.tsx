@@ -61,14 +61,14 @@ function Register() {
     dispatch(registerUser(user)).then((res) => {
       if (hasProperty(res.payload, "status")) {
         console.log(res.payload);
-        if (res.payload.status === 200) {
+        if (res.payload.status === 201) {
           toast({
             title: "Account created.",
             description: res.payload.data.message,
             className: "bg-[#09090B] text-[#e2e2e2] border-[#e2e2e2]/20",
             duration: 1000,
           });
-          navigate("/home");
+          navigate("/auth/otp/verify");
         } else {
           toast({
             title: "Unable to create an account.",
@@ -227,7 +227,9 @@ function ChooseGender({
         placeholder="Select your gender"
       />
       <div className="w-full flex justify-between">
-        <Button variant={"outline"} onClick={decrStep}>Previous</Button>
+        <Button variant={"outline"} onClick={decrStep}>
+          Previous
+        </Button>
         <Button onClick={incrStep}>Next</Button>
       </div>
     </div>
@@ -294,7 +296,9 @@ function CredentialForm({
           Sign up
         </Button>
       )}
-      <Button variant={"outline"} onClick={decrStep}>Previous</Button>
+      <Button variant={"outline"} onClick={decrStep}>
+        Previous
+      </Button>
     </div>
   );
 }

@@ -20,7 +20,10 @@ export function InputWithLabel(props: Props) {
         {props.label}
       </Label>
       <Input
-        className={cn("border border-gray-500/30 bg-[#AFFEFA]", props.inputClassName)}
+        className={cn(
+          "border border-gray-500/30 bg-[#AFFEFA]",
+          props.inputClassName
+        )}
         value={props.value!}
         onChange={(e) => {
           props.onValueChange!(e.target.value);
@@ -28,6 +31,7 @@ export function InputWithLabel(props: Props) {
         type={props.type}
         id={props.id}
         placeholder={props.placeholder}
+        required={true}
       />
     </div>
   );
