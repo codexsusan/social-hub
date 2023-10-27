@@ -4,7 +4,6 @@ import {
   joinCommunity,
   leaveCommunity,
 } from "@/features/community/communityInfo";
-import ProfileImage from "../common/ProfileImage";
 import { Button } from "../ui/button";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
