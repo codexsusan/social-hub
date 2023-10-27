@@ -1,7 +1,13 @@
-import AppRouter from './router/AppRouter'
+import AppRouter from "./router/AppRouter";
+import { Analytics } from "@vercel/analytics/react";
 
 function App() {
-  return <AppRouter />
+  return (
+    <>
+      <Analytics />
+      <AppRouter />
+    </>
+  );
 }
 
-export default App
+export default App;

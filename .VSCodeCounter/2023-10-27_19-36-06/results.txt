@@ -1,0 +1,239 @@
+Date : 2023-10-27 19:36:06
+Directory : /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src
+Total : 167 files,  11588 codes, 249 comments, 1025 blanks, all 12862 lines
+
+Languages
++----------------+------------+------------+------------+------------+------------+
+| language       | files      | code       | comment    | blank      | total      |
++----------------+------------+------------+------------+------------+------------+
+| TypeScript JSX |        113 |      7,538 |        111 |        641 |      8,290 |
+| TypeScript     |         51 |      3,949 |        135 |        368 |      4,452 |
+| CSS            |          3 |        101 |          3 |         16 |        120 |
++----------------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                        | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                           |        167 |     11,588 |        249 |      1,025 |     12,862 |
+| . (Files)                                                                                                                   |          5 |        100 |          4 |         19 |        123 |
+| app                                                                                                                         |          2 |         32 |          0 |          5 |         37 |
+| components                                                                                                                  |         90 |      6,179 |         99 |        541 |      6,819 |
+| components/addcommunity                                                                                                     |          1 |        103 |          0 |          6 |        109 |
+| components/auth                                                                                                             |          3 |        471 |          4 |         26 |        501 |
+| components/authorprofile                                                                                                    |          2 |        120 |          0 |         10 |        130 |
+| components/comment                                                                                                          |          8 |        431 |          4 |         43 |        478 |
+| components/common                                                                                                           |         18 |        923 |         10 |         84 |      1,017 |
+| components/community                                                                                                        |          4 |        300 |          9 |         26 |        335 |
+| components/communitysettings                                                                                                |          7 |        655 |         14 |         45 |        714 |
+| components/communitysinglepost                                                                                              |          1 |         96 |          0 |          7 |        103 |
+| components/communityusers                                                                                                   |          5 |        201 |         24 |         27 |        252 |
+| components/explorecommunity                                                                                                 |          1 |        101 |         14 |          5 |        120 |
+| components/home                                                                                                             |          4 |        284 |          0 |         24 |        308 |
+| components/post                                                                                                             |          3 |        267 |          0 |         19 |        286 |
+| components/skeleton                                                                                                         |          3 |         51 |          0 |          9 |         60 |
+| components/submit                                                                                                           |          1 |         51 |          0 |          6 |         57 |
+| components/ui                                                                                                               |         17 |        872 |          7 |        137 |      1,016 |
+| components/userprofile                                                                                                      |          5 |        250 |          1 |         23 |        274 |
+| components/usersetting                                                                                                      |          2 |        529 |         11 |         16 |        556 |
+| components/usersinglepost                                                                                                   |          5 |        474 |          1 |         28 |        503 |
+| features                                                                                                                    |         32 |      2,974 |         67 |        213 |      3,254 |
+| features (Files)                                                                                                            |          1 |         49 |          0 |          4 |         53 |
+| features/authorprofile                                                                                                      |          3 |        159 |          2 |         14 |        175 |
+| features/bookmarks                                                                                                          |          1 |         63 |          2 |          6 |         71 |
+| features/comment                                                                                                            |          1 |        327 |         17 |         16 |        360 |
+| features/community                                                                                                          |          7 |        458 |          1 |         39 |        498 |
+| features/communitysettings                                                                                                  |          2 |        178 |          0 |         14 |        192 |
+| features/communitysinglepost                                                                                                |          1 |        285 |          0 |          8 |        293 |
+| features/communityusers                                                                                                     |          3 |        137 |          0 |         20 |        157 |
+| features/explore-community                                                                                                  |          1 |        133 |          0 |          8 |        141 |
+| features/general                                                                                                            |          1 |          8 |          0 |          3 |         11 |
+| features/home                                                                                                               |          4 |        299 |          0 |         25 |        324 |
+| features/post                                                                                                               |          1 |        154 |         26 |         14 |        194 |
+| features/profile                                                                                                            |          3 |        210 |          0 |         16 |        226 |
+| features/submit                                                                                                             |          1 |         70 |          2 |          6 |         78 |
+| features/user                                                                                                               |          1 |        164 |         16 |         11 |        191 |
+| features/usersinglepost                                                                                                     |          1 |        280 |          1 |          9 |        290 |
+| hoc                                                                                                                         |          2 |         24 |          0 |          6 |         30 |
+| hooks                                                                                                                       |          2 |         18 |          0 |          5 |         23 |
+| lib                                                                                                                         |          1 |          5 |          0 |          2 |          7 |
+| pages                                                                                                                       |         17 |      1,286 |          7 |        113 |      1,406 |
+| router                                                                                                                      |          1 |        170 |          8 |          2 |        180 |
+| styles                                                                                                                      |          1 |         21 |          0 |          3 |         24 |
+| types                                                                                                                       |          6 |        241 |          3 |         42 |        286 |
+| utils                                                                                                                       |          8 |        538 |         61 |         74 |        673 |
++-----------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| filename                                                                                                                    | language       | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/App.css                                                  | CSS            |          0 |          0 |          1 |          1 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/App.tsx                                                  | TypeScript JSX |          5 |          0 |          3 |          8 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/app/hooks.ts                                             | TypeScript     |          4 |          0 |          1 |          5 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/app/store.ts                                             | TypeScript     |         28 |          0 |          4 |         32 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/addcommunity/AddCommunityForm.tsx             | TypeScript JSX |        103 |          0 |          6 |        109 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/auth/Login.tsx                                | TypeScript JSX |        105 |          4 |          7 |        116 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/auth/OtpVerify.tsx                            | TypeScript JSX |         78 |          0 |          4 |         82 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/auth/Register.tsx                             | TypeScript JSX |        288 |          0 |         15 |        303 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/authorprofile/AuthorCoverSection.tsx          | TypeScript JSX |         35 |          0 |          4 |         39 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/authorprofile/AuthorPostTab.tsx               | TypeScript JSX |         85 |          0 |          6 |         91 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/comment/AddCommentWrapper.tsx                 | TypeScript JSX |         53 |          0 |          6 |         59 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/comment/CommentActions.tsx                    | TypeScript JSX |         81 |          0 |          8 |         89 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/comment/CommentButton.tsx                     | TypeScript JSX |         24 |          0 |          4 |         28 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/comment/CommentEditor.tsx                     | TypeScript JSX |         20 |          0 |          3 |         23 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/comment/CommentReply.tsx                      | TypeScript JSX |         47 |          1 |          4 |         52 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/comment/CommentReplyAction.tsx                | TypeScript JSX |         65 |          2 |          7 |         74 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/comment/CommentSection.tsx                    | TypeScript JSX |         92 |          0 |          7 |         99 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/comment/CommentWrapper.tsx                    | TypeScript JSX |         49 |          1 |          4 |         54 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/common/AppNavbar.tsx                          | TypeScript JSX |        153 |          3 |          8 |        164 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/common/AuthNavbar.tsx                         | TypeScript JSX |         41 |          2 |          3 |         46 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/common/CommentReply.tsx                       | TypeScript JSX |        123 |          1 |          8 |        132 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/common/CustomAvatar.tsx                       | TypeScript JSX |         26 |          0 |          3 |         29 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/common/CustomDropdown.tsx                     | TypeScript JSX |         60 |          0 |          3 |         63 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/common/CustomOutput.tsx                       | TypeScript JSX |         29 |          3 |          6 |         38 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/common/CustomSelect.tsx                       | TypeScript JSX |         43 |          0 |          5 |         48 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/common/DialogModal.tsx                        | TypeScript JSX |         46 |          0 |          2 |         48 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/common/Editor.tsx                             | TypeScript JSX |         97 |          0 |          8 |        105 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/common/FileUploadButton.tsx                   | TypeScript JSX |         11 |          1 |          3 |         15 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/common/InputWithLabel.tsx                     | TypeScript JSX |         32 |          0 |          3 |         35 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/common/PageLoading.tsx                        | TypeScript JSX |         12 |          0 |          3 |         15 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/common/PageWrapper.tsx                        | TypeScript JSX |         25 |          0 |          3 |         28 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/common/PostSectionWrapper.tsx                 | TypeScript JSX |          9 |          0 |          3 |         12 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/common/ProfileImage.tsx                       | TypeScript JSX |         17 |          0 |          3 |         20 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/common/ProfileUploadButton.tsx                | TypeScript JSX |         73 |          0 |          6 |         79 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/common/SearchBar.tsx                          | TypeScript JSX |         17 |          0 |          2 |         19 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/common/UserPostWrapper.tsx                    | TypeScript JSX |        109 |          0 |         12 |        121 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/community/CommunityCover.tsx                  | TypeScript JSX |         54 |          2 |          7 |         63 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/community/CommunityHomeTab.tsx                | TypeScript JSX |         70 |          0 |          6 |         76 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/community/CommunityPostWrapper.tsx            | TypeScript JSX |        134 |          0 |         10 |        144 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/community/CommunityProfilePictureUpdate.tsx   | TypeScript JSX |         42 |          7 |          3 |         52 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/communitysettings/AddModeratorDialog.tsx      | TypeScript JSX |         95 |          0 |          5 |        100 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/communitysettings/AppearanceSection.tsx       | TypeScript JSX |         64 |          0 |          4 |         68 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/communitysettings/GeneralSection.tsx          | TypeScript JSX |        257 |          1 |         14 |        272 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/communitysettings/GuidelineDialog.tsx         | TypeScript JSX |         97 |          5 |          8 |        110 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/communitysettings/ManageSection.tsx           | TypeScript JSX |         34 |          8 |          4 |         46 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/communitysettings/MemberRequestDialog.tsx     | TypeScript JSX |         29 |          0 |          3 |         32 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/communitysettings/SwitchModeratorCard.tsx     | TypeScript JSX |         79 |          0 |          7 |         86 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/communitysinglepost/ActionButtons.tsx         | TypeScript JSX |         96 |          0 |          7 |        103 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/communityusers/AdminSection.tsx               | TypeScript JSX |          8 |          0 |          3 |         11 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/communityusers/MemberCard.tsx                 | TypeScript JSX |         37 |          0 |          4 |         41 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/communityusers/MemberSection.tsx              | TypeScript JSX |         76 |          0 |          7 |         83 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/communityusers/MembersTab.tsx                 | TypeScript JSX |          5 |         18 |          3 |         26 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/communityusers/ModeratorSection.tsx           | TypeScript JSX |         75 |          6 |         10 |         91 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/explorecommunity/CommunityListCard.tsx        | TypeScript JSX |        101 |         14 |          5 |        120 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/home/CreatePost.tsx                           | TypeScript JSX |         45 |          0 |          4 |         49 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/home/LatestHome.tsx                           | TypeScript JSX |         79 |          0 |          7 |         86 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/home/MostViewedHome.tsx                       | TypeScript JSX |         81 |          0 |          7 |         88 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/home/TrendingHome.tsx                         | TypeScript JSX |         79 |          0 |          6 |         85 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/post/CommunityPostCard.tsx                    | TypeScript JSX |         40 |          0 |          5 |         45 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/post/PostActions.tsx                          | TypeScript JSX |        184 |          0 |          9 |        193 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/post/PostCard.tsx                             | TypeScript JSX |         43 |          0 |          5 |         48 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/skeleton/CommunityHomeSkeleton.tsx            | TypeScript JSX |         12 |          0 |          3 |         15 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/skeleton/CoverSkeleton.tsx                    | TypeScript JSX |         28 |          0 |          3 |         31 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/skeleton/CreatePostSkeleton.tsx               | TypeScript JSX |         11 |          0 |          3 |         14 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/submit/EditorView.tsx                         | TypeScript JSX |         51 |          0 |          6 |         57 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/ui/aspect-ratio.tsx                           | TypeScript JSX |          3 |          0 |          3 |          6 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/ui/avatar.tsx                                 | TypeScript JSX |         43 |          0 |          6 |         49 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/ui/button.tsx                                 | TypeScript JSX |         51 |          0 |          6 |         57 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/ui/card.tsx                                   | TypeScript JSX |         71 |          0 |          9 |         80 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/ui/dialog.tsx                                 | TypeScript JSX |         98 |          4 |         13 |        115 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/ui/hover-card.tsx                             | TypeScript JSX |         22 |          0 |          6 |         28 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/ui/input.tsx                                  | TypeScript JSX |         21 |          0 |          5 |         26 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/ui/label.tsx                                  | TypeScript JSX |         20 |          0 |          5 |         25 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/ui/popover.tsx                                | TypeScript JSX |         24 |          0 |          6 |         30 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/ui/select.tsx                                 | TypeScript JSX |        108 |          0 |         12 |        120 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/ui/separator.tsx                              | TypeScript JSX |         26 |          0 |          4 |         30 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/ui/skeleton.tsx                               | TypeScript JSX |         13 |          0 |          3 |         16 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/ui/tabs.tsx                                   | TypeScript JSX |         47 |          0 |          7 |         54 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/ui/textarea.tsx                               | TypeScript JSX |         20 |          0 |          5 |         25 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/ui/toast.tsx                                  | TypeScript JSX |        115 |          0 |         13 |        128 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/ui/toaster.tsx                                | TypeScript JSX |         31 |          0 |          3 |         34 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/ui/use-toast.ts                               | TypeScript     |        159 |          3 |         31 |        193 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/userprofile/BookmarkTab.tsx                   | TypeScript JSX |         73 |          1 |          6 |         80 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/userprofile/ProfilePictureUpdate.tsx          | TypeScript JSX |         51 |          0 |          3 |         54 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/userprofile/UserCoverSection.tsx              | TypeScript JSX |         35 |          0 |          5 |         40 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/userprofile/UserPostTab.tsx                   | TypeScript JSX |         70 |          0 |          7 |         77 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/userprofile/UserProfileTab.tsx                | TypeScript JSX |         21 |          0 |          2 |         23 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/usersetting/AccountTab.tsx                    | TypeScript JSX |        431 |          7 |         12 |        450 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/usersetting/ProfileTab.tsx                    | TypeScript JSX |         98 |          4 |          4 |        106 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/usersinglepost/ActionButtons.tsx              | TypeScript JSX |         91 |          0 |          8 |         99 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/usersinglepost/CommentCard.tsx                | TypeScript JSX |        179 |          0 |          9 |        188 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/usersinglepost/CommentDialog.tsx              | TypeScript JSX |         95 |          1 |          4 |        100 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/usersinglepost/CommentSection.tsx             | TypeScript JSX |         31 |          0 |          3 |         34 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/components/usersinglepost/CommentTextArea.tsx            | TypeScript JSX |         78 |          0 |          4 |         82 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/authorprofile/authorSlice.ts                    | TypeScript     |          8 |          0 |          3 |         11 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/authorprofile/infoSlice.ts                      | TypeScript     |         52 |          0 |          5 |         57 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/authorprofile/postSlice.ts                      | TypeScript     |         99 |          2 |          6 |        107 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/bookmarks/bookmarkSlice.ts                      | TypeScript     |         63 |          2 |          6 |         71 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/comment/commentSlice.ts                         | TypeScript     |        327 |         17 |         16 |        360 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/community/communityGeneral.ts                   | TypeScript     |         43 |          0 |          5 |         48 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/community/communityHome.ts                      | TypeScript     |          8 |          0 |          3 |         11 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/community/communityInfo.ts                      | TypeScript     |        136 |          1 |         10 |        147 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/community/communityLists.ts                     | TypeScript     |         62 |          0 |          6 |         68 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/community/communityPost.ts                      | TypeScript     |        105 |          0 |          7 |        112 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/community/communitySlice.ts                     | TypeScript     |         16 |          0 |          3 |         19 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/community/createCommunity.ts                    | TypeScript     |         88 |          0 |          5 |         93 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/communitysettings/communitysetting.ts           | TypeScript     |          6 |          0 |          3 |          9 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/communitysettings/manageSlice.ts                | TypeScript     |        172 |          0 |         11 |        183 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/communitysinglepost/communitysinglepostslice.ts | TypeScript     |        285 |          0 |          8 |        293 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/communityusers/communityMembers.ts              | TypeScript     |          8 |          0 |          4 |         12 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/communityusers/communityModerator.ts            | TypeScript     |         63 |          0 |          6 |         69 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/communityusers/communityUser.ts                 | TypeScript     |         66 |          0 |         10 |         76 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/explore-community/exploreSlice.ts               | TypeScript     |        133 |          0 |          8 |        141 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/general/singlePostSlice.ts                      | TypeScript     |          8 |          0 |          3 |         11 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/home/homeSlice.ts                               | TypeScript     |         10 |          0 |          4 |         14 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/home/latestSlice.ts                             | TypeScript     |         98 |          0 |          7 |        105 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/home/mostviewedSlice.ts                         | TypeScript     |         96 |          0 |          6 |        102 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/home/trendingSlice.ts                           | TypeScript     |         95 |          0 |          8 |        103 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/post/postSlice.ts                               | TypeScript     |        154 |         26 |         14 |        194 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/profile/bookmarkSlice.ts                        | TypeScript     |        105 |          0 |          6 |        111 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/profile/postSlice.ts                            | TypeScript     |         97 |          0 |          7 |        104 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/profile/profileSlice.ts                         | TypeScript     |          8 |          0 |          3 |         11 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/submit/submitSlice.ts                           | TypeScript     |         70 |          2 |          6 |         78 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/user/userSlice.ts                               | TypeScript     |        164 |         16 |         11 |        191 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/usersinglepost/usersinglepostslice.ts           | TypeScript     |        280 |          1 |          9 |        290 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/features/utils.ts                                        | TypeScript     |         49 |          0 |          4 |         53 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/hoc/AppContainer.tsx                                     | TypeScript JSX |         10 |          0 |          3 |         13 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/hoc/AuthContainer.tsx                                    | TypeScript JSX |         14 |          0 |          3 |         17 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/hooks/useDocumentTitle.tsx                               | TypeScript JSX |          7 |          0 |          3 |         10 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/hooks/useTokenVerify.tsx                                 | TypeScript JSX |         11 |          0 |          2 |         13 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/index.css                                                | CSS            |         80 |          3 |         12 |         95 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/lib/utils.ts                                             | TypeScript     |          5 |          0 |          2 |          7 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/main.tsx                                                 | TypeScript JSX |         15 |          0 |          2 |         17 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/pages/AddCommunity.tsx                                   | TypeScript JSX |         78 |          0 |          6 |         84 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/pages/Auth.tsx                                           | TypeScript JSX |         15 |          0 |          3 |         18 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/pages/AuthorProfile.tsx                                  | TypeScript JSX |         77 |          0 |          6 |         83 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/pages/CommunityHome.tsx                                  | TypeScript JSX |         86 |          0 |          6 |         92 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/pages/CommunitySettings.tsx                              | TypeScript JSX |         86 |          0 |          5 |         91 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/pages/CommunitySinglePost.tsx                            | TypeScript JSX |        122 |          1 |         13 |        136 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/pages/CommunityUsers.tsx                                 | TypeScript JSX |         23 |          0 |          5 |         28 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/pages/ExploreCommunity.tsx                               | TypeScript JSX |         77 |          0 |          5 |         82 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/pages/Home.tsx                                           | TypeScript JSX |         81 |          2 |          5 |         88 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/pages/ListCommunity.tsx                                  | TypeScript JSX |         77 |          1 |         10 |         88 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/pages/RootPage.tsx                                       | TypeScript JSX |         15 |          0 |          3 |         18 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/pages/SinglePost.tsx                                     | TypeScript JSX |        104 |          0 |          9 |        113 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/pages/SubmitPage.tsx                                     | TypeScript JSX |        156 |          0 |         12 |        168 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/pages/Test.tsx                                           | TypeScript JSX |         50 |          2 |          3 |         55 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/pages/UserProfile.tsx                                    | TypeScript JSX |         67 |          0 |          6 |         73 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/pages/UserSettings.tsx                                   | TypeScript JSX |         75 |          0 |          4 |         79 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/pages/UserSinglePost.tsx                                 | TypeScript JSX |         97 |          1 |         12 |        110 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/router/AppRouter.tsx                                     | TypeScript JSX |        170 |          8 |          2 |        180 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/styles/FileUploadButton.css                              | CSS            |         21 |          0 |          3 |         24 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/types/bookmarkTypes.ts                                   | TypeScript     |         16 |          0 |          4 |         20 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/types/commentTypes.ts                                    | TypeScript     |         38 |          0 |          6 |         44 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/types/communityTypes.ts                                  | TypeScript     |         59 |          0 |          9 |         68 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/types/generalTypes.ts                                    | TypeScript     |         12 |          0 |          4 |         16 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/types/postTypes.ts                                       | TypeScript     |         69 |          3 |          9 |         81 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/types/userTypes.ts                                       | TypeScript     |         47 |          0 |         10 |         57 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/utils/bookmarkUtils.ts                                   | TypeScript     |         19 |          3 |          4 |         26 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/utils/commentUtils.ts                                    | TypeScript     |         69 |          5 |          8 |         82 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/utils/communityUtils.ts                                  | TypeScript     |        222 |         23 |         23 |        268 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/utils/fileUtils.ts                                       | TypeScript     |          9 |          0 |          2 |         11 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/utils/generalUtils.ts                                    | TypeScript     |          6 |          1 |          2 |          9 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/utils/httpUtils.ts                                       | TypeScript     |         64 |          4 |          7 |         75 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/utils/postUtils.ts                                       | TypeScript     |         96 |         19 |         18 |        133 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/utils/userUtils.ts                                       | TypeScript     |         53 |          6 |         10 |         69 |
+| /Users/hritik/Documents/Data/Development/Social Hub/social-hub/src/vite-env.d.ts                                            | TypeScript     |          0 |          1 |          1 |          2 |
+| Total                                                                                                                       |                |     11,588 |        249 |      1,025 |     12,862 |
++-----------------------------------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
