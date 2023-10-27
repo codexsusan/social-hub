@@ -19,7 +19,7 @@ function CommunityCover() {
 
   const home = useAppSelector((state) => state.community.home.info);
   const { icon_image, isMember, displayName, name, _id } = home;
-  
+
   const handleLeaveCommunity = () => {
     dispatch(leaveCommunity(_id));
   };

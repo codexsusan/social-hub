@@ -30,14 +30,14 @@ function Login() {
       if (hasProperty(res.payload, "data")) {
         setLoading(false);
         if (res.payload.status === 200) {
-          // toast({
-          //   title: "Welcome back.",
-          //   description: "We've logged you in.",
-          //   className: "bg-[#09090B] text-[#e2e2e2] border-[#e2e2e2]/20",
-          //   duration: 1000,
-          // });
-          navigate("/auth/otp/verify");
-          // navigate("/home");
+          toast({
+            title: "Welcome back.",
+            description: "We've logged you in.",
+            className: "bg-[#09090B] text-[#e2e2e2] border-[#e2e2e2]/20",
+            duration: 1000,
+          });
+          // navigate("/auth/otp/verify");
+          navigate("/home");
         } else {
           toast({
             title: "Login failed.",
@@ -58,9 +58,7 @@ function Login() {
       <div className="xl:w-2/5 lg:w-3/5 md:w-4/5 w-full p-2 rounded-sm flex flex-col gap-2">
         <div className="w-full text-center">
           <div className="flex flex-col gap-4">
-            <div className="font-semibold text-[2rem] mb-2">
-              Log In
-            </div>
+            <div className="font-semibold text-[2rem] mb-2">Log In</div>
             <div className="font-thin text-[1.25rem]">
               Enter your credentials to access your account
             </div>
@@ -94,9 +92,7 @@ function Login() {
                 Please wait
               </Button>
             ) : (
-              <Button type="submit">
-                Login
-              </Button>
+              <Button type="submit">Login</Button>
             )}
             <div className="text-center text-slate-600">
               Don't have an account ?{" "}
