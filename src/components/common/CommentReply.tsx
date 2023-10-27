@@ -104,8 +104,8 @@ function CommentReply({
               {upVoteStatus ? (
                 <ArrowBigUp
                   onClick={handleUpVote}
-                  strokeWidth={1}
-                  fill={"white"}
+                  strokeWidth={0}
+                  fill={"blue"}
                 />
               ) : (
                 <ArrowBigUp onClick={handleUpVote} strokeWidth={1} />
@@ -113,8 +113,8 @@ function CommentReply({
               {downVoteStatus ? (
                 <ArrowBigDown
                   onClick={handleDownVote}
-                  strokeWidth={1}
-                  fill={"white"}
+                  strokeWidth={0}
+                  fill={"blue"}
                 />
               ) : (
                 <ArrowBigDown onClick={handleDownVote} strokeWidth={1} />
