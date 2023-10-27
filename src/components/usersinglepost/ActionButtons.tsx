@@ -85,7 +85,7 @@ function ActionButtons() {
             onClick={switchBookmarkCB}
             strokeWidth={1}
             size={22}
-            fill={"white"}
+            fill={"blue"}
           />
         ) : (
           <Bookmark onClick={switchBookmarkCB} strokeWidth={1} size={22} />

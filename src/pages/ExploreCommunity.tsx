@@ -1,5 +1,4 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import PageWrapper from "@/components/common/PageWrapper";
 import CommunityListCard from "@/components/explorecommunity/CommunityListCard";
 import {
   fetchExploreCommunities,
@@ -21,11 +20,18 @@ function ExploreCommunity() {
     );
   }, [dispatch]);
   return (
-    <PageWrapper
-      className="mt-8"
-      LeftContent={<LeftContent />}
-      RightContent={<RightContent />}
-    />
+    // <PageWrapper
+    //   className="mt-8"
+    //   LeftContent={<LeftContent />}
+    //   RightContent={<RightContent />}
+    // />
+    <div className="mt-4">
+      <div className="grid grid-cols-10">
+        <div className="p-4 pt-0 col-start-3 sm:col-start-2 sm:col-span-8 md:col-start-3 md:col-span-6">
+          <LeftContent />
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -74,8 +80,8 @@ function LeftContent() {
   );
 }
 
-function RightContent() {
-  return <div>Right Content</div>;
-}
+// function RightContent() {
+//   return <div>Right Content</div>;
+// }
 
 export default ExploreCommunity;

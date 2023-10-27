@@ -17,6 +17,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Auth from "../pages/Auth";
 import UserSinglePost from "@/pages/UserSinglePost";
 import CommunitySinglePost from "@/pages/CommunitySinglePost";
+import SearchPage from "@/pages/SearchPage";
 
 const router = createBrowserRouter([
   {
@@ -76,6 +77,14 @@ const router = createBrowserRouter([
     element: (
       <AppContainer>
         <UserProfile />
+      </AppContainer>
+    ),
+  },
+  {
+    path: "/search",
+    element: (
+      <AppContainer>
+        <SearchPage/>
       </AppContainer>
     ),
   },

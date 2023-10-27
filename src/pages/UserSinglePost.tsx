@@ -1,6 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import CustomOutput from "@/components/common/CustomOutput";
-import PageWrapper from "@/components/common/PageWrapper";
 import UserPostWrapper from "@/components/common/UserPostWrapper";
 import ActionButtons from "@/components/usersinglepost/ActionButtons";
 import CommentSection from "@/components/usersinglepost/CommentSection";
@@ -26,10 +25,17 @@ import { useParams } from "react-router-dom";
 // TODO: Remove Update and make it user single post
 function UpdatedSinglePost() {
   return (
-    <PageWrapper
-      LeftContent={<LeftContent />}
-      RightContent={<RightContent />}
-    />
+    // <PageWrapper
+    //   LeftContent={<LeftContent />}
+    //   RightContent={<RightContent />}
+    // />
+    <div className="mt-4">
+      <div className="grid grid-cols-10">
+        <div className="p-4 pt-0 col-start-3 sm:col-start-2 sm:col-span-8 md:col-start-3 md:col-span-6">
+          <LeftContent />
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -102,8 +108,8 @@ function LeftContent() {
   );
 }
 
-function RightContent() {
-  return <div className="mt-4">Right Content</div>;
-}
+// function RightContent() {
+//   return <div className="mt-4">Right Content</div>;
+// }
 
 export default UpdatedSinglePost;

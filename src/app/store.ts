@@ -9,6 +9,7 @@ import communityReducer from "@/features/community/communitySlice";
 import userSinglePostReducer from "@/features/usersinglepost/usersinglepostslice";
 import communitySinglePOstReducer from "@/features/communitysinglepost/communitysinglepostslice";
 import exploreReducer from "@/features/explore-community/exploreSlice";
+import searchReducer from "@/features/searchpage/searchSlice";
 
 const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
     profile: profileReducer,
     community: communityReducer,
     explore: exploreReducer,
+    search: searchReducer,
   },
 });
 

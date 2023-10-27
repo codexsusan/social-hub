@@ -130,3 +130,9 @@ export const unreportPostUtils = async (id: PostPartial["_id"]) => {
   const response = await request(`/api/post/unreport-post/${id}`, "POST", {});
   return response;
 };
+
+// Search Post
+export const searchPostQueryUtils = async (data: { query: string }) => {
+  const response = await request(`/api/post/search-post`, "GET", data);
+  return response;
+};
