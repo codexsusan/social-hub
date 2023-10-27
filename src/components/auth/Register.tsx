@@ -82,14 +82,14 @@ function Register() {
   };
 
   return (
-    <div className="w-full flex flex-col flex-1 items-center justify-center p-4 gap-y-2 overflow-auto bg-[#030303]">
+    <div className="w-full flex flex-col flex-1 items-center justify-center p-4 gap-y-2 overflow-auto bg-[#fbfffe]">
       <div className="xl:w-2/5 lg:w-3/5 md:w-4/5 w-full p-2 rounded-sm flex flex-col gap-2">
         <div className=" text-center">
           <div>
-            <div className="text-2xl text-slate-200 font-semibold mb-2">
-              Sign up
+            <div className="font-semibold text-[2rem] mb-2">Sign up</div>
+            <div className="font-thin text-[1.25rem]">
+              Register yourself to access
             </div>
-            <div className="text-slate-200">Register yourself to access</div>
           </div>
         </div>
         <div className="w-full flex justify-center mt-16">
@@ -98,21 +98,9 @@ function Register() {
               e.preventDefault();
               handleRegister();
             }}
-            className="w-full flex flex-col gap-y-3"
+            className="w-full flex flex-col gap-4"
           >
             <FormStages user={user} setUser={setUser} />
-
-            <div className="text-center text-slate-400">
-              Already a member?{" "}
-              <span
-                onClick={() => {
-                  navigate("/auth/login");
-                }}
-                className="text-blue-600 hover:text-blue-800 cursor-pointer"
-              >
-                Log in
-              </span>
-            </div>
           </form>
         </div>
       </div>
@@ -166,6 +154,7 @@ function NameForm({
   setUser: (value: Partial<RegisterUser>) => void;
   incrStep: () => void;
 }) {
+  const navigate = useNavigate();
   return (
     <>
       <InputWithLabel
@@ -173,7 +162,6 @@ function NameForm({
         onValueChange={(value: string) => {
           setUser({ ...user, firstName: value });
         }}
-        inputClassName="bg-[#09090B] text-white"
         id="firstname"
         label="First Name"
         placeholder="Enter your first name"
@@ -181,7 +169,6 @@ function NameForm({
       />
       <InputWithLabel
         value={user.lastName}
-        inputClassName="bg-[#09090B] text-white"
         onValueChange={(value: string) => {
           setUser({ ...user, lastName: value });
         }}
@@ -192,7 +179,6 @@ function NameForm({
       />
       <InputWithLabel
         value={user.userName}
-        inputClassName="bg-[#09090B] text-white"
         onValueChange={(value: string) => {
           setUser({ ...user, userName: value });
         }}
@@ -202,6 +188,17 @@ function NameForm({
         type="text"
       />
       <Button onClick={incrStep}>Next</Button>
+      <div className="text-center text-slate-600 ">
+        Already a member?{" "}
+        <span
+          onClick={() => {
+            navigate("/auth/login");
+          }}
+          className="text-blue-600 hover:text-blue-800 cursor-pointer"
+        >
+          Log in
+        </span>
+      </div>
     </>
   );
 }
@@ -219,7 +216,7 @@ function ChooseGender({
 }) {
   return (
     <div className="w-full flex flex-col gap-4">
-      <Label className="text-slate-200" htmlFor="gender">
+      <Label className="text-black text-lg" htmlFor="gender">
         Gender
       </Label>
       <CustomSelect
@@ -230,7 +227,7 @@ function ChooseGender({
         placeholder="Select your gender"
       />
       <div className="w-full flex justify-between">
-        <Button onClick={decrStep}>Previous</Button>
+        <Button variant={"outline"} onClick={decrStep}>Previous</Button>
         <Button onClick={incrStep}>Next</Button>
       </div>
     </div>
@@ -251,7 +248,6 @@ function CredentialForm({
     <div className="w-full flex flex-col gap-4">
       <InputWithLabel
         value={user.email}
-        inputClassName="bg-[#09090B] text-white"
         onValueChange={(value: string) => {
           setUser({ ...user, email: value });
         }}
@@ -262,7 +258,6 @@ function CredentialForm({
       />
       <InputWithLabel
         value={user.phoneNo}
-        inputClassName="bg-[#09090B] text-white"
         onValueChange={(value: string) => {
           setUser({ ...user, phoneNo: value });
         }}
@@ -273,7 +268,6 @@ function CredentialForm({
       />
       <InputWithLabel
         value={user.password}
-        inputClassName="bg-[#09090B] text-white"
         onValueChange={(value: string) => setUser({ ...user, password: value })}
         id="password"
         label="Password"
@@ -282,7 +276,6 @@ function CredentialForm({
       />
       <InputWithLabel
         value={user.confirmPassword}
-        inputClassName="bg-[#09090B] text-white"
         onValueChange={(value: string) => {
           setUser({ ...user, confirmPassword: value });
         }}
@@ -297,11 +290,11 @@ function CredentialForm({
           Please wait
         </Button>
       ) : (
-        <Button variant={"secondary"} type="submit">
+        <Button variant={"default"} type="submit">
           Sign up
         </Button>
       )}
-      <Button onClick={decrStep}>Previous</Button>
+      <Button variant={"outline"} onClick={decrStep}>Previous</Button>
     </div>
   );
 }

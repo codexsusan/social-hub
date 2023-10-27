@@ -15,7 +15,7 @@ function CreatePost() {
   };
 
   return (
-    <div className="w-full p-3 border rounded-2xl border-slate-600 flex gap-2 items-center">
+    <div className="w-full p-3 rounded-2xl  border-slate-600/30 flex gap-2 items-center">
       <div
         className=" cursor-pointer"
         onClick={() => {
@@ -23,6 +23,7 @@ function CreatePost() {
         }}
       >
         <CustomAvatar
+         className="border-2 rounded-full border-blue-500"
           src={user.profilePic}
           fallBack={user.firstName.charAt(0)}
         />
@@ -31,14 +32,14 @@ function CreatePost() {
         onClick={() => {
           navigate(`/submit?origin=${location.pathname}`, { state: communityData });
         }}
-        className="bg-[#171717] border-none border-0 text-gray-400"
+        className="border"
         placeholder="Create Post"
       />
       <ImagePlus
         onClick={() => {
           navigate(`/submit?type=image`);
         }}
-        className="text-white cursor-pointer"
+        className="text-black/50 cursor-pointer"
       />
     </div>
   );

@@ -17,15 +17,15 @@ import { toast } from "../ui/use-toast";
 function SwitchModeratorCard({ user }: { user: SuperUser }) {
   const { firstName, lastName, userName, profilePic, isAdmin } = user;
   return (
-    <Card className="w-full bg-[#27272a] text-white">
+    <Card className="w-full bg-[#F2F7F8]">
       <CardContent className="p-4 flex justify-between">
         <div className="flex gap-x-3 items-center">
           <CustomAvatar src={profilePic} fallBack={firstName.charAt(0)} />
           <div className="flex flex-col justify-start">
-            <p className="text-white opacity-70 text-base font-semibold">
+            <p className=" opacity-60 text-base font-semibold">
               {firstName + " " + lastName}
             </p>
-            <p className="text-white opacity-60 text-base -my-1">
+            <p className=" opacity-60 text-base -my-1">
               {"@" + userName}
             </p>
           </div>
@@ -72,11 +72,11 @@ function ActionButton({ user }: { user: SuperUser }) {
   };
 
   return isModerator ? (
-    <Button onClick={demoteToUserCB} variant={"default"}>
+    <Button onClick={demoteToUserCB} variant={"outline"}>
       Remove
     </Button>
   ) : (
-    <Button onClick={promoteToModeratorCB} variant={"secondary"}>
+    <Button onClick={promoteToModeratorCB} variant={"default"}>
       Promote
     </Button>
   );

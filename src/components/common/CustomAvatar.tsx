@@ -20,7 +20,9 @@ export function CustomAvatar(props: Props) {
         }
         alt={alt ? alt : ""}
       />
-      <AvatarFallback className="bg-slate-500 text-xl font-semibold text-center">{fallBack}</AvatarFallback>
+      <AvatarFallback className="bg-slate-500 text-xl font-semibold text-center">
+        {fallBack}
+      </AvatarFallback>
     </Avatar>
   );
 }

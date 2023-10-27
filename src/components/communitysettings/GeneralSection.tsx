@@ -35,19 +35,19 @@ function GeneralSection() {
     <div className="flex flex-col gap-10 mt-8">
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-1">
-          <h3>Display Name</h3>
+          <h3 className="text-black">Display Name</h3>
         </div>
         <DisplaynameDialog />
       </div>
       <div className="flex items-center justify-between">
         <div className="">
-          <h3>Description</h3>
+          <h3 className="text-black">Description</h3>
         </div>
         <DescriptionDialog />
       </div>
       <div className="flex items-center justify-between">
         <div className="">
-          <h3>Community Type</h3>
+          <h3 className="text-black">Community Type</h3>
         </div>
         <CommunityTypeDialog />
       </div>
@@ -92,7 +92,7 @@ function DisplaynameDialog() {
       <DialogTrigger asChild>
         <Button onClick={() => setIsOpen(true)}>Edit</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]  bg-[#09090b] text-white">
+      <DialogContent className="sm:max-w-[425px]  font-inter bg-[#fbfffe]">
         <DialogHeader className="text-lg font-semibold">
           Update Display Name
         </DialogHeader>
@@ -102,7 +102,7 @@ function DisplaynameDialog() {
             onValueChange={(value: string) => {
               setCommunity({ ...community, displayName: value });
             }}
-            inputClassName="bg-[#09090B] text-white"
+            // inputClassName="bg-[#09090B] text-white"
             id="displayname"
             label="Display Name"
             placeholder="Enter your display name"
@@ -111,16 +111,12 @@ function DisplaynameDialog() {
         </div>
         <DialogFooter>
           {loading ? (
-            <Button className="mt-2" disabled>
+            <Button variant="default" className="mt-2" disabled>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               Please wait
             </Button>
           ) : (
-            <Button
-              onClick={changeDisplayname}
-              variant="secondary"
-              type="submit"
-            >
+            <Button onClick={changeDisplayname} variant="default" type="submit">
               Save changes
             </Button>
           )}
@@ -168,7 +164,7 @@ function DescriptionDialog() {
       <DialogTrigger asChild>
         <Button onClick={() => setIsOpen(true)}>Edit</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]  bg-[#09090b] text-white">
+      <DialogContent className="sm:max-w-[425px] font-inter bg-[#fbfffe]">
         <DialogHeader className="text-lg font-semibold">
           Update Description
         </DialogHeader>
@@ -178,7 +174,6 @@ function DescriptionDialog() {
             onValueChange={(value: string) => {
               setCommunity({ ...community, description: value });
             }}
-            inputClassName="bg-[#09090B] text-white"
             id="description"
             label="Description"
             placeholder="Enter your description"
@@ -187,14 +182,14 @@ function DescriptionDialog() {
         </div>
         <DialogFooter>
           {loading ? (
-            <Button className="mt-2" disabled>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            <Button variant="default" className="mt-2" disabled>
+              <Loader2  className="mr-2 h-4 w-4 animate-spin" />
               Please wait
             </Button>
           ) : (
             <Button
               onClick={changeDescription}
-              variant="secondary"
+              variant="default"
               type="submit"
             >
               Save changes
@@ -243,7 +238,7 @@ function CommunityTypeDialog() {
       <DialogTrigger asChild>
         <Button onClick={() => setIsOpen(true)}>Edit</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]  bg-[#09090b] text-white">
+      <DialogContent className="sm:max-w-[425px] font-inter bg-[#fbfffe]">
         <DialogHeader className="text-lg font-semibold">
           Update Community Type
         </DialogHeader>
@@ -258,12 +253,12 @@ function CommunityTypeDialog() {
         </div>
         <DialogFooter>
           {loading ? (
-            <Button className="mt-2" disabled>
+            <Button className="mt-2" variant={'default'} disabled>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               Please wait
             </Button>
           ) : (
-            <Button onClick={changeType} variant="secondary" type="submit">
+            <Button onClick={changeType} variant="default" type="submit">
               Save changes
             </Button>
           )}

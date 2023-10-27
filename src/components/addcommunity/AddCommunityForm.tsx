@@ -38,7 +38,7 @@ function FieldAreaA() {
   return (
     <>
       <InputWithLabel
-        inputClassName="bg-[#09090B] text-white"
+        inputClassName="text-lg"
         onValueChange={(value: string) => {
           dispatch(changeName(value));
         }}
@@ -49,7 +49,7 @@ function FieldAreaA() {
         type="text"
       />
       <InputWithLabel
-        inputClassName="bg-[#09090B] text-white"
+        inputClassName="text-lg"
         onValueChange={(value: string) => {
           dispatch(changeDisplayName(value));
         }}
@@ -60,7 +60,7 @@ function FieldAreaA() {
         type="text"
       />
       <InputWithLabel
-        inputClassName="bg-[#09090B] text-white"
+        inputClassName="text-lg"
         onValueChange={(value: string) => {
           dispatch(changeDescription(value));
         }}
@@ -71,7 +71,7 @@ function FieldAreaA() {
         type="text"
       />
       <div className="w-full flex flex-col gap-y-2">
-        <Label className="text-slate-200" htmlFor="email">
+        <Label className="text-lg font-medium" htmlFor="email">
           Community Type
         </Label>
         <CustomSelect
@@ -92,7 +92,7 @@ function FieldAreaB() {
   const { icon_image } = community.create;
   return (
     <div className="flex flex-col gap-y-2 ">
-      <Label className="text-base">Community Icon</Label>
+      <Label className="text-lg font-medium">Community Icon</Label>
       <div className="flex justify-center ">
         <ProfileUploadButton
           callBackFn={(value: string) => {

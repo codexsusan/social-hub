@@ -70,7 +70,7 @@ function LeftContent() {
 
   return (
     <div className="mt-4 flex justify-center">
-      <div className="rounded-sm bg-[#27272a] flex flex-col divide-y divide-slate-400/90 text-white cursor-pointer hover:bg-[#1e1e1e]">
+      <div className="rounded-sm  bg-[#F2F7F8] flex flex-col divide-y divide-slate-400/90 cursor-pointer ">
         {!postData.loading ? (
           <UserPostWrapper
             optionsVisibility={true}

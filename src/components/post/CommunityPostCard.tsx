@@ -26,12 +26,12 @@ function CommunityPostCard(props: Props) {
     <div
       onClick={routeToSinglePost}
       className={cn(
-        "w-full rounded-sm bg-[#27272a] flex gap-2 flex-col text-white p-4 cursor-pointer hover:bg-[#1e1e1e]",
+        "w-full rounded-sm bg-gray-300/30 flex gap-2 flex-col text-black p-4 cursor-pointer ",
         className
       )}
     >
       <CommunityPostWrapper optionsVisibility={optionsVisibility} post={post}>
-        <div className="text-base mt-2 space-y-4 flex-1">
+        <div className="text-base text-black mt-2 space-y-4 flex-1">
           <div className="text-xl font-semibold">{post!.title}</div>
           <CustomOutput content={content} />
           <PostActions {...props} />

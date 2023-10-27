@@ -30,19 +30,19 @@ function LeftContent() {
     <div className="w-full flex flex-col flex-1 items-center p-4 gap-y-2 overflow-auto text-white">
       <div className=" md:w-4/5 w-full p-2 rounded-sm border-slate-600 flex flex-col gap-6">
         <div className="flex flex-col gap-2">
-          <div className="text-xl font-bold">Community Settings</div>
+          <div className="text-xl font-bold text-black">Community Settings</div>
           <Separator className="bg-gray-700" orientation="horizontal" />
         </div>
         <Tabs defaultValue="general" className="w-full">
-          <TabsList className="grid w-full  bg-[#27272A] grid-cols-3">
-            <TabsTrigger value="general">General</TabsTrigger>
-            <TabsTrigger value="appearance">Appearance</TabsTrigger>
-            <TabsTrigger value="manage">Manage</TabsTrigger>
+          <TabsList className="grid w-full bg-slate-300/20  grid-cols-3">
+            <TabsTrigger className="text-lg text-black" value="general">General</TabsTrigger>
+            <TabsTrigger className="text-lg text-black" value="appearance">Appearance</TabsTrigger>
+            <TabsTrigger className="text-lg text-black" value="manage">Manage</TabsTrigger>
           </TabsList>
           <TabsContent value="general">
             <GeneralSection />
           </TabsContent>
-          <TabsContent className="" value="appearance">
+          <TabsContent value="appearance">
             <AppearanceSection />
           </TabsContent>
           <TabsContent className="" value="manage">
@@ -57,8 +57,8 @@ function LeftContent() {
 function RightContent() {
   const communityInfo = useAppSelector((state) => state.community.home.info);
   return (
-    <div className="relative rounded-md top-20 w-full bg-[#111111] overflow-hidden">
-      <div className="p-5 flex items-center gap-x-2 bg-[#202020] border-b border-[#2B2B2B]">
+    <div className="relative rounded-md top-20 w-full bg-[#F2F7F8] overflow-hidden">
+      <div className="p-5 flex items-center gap-x-2 bg-[#eef2f3]  border-b">
         <User2 className="" />
         <p className="text-lg font-semibold">Community Profile</p>
       </div>

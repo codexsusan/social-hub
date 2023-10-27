@@ -85,13 +85,13 @@ function CommentReply({
           <div className="flex items-center gap-2">
             <p
               onClick={handleRedirectToAuthorProfile}
-              className="text-white opacity-70 text-base font-semibold"
+              className="opacity-70 text-base font-semibold"
             >
               {comment.author?.firstName + " " + comment.author?.lastName}
             </p>
             <p
               onClick={handleRedirectToAuthorProfile}
-              className="text-white opacity-60 text-base"
+              className="opacity-60 text-base"
             >
               @{comment.author!.userName}
             </p>

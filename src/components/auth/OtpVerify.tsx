@@ -33,14 +33,14 @@ function OtpVerify() {
     });
   };
   return (
-    <div className="w-full flex flex-col flex-1 items-center justify-center p-4 gap-y-2 overflow-auto bg-[#030303]">
+    <div className="w-full flex flex-col flex-1 items-center justify-center p-4 gap-y-2 overflow-auto bg-[#fbfffe]">
       <div className="xl:w-2/5 lg:w-3/5 md:w-4/5 w-full p-2 rounded-sm flex flex-col gap-2">
         <div className="w-full text-center">
           <div>
-            <div className="text-2xl text-slate-200 font-semibold mb-2">
+            <div className="font-semibold text-[2rem] mb-2">
               OTP Verification
             </div>
-            <div className="text-slate-200">
+            <div className="font-thin text-[1.25rem]">
               We have sent OTP to your mobile number
             </div>
           </div>
@@ -52,7 +52,7 @@ function OtpVerify() {
           >
             <InputWithLabel
               value={otp}
-              inputClassName="bg-[#09090B] text-white"
+              inputClassName=""
               onValueChange={(value: string) => {
                 setOtp(value);
               }}

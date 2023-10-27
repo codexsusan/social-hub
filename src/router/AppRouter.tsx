@@ -95,7 +95,6 @@ const router = createBrowserRouter([
       </AppContainer>
     ),
   },
-  // Community post single page
   {
     path: "/c/:communityId/post/:postId",
     element: (

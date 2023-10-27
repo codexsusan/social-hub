@@ -103,13 +103,13 @@ function CommentCard({
           <div className="flex items-center gap-2">
             <p
               onClick={handleRedirectToAuthorProfile}
-              className="text-white opacity-70 text-base font-semibold"
+              className=" opacity-70 text-base font-semibold"
             >
               {comment.author?.firstName + " " + comment.author?.lastName}
             </p>
             <p
               onClick={handleRedirectToAuthorProfile}
-              className="text-white opacity-60 text-base"
+              className=" opacity-60 text-base"
             >
               @{comment.author!.userName}
             </p>
@@ -118,31 +118,33 @@ function CommentCard({
         <div>{comment.content}</div>
         <div className="w-full">
           <div className="w-full flex gap-x-8 justify-normal items-center">
-            <div className="flex gap-x-2">
+            <div className="flex gap-x-2 items-center">
               {upVoteStatus ? (
                 <ArrowBigUp
                   onClick={handleUpVote}
-                  strokeWidth={1}
-                  fill={"white"}
+                  strokeWidth={0}
+                  fill="blue"
+                  size={30}
                 />
               ) : (
-                <ArrowBigUp onClick={handleUpVote} strokeWidth={1} />
+                <ArrowBigUp size={30} onClick={handleUpVote} strokeWidth={1} />
               )}
               {downVoteStatus ? (
                 <ArrowBigDown
                   onClick={handleDownVote}
                   strokeWidth={1}
-                  fill="white"
+                  fill="blue"
+                  size={30}
                 />
               ) : (
-                <ArrowBigDown onClick={handleDownVote} strokeWidth={1} />
+                <ArrowBigDown size={30} onClick={handleDownVote} strokeWidth={1} />
               )}
               {VoteCount}
             </div>
             <CommentDialog source={source} comment={comment}>
-              <div className="flex gap-x-2 items-center">
-                <MessageCircle strokeWidth={1} size={22} />
-                <div className="text-cl">{replies_count}</div>
+              <div className="flex gap-x-2 items-center text-black">
+                <MessageCircle  strokeWidth={1} size={22} />
+                <div >{replies_count}</div>
               </div>
             </CommentDialog>
           </div>

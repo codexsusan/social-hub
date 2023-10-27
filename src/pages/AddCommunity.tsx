@@ -44,14 +44,14 @@ function AddCommunity() {
     });
   };
   return (
-    <div className="w-full flex flex-col flex-1 items-center p-4 gap-y-2 overflow-auto text-white">
-      <div className="xl:w-2/5 lg:w-3/5 md:w-4/5 w-full p-2 rounded-sm border-slate-600 flex flex-col gap-6">
-        <div className="text-xl font-medium flex  w-full items-baseline">
+    <div className="w-full flex flex-col flex-1 items-center p-4 gap-y-2 overflow-auto">
+      <div className="xl:w-2/5 lg:w-3/5 md:w-4/5 w-full p-2 rounded-sm border-slate-600 flex flex-col gap-4">
+        <div className="text-2xl font-semibold flex  w-full items-baseline">
           <div>Create a community</div>
         </div>
-        <Separator className="bg-gray-700" orientation="horizontal" />
-        <div className="w-full flex justify-center bg-[#27272a] p-4 rounded-sm ">
-          <form className="w-full flex flex-col gap-y-6">
+        <Separator className="bg-[#eef2f3] " orientation="horizontal" />
+        <div className="w-full flex justify-center bg-[#eef2f3] p-4 rounded-sm ">
+          <form className="w-full flex flex-col gap-y-4">
             <AddCommunityForm page={page} />
             <div className="flex justify-between gap-x-4">
               <Button

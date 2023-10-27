@@ -47,7 +47,7 @@ function LatestHome() {
 
   return latest.loading ? (
     <div className="flex justify-center">
-      <Loader className=" animate-spin my-4 text-white" />
+      <Loader className=" animate-spin my-4 text-black" />
     </div>
   ) : (
     <InfiniteScroll
@@ -55,7 +55,7 @@ function LatestHome() {
       dataLength={latestPosts.length}
       next={fetchMoreData}
       hasMore={hasMore}
-      loader={<Loader className="animate-spin text-white scroll self-center" />}
+      loader={<Loader className="animate-spin text-black scroll self-center" />}
     >
       {latestPosts.map((post, index) => {
         if (post.community === null) {

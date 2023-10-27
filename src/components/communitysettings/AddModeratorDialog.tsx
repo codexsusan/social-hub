@@ -71,7 +71,7 @@ function AddModeratorDialog() {
       <DialogTrigger asChild>
         <Button onClick={() => setIsOpen(true)}>Add</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] bg-[#09090b] text-white">
+      <DialogContent className="sm:max-w-[425px] font-inter bg-[#fbfffe]">
         <DialogHeader className="text-lg font-semibold">
           Add Moderator
         </DialogHeader>

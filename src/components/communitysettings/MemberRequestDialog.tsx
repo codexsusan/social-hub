@@ -19,7 +19,7 @@ function MemberRequestDialog() {
       <DialogTrigger asChild>
         <Button onClick={() => setIsOpen(true)}>View</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px] bg-[#09090b] text-white">
+      <DialogContent className="sm:max-w-[500px] font-inter bg-[#fbfffe]">
         <DialogHeader className="text-lg font-semibold">
           Membership Request
         </DialogHeader>

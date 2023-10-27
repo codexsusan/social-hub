@@ -41,7 +41,7 @@ export interface Post {
   comment_count: number;
   tags: string[];
   is_blocked: boolean;
-  created_at: string;
+  createdAt: string;
   isBookmarked: boolean;
   upVoteStatus: boolean;
   downVoteStatus: boolean;

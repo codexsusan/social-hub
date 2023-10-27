@@ -38,31 +38,31 @@ function AccountTab() {
     <div className="flex flex-col gap-10 mt-8">
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-1">
-          <h3>First Name</h3>
+          <h3 className="text-black">First Name</h3>
         </div>
         <FirstnameDialog />
       </div>
       <div className="flex items-center justify-between">
         <div className="">
-          <h3>Last Name</h3>
+          <h3 className="text-black">Last Name</h3>
         </div>
         <LastnameDialog />
       </div>
       <div className="flex items-center justify-between">
         <div className="">
-          <h3>Gender</h3>
+          <h3 className="text-black">Gender</h3>
         </div>
         <GenderDialog />
       </div>
       <div className="flex items-center justify-between">
         <div className=" gap-1">
-          <h3>Password</h3>
+          <h3 className="text-black">Password</h3>
         </div>
         <PasswordDialog />
       </div>
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-1">
-          <h3>Delete Account</h3>
+          <h3 className="text-black">Delete Account</h3>
           <p className=" text-sm">This action can't be reverted.</p>
         </div>
         <DeleteDialog />
@@ -94,17 +94,14 @@ function FirstnameDialog() {
           Edit
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]  bg-[#09090b] text-white">
-        <DialogHeader className="text-lg font-semibold">
-          Update First Name
-        </DialogHeader>
+      <DialogContent className="sm:max-w-[425px] font-inter bg-[#fbfffe] ">
+        
         <div className="">
           <InputWithLabel
             value={user.firstName}
             onValueChange={(value: string) => {
               setUser({ ...userData, firstName: value });
             }}
-            inputClassName="bg-[#09090B] text-white"
             id="firstname"
             label="First Name"
             placeholder="Enter your firstname"
@@ -134,7 +131,7 @@ function FirstnameDialog() {
                 setLoading(false);
                 setIsOpen(false);
               }}
-              variant="secondary"
+              variant="default"
               type="submit"
             >
               Save changes
@@ -168,17 +165,17 @@ function LastnameDialog() {
           Edit
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]  bg-[#09090b] text-white">
-        <DialogHeader className="text-lg font-semibold">
+      <DialogContent className="sm:max-w-[425px] font-inter bg-[#fbfffe]">
+        {/* <DialogHeader className="text-lg font-semibold">
           Update Last Name
-        </DialogHeader>
+        </DialogHeader> */}
         <div className="">
           <InputWithLabel
             value={user.lastName}
             onValueChange={(value: string) => {
               setUser({ ...userData, lastName: value });
             }}
-            inputClassName="bg-[#09090B] text-white"
+            // inputClassName="bg-[#09090B] text-white"
             id="lastname"
             label="Last Name"
             placeholder="Enter your lastname"
@@ -208,7 +205,7 @@ function LastnameDialog() {
                 setLoading(false);
                 setIsOpen(false);
               }}
-              variant="secondary"
+              variant="default"
               type="submit"
             >
               Save changes
@@ -242,7 +239,7 @@ function GenderDialog() {
           Edit
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]  bg-[#09090b] text-white">
+      <DialogContent className="sm:max-w-[425px] font-inter bg-[#fbfffe]">
         <DialogHeader className="text-lg font-semibold">
           Update Gender
         </DialogHeader>
@@ -314,7 +311,7 @@ function PasswordDialog() {
           Edit
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]  bg-[#09090b] text-white">
+      <DialogContent className="sm:max-w-[425px] font-inter bg-[#fbfffe]">
         <DialogHeader className="text-lg font-semibold">
           Update Password
         </DialogHeader>
@@ -324,7 +321,7 @@ function PasswordDialog() {
             onValueChange={(value: string) => {
               setUserPassword({ ...userPassword, password: value });
             }}
-            inputClassName="bg-[#09090B] text-white"
+            // inputClassName="bg-[#09090B] text-white"
             id="password"
             label="Password"
             placeholder="•••••••••"
@@ -335,7 +332,7 @@ function PasswordDialog() {
             onValueChange={(value: string) => {
               setUserPassword({ ...userPassword, confirmPassword: value });
             }}
-            inputClassName="bg-[#09090B] text-white"
+            // inputClassName="bg-[#09090B] text-white"
             id="confirm-password"
             label="ConfirmPassword"
             placeholder="•••••••••"
@@ -350,21 +347,33 @@ function PasswordDialog() {
             </Button>
           ) : (
             <Button
+              
               onClick={() => {
                 setLoading(true);
-                dispatch(resetPassword(userPassword)).then((res) => {
-                  if (res.meta.requestStatus === "fulfilled") {
-                    toast({
-                      title: "Password updated successfully.",
-                      className: "bg-[#09090B] text-[#e2e2e2] border-none ",
-                      duration: 2000,
-                    });
-                  }
-                  setLoading(false);
-                });
+                const match =
+                  userPassword.password === userPassword.confirmPassword;
+                if (!match) {
+                  toast({
+                    title: "Password didn't match",
+                    // className: "bg-[#09090B] text-[#e2e2e2] border-none ",
+                    variant: "destructive",
+                    duration: 1500,
+                  });
+                } else {
+                  dispatch(resetPassword(userPassword)).then((res) => {
+                    if (res.meta.requestStatus === "fulfilled") {
+                      toast({
+                        title: "Password updated successfully.",
+                        className: "bg-[#09090B] text-[#e2e2e2] border-none ",
+                        duration: 2000,
+                      });
+                    }
+                  });
+                }
+                setLoading(false);
                 setIsOpen(false);
               }}
-              variant="secondary"
+              variant="default"
               type="submit"
             >
               Save changes
@@ -398,7 +407,7 @@ function DeleteDialog() {
           Delete
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]  bg-[#09090b] text-white">
+      <DialogContent className="sm:max-w-[425px]  font-inter bg-[#fbfffe]">
         <DialogHeader className="text-lg font-semibold ">
           <p>Delete Account</p>
         </DialogHeader>

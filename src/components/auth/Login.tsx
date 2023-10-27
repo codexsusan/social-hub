@@ -51,14 +51,17 @@ function Login() {
   };
 
   return (
-    <div className="w-full flex flex-col flex-1 items-center justify-center p-4 gap-y-2 overflow-auto bg-[#030303]">
+    // bg-[#030303]
+    // [#fbfffe]
+    // bg-[#AFFEFA]
+    <div className="w-full  flex flex-col flex-1 items-center justify-center p-4 gap-y-2 overflow-auto  bg-[#fbfffe]">
       <div className="xl:w-2/5 lg:w-3/5 md:w-4/5 w-full p-2 rounded-sm flex flex-col gap-2">
         <div className="w-full text-center">
-          <div>
-            <div className="text-2xl text-slate-200 font-semibold mb-2">
+          <div className="flex flex-col gap-4">
+            <div className="font-semibold text-[2rem] mb-2">
               Log In
             </div>
-            <div className="text-slate-200">
+            <div className="font-thin text-[1.25rem]">
               Enter your credentials to access your account
             </div>
           </div>
@@ -67,7 +70,6 @@ function Login() {
           <form onSubmit={handleLogin} className="w-full flex flex-col gap-4">
             <InputWithLabel
               value={user.email}
-              inputClassName="bg-[#09090B] text-white"
               onValueChange={(value: string) => {
                 setUser({ ...user, email: value });
               }}
@@ -78,7 +80,6 @@ function Login() {
             />
             <InputWithLabel
               value={user.password}
-              inputClassName="bg-[#09090B] text-white"
               onValueChange={(value: string) => {
                 setUser({ ...user, password: value });
               }}
@@ -88,16 +89,16 @@ function Login() {
               type="password"
             />
             {loading ? (
-              <Button className="mt-2" disabled>
+              <Button disabled>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 Please wait
               </Button>
             ) : (
-              <Button type="submit" className="mt-2">
+              <Button type="submit">
                 Login
               </Button>
             )}
-            <div className="text-center text-slate-400">
+            <div className="text-center text-slate-600">
               Don't have an account ?{" "}
               <span
                 onClick={() => {

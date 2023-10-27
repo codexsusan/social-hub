@@ -30,7 +30,7 @@ export default function CustomDropdown(props: { options: OptionType[] }) {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 z-10 mt-2 w-32 text-whi rounded-md shadow-lg focus:ring-1 ring-white ring-opacity-25 bg-gray-500">
+        <Menu.Items className="absolute right-0 z-10 mt-2 w-32 text-whi rounded-md shadow-lg focus:ring-1 ring-white ring-opacity-25 bg-white">
           <div className="py-1">
             {options.map((option) => {
               if (option.displayStatus) {
@@ -40,8 +40,8 @@ export default function CustomDropdown(props: { options: OptionType[] }) {
                       <a
                         onClick={option.action}
                         className={classNames(
-                          active ? "bg-gray-700" : "bg-gray-500",
-                          "flex px-4 py-2 text-sm text-white items-center gap-x-4"
+                          active ? "bg-[#F2F7F8]" : "bg-white",
+                          "flex px-4 py-2 text-sm text-black items-center gap-x-4"
                         )}
                       >
                         {option.icon}

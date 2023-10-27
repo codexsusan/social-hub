@@ -28,13 +28,13 @@ function CustomSelect(props: Props) {
       value={value}
       onValueChange={onValueChange}
     >
-      <SelectTrigger className="w-full bg-[#09090B] border border-gray-500/30">
+      <SelectTrigger className="w-full text-black border border-gray-500/30">
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
-      <SelectContent className="bg-black">
+      <SelectContent className="">
         {optionData!.map((option: CommunityMultiSelectData) => {
           return (
-            <SelectItem key={option.id} value={option.id}>
+            <SelectItem className="text-black text-base font-inter" key={option.id} value={option.id}>
               {option.name.charAt(0).toUpperCase() + option.name.slice(1)}
             </SelectItem>
           );

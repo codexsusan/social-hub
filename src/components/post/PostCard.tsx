@@ -20,14 +20,16 @@ function PostCard(props: Props) {
   const location = useLocation();
   const routeToSinglePost = (e: React.MouseEvent) => {
     e.preventDefault();
-    navigate(`/u/${post!.author?._id}/post/${post!._id}?origin=${location.pathname}`);
+    navigate(
+      `/u/${post!.author?._id}/post/${post!._id}?origin=${location.pathname}`
+    );
   };
   const content = post!.content!.length > 0 ? JSON.parse(post!.content!) : "";
   return (
     <div
       onClick={routeToSinglePost}
       className={cn(
-        "w-full rounded-sm bg-[#27272a]  flex gap-2 flex-col text-white p-4 cursor-pointer hover:bg-[#1e1e1e]",
+        "w-full rounded-sm bg-gray-300/30 flex gap-2 flex-col p-4 cursor-pointer text-black",
         className
       )}
     >

@@ -111,7 +111,7 @@ function CommunityListCard({ community }: { community: PartialCommunity }) {
           </div>
         </div>
       </div>
-      <div className="p-4 text-lg text-slate-300">{description}</div>
+      <div className="p-4 text-lg">{description}</div>
     </div>
   );
 }

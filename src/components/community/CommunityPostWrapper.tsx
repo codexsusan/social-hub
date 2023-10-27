@@ -84,10 +84,16 @@ function CommunityPostWrapper(props: Props) {
   ];
   return (
     <div className={cn("flex gap-x-3", className)}>
-      <div className={""} onClick={() => {}}>
+      <div
+        className={""}
+        onClick={(e) => {
+          e.stopPropagation();
+          navigate(`/c/${post?.community._id}`);
+        }}
+      >
         <CustomAvatar
           src={post?.community?.icon_image}
-          fallBack={post?.author?.firstName?.charAt(0)}
+          fallBack={post?.community?.displayName?.charAt(0)}
         />
       </div>
       <div className="w-full">
@@ -96,13 +102,13 @@ function CommunityPostWrapper(props: Props) {
             <div className="flex">
               <p
                 onClick={handleRedirectToCommunityProfile}
-                className="text-white opacity-70 text-base font-semibold hover:underline mr-1"
+                className="text-black opacity-70 text-lg font-semibold hover:underline mr-1"
               >
                 {post?.community?.name}
               </p>
               <p
                 onClick={handleRedirectToCommunityProfile}
-                className="text-white opacity-60 text-base "
+                className="text-black opacity-60 text-base font-normal"
               >
                 @
                 <span className="hover:underline">
@@ -120,7 +126,7 @@ function CommunityPostWrapper(props: Props) {
                   src={post?.author?.profilePic}
                   className="w-4 h-4 mr-1"
                 />
-                <span className="text-white opacity-60 text-base hover:underline">
+                <span className="text-black opacity-60 text-base hover:underline">
                   @{post?.author?.userName}
                 </span>
               </div>

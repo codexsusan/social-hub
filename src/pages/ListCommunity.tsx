@@ -36,6 +36,7 @@ function LeftContent() {
   const communityData = useAppSelector(
     (state) => state.community.lists.communities
   );
+  console.log(communityData);
   const [state, setState] = useState({
     page: 1,
     limit: 10,
@@ -79,6 +80,7 @@ function LeftContent() {
 }
 
 function RightContent() {
+  // TODO: Right Content
   return <div>Right COntent</div>;
 }
 

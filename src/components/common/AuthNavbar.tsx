@@ -6,18 +6,14 @@ import { authMethod } from "@/types/generalTypes";
 export default function AuthNavbar(props: { authMethod: authMethod }) {
   const navigate = useNavigate();
   return (
-    <Disclosure as="nav" className="bg-[#0B1416]">
+    <Disclosure as="nav" className="bg-[#fbfffe]">
       <>
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
           <div className="relative flex h-16 items-center justify-between">
             <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
               {/* Logo will be here below */}
               <div className="flex flex-shrink-0 items-center">
-                <img
-                  className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                  alt="Your Company"
-                />
+              <h1 className="text-3xl text-blue-800 font-bold">S<sup>h</sup></h1>
               </div>
             </div>
 

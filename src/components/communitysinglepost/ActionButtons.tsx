@@ -60,35 +60,41 @@ export function ActionButtons() {
     <div className="w-full flex gap-x-8 justify-normal items-center">
       <div className="flex gap-x-2">
         {upVoteStatus ? (
-          <ArrowBigUp onClick={handleUpVote} strokeWidth={1} fill={"white"} />
+          <ArrowBigUp
+            size={30}
+            onClick={handleUpVote}
+            strokeWidth={0}
+            fill={"blue"}
+          />
         ) : (
-          <ArrowBigUp onClick={handleUpVote} strokeWidth={1} />
+          <ArrowBigUp size={30} onClick={handleUpVote} strokeWidth={1} />
         )}
         {downVoteStatus ? (
           <ArrowBigDown
+            size={30}
             onClick={handleDownVote}
-            strokeWidth={1}
-            fill={"white"}
+            strokeWidth={0}
+            fill={"blue"}
           />
         ) : (
-          <ArrowBigDown onClick={handleDownVote} strokeWidth={1} />
+          <ArrowBigDown size={30} onClick={handleDownVote} strokeWidth={1} />
         )}
         {VoteCount}
       </div>
       <div className="flex gap-x-2">
-        <MessageCircle strokeWidth={1} size={22} />
+        <MessageCircle strokeWidth={1} size={26} />
         {CommentCount}
       </div>
       <div>
         {isBookmarked ? (
           <Bookmark
             onClick={switchBookmarkCB}
-            strokeWidth={1}
-            size={22}
-            fill={"white"}
+            strokeWidth={0}
+            size={24}
+            fill={"blue"}
           />
         ) : (
-          <Bookmark onClick={switchBookmarkCB} strokeWidth={1} size={22} />
+          <Bookmark onClick={switchBookmarkCB} strokeWidth={1} size={24} />
         )}
       </div>
     </div>

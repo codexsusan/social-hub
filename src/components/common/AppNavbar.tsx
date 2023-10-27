@@ -56,11 +56,11 @@ export default function AppNavbar() {
   ];
 
   return (
-    <Disclosure as="nav" className="bg-[#1A1A1B] fixed top-0 w-full z-10">
+    <Disclosure as="nav" className="bg-[#fbfffe] fixed top-0 w-full z-10 ">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-            <div className="relative flex h-16 items-center justify-between">
+          <div className="mx-auto px-2 sm:px-6 lg:px-8 py-2">
+            <div className=" flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
                 <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-[#1A282D] hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
@@ -82,14 +82,10 @@ export default function AppNavbar() {
                   }}
                   className="flex flex-shrink-0 items-center cursor-pointer"
                 >
-                  <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                    alt="Your Company"
-                  />
+                  <h1 className="text-3xl text-blue-800 font-bold">S<sup>h</sup></h1>
                 </div>
               </div>
-              <div className="w-1/2  text-white hidden sm:block">
+              <div className="w-1/2 text-white hidden sm:block">
                 <SearchBar />
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">

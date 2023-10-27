@@ -60,7 +60,7 @@ function CommentDialog({
       <DialogTrigger className="bg-transparent hover:bg-transparent" asChild>
         <Button onClick={() => setIsOpen(true)}>{children}</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[720px] bg-[#09090b] text-white">
+      <DialogContent className="sm:max-w-[720px] font-inter bg-[#fbfffe]">
         <div className="flex flex-col gap-y-2 max-h-[425px] overflow-y-scroll">
           <div className={cn("flex gap-x-3")}>
             <div>
@@ -69,10 +69,10 @@ function CommentDialog({
             <div className="w-full flex flex-col gap-2">
               <div className="flex justify-between">
                 <div className="flex items-center gap-2">
-                  <p className="text-white opacity-70 text-base font-semibold">
+                  <p className=" opacity-70 text-base font-semibold">
                     {comment.author?.firstName + " " + comment.author?.lastName}
                   </p>
-                  <p className="text-white opacity-60 text-base">
+                  <p className=" opacity-60 text-base">
                     @{comment.author!.userName}
                   </p>
                 </div>

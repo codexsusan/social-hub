@@ -26,6 +26,9 @@ module.exports = {
         "3xl": "1600px",
         "4xl": "1920px",
       },
+      fontFamily: {
+        inter: ["Inter", "sans"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -82,5 +85,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), require('tailwind-scrollbar')],
+  plugins: [require("tailwindcss-animate"), require("tailwind-scrollbar")],
 };

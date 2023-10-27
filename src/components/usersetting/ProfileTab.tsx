@@ -6,7 +6,6 @@ import {
   Dialog,
   DialogContent,
   DialogFooter,
-  DialogHeader,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import {
@@ -38,7 +37,7 @@ function ProfileTab() {
       </div>
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-1">
-          <h3>Update Bio</h3>
+          <h3 className="text-black">Update Bio</h3>
           <p className="text-sm flex-1">Hello everyone this is my bio </p>
         </div>
         <BioDialog />
@@ -76,17 +75,17 @@ function BioDialog() {
       <DialogTrigger asChild>
         <Button>Edit</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]  bg-[#09090b] text-white">
-        <DialogHeader className="text-lg font-semibold">
+      <DialogContent className="sm:max-w-[425px] font-inter bg-[#fbfffe]">
+        {/* <DialogHeader className="text-lg font-semibold">
           Update Bio
-        </DialogHeader>
+        </DialogHeader> */}
         <div className="">
           <InputWithLabel
             value={bio}
             onValueChange={(value: string) => {
               setBio(value);
             }}
-            inputClassName="bg-[#09090B] text-white"
+            // inputClassName="bg-[#09090B] text-white"
             id="bio"
             label="Update Bio"
             placeholder="Enter your bio"
@@ -94,7 +93,7 @@ function BioDialog() {
           />
         </div>
         <DialogFooter>
-          <Button variant="secondary" type="submit">
+          <Button variant="default" type="submit">
             Save changes
           </Button>
         </DialogFooter>

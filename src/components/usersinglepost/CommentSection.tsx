@@ -14,7 +14,7 @@ function CommentSection({
       <Loader2 className="animate-spin h-4 w-4" />
     </div>
   ) : (
-    <div className="flex flex-col divide-y divide-slate-400/90">
+    <div className="flex flex-col divide-y divide-slate-400/30">
       {commentsData.comments &&
         commentsData.comments.map((comment) => {
           return (
@@ -23,7 +23,7 @@ function CommentSection({
         })}
       {commentsData.comments?.length === 0 && (
         <div className="flex justify-center py-10">
-          <p className="text-white">No comments yet</p>
+          <p className="text-black">No comments yet</p>
         </div>
       )}
     </div>

@@ -2,6 +2,13 @@ import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { MouseEventHandler, useEffect, useState } from "react";
 import { Button } from "../ui/button";
 
+import {
+  fetchCommunityGuideLines,
+  updateCommunityGuideLines,
+  updateCommunityGuidelinesSuccess,
+} from "@/features/communitysettings/manageSlice";
+import { hasProperty } from "@/utils/generalUtils";
+import { useParams } from "react-router-dom";
 import Editor from "../common/Editor";
 import {
   Dialog,
@@ -9,15 +16,7 @@ import {
   DialogHeader,
   DialogTrigger,
 } from "../ui/dialog";
-import {
-  fetchCommunityGuideLines,
-  updateCommunityGuideLines,
-  updateCommunityGuidelinesSuccess,
-} from "@/features/communitysettings/manageSlice";
-import { useParams } from "react-router-dom";
-import { hasProperty } from "@/utils/generalUtils";
 import { toast } from "../ui/use-toast";
-import { Loader } from "lucide-react";
 
 function GuidelineDialog() {
   const dispatch = useAppDispatch();
@@ -84,23 +83,24 @@ function GuidelineDialog() {
       <DialogTrigger asChild>
         <Button onClick={() => setIsOpen(true)}>Update</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px] bg-[#09090b] text-white">
+      <DialogContent className="sm:max-w-[500px] font-inter bg-[#fbfffe]">
         <DialogHeader className="text-lg font-semibold">
           Community Guidelines
         </DialogHeader>
-        {manageData.guidelines.loading ? (
+        {/* {manageData.guidelines.loading ? (
           <Loader className="animate-spin h-4 w-4 text-center" />
         ) : (
-          <>
+          
+        )} */}
+        <>
             <Editor
               value={guideline.length > 0 ? JSON.parse(guideline) : null}
               changeContentCB={changeContent}
             />
-            <Button onClick={handleUpdateGuideline} variant={"secondary"}>
+            <Button  onClick={handleUpdateGuideline} variant={"default"}>
               Update
             </Button>
           </>
-        )}
       </DialogContent>
     </Dialog>
   );

@@ -38,8 +38,8 @@ function RightContent() {
   const communityInfo = useAppSelector((state) => state.community.home.info);
   const navigate = useNavigate();
   return (
-    <div className="relative rounded-md top-20 w-full bg-[#111111] overflow-hidden">
-      <div className="p-5 flex items-center justify-between gap-x-2 bg-[#202020] border-b border-[#2B2B2B]">
+    <div className="relative rounded-md top-20 w-full bg-[#F2F7F8] overflow-hidden">
+      <div className="p-5 flex items-center justify-between gap-x-2 bg-[#eef2f3] border-b ">
         <div className="flex items-center gap-x-4">
           <BoxesIcon />
           <p className="text-lg font-semibold">{communityInfo.displayName}</p>
@@ -69,7 +69,7 @@ function RightContent() {
         </div>
         <div className="w-full">
           <Button
-            variant="secondary"
+            variant="default"
             onClick={() => navigate(`/c/${communityInfo._id}/members`)}
             className="mt-5 w-full"
           >
@@ -77,7 +77,7 @@ function RightContent() {
           </Button>
           <Button
             onClick={() => navigate(`/c/${communityInfo._id}/settings`)}
-            variant="secondary"
+            variant="default"
             className="mt-5 w-full"
           >
             Manage Community

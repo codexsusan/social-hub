@@ -58,7 +58,7 @@ function CommentTextArea({
               }}
               onChange={handleCommentChange}
               placeholder="Add a comment"
-              className="w-full bg-[#27272a] border p-2 border-slate-600 rounded-md text-white h-[50px]"
+              className="w-full border border-gray-500/30 bg-[#AFFEFA] p-2 rounded-md text-lg h-[50px]"
               name="comment"
               id="comment-box"
               cols={95}
@@ -69,7 +69,7 @@ function CommentTextArea({
           onClick={handleSubmit}
           className="hidden"
           ref={postButtonRef}
-          variant={"secondary"}
+          variant={"default"}
         >
           Post
         </Button>

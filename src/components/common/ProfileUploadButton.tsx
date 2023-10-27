@@ -56,12 +56,12 @@ function ProfileUploadButton(props: {
           <button
             onClick={handleSelectFile}
             className={cn(
-              "flex flex-col gap-y-2 bg-[#09090B] p-16 rounded-full items-center cursor-pointer border-none",
+              "flex flex-col gap-y-2 bg-[#F2F7F8] p-16 rounded-full items-center cursor-pointer border-none",
               props.className
             )}
           >
-            <Camera />
-            <div className="text-white text-base">Upload</div>
+            <Camera className="" />
+            <div className=" text-lg font-medium">Upload</div>
           </button>
           <input
             type="file"

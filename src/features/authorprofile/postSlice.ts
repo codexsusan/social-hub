@@ -67,7 +67,6 @@ const postSlice = createSlice({
         state: MultiplePostsInitialState,
         action: PayloadAction<ResponseData>
       ) => {
-        console.log(action.payload);
         state.loading = false;
         state.posts = [...action.payload.data.data];
         state.totalPages = action.payload.data.totalPages;

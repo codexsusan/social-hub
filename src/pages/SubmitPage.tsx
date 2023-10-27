@@ -18,6 +18,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import TextareaAutosize from "react-textarea-autosize";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/use-toast";
+import { User2 } from "lucide-react";
+import { CustomAvatar } from "@/components/common/CustomAvatar";
 
 function SubmitPage() {
   useDocumentTitle("Submit | Social Hub");
@@ -91,7 +93,7 @@ function LeftContent() {
   };
 
   return (
-    <div className="w-full flex flex-col flex-1 items-center p-4 gap-y-2 overflow-auto text-white">
+    <div className="w-full flex flex-col items-center p-4 gap-y-2 overflow-autotext-white">
       <div className=" w-full p-2 rounded-sm border-slate-600 flex flex-col gap-4">
         <div className="text-xl font-semibold">Create a post</div>
         <Separator className="bg-gray-700" orientation="horizontal" />
@@ -127,7 +129,39 @@ function LeftContent() {
 }
 
 function RightContent() {
-  return <>Right Content</>;
+  const user = useAppSelector((state) => state.user);
+  return (
+    <div className="relative rounded-md top-20 w-full bg-[#F2F7F8] overflow-hidden">
+      <div className="p-5 flex items-center gap-x-2 bg-[#eef2f3] border-b border-[#2B2B2B]">
+        <User2 className="" />
+        <p className="text-lg font-semibold">User Profile</p>
+      </div>
+      <div className=" grid grid-cols-1 p-2 divide-y divide-zinc-500">
+        <div className="w-full flex justify-between p-4 items-center">
+          <p className=" font-medium">Avatar</p>
+          <CustomAvatar src={user.profilePic} />
+        </div>
+        <div className="w-full flex justify-between p-4">
+          <p className=" font-medium">Email</p>
+          <p>{user.email}</p>
+        </div>
+        <div className="w-full flex justify-between p-4">
+          <p className=" font-medium">Fullname</p>
+          <p>{user.firstName + " " + user.lastName}</p>
+        </div>
+        <div className="w-full flex justify-between p-4">
+          <p className="font-medium">Username</p>
+          <div>
+            <p>{"@" + user.userName}</p>
+          </div>
+        </div>
+        <div className="w-full flex justify-between p-4">
+          <p className=" font-medium">Gender</p>
+          <p>{user.gender.charAt(0).toUpperCase() + user.gender.slice(1)}</p>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default SubmitPage;

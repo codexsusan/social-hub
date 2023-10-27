@@ -18,14 +18,14 @@ export function UserSettings() {
 
 function LeftContent() {
   return (
-    <div className="w-full flex flex-col flex-1 items-center p-4 gap-y-2 overflow-auto text-white">
+    <div className="w-full flex flex-col flex-1 items-center p-4 gap-y-2 overflow-auto ">
       <div className=" md:w-4/5 w-full p-2 rounded-sm border-slate-600 flex flex-col gap-6">
         <div className="flex flex-col gap-2">
           <div className="text-xl font-bold">User Settings</div>
           <Separator className="bg-gray-700" orientation="horizontal" />
         </div>
         <Tabs defaultValue="account" className="w-full">
-          <TabsList className="grid w-full  bg-[#27272A] grid-cols-2">
+          <TabsList className="grid w-full  bg-slate-300/20 grid-cols-2">
             <TabsTrigger value="account">Account</TabsTrigger>
             <TabsTrigger value="profile">Profile</TabsTrigger>
           </TabsList>
@@ -44,8 +44,8 @@ function LeftContent() {
 function RightContent() {
   const user = useAppSelector((state) => state.user);
   return (
-    <div className="relative rounded-md top-20 w-full bg-[#111111] overflow-hidden">
-      <div className="p-5 flex items-center gap-x-2 bg-[#202020] border-b border-[#2B2B2B]">
+    <div className="relative rounded-md top-20 w-full bg-[#F2F7F8] overflow-hidden">
+      <div className="p-5 flex items-center gap-x-2 bg-[#eef2f3] border-b border-[#2B2B2B]">
         <User2 className="" />
         <p className="text-lg font-semibold">User Profile</p>
       </div>

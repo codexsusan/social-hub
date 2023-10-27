@@ -6,7 +6,7 @@ export function SearchBar() {
   return (
     <div className="flex w-full items-center space-x-2">
       <Input
-        className="bg-[#272729] w-full flex-1 "
+        className="border w-full flex-1 text-lg font-medium "
         type="text"
         placeholder="Search"
       />

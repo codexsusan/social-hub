@@ -98,13 +98,13 @@ function UserPostWrapper(props: Props) {
           <div className="flex items-center gap-2">
             <p
               onClick={handleRedirectToAuthorProfile}
-              className="text-white opacity-70 text-base font-semibold"
+              className="text-black opacity-70 text-lg font-semibold hover:underline"
             >
               {displayName}
             </p>
             <p
               onClick={handleRedirectToAuthorProfile}
-              className="text-white opacity-60 text-base"
+              className="text-black opacity-60 text-base font-normal hover:underline"
             >
               @{username}
             </p>
