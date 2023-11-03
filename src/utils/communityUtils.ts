@@ -265,3 +265,12 @@ export const updateCommunityProfileIconUtils = async (
   });
   return response;
 };
+
+export const searchCommunityQueryUtils = async (data: { query: string }) => {
+  const response = await request(
+    `/api/community/search-community`,
+    "GET",
+    data
+  );
+  return response;
+};
