@@ -35,6 +35,9 @@ function LatestHome() {
   };
   useEffect(() => {
     dispatch(fetchLatestPosts({ page: 1, limit: 10 })).then((res) => {
+      if (latest.totalPages === 0) {
+        setHasMore(false)
+      }
       if (res.meta.requestStatus === "rejected") {
         toast({
           title: "Unable to load data",
@@ -47,7 +50,7 @@ function LatestHome() {
 
   return latest.loading ? (
     <div className="flex justify-center">
-      <Loader className=" animate-spin my-4 text-black" />
+      {/* <Loader className=" animate-spin my-4 text-black" /> */}
     </div>
   ) : (
     <InfiniteScroll

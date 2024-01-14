@@ -46,7 +46,7 @@ function TrendingHome() {
 
   return trending.loading ? (
     <div className="flex justify-center">
-      <Loader className=" animate-spin my-4 text-black" />
+      {/* <Loader className=" animate-spin my-4 text-black" /> */}
     </div>
   ) : (
     <InfiniteScroll

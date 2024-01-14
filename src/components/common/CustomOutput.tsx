@@ -14,6 +14,7 @@ const renderers = {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function CustomOutput({ content }: { content: any }) {
+  console.log(content)
   return (
     <Output
       className="text-white border"

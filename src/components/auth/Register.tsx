@@ -60,7 +60,6 @@ function Register() {
     }
     dispatch(registerUser(user)).then((res) => {
       if (hasProperty(res.payload, "status")) {
-        console.log(res.payload);
         if (res.payload.status === 201) {
           toast({
             title: "Account created.",
@@ -68,7 +67,7 @@ function Register() {
             className: "bg-[#09090B] text-[#e2e2e2] border-[#e2e2e2]/20",
             duration: 1000,
           });
-          navigate("/auth/otp/verify");
+          navigate("/auth/login");
         } else {
           toast({
             title: "Unable to create an account.",
