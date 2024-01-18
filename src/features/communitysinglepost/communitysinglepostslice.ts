@@ -31,8 +31,7 @@ const initialState: CommunitySinglePostInitialState = {
   loading: true,
   post: {
     loading: false,
-    content:
-      '{"time":1697208637870,"blocks":[{"id":"FuZcoTwXqM","type":"paragraph","data":{"text":""}}],"version":"2.28.0"}',
+    content: "",
   } as SinglePostInitialState,
   comment: {
     loading: false,

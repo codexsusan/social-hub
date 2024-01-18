@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
 import { PostPartial } from "@/types/postTypes";
+import parse from 'html-react-parser';
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import CustomOutput from "../common/CustomOutput";
 import CommunityPostWrapper from "../community/CommunityPostWrapper";
 import PostActions from "./PostActions";
 
@@ -21,7 +21,8 @@ function CommunityPostCard(props: Props) {
     navigate(`/c/${post!.community._id}/post/${post!._id}?origin=${location.pathname}`);
   };
 
-  const content = post!.content!.length > 0 ? JSON.parse(post!.content!) : "";
+  // const content = post!.content!.length > 0 ? JSON.parse(post!.content!) : "";
+  const content = parse(post!.content!);
   return (
     <div
       onClick={routeToSinglePost}
@@ -33,7 +34,8 @@ function CommunityPostCard(props: Props) {
       <CommunityPostWrapper optionsVisibility={optionsVisibility} post={post}>
         <div className="text-base text-black mt-2 space-y-4 flex-1">
           <div className="text-xl font-semibold">{post!.title}</div>
-          <CustomOutput content={content} />
+          {/* <CustomOutput content={content} /> */}
+          <p>{content}</p>
           <PostActions {...props} />
         </div>
       </CommunityPostWrapper>

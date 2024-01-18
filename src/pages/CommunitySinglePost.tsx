@@ -1,5 +1,4 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import CustomOutput from "@/components/common/CustomOutput";
 import CommunityPostWrapper from "@/components/community/CommunityPostWrapper";
 import { ActionButtons } from "@/components/communitysinglepost/ActionButtons";
 import CommentSection from "@/components/usersinglepost/CommentSection";
@@ -11,6 +10,7 @@ import {
 import { addcommentCommunitySinglePostSuccess } from "@/features/communitysinglepost/communitysinglepostslice";
 import { fetchSinglePost } from "@/features/usersinglepost/usersinglepostslice";
 import { hasProperty } from "@/utils/generalUtils";
+import parse from 'html-react-parser';
 import { Loader2 } from "lucide-react";
 import { MouseEventHandler, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -49,7 +49,8 @@ function LeftContent() {
     (state) => state.communitysinglepost.comment
   );
 
-  const content = JSON.parse(postData!.content!);
+  // const content = JSON.parse(postData!.content!);
+  const content = parse(postData!.content!)
 
   const [comment, setComment] = useState("");
 
@@ -82,7 +83,8 @@ function LeftContent() {
           >
             <div className="text-base mt-2 space-y-4 w-full">
               <div className="text-xl font-semibold mb-2">{postData.title}</div>
-              <CustomOutput content={content} />
+              {/* <CustomOutput content={content} /> */}
+              <p>{content}</p>
               <ActionButtons />
             </div>
           </CommunityPostWrapper>
@@ -103,38 +105,5 @@ function LeftContent() {
   );
 }
 
-// function RightContent() {
-//   const postData = useAppSelector((state) => state.communitysinglepost.post);
-//   return (
-//     <div className="relative rounded-md top-20 w-full bg-[#F2F7F8] overflow-hidden">
-//       <div className="p-5 flex items-center gap-x-2 bg-[#eef2f3] border-b border-[#2B2B2B]">
-//         <User2 className="" />
-//         <p className="text-lg font-semibold">
-//           Post Details
-//         </p>
-//       </div>
-//       <div className=" grid grid-cols-1 p-2 divide-y divide-zinc-500">
-//         <div className="w-full flex justify-between p-4 items-center">
-//           <p className=" font-medium">Username</p>
-//           {"@" + postData.author?.userName}
-//         </div>
-//         <div className="w-full flex justify-between p-4">
-//           <p className=" font-medium">Community Name</p>
-//           <p>{postData.community?.displayName}</p>
-//         </div>
-//         <div className="w-full flex justify-between p-4">
-//           <p className=" font-medium">Community Username</p>
-//           <p>{postData.community?.name}</p>
-//         </div>
-//         <div className="w-full flex justify-between p-4">
-//           <p className="font-medium">Posted On</p>
-//           <div>
-//             <p>{postData.createdAt?.split("T")[0]}</p>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
 
 export default CommunitySinglePost;

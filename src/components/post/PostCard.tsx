@@ -4,9 +4,8 @@ import PostActions from "./PostActions";
 
 import { cn } from "@/lib/utils";
 import { PostPartial } from "@/types/postTypes";
+import parse from 'html-react-parser';
 import { useLocation, useNavigate } from "react-router-dom";
-import CustomOutput from "../common/CustomOutput";
-
 interface Props {
   className?: string;
   type?: string;
@@ -24,7 +23,7 @@ function PostCard(props: Props) {
       `/u/${post!.author?._id}/post/${post!._id}?origin=${location.pathname}`
     );
   };
-  const content = post!.content!.length > 0 ? JSON.parse(post!.content!) : "";
+  const content = parse(post!.content!);
   return (
     <div
       onClick={routeToSinglePost}
@@ -36,7 +35,8 @@ function PostCard(props: Props) {
       <UserPostWrapper post={post} optionsVisibility={optionsVisibility}>
         <div className="text-base mt-2 space-y-4 flex-1">
           <div className="text-xl font-semibold">{post!.title}</div>
-          <CustomOutput content={content} />
+          {/* <CustomOutput content={content} /> */}
+          <p>{content}</p>
           <PostActions {...props} />
         </div>
       </UserPostWrapper>

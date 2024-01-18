@@ -1,5 +1,4 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import CustomOutput from "@/components/common/CustomOutput";
 import UserPostWrapper from "@/components/common/UserPostWrapper";
 import ActionButtons from "@/components/usersinglepost/ActionButtons";
 import CommentSection from "@/components/usersinglepost/CommentSection";
@@ -13,6 +12,7 @@ import {
   fetchSinglePost,
 } from "@/features/usersinglepost/usersinglepostslice";
 import { hasProperty } from "@/utils/generalUtils";
+import parse from 'html-react-parser';
 import { Loader2 } from "lucide-react";
 import {
   ChangeEventHandler,
@@ -54,7 +54,8 @@ function LeftContent() {
 
   const commentsData = useAppSelector((state) => state.usersinglepost.comment);
 
-  const content = JSON.parse(postData!.content!);
+  // const content = JSON.parse(postData!.content!);
+  const content = parse(postData!.content!);
 
   const [comment, setComment] = useState("");
   const handleCommentChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
@@ -86,7 +87,8 @@ function LeftContent() {
           >
             <div className="text-base mt-2 space-y-4 w-full">
               <div className="text-xl font-semibold mb-2">{postData.title}</div>
-              <CustomOutput content={content} />
+              {/* <CustomOutput content={content} /> */}
+              <p>{content}</p>
               <ActionButtons />
             </div>
           </UserPostWrapper>

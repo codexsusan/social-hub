@@ -1,25 +1,25 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import Editor from "@/components/common/Editor";
 import PageWrapper from "@/components/common/PageWrapper";
 import { Separator } from "@/components/ui/separator";
 import { fetchAllCommunityByUser } from "@/features/community/communityLists";
 import useDocumentTitle from "@/hooks/useDocumentTitle";
 
+import { CustomAvatar } from "@/components/common/CustomAvatar";
 import CustomSelect from "@/components/common/CustomSelect";
+import TextEditor from "@/components/common/TextEditor";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { toast } from "@/components/ui/use-toast";
 import {
   changeCommunity,
   changeContent,
   changeTitle,
   createPost,
 } from "@/features/submit/submitSlice";
+import { User2 } from "lucide-react";
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import TextareaAutosize from "react-textarea-autosize";
-import { Label } from "@/components/ui/label";
-import { toast } from "@/components/ui/use-toast";
-import { User2 } from "lucide-react";
-import { CustomAvatar } from "@/components/common/CustomAvatar";
 
 function SubmitPage() {
   useDocumentTitle("Submit | Social Hub");
@@ -116,10 +116,11 @@ function LeftContent() {
             dispatch(changeTitle(e.target.value));
           }}
         />
-        <Editor
+        <TextEditor changeContent={changeContentCB} contentData={submitPage.post.content!} />
+        {/* <Editor
           value={JSON.parse(submitPage.post.content!)}
           changeContentCB={changeContentCB}
-        />
+        /> */}
         <Button onClick={handlePostSubmit} variant={"default"}>
           Post
         </Button>
