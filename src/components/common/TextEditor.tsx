@@ -42,7 +42,7 @@ function TextEditor({
                     extraPlugins: [uploadPlugin],
                     placeholder: "Enter your thoughts here..."
                 }}
-                onChange={(event, editor: ClassicEditor) => {
+                onChange={(_event, editor: ClassicEditor) => {
                     const data = editor.getData();
                     setContent(data);
                     changeContent(data)
