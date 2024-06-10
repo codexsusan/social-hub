@@ -22,6 +22,7 @@ function classNames(...classes: string[]) {
 
 export default function AppNavbar() {
   const user = useAppSelector((state) => state.user);
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   useTokenVerify();
@@ -31,7 +32,12 @@ export default function AppNavbar() {
         toast({
           description: user.error,
           className: "bg-[#09090B] text-[#e2e2e2] border-none ",
+          duration: 3000,
         });
+        if (user.error === "Failed to load user data") {
+          localStorage.removeItem("token");
+          navigate("/auth/login");
+        }
       }
     });
   }, [dispatch, navigate, user.error]);
@@ -45,7 +51,11 @@ export default function AppNavbar() {
     { label: "Explore", href: "/explore", onClick: () => {} },
     { label: "Create Community", href: "/c/create", onClick: () => {} },
     { label: "Your Community", href: "/c/lists", onClick: () => {} },
-    { label: "Settings", href: `/profile/${user.userName}/settings`, onClick: () => {} },
+    {
+      label: "Settings",
+      href: `/profile/${user.userName}/settings`,
+      onClick: () => {},
+    },
     {
       label: "Sign out",
       href: "/auth/login",
@@ -82,7 +92,9 @@ export default function AppNavbar() {
                   }}
                   className="flex flex-shrink-0 items-center cursor-pointer"
                 >
-                  <h1 className="text-3xl text-blue-800 font-bold">S<sup>h</sup></h1>
+                  <h1 className="text-3xl text-blue-800 font-bold">
+                    S<sup>h</sup>
+                  </h1>
                 </div>
               </div>
               <div className="w-1/2 text-white hidden sm:block">

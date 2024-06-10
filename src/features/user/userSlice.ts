@@ -145,6 +145,7 @@ const userSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(fetchUserData.fulfilled, (state: User, action) => {
+      if (!action.payload.data) return;
       state.loading = false;
       state.error = "";
       state._id = action.payload.data._id;

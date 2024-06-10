@@ -100,13 +100,13 @@ function CommunityPostWrapper(props: Props) {
         <div className="flex justify-between">
           <div className="flex flex-col md:flex-row gap-x-2 items-start ">
             <div className="flex">
-              <p
+              <div
                 onClick={handleRedirectToCommunityProfile}
                 className="text-black opacity-70 text-lg font-semibold hover:underline mr-1"
               >
                 {post?.community?.name}
-              </p>
-              <p
+              </div>
+              <div
                 onClick={handleRedirectToCommunityProfile}
                 className="text-black opacity-60 text-base font-normal"
               >
@@ -114,10 +114,10 @@ function CommunityPostWrapper(props: Props) {
                 <span className="hover:underline">
                   {post?.community?.displayName}
                 </span>
-              </p>
+              </div>
             </div>
             <div className="border-l pl-2 border-gray-400/30 flex items-center gap-x-2">
-              <p>via </p>
+              <span>via </span>
               <div
                 onClick={handleRedirectToAuthorProfile}
                 className=" flex items-center "

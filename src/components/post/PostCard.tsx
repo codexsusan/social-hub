@@ -36,7 +36,7 @@ function PostCard(props: Props) {
         <div className="text-base mt-2 space-y-4 flex-1">
           <div className="text-xl font-semibold">{post!.title}</div>
           {/* <CustomOutput content={content} /> */}
-          <p>{content}</p>
+          <div>{content}</div>
           <PostActions {...props} />
         </div>
       </UserPostWrapper>

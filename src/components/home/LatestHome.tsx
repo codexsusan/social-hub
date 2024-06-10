@@ -46,7 +46,7 @@ function LatestHome() {
         });
       }
     });
-  }, [dispatch]);
+  }, [dispatch, latest.totalPages]);
 
   return latest.loading ? (
     <div className="flex justify-center">
