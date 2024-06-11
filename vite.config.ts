@@ -12,7 +12,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://be-socialhub.susankhadka.com.np/",
+        target: "https://be-socialhub.susankhadka.com.np",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
