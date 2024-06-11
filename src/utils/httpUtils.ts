@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type methodType = "GET" | "POST" | "PATCH" | "PUT" | "DELETE";
 
-// const base_url = "http://localhost:3000" || "https://sea-turtle-app-bk4cx.ondigitalocean.app";
 const base_url = import.meta.env.VITE_APP_SERVER || "http://localhost:3000";
-// const base_url = "http://localhost:3001" || import.meta.env.VITE_APP_SERVER;
 
 export type ResponseData = {
   status: number;
